@@ -1,0 +1,78 @@
+\documentclass[a4paper,12pt,twoside]{ctexart}
+\usepackage{def/format}
+%%%%%%%%%%%%% 以下内容按需要进行修改
+\def\mytitlenum{16}           %单行题目长度
+\def\school{数学与统计学学院} %院系名字
+\def\major{数\!学\!与\!应\!用\!数\!学(师\!范)} %专业
+\def\grade{2017级}    %年级
+\def\authorname{作者} %作者
+\def\xuehao{2015123456} %学号
+\def\teacher{张三丰 教授 \quad 三丰 教授}%指导教师, 职称
+\def\title{浅谈我们的我们的大学的大大大学我们的大学的大大大大} % 文章题目
+%%%%%%%%%%%%%% 封面信息结束
+%%%%%%%%%%%%%%% 摘要和关键词
+%中文摘要
+\def\myabstract{摘要的字数控制在400个汉字左右. 尽量不要出现公式参考文献. 介绍本文的主要工作以及创新点.}
+%中文关键词
+\def\mykeywords{关键词1\qquad 关键词2\qquad关键词3}
+%英文题目
+\def\mytitle{Discuss}
+%英文摘要
+\def\myabstracten{For. }
+%英文关键词
+\def\mykeywordsen{keywords1\qquad keywords2\qquad keywords3}
+\begin{document}
+%\begin{CJK*}{GBK}{song}
+%%%%%%%% 所有自定义的命令请放到下面文件中
+\input{def/simplify.def} %加载简化命令
+%%%%%%%% 自定义命令加载完毕
+%以下内容不要做修改
+%以下内容不要做修改
+%以下内容不要做修改
+\input{def/firstpage} %封面
+\input{def/copyright} %版权页
+\newpage %目录新起一页
+\pagestyle{empty}
+\tableofcontents      %目录
+\newpage %摘要新起一页
+\input{def/abstract}  %摘要
+%以上内容不要做修改
+%以上内容不要做修改
+%以上内容不要做修改
+
+%正文开始
+%正文开始
+\newpage
+\section{引言}
+    介绍工作的动机和发展等等.
+\section{我是第二节的一级标题}
+以上内容不要做修改 以上内容不要做修改 以上内容不要做修改 以上内容不要做修改
+\subsection{我二级标题}
+    我真的是小节.
+\subsubsection{我是三级标题}
+\subsection{小节2}
+    我也是小节.
+
+\section{我是第三节}
+\section{我是第四节}
+\newpage
+%正文结束
+
+%参考文献
+\begin{thebibliography}{99}
+\addcontentsline{toc}{section}{\protect参考文献}
+\setlength{\itemsep}{-0.75ex}
+% 请把文献条目填写在下面, 例如
+\bibitem{zhs}张三. 钢铁侠[J]. 数学实践, 2020, \textbf{10}2: 1-10.
+\end{thebibliography}
+\newpage
+\section*{\centering致\quad谢}
+\addcontentsline{toc}{section}{\protect致谢}
+感谢!
+\newpage
+\section*{附录}
+\addcontentsline{toc}{section}{\protect附录}
+此节可添加调查问卷、访谈记录等
+
+\end{document}
+

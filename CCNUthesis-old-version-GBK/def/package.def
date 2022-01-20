@@ -1,0 +1,39 @@
+%%%可能用到的包都放在这里，可以根据自己的实际需要添加或者删除. %%%
+\usepackage{amscd,amssymb,amsfonts,amsbsy,amsmath,verbatim} % 各种数学符号
+%\usepackage{mathrsfs} %哥特体
+\usepackage{ntheorem}  % 定理环境
+\usepackage{enumitem}  % 设置各条例间距
+\usepackage{multicol}  % 多栏排版
+\usepackage{color} % 字体和背景颜色
+\usepackage{graphicx} %加载图片
+\usepackage{subfigure}
+\usepackage{picins,fancyhdr} %文字环绕图片
+\usepackage{CJK}%支持中、日、韩文
+
+\usepackage{CJKulem} %加下划线的文本部分中可以断行
+\usepackage{CJKpunct} %调整中文标点后的空白
+\usepackage{setspace} %设置行间距
+\usepackage[left=3cm,right=2.5cm,top=3cm,bottom=2.5cm]{geometry}
+%            %页边距设定
+\usepackage{titlesec} %改变章节标题格式
+\usepackage{titletoc} %改变目录格式
+\usepackage{times} %英文字体
+\usepackage{xifthen} %使用\ifthenelse命令，必须要有这个包！
+%\usepackage{CJKspace} %中英文之间插入空白
+\usepackage{indentfirst} %首行缩进
+\usepackage{makecell}    %表格宏包
+\usepackage{enumitem}    %扩展列表
+\usepackage{booktabs,array}
+\usepackage{tikz}        %绘图
+\usetikzlibrary{intersections} %tikz拓展
+\usetikzlibrary{calc}          %tikz拓展
+\usepackage{ifthen}      %分支程序
+%\usepackage{ctex}        %中文环境
+\usepackage{bm}          %数学环境粗体
+\usepackage{multirow}    %多行表格
+\usepackage{setspace}    %段落间距宏包
+\usepackage{CJKnumb}
+\usepackage{ccmap}  %%%%%% pdf中文不乱码
+\usepackage{float}  %浮动表格图片
+\usepackage{etex,yhmath} %数学符号
+\usepackage{cite} %参考文献自动排序和紧缩排版

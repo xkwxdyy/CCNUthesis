@@ -1,0 +1,96 @@
+%页边距
+\oddsidemargin=0pt
+\evensidemargin=0pt
+\setlength{\parindent}{2em} %设置段首缩进量
+
+%设置列表环境各种间距
+\setenumerate{itemsep=-2pt,partopsep=0pt,parsep=\parskip,topsep=0pt}
+\setitemize{itemsep=-2pt,partopsep=0pt,parsep=\parskip,topsep=0pt}
+\setdescription{itemsep=-2pt,partopsep=0pt,parsep=\parskip,topsep=0pt}
+
+
+\renewcommand\arraystretch{1.5}
+
+%%%% 字体
+\newcommand{\song}{\CJKfamily{song}} %宋体
+\newcommand{\kai}{\CJKfamily{kai}} %楷体
+\newcommand{\hei}{\CJKfamily{hei}} %黑体
+%\newcommand{\fangsong}{\CJKfamily{fs}} %仿宋
+\newcommand{\li}{\CJKfamily{li}} %隶书
+\newcommand{\you}{\CJKfamily{you}} %幼圆
+
+%%%% 重定义标准大小
+\makeatletter
+\renewcommand{\normalsize}{%
+   \@setfontsize\normalsize\@xpt\@xiipt
+   \abovedisplayskip 4\p@ \@plus2\p@ \@minus5\p@
+   \abovedisplayshortskip \z@ \@plus3\p@
+   \belowdisplayshortskip 4\p@ \@plus3\p@ \@minus3\p@
+   \belowdisplayskip \abovedisplayskip
+   \let\@listi\@listI}
+
+ %一级标题格式
+  \renewcommand\section{%
+      \@startsection{section}{2}{0mm}{10pt}{8pt}%
+      {\zihao{3}\song\textbf}%
+    }
+  % 二级标题格式
+  \renewcommand\subsection{%
+      \@startsection{subsection}{2}{0mm}{0.1\baselineskip}{5pt}%
+      {\song\zihao{-3}\textbf}%
+    }
+  % 三级标题格式
+  \renewcommand\subsubsection{%
+      \@startsection{subsubsection}{0}{0mm}{0\baselineskip}{1pt}%
+      {\zihao{4}\song\textbf\!\!}%
+    }
+  % 四级标题格式
+  \renewcommand\paragraph{%
+      \@startsection{paragraph}{1}{0mm}{0.5\baselineskip}{0.5\baselineskip}%
+      {\zihao{-4}\song\textbf}%
+    }
+\makeatother
+
+%%%%%%%% 目录格式
+\setcounter{tocdepth}{2}
+\renewcommand{\contentsname}{\centerline{\heiti\zihao{-2} 目\quad 录}}
+
+    % 一级标题
+\titlecontents{section}
+              [0em]
+              {\zihao{-4} \song \addvspace{2bp minus 1bp}}
+              {\contentslabel{0em}\quad}
+              {}
+              {\dotfill\textrm{\contentspage[\thecontentspage]}}
+    % 二级标题
+\titlecontents{subsection}
+              [3.0em]
+              {\zihao{-4} \song \addvspace{1bp minus 1bp}}
+              {\contentslabel{2.0em}}
+              {}
+              {\dotfill\textrm{\contentspage[\thecontentspage]}}
+
+    % 三级标题, 此版本不显示此层次标题
+    \titlecontents{subsubsection}
+              [3.0em]
+              {\zihao{-4} \song \addvspace{1bp minus 1bp}}
+              {\contentslabel{2.0em}}
+              {}
+              {\dotfill\textrm{\contentspage[\thecontentspage]}}
+
+\renewcommand{\figurename}{\zihao{-5}图}
+\renewcommand\tablename{\zihao{-5}表}
+
+\setlength{\theorempreskipamount}{-1em}%调整定理环境与上文的距离
+\setlength{\theorempostskipamount}{-.35em}%调整定理环境与下文的距离
+
+
+%\renewcommand{\baselinestretch}{5.5}
+\zihao{-4}
+\linespread{1.5}  % 1.5倍行间距
+%\baselineskip=23pt
+\parskip=0pt      %段间距与行间距相等
+
+\widowpenalty=0
+\clubpenalty=0000
+\allowdisplaybreaks  %允许多行公式换页

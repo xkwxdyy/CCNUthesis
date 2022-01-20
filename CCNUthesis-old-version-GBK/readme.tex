@@ -1,0 +1,869 @@
+\documentclass[a4paper,12pt,twoside]{ctexart}
+\input{def/package.def}
+\input{def/page.def}
+
+\def\setenum#1{\setcounter{enumi}{#1}}
+
+\begin{document}
+\input{def/simplify.def}
+
+\title{使用指南}
+\date{\today}
+\author{邓国泰}
+\maketitle
+\zihao{-4}\linespread{1.35}
+\renewcommand{\baselinestretch}{1.5}
+\baselineskip=23pt
+\parskip=0pt
+\tableofcontents
+
+% 1.5倍行间距
+\begin{proof}[解]
+  dfelf
+\end{proof}
+
+\section{模板使用指南}
+\subsection{编写目的}
+    当学者们使用Office书写数学论文时, 一个巨大的麻烦是数学公式的\red{输入与排版}. 一个是数学公式输入需要使用专门的软件(可以使用word自带的公式编辑器, 但强烈建议使用mathtype软件), 每个公式是作为图片插入到文档中, 所以查找替换公式里面的内容已成为一种不可能的事情. 另外一个是排版, 插入数学公式后, 文档的行间距就会产生变化, 无法做到全文一致, 失去美观性. 为此, 众多学术期刊杂志都使用Tex作为排版软件.
+
+    为克服Office软件排版的缺陷, 本院采用Tex作为毕业论文的排版软件.
+    为了简化排版, 也为了消除排版的随意性, 我们编写了此个模板共大家使用, 它符合学校对论文格式的要求.
+
+\subsection{功能}
+    本模板提供以下便利功能:
+    \begin{itemize}
+      \item 根据系统时间, 自动确定论文写作年份;
+      \item 根据题目的长度, 自动排成居中的两行或者一行;
+      \item 正文前的页面不要额外排版, 只需要提供相应信息即可;
+      \item 公式、定理、标题, 全文自动编号, 无需手动编号;
+      \item 提供simplify.def文档, 内含大量已定义好的宏命令, 便于简化输入.
+    \end{itemize}
+
+\subsection{模板使用}
+    打开main.tex或者sim$\_$main.tex, 使用\red{pdflatex.exe}编译\red{两次}便产生最终文档. mian.tex提供了一篇完整的毕业论文, 而sim$\_$main.tex只是提供一个论文框架.
+
+\subsection{文档构成}
+    本论文模板由一个主文件\red{main.tex}(以及简化版sim\_main.tex和范例版exam\_main.tex)和三个文件夹\red{def}, \red{doc}和\red{photo}组成. 文件夹def包含以下文件
+    \begin{multicols}{2}
+    \begin{itemize}
+      \item[1)] format.sty: 格式包, 引用\blue{package.def}, \blue{page.def}和\blue{config.tex}3个文档
+      \item[2)] package.def: 调用的各种宏包
+      \item[3)] page.def: 页面设置文档
+      \item[4)] mytikz.def: 绘图命令, 含坐标绘制
+      \item[5)] simplify.def: 简化命令文
+      \item[6)] firstpage.tex: 封面
+      \item[7)] copyright.tex: 版权页
+      \item[8)] abstract.tex: 生成中英文摘要等
+      \item[9)] school.jpg: 校名图片
+    \end{itemize}
+    \end{multicols}\noindent
+    上述文档中, simplify.def放置了各种简化宏命令, 有助于用户简化输入. mytikz.def是绘图命令集合, 简化了坐标绘制.
+
+    文件夹doc用来放置用户各章节文档, 本模拟文档包含了introduction(引言), section2(第二节), section3(第三节), section4, section5, references(参考文献), acknowledge(致谢), aprodix(附录).
+
+    文件夹photo用来放置毕业论文所需要引用的图形文件. 所以本模板中, 文件以及文件夹的结构如下图\ref{fig1}所示.
+
+    \begin{figure}[htb]\centering
+    \begin{tikzpicture}[>=latex]
+      \draw[->](0,1)node[text width=25pt,left]{毕业论文}--(1,2.4)node[right]{main.tex: 论文主体文件};
+      \foreach \i/\tex in {2/{sim$\_$main.tex: 论文主体文件简化版}, 1/{doc: 文件夹, 放置论文各章节文档}, 0/{photo: 文件夹, 论文调用的图片文档},-1/{def: 文件夹, 放置模板所必须的宏包文档}}
+      \draw[->](0,1)--(1,{\i*.8})node[right]{\tex};
+
+      \foreach \i/\tex in {1/format.sty, 2/package.def, 3/page.def, 4/mytikz.def}
+        \draw[->](1.3,-1)--++(-2,.1-\i/1.4)node[left]{\tex};
+      \foreach \i/\tex in {1/simplify.def, 2/firstpage.tex, 3/copyright.tex, 4/abstract.tex}
+        \draw[->](1.3,-1)--++(2,.1-\i/1.4)node[right]{\tex};
+      \draw[->](1.3,-1)--++(0,-2.8)node[below]{school.jpg};
+
+    \end{tikzpicture}
+    \caption{\label{fig1} 文档结构信息}
+    \end{figure}
+
+\section{main.tex和sim$\_$main.tex}
+
+    main.tex和sim$\_$main.tex都是主文件, 区别在于, main.tex只是调用位于文件夹doc内的各个章节文档, 本身不作修改; 而sim$\_$main.tex 文档则允许用户在其中书写章节内容. 建议初始使用sim$\_$main.tex, 成文后, 改成main.tex的调用模式. 下面对于主文件sim$\_$main.tex作一说明. %\def\gray#1{\textcolor{gray}{\zihao{-4}#1}}
+
+    \subsection{类和宏包文件}
+    文档sim\_main.tex的前两行代码为
+    \begin{enumerate}
+    \item
+    \textbf{$\backslash$documentclass[a4paper,12pt, twoside]$\{$ctexart$\}$
+    \item $\backslash$usepackage$\{$def/format$\}$}
+    \end{enumerate}
+    第一行表示本模板使用\red{ctexart.cls}类文件, a4纸张, 字体放大到1.2倍, 允许奇偶页的页边距不同; 第二行调用文件夹def内的宏包\red{format.sty}.
+
+    \subsection{用户信息}
+    第3行到第23行是用来收录论文的基本信息, 如作者, 题目, 摘要等. 相应内容必须\red{修改为用户自身的信息}.
+    \subsubsection{首页信息}
+    以下代码用于生成首页, 其中花括号内的信息(\blue{蓝色字体})根据需要进行相应修改.\\
+    \indent$\backslash$def$\backslash$mytitlenum$\{$\blue{15}$\}$
+    \qquad\quad\%单行题目长度, 缺省为15\\
+    \indent$\backslash$def$\backslash$school$\{$\blue{数学与统计学学院}$\}$ \qquad\quad \%院系名字\\
+    \indent$\backslash$def$\backslash$major$\{$\blue{数\!学\!与\!应\!用\!数\!学(师\!范)}$\}$\qquad\quad \%专业\\
+    \indent $\backslash$def$\backslash$grade$\{$\blue{2015}级$\}$ \qquad\quad \%年级\\
+    \indent $\backslash$def$\backslash$authorname$\{$\blue{作者}$\}$ \qquad\quad \%作者姓名\\
+    \indent$\backslash$def$\backslash$xuehao$\{$\blue{2015123456}$\}$ \quad\qquad \%学号\\
+    \indent$\backslash$def$\backslash$teacher$\{$\blue{张三丰\quad 教授}$\}$\qquad\quad \%指导教师, 职称\\
+    \indent$\backslash$def$\backslash$title$\{$\blue{浅谈我们的大学我们的大学}$\}$\qquad\quad \% 文章题目
+
+    \subsubsection{摘要页}
+    以下代码用于生成\red{摘要页}, 花括号的内容(\blue{蓝色字体})需要做相应的修改, 其他英文名称不能变更, 更不能删除, 否则无法编译成功. 关键词数目为\red{3-5}个.
+
+    \indent\%中文摘要\\
+    \indent$\backslash$def$\backslash$myabstract$\{$\blue{摘要的字数控制在400 个汉字左右. 尽量不要出现公式参考文献. 介绍本文的主要工作以及创新点.}$\}$\\
+    \indent\%中文关键词\\
+    \indent$\backslash$def$\backslash$mykeywords$\{$\blue{关键词1} $\backslash$qquad\quad \blue{关键词2}$\backslash$qquad\quad \blue{关键词3}$\}$\\ \indent
+    \%英文题目\\
+    \indent$\backslash$def$\backslash$mytitle$\{$\blue{Discuss}$\}$\\
+    \indent\%英文摘要\\
+    \indent$\backslash$def$\backslash$myabstracten$\{$\blue{For. }$\}$\\
+    \indent\%英文关键词\\
+    \indent$\backslash$def$\backslash$mykeywordsen$\{$\blue{keywords1} $\backslash$qquad\quad \blue{keywords2}$\backslash$qquad\quad \blue{keywords3}$\}$
+
+    \subsection{正文之前}
+    第24行代码为\textbf{$\backslash$begin$\{$document$\}$}, 它与第77行代码\textbf{$\backslash$end$\{$document$\}$}配对, 它俩之间的代码为文档主体.
+
+    以下几行代码生成论文正文之前的所有页面: \blue{首页}, \blue{版权页}, \textbf{目录}和\textbf{摘要}. 其中\red{simplify.def}没有在之前加载是因为宏包冲突: \red{定理环境无法支持中文}.
+    \textbf{
+    \begin{multicols}{2}
+    \begin{enumerate}\setenum{2}
+    \item[27] $\backslash$input$\{$def/simplify.def$\}$ \%加载简化命令
+    \item[32] $\backslash$input$\{$def/firstpage$\}$\%封面
+    \item[33] $\backslash$input$\{$def/copyright$\}$\%版权页
+    \item[34] $\backslash$newpage  \%目录新起一页
+    \item[35] $\backslash$pagestyle$\{$empty$\}$ \%目录页不含页码
+    \item[36] $\backslash$tableofcontents     \%目录
+    \item[37] $\backslash$newpage  \%摘要新起一页
+    \item[38] $\backslash$input$\{$def/abstract$\}$ \%摘要
+    \end{enumerate}
+    \end{multicols}}
+
+%    \textbf{(2)} 以下内容用于生成\red{正文前}的所有页面, 不需要做任何修改. \vspace*{-10pt}
+%    \begin{spacing}{1.35}\zihao{-4}
+%    \begin{verbatim}
+%    %%%%%%%%% 以下几行生成: 封面, 版权页和目录, 摘要. 不用做修改
+%    \input{def/firstpage}   %加载封面
+%    %\input{def/copyright}  %加载版权页
+%    \newpage                %新起一页
+%    %%%%%%%% 目录
+%    \renewcommand{\baselinestretch}{1.2} %目录的行间距设置为1.2
+%    \zihao{-4}              %字号为小四号
+%    \tableofcontents        %加载目录
+%    \newpage                %新起一页
+%    %页面设置
+%    \linespread{1.5}        %全文设置为1.5倍行间距
+%    \baselineskip=23pt
+%    \parskip=0pt   %全文的段间距与行间距相等, 都是1.5倍行间距
+%    \input{def/abstract}    %加载摘要页
+%    %%%%%%%%%%%% 以上内容不需要做修改
+%    \end{verbatim}
+%    \end{spacing}\vspace*{-0pt}
+%
+%    \vspace*{-35pt}\noindent
+%    以上内容生成了首页,版权页, 目录与摘要页. 如无必要, 不作任何修改.
+
+    \subsection{论文主体}
+    从第45行到82行, 为论文的主体. section为一级标题, subsection为二级标题, subsubsection为三级标题.
+    \textbf{
+    \begin{multicols}{2}
+    \begin{enumerate} \setenum{44}
+    \item $\backslash$newpage  \%第一节新起一页
+    \item $\backslash$section$\{$引言$\}$
+    \item    介绍工作的动机和发展等等.
+    \item $\backslash$section$\{$我是第二节的一级标题$\}$
+    \item 以上内容不要做
+    \item $\backslash$subsection$\{$我二级标题$\}$
+    \item    我真的是小节.
+    \item $\backslash$subsubsection$\{$三级标题$\}$
+    \item $\backslash$subsection$\{$小节2$\}$
+    \item    我也是小节.
+    \item
+    \item $\backslash$section$\{$我是第三节$\}$
+    \item $\backslash$section$\{$我是第四节$\}$
+    \item $\backslash$newpage   \%正文结束, 之后内容新起一页
+    \end{enumerate}
+    \end{multicols}}
+
+    \subsection{正文之后}
+    以下代码生成参考文献, 致谢和附录.%文档结束, 后面的内容将被忽略.
+    \textbf{
+    \begin{multicols}{2}
+    \begin{enumerate}\setenum{61}
+\item $\backslash$begin$\{$thebibliography$\}\{$99$\}$
+\item $\backslash$addcontentsline$\{$toc$\}\{$section$\}\\
+ \{\backslash$protect参考文献$\}$
+\item $\backslash$setlength$\{\backslash$itemsep$\}\{$-0.75ex$\}$
+\item \% 请把文献条目填写在下面, 例如
+\item $\backslash$bibitem$\{$zhs$\}$张三. 钢铁侠[J]. 数学实践, 2020, $\backslash$textbf$\{$10$\}$2: 1-10.
+\item $\backslash$end$\{$thebibliography$\}$
+\item $\backslash$newpage
+\item $\backslash$section*$\{$$\backslash$centering致$\backslash$quad 谢$\}$
+\item $\backslash$addcontentsline$\{$toc$\}\{$section$\}\\
+ \{$$\backslash$protect致谢$\}$
+\item 感谢!
+\item $\backslash$newpage
+\item $\backslash$section*$\{$附录$\}$
+\item $\backslash$addcontentsline$\{$toc$\}\{$section$\} \\ \{$$\backslash$protect附录$\}$
+\item 此节可添加调查问卷、访谈记录等
+\end{enumerate}
+\end{multicols}}
+
+    值得指出的是, (1) 参考文献条目的格式为(以论文为例, 其他类型请参见后文\red{参考文献}小节.\\
+    $\backslash$bibitem$\{$引用名称$\}$ 作者1, 作者2. 文章题目. 杂志名称, 年份, \textbf{卷号}期号: 起码-止码.
+
+    \indent (2) \red{当论文没有附录时, 就可以删除与附录有关的两行.}
+
+    以上就是主文件sim$\_$main.tex的\red{所有内容}.
+\subsection{main.tex}
+    将sim\_main.tex从第45行开始每一各章节(含参考文献, 致谢, 附录)作为一个单独文件, 将其放置在doc文档, 然后在主文件进行调用, 就形成了main.tex文件.
+        \textbf{
+        \begin{multicols}{2}
+        \begin{enumerate}\setenum{44}
+\item $\backslash$newpage \%第一节新起一页
+\item $\backslash$input$\{$doc/introduction$\}$
+\item $\backslash$input$\{$doc/section2$\}$
+\item $\backslash$input$\{$doc/section3$\}$
+\item $\backslash$input$\{$doc/section4$\}$
+\item $\backslash$input$\{$doc/section5$\}$
+\item \%正文结束
+\item \%\%\%附录开始一页
+\item $\backslash$newpage
+\item $\backslash$input$\{$doc/references$\}$  \%参考文献
+\item $\backslash$newpage
+\item $\backslash$input$\{$doc/acknowledge$\}$ \%致谢
+\item $\backslash$newpage
+\item $\backslash$input$\{$doc/aprodix$\}$     \%附录
+    \end{enumerate}
+    \end{multicols}}
+
+\section{package.def}
+    文档package.def加载了许多宏包, 它大大简化了我们的工作, 可以根据自己的实际需要添加或者删除. 各种宏包的使用, 请参阅相应的帮助文档.
+    \begin{verbatim}
+\usepackage{amscd,amssymb,amsfonts,amsbsy,amsmath,verbatim}
+                       % 各种数学符号
+%\usepackage{mathrsfs} % 哥特体
+\usepackage{ntheorem}  % 定理环境
+\usepackage{enumitem}  % 设置各条例间距
+\usepackage{multicol}  % 多栏排版
+\usepackage{color} % 字体和背景颜色
+\usepackage{graphicx} %加载图片
+\usepackage{subfigure}
+\usepackage{picins} %文字环绕图片
+\usepackage{CJK}%支持中、日、韩文
+\usepackage{CJKulem} %加下划线的文本部分中可以断行
+\usepackage{CJKpunct} %调整中文标点后的空白
+\usepackage{setspace} %设置行间距
+\usepackage[left=3cm,right=2.5cm,top=3cm,bottom=2.5cm]{geometry}
+                      %页边距设定
+\usepackage{titlesec} %改变章节标题格式
+\usepackage{titletoc} %改变目录格式
+\usepackage{times}    %英文字体
+\usepackage{xifthen}  %使用\ifthenelse命令，必须要有这个包！
+%\usepackage{CJKspace} %中英文之间插入空白
+\usepackage{indentfirst} %首行缩进
+\usepackage{makecell}    %表格宏包
+\usepackage{enumitem}    %扩展列表
+\usepackage{tikz}        %绘图
+\usetikzlibrary{intersections} %tikz拓展
+\usetikzlibrary{calc}          %tikz拓展
+\usepackage{ifthen}      %分支程序
+%\usepackage{ctex}       %中文环境
+\usepackage{bm}          %数学环境粗体
+\usepackage{multirow}    %多行表格
+\usepackage{setspace}    %段落间距宏包
+\usepackage{CJKnumb}
+\usepackage{ccmap}       %pdf中文不乱码
+\usepackage{float}       %浮动表格图片
+\end{verbatim}
+
+\section{page.def}
+    文档page.def设置了各种间距, 字号, 字体, 各级标题在正文和在目录中的格式, 以及其他一些设定. 本文档不需做修改, 下面只给出简略介绍.
+    \subsection{间距}
+    页边距的在package.def中给出. 下面语句设置了列表环境的间距以及首行缩进量.
+\begin{verbatim}
+\oddsidemargin=5pt
+\evensidemargin=5pt
+\setlength{\parindent}{2em} %设置段首缩进量
+%设置列表环境各种间距
+\setenumerate{itemsep=-2pt,partopsep=0pt,parsep=\parskip,
+ topsep=0pt}
+\setitemize{itemsep=-2pt,partopsep=0pt,parsep=\parskip,
+ topsep=0pt}
+\setdescription{itemsep=-2pt,partopsep=0pt,parsep=\parskip,
+ topsep=0pt}
+\end{verbatim}\vspace*{-0pt}
+
+\vspace*{-10pt}
+    \subsection{字号和字体}
+    下面代码设定了字体.\vspace*{-10pt}
+    \begin{verbatim}
+\newcommand{\song}{\CJKfamily{song}} %宋体
+\newcommand{\kai}{\CJKfamily{kai}} %楷体
+\newcommand{\hei}{\CJKfamily{hei}} %黑体
+%\newcommand{\fangsong}{\CJKfamily{fs}} %仿宋
+\newcommand{\li}{\CJKfamily{li}} %隶书
+\newcommand{\you}{\CJKfamily{you}} %幼圆
+    \end{verbatim}\vspace*{0pt}
+
+    \vspace*{-20pt}字号使用命令$\backslash$zihao来定义: $\backslash$zihao$\{$n$\}$, n号字; $\backslash$zihao$\{$-n$\}$, 小n号字.  如
+    \begin{multicols}{2}
+    \begin{itemize}
+    \item 四号字: \red{$\backslash$zihao$\{$4$\}$};
+    \item 小四号字: \red{$\backslash$zihao$\{$-4$\}$}.
+    \end{itemize}
+    \end{multicols}
+
+    \subsection{各级标题样式}
+以下代码重新定义了标准尺寸和各级标题格式.\vspace*{-10pt}
+    \begin{verbatim}
+%%%% 重定义标准大小
+\makeatletter  %  令@为字母, 不具有特殊含义
+\renewcommand{\normalsize}{%
+   \@setfontsize\normalsize\@xpt\@xiipt
+   \abovedisplayskip 4\p@ \@plus2\p@ \@minus5\p@
+   \abovedisplayshortskip \z@ \@plus3\p@
+   \belowdisplayshortskip 4\p@ \@plus3\p@ \@minus3\p@
+   \belowdisplayskip \abovedisplayskip
+   \let\@listi\@listI}
+%一级标题格式
+  \renewcommand\section{%
+      \@startsection{section}{2}{0mm}{0.1\baselineskip}
+      {0.1\baselineskip}{\heiti\sanhao\bf}%
+    }
+  % 二级标题格式
+  \renewcommand\subsection{%
+      \@startsection{subsection}{2}{0mm}{0\baselineskip}{2pt}%
+      {\heiti\xiaosanhao\bf}%
+    }
+  % 三级标题格式
+  \renewcommand\subsubsection{%
+      \@startsection{subsubsection}{0}{0mm}{0\baselineskip}{1pt}%
+      {\heiti\sihao\bf\!\!}%
+    }
+  % 四级标题格式
+  \renewcommand\paragraph{%
+      \@startsection{paragraph}{1}{0mm}{0.5\baselineskip}
+      {0.5\baselineskip}{\heiti\zihao{-4}\bf}%
+    }
+\makeatother %恢复@的特殊含义, 不在作为字母出现
+    \end{verbatim}\vspace*{0pt}
+
+\vspace*{-30pt}
+    \subsection{目录格式}
+下面代码设定了目录格式.
+    \begin{verbatim}
+%%%%%%%% 目录格式
+\setcounter{tocdepth}{2}  %目录中只显示一级和二级标题
+\renewcommand{\contentsname}{\centerline{\heiti\xiaoerhao
+    目\quad 录}}
+    % 一级标题
+\titlecontents{section}
+     [0em]
+     {\zihao{-4} \song \addvspace{2bp minus 1bp}}
+     {\contentslabel{0em}\quad}
+     {}
+     {\dotfill\textrm{\contentspage[\thecontentspage]}}
+    % 二级标题
+\titlecontents{subsection}
+     [3.0em]
+     {\zihao{-4} \song \addvspace{1bp minus 1bp}}
+     {\contentslabel{2.0em}}
+     {}
+     {\dotfill\textrm{\contentspage[\thecontentspage]}}
+    % 三级标题, 此版本不显示此层次标题
+\titlecontents{subsubsection}
+     [3.0em]
+     {\zihao{-4} \song \addvspace{1bp minus 1bp}}
+     {\contentslabel{2.0em}}
+     {}
+     {\dotfill\textrm{\contentspage[\thecontentspage]}}
+    \end{verbatim}  \vspace*{0pt}
+
+    \vspace*{-25pt}
+    \subsection{其他设定}
+以下代码重新定义了图表的格式.
+    \begin{verbatim}
+\renewcommand{\figurename}{\xiaowuhao图}
+\renewcommand\tablename{\xiaowuhao表}
+    \end{verbatim}\vspace*{0pt}
+
+    \vspace*{-25pt}以下代码调整了定理与上下正文的间距.\vspace*{-10pt}
+    \begin{verbatim}
+\setlength{\theorempreskipamount}{-1em}%调整定理环境与上文的距离
+\setlength{\theorempostskipamount}{-.35em}%调整定理环境与下文的距离
+    \end{verbatim}\vspace*{-0pt}
+
+\vspace*{-30pt}
+
+
+\section{simplifty.tex}
+    文档simplify.tex放置了大量的宏命令, 用以简化输入. 现列出部分命令的设定. 用户可以根据需要自行增添宏命令.
+    \subsection{定理设定}
+    下面代码生成所需的定理环境, 可以根据需要增添自己想要的定理名称. 所有的定理都是\red{统一自动编号}的, 并不需要手动编号. 如已编号到定理2.1, 紧随其后的定理(或推论、注解、例、引理等等)的编号就为2.2.
+    \begin{spacing}{1.35}\zihao{-4}
+    \begin{verbatim}
+    \begin{document}  %文档开始
+    %%%%%%%%%%%%
+        \def\kg{\mbox{}\qquad}
+        \newtheorem{theo}{\kg定理}[section] %定理编号带有节前缀
+        \newtheorem{coro}[theo]{\kg推论}
+        \newtheorem{prop}[theo]{\kg命题}
+        \newtheorem{propt}[theo]{\kg性质}
+        \newtheorem{lem}[theo]{\kg引理}
+        \newtheorem{defi}[theo]{\kg定义}
+        \newtheorem{exam}[theo]{\kg例}
+        \newtheorem{ques}[theo]{\kg问题}
+        \newtheorem{exa}{\kg例}[section]
+        \newtheorem{conj}[theo]{\kg猜想}
+        \newtheorem{rema}[theo]{\kg注}
+        \numberwithin{equation}{section}
+        % 公式编号带有节前缀
+    %%%%%%%%%%%% 定理环境结束
+    \end{verbatim}
+    \end{spacing}\vspace*{-0pt}
+
+    \vspace*{-20pt}\noindent
+    \subsection{容错单词表}
+\begin{verbatim}
+%%%%%%%%%%%%% 容错单词表
+\def\pmatrxi{\pmatrix}\def\mbxo{\mbox}\def\cdtos{\cdots}
+\def\ldtos{\ldots}    \def\ddtos{\ddots}\def\vdtos{\vdots}
+\def\imte{\item}      \def\itme{\item}  \def\iemt{\item}
+%%%%%%%%%%%% 容错单词表
+\end{verbatim}\vspace{-00pt}
+
+
+\vspace{-20pt}
+    \subsection{字体颜色}
+\begin{verbatim}
+\def\white#1{\textcolor{white}{#1}}
+\def\red#1{\textcolor{red}{#1}}
+\def\blue#1{\textcolor{blue}{#1}}
+\end{verbatim}\vspace{-0pt}
+
+\vspace{-20pt}
+    \subsection{配对括号}
+\begin{verbatim}
+\def\brac#1{\left(#1\right)}%圆括号, 括号大小取决于输入内容的大小
+\def\set#1{\left\{#1\right\}}%花括号, 括号大小取决于输入内容的大小
+\def\norm#1{\left\|#1\right\|}%范数
+\def\pare#1{(#1)}             %圆括号, 正常尺寸
+\def\bpare#1{\big(#1\big)}    %圆括号, 比正常尺寸大一号
+\def\Bpare#1{\Big(#1\Big)}    %圆括号, 比正常尺寸大二号
+\def\lpare#1{\bigg(#1\bigg)}  %圆括号, 比正常尺寸大三号
+\def\brac#1{\{#1\}}           %花括号, 正常尺寸
+\def\bbrac#1{\big\{#1\big\}}  %花括号, 比正常尺寸大一号
+\def\Bbrac#1{\Big\{#1\Big\}}  %花括号, 比正常尺寸大二号
+\def\lbrac#1{\bigg\{#1\bigg\}}%花括号, 比正常尺寸大三号
+\def\ang#1{\langle#1\rangle}  %尖括号, 一般用于内积
+\def\Ang#1{\left\langle#1\right\rangle} %尖括号, 括号大小取决于输入内容的大小
+\end{verbatim}\vspace{-0pt}
+
+\vspace{-20pt}
+\subsection{增量、微分与偏导}
+以下代码定义了各种增量.\vspace*{-10pt}
+\begin{verbatim}
+%%%%%%% 增量
+\providecommand{\Dvar}[1]{\Delta #1}
+\def\Dx{\Dvar x}\def\DX{\Dvar X}\def\Dy{\Dvar y}
+\def\DY{\Dvar Y}\def\Dz{\Dvar z}\def\DZ{\Dvar Z}
+\def\Dt{\Dvar t}\def\DT{\Dvar T}\def\Ds{\Dvar s}
+\def\DS{\Dvar S}\def\Df{\Dvar f}\def\DF{\Dvar F}
+\def\Du{\Dvar u}\def\DU{\Dvar U}\def\Dv{\Dvar v}
+\def\DV{\Dvar V}\def\DD{\Dvar D}\def\DA{\Dvar A}
+% 微分
+\newcommand{\dev}[2][]{{\,\textup{d}}^{#1}#2}
+\def\dx{\dev x}\def\dy{\dev y}\def\dz{\dev z}
+\def\dt{\dev t}\def\du{\dev u}\def\dv{\dev v}
+\def\ds{\dev s}\def\df{\dev f}\def\dg{\dev g}
+\def\dh{\dev h}\def\dw{\dev w}\def\dc{\dev c}
+\def\dS{\dev S}\def\dd{\dev d}\def\dr{\dev r}
+\def\dF{\dev F}\def\dV{\dev V}\def\dU{\dev U}
+%%%%%% 偏导数
+\def\pt{\partial}
+\def\ptx{\pt x}\def\pty{\pt y}\def\ptz{\pt z}
+\def\ptr{\pt r}\def\pts{\pt s}\def\ptt{\pt t}
+\def\ptu{\pt u}\def\ptv{\pt v}\def\ptw{\pt w}
+\def\ptf{\pt f}\def\ptg{\pt g}\def\pth{\pt h}
+\def\ptR{\pt R}\def\ptS{\pt S}\def\ptT{\pt T}
+\def\ptP{\pt P}\def\ptQ{\pt Q}\def\ptW{\pt W}
+\def\ptF{\pt F}\def\ptG{\pt G}\def\ptH{\pt H}
+\def\ptU{\pt U}\def\ptV{\pt V}\def\ptX{\pt X}
+\def\ptY{\pt Y}\def\ptZ{\pt Z}\def\ptH{\pt H}
+\def\ptG{\pt G}\def\ptc{\pt c}\def\ptd{\pt d}
+\end{verbatim}\vspace{-0pt}
+
+
+下面给出若干应用实例.\vspace{-10pt}
+\begin{multicols}{3}
+\begin{itemize}
+\item $\Dx$, 输入$\backslash$Dx;
+\item $\Df$, 输入$\backslash$Df;
+\item $\dx$, 输入$\backslash$dx;
+\item $\dt$, 输入$\backslash$dt;
+\item $\dev[2]y$, 输入$\backslash$dev[2]y;
+\item $\dx^2$, 输入$\backslash$dx\^{}2;
+\item $\ptx$, 输入$\backslash$ptx;
+\item $\ptR$, 输入$\backslash$ptR;
+\item $\pt^2y$, 输入$\backslash$pt\^{}2y;
+\end{itemize}
+\end{multicols}
+
+\subsection{其他命令}
+%%%%%%%%%
+(1) 上下极限\vspace{-10pt}
+\begin{verbatim}
+\def\llim{  %下极限
+    \mathop{\underline{\lim}}\limits
+    }
+\def\ulim{  % 上极限
+    \mathop{\overline{\lim}}\limits
+    }
+\end{verbatim}
+
+(2) 反斜点
+\begin{verbatim}
+\def\idots{{\mathinner{\mkern2mu\raise1pt\hbox{.}\mkern2mu
+        \raise4pt\hbox{.}\mkern2mu\raise7pt\hbox{.}\mkern1mu}} }
+\end{verbatim}\vspace{-0pt}
+
+\vspace{-15pt}
+    数学省略号有: $\backslash$cdots $\backslash$dots $\backslash$ddtos $\backslash$dots $\backslash$ldots $\backslash$idots, 它们的显示效果分别为
+
+    \noindent\frame{\parbox[c]{\textwidth}{$$\cdots\quad \dots\quad \ddots\quad \dots \quad\ldots\quad \idots.$$}}
+
+(3) 黑体变量\vspace*{-10pt}
+\begin{multicols}{2}
+\begin{verbatim}
+\def\bx{{\mathbf x}}
+\def\by{{\mathbf y}}
+\def\bz{{\mathbf z}}
+\def\bb{{\mathbf b}}
+\def\bu{{\mathbf u}}
+\def\bv{{\mathbf v}}
+\def\bs{{\mathbf s}}
+\def\bw{{\mathbf w}}
+\def\be{{\bf e}}
+\def\bu{{\bf u}}
+\def\bw{{\bf w}}
+\end{verbatim}
+\end{multicols}\vspace*{-10pt}
+(4) 简化的插图命令\vspace*{-10pt}
+\begin{verbatim}
+\newcommand{\insertjpg}[2][\textwidth]
+    {\includegraphics[width=#1]{#2}}
+\end{verbatim}\vspace*{-10pt}
+
+\vspace*{-10pt}因此插入图片的命令为
+    \cent{$\backslash$inserjpg[图片宽度]$\{$文件名$\}$}
+\noindent使用pdflatex编译时, 不支持eps格式的图片, 需要转换为pdf或者jpg,png,bmp等格式.
+
+(5) 数学花体和空心字体\vspace{-10pt}
+\begin{multicols}{3}
+\begin{verbatim}
+\def\cA{{\mathcal A}}
+\def\cB{{\mathcal B}}
+\def\cC{{\mathcal C}}
+\def\cD{{\mathcal D}}
+\def\cE{{\mathcal E}}
+\def\cS{{\mathcal S}}
+\def\cT{{\mathcal T}}
+\def\cF{{\mathcal F}}
+\def\cG{{\mathcal G}}
+\def\cH{{\mathcal H}}
+\def\cK{{\mathcal K}}
+\def\cL{{\mathcal L}}
+\def\cM{{\mathcal M}}
+\def\cW{{\mathcal W}}
+\def\cV{{\mathcal V}}
+\def\cU{{\mathcal U}}
+\def\cP{{\mathcal P}}
+\def\cQ{{\mathcal Q}}
+\def\R{{\mathbb R}}
+\def\Z{{\mathbb Z}}
+\def\T{{\mathbb T}}
+\def\C{{\mathbb C}}
+\def\Q{{\mathbb Q}}
+\def\N{{\mathbb N}}
+\end{verbatim}
+\end{multicols}\vspace*{0pt}
+
+\vspace*{-10pt}
+(6) 常用数学符号和字体\vspace*{-10pt}
+\begin{multicols}{2}
+\begin{verbatim}
+\def\dis{\displaystyle}
+\def\dunhao{、}  %顿号
+\def\pl{\parallel}
+\def\kg{\mbox{}\qquad}
+\def\To{\Rightarrow}
+\def\oT{\Leftarrow}
+\def\oTo{\Leftrightarrow}
+\def\sgn{{\textup{\rm sgn}}}
+\def\diag{{\textup{\rm diag}}}
+\def\arccot{{\textup{arccot}}}
+\def\ep{\varepsilon}
+\def\sh{\textrm{\textup{sh}}}
+\def\ch{\textrm{\textup{ch}}}
+\def\dd{{\textup{d\,}}}
+\def\bmu{\boldsymbol{\mu}}
+\def\bA{\boldsymbol{A}}
+\def\bT{\boldsymbol{T}}
+\def\cov{{\textup{cov}}}
+%%%%%%%%% 复数的实部, 虚部
+\def\Re{\textrm{Re}}
+\def\Im{\textrm{Im}}
+\end{verbatim}
+\end{multicols}\vspace{-10pt}
+
+
+\section{论文排版格式要求}
+    \subsection{页面设置}
+    本模板已经将页面设置为: A4纸张, 页边距上3厘米,下2.5厘米,左3厘米,右2.5厘米, 左侧装订. 统一采用\red{A4纸单面打印}, 加封面装订.
+    \subsection{页码编排}
+    本模板目录(含)前不编写页码, 从摘要起按顺序不间断编排, 起页编号为1.
+    \subsection{目录}
+    目录是由主文件的命令$\backslash$tableofcontents所生成, 按规定只显示二级标题.
+    \subsection{段落格式}
+    行文中, 段首是否顶格、缩进, 往往是初学者迷茫的地方. 如果行文逻辑上没有换段, 只是换行, 那么段首不缩进, 此时在段首加命令
+    $\backslash$noindent. 如下面排版中, ``那么"这一句就不用缩进. \\[10pt]
+    \frame{\parbox[b][2.35cm][c]{\textwidth}{\qquad我们已经证明了
+	   $$a^2+b^2=c^2,$$
+    那么就可以证明$c^2=a^2+b^2$."}}
+
+    最忌讳的是, 一段还没有完成就换段. 如下排版是不适合的. ``那么"应该紧随前行\\[10pt]
+    \frame{\parbox[b][2.35cm][c]{\textwidth}{\qquad我们已经证明了
+	   $$a^2+b^2=c^2,$$
+    \qquad那么就可以证明$c^2=a^2+b^2$."}}
+
+    以下排版更是犯了大忌\\[10pt]
+    \frame{\parbox[b][2.1cm][c]{\textwidth}{
+    \qquad根据条件(1),
+
+    \qquad和条件(2),
+
+    \qquad以及定理2.1的结论, 我们便得到了结论.}}
+
+    如果行文中确实是逻辑换段, 那么该段落首行应该缩进, 此时的操作是: \red{空一行}, 即输入两个\red{回车}符号.
+
+    \subsection{字体}
+    行文中, 中文使用宋体, 小四; 西文使用罗马字体, 小四（12磅）, 本模板已经自动设置了.
+
+    在数学环境中, 会出现斜体和正体以及花体、空心字体等. 一般的原则是
+    \begin{itemize}
+      \item \red{正体}: 常数、函数名一律用正体, 如$1$, $2$, $\sin $, $\cot$, $\ln$, $\log$等;
+      \item \red{斜体}: 变量一律使用斜体, 如$x$, $y$, $A$;
+      \item \red{空心字体}: 一些特殊的集合使用空心字体, 如: 自然数$\N$, 整数$\Z$, 有理数$\Q$、实数$\R$, 复数$\mathbb{C}$.
+    \end{itemize}
+
+    圆周率$\pi$和自然对数底数e都是常数, 行文中应该使用正体, 但是由于犯错的人员太多了, 所以大家也认可它们的斜体形式.
+
+    \subsection{编号}
+    全文编号是自动进行的, 包括标题、公式、定理(引理、例等等)、参考文献。采用自动编号模式, 可以省去手工编号的麻烦, 更省去修改文章而导致重新编号的麻烦.
+
+    \subsubsection{标题编号}
+    标题编号, 分为自动编号和手工编号两种. 建议使用自动编号. 一般编号到四级标题. 三级(含)以上标题不出现在目录页.
+    \subsubsection{公式编号}
+    在文中需要引用的公式, 一定要进行标号. 本模板的公式编号是以节为前缀的. 进行公式标号的数学环境主要有: 单行公式, \red{equation}, 多行公式\red{eqnarray}和\red{gather}. 具体操作为
+    \begin{spacing}{1.2}\zihao{-4}
+    \begin{verbatim}
+    若我们证明了
+    \begin{equation}\label{eqabcd}
+      a^2+b^2=c^2,
+    \end{equation}
+    那么我们就知道勾股定理成立.
+    \end{verbatim}
+    \end{spacing}\vspace*{-20pt}\noindent
+    显示效果为\\[10pt]
+    \framebox{\parbox{\textwidth}{\qquad 若我们证明了
+    \begin{equation}\label{eqabcd}
+      a^2+b^2=c^2+d^2,
+    \end{equation}
+    那么我们就知道勾股定理成立.}}\medskip
+
+    上文中$\backslash$label$\{$eqabcd$\}$就是给公式\ref{eqabcd}一个名称, 便于后文引用. 这里的\ref{eqabcd}就是一个引用, 它实现的命令是$\backslash$ref$\{$eqabcd$\}$.
+
+    \subsubsection{定理和图、表编号\label{subsub1}}
+    定理和图、表的自动编号实现方式是一致的, 但是它们的命名方式有所不同.
+    \begin{verbatim}
+    \begin{theo}\label{theo1}
+    定理内容
+    \end{theo}
+    \begin{center}
+    \begin{table}[H]
+    表格内容
+    \caption{\label{tab1} 表格题头.}
+    \end{table}
+    \end{center}
+    \begin{center}
+    \begin{figure}[H]
+    图形内容
+    \caption{\label{fig1} 图形题头.}
+    \end{figure}
+    \end{center}
+    \end{verbatim}
+    \vspace*{-20pt}\noindent
+    显示效果为\\
+    \framebox{
+    \parbox{\textwidth}{\begin{theo}\label{theo1}
+    定理内容
+    \end{theo}}}\\[10pt]
+    \framebox{
+    \parbox[h][1.75cm][s]{\textwidth}{\begin{center}
+    \begin{table}[H]
+    表格内容
+    \caption{\label{tab1} 表格题头.}
+    \end{table}
+    \end{center}}}\\[10pt]
+    \framebox{\parbox[h][1.75cm][s]{\textwidth}{
+    \begin{center}
+    \begin{figure}[H]
+    图形内容
+    \caption{\label{fig1} 图形题头.}
+    \end{figure}
+    \end{center}}}\bigskip
+
+\subsection{标点符号}
+    从摘要到参考文献, 文中的符号, 都应该用西文的半角符号. 建议双引号使用中文的全角符号. 如果在书写的时候, 使用的是中文标点, 可以替换. 注意替换范围（不包括声明页和后记页）. 西文符号后要跟一个空格. 行文中, 应该加上标点, 包括数学公式. 如：`` .",``;",``,"等等.
+
+    数学中的省略号是三个点: $\ldots$和$\cdots$. 使用它们的规则是, 三个点的重心位置与前后的符号的重心一致. 如以下省略号使用是规范的,
+    \cent[4]{
+        \$\$1+2+$\backslash$cdots+n. $\backslash$quad i=1,2,$\backslash$ldots,n.\$\$}
+    \noindent显示效果为\medskip
+
+    \noindent
+    \frame{\parbox[c]{\textwidth}{$$1+2+\cdots+n.\quad i=1,2,\ldots,n.$$}}
+
+    中文的省略号是6个点$\cdots\cdots$, 可以使用中文输入法输入.
+
+
+\subsection{对齐方式}
+    为了美观, 建议单行公式居中显示, 此时可使用环境\red{equation*},\red{equation},\red{displaymath}和它们的简写形式\red{\$\$ 公式内容\$\$}, \red{$\backslash$[公式内容$\backslash$]}. 如以下四个命令是等效的. \\[-20pt]
+    \begin{spacing}{1.35}\zihao{-4}
+    \begin{verbatim}
+    (1) 使用equation环境
+    \begin{equation*}
+      a^2+b^2=c^2.
+    \end{equation*}
+    (2) 使用displaymath环境
+    \begin{displaymath}
+      a^2+b^2=c^2.
+    \end{displaymath}
+    (3) 使用双$符号
+    $$a^2+b^2=c^2.$$
+    (4) 使用\[\]
+    \[a^2+b^2=c^2.\]
+    \end{verbatim}
+    \end{spacing}\vspace*{-18pt}\noindent
+    它们均显示
+    \begin{displaymath}
+      a^2+b^2=c^2.
+    \end{displaymath}
+
+\subsection{引用}
+    交叉引用的简洁性是Tex受欢迎的一个重要原因. 虽然Office也可以建立交叉引用, 但是它实现起来的操作较为繁琐, 很多人望之却步, 敬而远之. Tex的交叉引用就较为简单, 只需两步即可: \red{命名}和\red{引用}. 首先在需要引用的地方设置一个标识\red{label}, 然后在需要引用的地方输入它的名称.
+
+    虽然引用初次使用很麻烦, 但是文章修改起来却是相当方便的. \red{不用不知道, 使用真巧妙}. 具体操作如下. 定理、公式、图表和章节的引用方式类似, 参考文献的引用方式特殊性些.
+    \subsubsection{定义标签}
+    在需要引用的地方, 输入$\backslash$label$\{$标签名称$\}$. 如下就将定理\ref{theo2}命名为\red{theo2}.\\[-20pt]
+    \begin{spacing}{1.35}\zihao{-4}
+    \begin{verbatim}
+    \begin{theo}\label{theo2}
+        若实数$a<3$, 那么$a<4$.
+    \end{theo}
+    \end{verbatim}
+    \end{spacing}\noindent
+    \frame{\parbox[b][1cm][c]{\textwidth}{
+    \begin{theo}\label{theo2}
+        若实数$a<3$, 那么$a<4$.
+    \end{theo}}}
+
+    公式的命名类似, 需要注意的是, 此时调用的数学环境是不带*的, 如 \red{equation}, \red{eqnarray}, \red{gather}等能自动编号的数学环境. 下面就给公式\ref{eqabc}命名为eqabc.\\[-20pt]
+
+    \begin{verbatim}
+    \begin{equation}\label{eqabc}
+        \Big(\dfrac{a+b+c}3\Big)^3\ge abc.
+    \end{equation}
+    \end{verbatim}
+
+    \noindent
+\frame{\parbox[b][1.1cm][c]{\textwidth}{
+    \begin{equation}\label{eqabc}
+        \Big(\dfrac{a+b+c}3\Big)^3\ge abc.
+    \end{equation}}}
+
+    图表的命名需要调用\red{caption}命令, 详见上文\ref{subsub1}节.
+
+    以下代码, 将该条\red{参考文献}命名为zhs.
+    \begin{verbatim}
+    \bibitem{zhs} 张三, 李四. 论学习[J]. 生活实践, (2020)\textbf{5}(33): 1-10.
+    \end{verbatim}
+
+    \subsubsection{建立引用}
+    在需要引用定理、图表的地方, 直接输入\red{$\backslash$ref$\{$标签名称$\}$}; 对于公式引用, 输入\red{$\backslash$eqref$\{$标签名称$\}$}; 对于参考文献, 输入\red{$\backslash$cite$\{$参考文献标签名$\}$}. 如下代码就是对公式、定理和参考文献的引用.     \begin{verbatim}
+    根据公式\eqref{eqabc}, 以及文献\cite{zhs}和定理\ref{theo2}, 我们便知道命题结论成立.
+    \end{verbatim}
+
+    \noindent
+\frame{\parbox[b][1cm][c]{\textwidth}{\qquad
+    根据公式\eqref{eqabc}, 以及文献\cite{hui}和定理\ref{theo2}, 我们便知道命题结论成立.}}
+
+    \subsection{参考文献}
+    理工科专业毕业论文（设计）不采用脚注形式进行注释, 需要进行注释的, 置于参考文献中, 但正文中应标注与参考文献对应的编号.
+
+    参考文献要求有近年来的\red{外文文献}, 其中理科学生必须达到\textbf{\red{两篇}}, 否则不能参加校级和省级优秀学士学位论文的评选.
+
+    参考文献应该标识出类型, 主要有以下几种.\vspace*{-10pt}
+    \begin{multicols}{2}
+    \begin{itemize}
+      \item [J]: 期刊论文;
+      \item [M]: 书籍;
+      \item [C]: 论文析出集;
+      \item [D]: 学位论文.
+    \end{itemize}
+    \end{multicols}
+    以下是参考文献的源代码.\vspace*{-10pt}
+    \begin{spacing}{1.3}\zihao{-4}
+    \begin{verbatim}
+    \begin{thebibliography}{99}
+    \bibitem{hui} 惠晓实, 王凯航, 陆舟等.一种基于Web技术的网络数据库系统设计[J]. 计算机应用研究, 2000, \textbf{17}(1): 84-86.
+    \bibitem{qiang}强文久, 元章, 雯荣. 数学分析的基本概念与方法[M].
+北京: 高等教育出版社, 1989: 153-167.
+    \bibitem{zan}詹东风. 中国漆树酶分离制备及反映功能研究[D]. 武汉大学博士学位论文, 1998: 81-89.
+    \bibitem{Wayn} Wayn Carmichale. The toxins of cyanobacter-
+ia[J]. Scientific American, 1994, \textbf{270}(1): 78-86.
+    \bibitem{Buch}Buchberger B, Collins G E, Loos R. Computer
+Algebra Symbolic and Algebraic Computation[M]. New York: Spri-
+nger Verlag, 1998: 58-76.
+    \bibitem{Yu}Yu S Z. Drinking water and primary liver can-
+cer[C]. In: Tang Z Y, Wu M C and Xia S S, eds, Primary Liver
+Cancer. Beijing: Beijing Springer, 1992: 30-37.
+    \bibitem{fang}方开泰. 实用多元统计分析[M]. 上海: 华东师范大学出版社, 1986: 15-17.
+    \bibitem{ren} 任若恩, 王惠文. 多元统计数据分析[M]. 北京: 国防工业出版社, 1999.
+    \bibitem{zhong} 中华人民共和国国家标准-工业企业产品取水定额编制通鉴[J]. 2002.
+    \bibitem{yan}严士健, 王隽骧, 刘秀芳. 概率论基础[M]. 北京: 科学出版社, 1982.
+    \end{thebibliography}
+    \end{verbatim}
+    \end{spacing}\vspace*{0pt}
+
+    \vspace*{-25pt}
+    \noindent显示效果为
+
+    \begin{thebibliography}{99}\setlength{\itemsep}{-.75ex}
+    \bibitem{hui} 惠晓实, 王凯航, 陆舟等.一种基于Web技术的网络数据库系统设计[J]. 计算机应用研究, 2000, \textbf{17}(1): 84-86.
+    \bibitem{qiang}强文久, 元章, 雯荣. 数学分析的基本概念与方法[M]. 北京: 高等教育出版社, 1989: 153-167.
+    \bibitem{zan}詹东风. 中国漆树酶分离制备及反映功能研究[D]. 武汉大学博士学位论文, 1998: 81-89.
+    \bibitem{Wayn} Wayn Carmichale. The toxins of cyanobacteria[J]. Scientific American, 1994, \textbf{270}(1): 78-86.
+    \bibitem{Buch}Buchberger B, Collins G E, Loos R. Computer Algebra Symbolic and Algebraic Computation[M]. New York: Springer Verlag, 1998: 58-76.
+    \bibitem{Yu}Yu S Z. Drinking water and primary liver cancer[C]. In: Tang Z Y, Wu M C and Xia S S, eds, Primary Liver Cancer. Beijing: Beijing Springer, 1992: 30-37.
+    \bibitem{fang}方开泰. 实用多元统计分析[M]. 上海: 华东师范大学出版社, 1986: 15-17.
+    \bibitem{ren} 任若恩, 王惠文. 多元统计数据分析[M]. 北京: 国防工业出版社, 1999.
+    \bibitem{zhong} 中华人民共和国国家标准-工业企业产品取水定额编制通鉴[J]. 2002.
+    \bibitem{yan}严士健, 王隽骧, 刘秀芳. 概率论基础[M]. 北京: 科学出版社, 1982.
+    \end{thebibliography}
+
+    \subsection{友情提示}
+    本科论文作为毕业论文, 是一篇科技论文, 其表达应该清晰明了. 不需要太多口语化的语言参杂其中. 对于不是自己做出的结论, 一定要标明所\red{引用}的参考文献, 否则视为\red{抄袭}.
+
+    欲对Tex{}有进一步了解, 请参阅书籍《2eManual》和《ctex-faq》, 若想对latex绘图有所了解, 请参阅《latex简单画图指南minimaltikz》。以上书籍均能``百度"到.
+\end{document}

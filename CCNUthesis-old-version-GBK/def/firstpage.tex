@@ -1,0 +1,79 @@
+%%%%%%%%%% 以下内容为自动生成, 不需要修改.
+\CJKtilde
+\pagestyle{empty}\def\lnlen{8}
+\vspace*{5mm} {\zihao{4}\fangsong
+\MakeBox3{\bf分类号}\underline{\MakeBox[c]\lnlen{}}\MakeBox{3}{}
+\MakeBox{6}{\bf论文选题类型}\underline{\MakeBox{6}{}}
+\bigskip
+
+\MakeBox{3}{\bf U\,\,D\,\,C}\underline{\MakeBox\lnlen{ }}\MakeBox{3}{}
+\MakeBox2{\bf编号}\underline{\MakeBox{10}{}}
+\vspace*{15mm}
+
+\begin{center}
+%\zihao{2}
+\songti
+\insertjpg[.43\textwidth]{def/school.jpg}
+
+\vspace*{18mm}
+{\heiti \zihao{-1} \quad本科毕业论文（设计）}
+\end{center}}
+
+\vspace*{15mm}\zihao{-3}\songti
+\newlength\titlelength
+\newlength\testlength
+\newlength\majorlen
+
+%%%%%%%%%% majorlen记录个人信息中最长一行的长度
+\settowidth\majorlen{\major}
+\settowidth\testlength{\school}
+\ifthenelse{\testlength>\majorlen}
+    {\setlength\majorlen{\testlength}}{}
+\settowidth\testlength{\teacher}
+\ifthenelse{\testlength>\majorlen}
+    {\setlength\majorlen{\testlength}}{}
+
+%%%%%%%%% 论文题目
+\settowidth\titlelength{\,\title\,}
+\setlength\testlength{\mytitlenum\ccwd+.5\ccwd}
+%\def\unlen{2.2*\mytitlenum/16} %16个汉字, 2.2
+
+\begin{center}
+\begin{tikzpicture}[scale=2]
+    \pgfmathsetmacro{\h}{.45}
+    \pgfmathsetmacro{\v}{1}
+    \ifthenelse{\titlelength>\testlength}
+        {%
+        \draw(\h+1.4,\v/5)node[below]
+            {\parbox[t][2cm][s]{.5\ccwd+\mytitlenum\ccwd}{%
+            \begin{spacing}{1.95}
+            \centering \zihao{-2}\textbf{\title}
+            \end{spacing}
+            }};
+            \foreach \i in {0,1}
+                \foreach \j in {1,-1}
+                    \draw[thick](\h*1.5+1.2,-\v/5-\i*\v*.75) --++({\j*\testlength/3.8},0);
+
+            }
+        {\draw(\h+1.4,\v/5-\v*.45)node[below]{\textbf{\song\title}};
+        \foreach \j in {1,-1}
+        \draw[thick](\h*1.5+1.2,-\v/5-\v*.42) --++({\j*\testlength/3.8},0);
+        }
+    \foreach \i/\text/\tex in {%
+            1/学院/\school,
+            2/专业/\major,
+            3/年级/\grade,
+            4/学生姓名/\authorname,
+            5/学号/\xuehao,
+            6/指导教师/\teacher
+            }
+        {%
+        \draw(-.3,{-1.8-\i*\v/2})node[right]{%
+            \MakeBox4{\zihao{-3}\textbf{\text}}};
+        \draw[thick](1.2,{-1.95-\i*\v/2})-- node[yshift=3mm]{\zihao{-3}\textbf{\tex}}++(\majorlen/1.92,0);}
+    \draw(1.7,-6*\v)node{%
+        \heiti\makebox[4\ccwd][c]{%
+            \CJKdigits{\number\year}}\,\,年\,\,四\,\,月};
+    \end{tikzpicture}
+\end{center}
+%%%%%%% 封面结束

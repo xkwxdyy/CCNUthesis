@@ -1,0 +1,71 @@
+\section{\LaTeX{}中制作课件所需文档及常见的命令和环境}
+在\LaTeX{}系统中, 可生成多种类型的文档. 常见的有article、report、book、beamer~和slides. article文档适用于排版本硕论文、科学期刊、演示文稿、短报告等；report 文档适用于排版多个章节的长报告、博士论文、短篇书籍等；book文档适用于排版书籍；而beamer文档与slides 文档都是用于幻灯片的排版, 进行课件制作. 在\LaTeX{}程序处理中, 为了使得\LaTeX{} 按照使用者的想法去进行某种操作, 就必须要有相应的一些命令和环境. 在课件制作过程中\LaTeX{}中输入的命令与环境的方式与其他文档的都相同, 这些命令及环境在\LaTeX{}的输入文本中是可见, 但在经过系统的编译之后, 其输出的结果中就不存在了. 为此, 在制作课件的过程中, 认识命令及环境的作用是尤其重要的.
+
+\subsection{制作课件的文档}
+
+在课件制作的过程中, 所选择的文档主要为beamer, 当然也可选择slides 或者其他类型, 这只需根据使用者的个人喜好即可. 但两种类型的课件制作文档在使用时所需要的宏包种类会有差异, 需要进行相应的调整与改动.
+\subsection{制作课件的常见命令}
+\LaTeX{}中大多数的命令语法是由$\backslash$(反斜杠)后加\LaTeX{}语言程序中所能编译的要求, 再接一个[]与一个或者多个\{\},[] 中输入的是要求的可省限制条件, \{\}中输入的是要求中的不可省限制条件. 以下则为开始制作课件时所需的一些常见命令：
+\begin{itemize}
+\item 定义文档类型：$\backslash$documentclass[CJK,notheorems,compress]$\{$beamer$\}$
+    \item 使用宏包命令：$\backslash$usepackage$\{$文档编辑所需宏包$\}$, 例如支持中日韩文输出的宏包与设置行间距的宏包分别为：\\
+ \centerline{
+ $\backslash$usepackage$\{$CJK$\}${}、
+ $\backslash$usepackage$\{$setspace$\}$
+ }
+    \item 使用主题命令：
+$\backslash$usetheme$\{$课件主题$\}$, 例如课件的Warsaw 主题与CambridgeUS分别为：\\
+\centerline{
+$\backslash$usetheme$\{$Warsaw$\}${}、
+$\backslash$usetheme$\{$CambridgeUS$\}$}
+    \item 设置课件版式命令：$\backslash$setbeamertemplate$\{\backslash$footline$\}$[frame number]
+    \item 设置幻灯片之间的覆盖方式：$\backslash$setbeamercovered$\{$覆盖方式$\}$, 例如幻灯片之间透明的覆盖方式如下：\\
+    \centerline{
+        $\backslash$setbeamercovered$\{$transparent$\}$}
+    \item 设置首行缩进2字符：$\backslash$setlength$\{\backslash$parindent$\}\{$2em$\}$
+    \item 文本字体大小、加粗和颜色设置的命令分别为：\\
+字体大小：$\{\backslash$fontsize$\{$字体尺寸$\}\{$行距$\}\{$需要设置的文本$\}\}$. 此外, 还可以用命令$\backslash$tiny($\backslash$small 或$\backslash$large或$\backslash$LARGE或$\backslash$huge或$\backslash$Huge)$\{$文本$\}$ 来调整；\\
+字体加粗：$\{\backslash$bf$\{$需要设置的文本$\}\}$；\\
+字体颜色：$\backslash$textcolor$\{$颜色+!+数值(不宜超过200)$\} \{$需要设置的文本$\}$；\\
+例如要将l like Latex! 设置为红色加粗40点大小的文本则可编写为：\\
+$\{\backslash$fontsize$\{$40pt$\}\{$24pt$\}\{\backslash$ bf$\{\backslash$textcolor$\{$red!80$\}\{$l like Latex!$\}\}\}\}$\\
+\noindent或者可写为：$\{\backslash$bf$\{\backslash$textcolor$\{$red!80$\}\{\backslash$fontsize$\{$40pt$\}\{$24pt$\}\{$l like Latex!$\}\}\}\}$.
+    \end{itemize}
+
+
+若有多个不可省限制条件时, 不可省限制条件中的每一个因素都必须位于一个大括号内, 而且顺序要同命令语法中的顺序相同, 不能随意填入, 也不能交换填入. 例如要输出一个指定宽度和高度的黑色矩形, 输入的语言为：$\backslash$rule[提升高度]$\{$宽度$\}\{$高度$\}$, 以此一个宽10cm, 高5cm的矩形可以输入的语法为：$\backslash$rule$\{$10cm$\}\{$5cm$\}$, 此处没有给出可省限制条件.
+
+\subsection{制作课件的常见环境}
+在\LaTeX{}中, 一个环境是用命令$\backslash$begin$\{$环境$\}$来作为文本输入的开始, 用命令$\backslash$end$\{$环境$\}$来作为一段文本输入的结束. 在制作课件时, 如果我们选用课件制作文档, 即是$
+\backslash$documentclass$\{$beamer$\}$想要在一张幻灯片上输入相应的文本, 则至少需要用到两个环境, 进行如下排序编写：
+
+    $\backslash$begin$\{$document$\}$\\
+    \indent$\backslash$begin$\{$frame$\}$\\
+    \indent文本内容\\
+    \indent$\backslash$end$\{$frame$\}$\\
+    \indent$\backslash$end$\{$document$\}$ \\
+即在命令$\backslash$begin$\{$document$\}$, $\backslash$begin$\{$frame$\}$之后开始文本输入, 在文本输入结束时, 加上$\backslash$end$\{$document$\}$, $\backslash$end$\{$frame$\}$即可. 从上述可知, 在Latex语言输入时, 环境是可以嵌套的, 并且可以进行多层嵌套, 但要保持好调用时的次序, 不能交错. 其嵌套模式为：\\
+    \indent $\backslash$begin$\{$环境1$\}$\\
+    \indent $\backslash$begin$\{$环境2$\}$\\
+    \indent 文本内容\\
+    \indent $\backslash$end$\{$环境2$\}$\\
+    \indent $\backslash$end$\{$环境1$\}$\\
+不仅如此, \LaTeX{}中很多复杂的排版都可以通过环境得到解决, 在制作课件时也是如此.
+
+此外, 在\LaTeX{}中还有许多常见的环境, 在制作课件的过程中也经常使用到. 例如用于列表的三个环境：itemize、enumerate 和description；分别用于左对齐、右对齐和居中的三个环境：flushleft、flushright 和center；用于表格生成的环境：tabular；用于绘图的环境tikzpicture；由于图片插入的环境：figure；还有用于数学公式生成与方程输出的环境：displaymath 和equation 等等. 而环境的基本语言是：$\backslash$begin$\{$所需环境$\}+$ 文本$+\backslash$end$\{$ 所需环境$\}$, 这些环境的具体运用将在下文中\LaTeX{}中制作课件的常用设计排版处给予说明.
+\begin{table}
+\centering
+\renewcommand\arraystretch{1.5}  %%%%%% 设置表格行高
+\begin{tabular}{|c|c|}
+  \hline
+  环境类型 & 环境名称 \\ \hline
+  列表环境 & itemize、enumerate 、description \\ \hline
+  对齐方式环境 & flushleft、flushright 、center \\ \hline
+  表格生成环境 & tabular \\\hline
+  绘图环境 & tikzpicture \\\hline
+  图片插入环境& figure \\\hline
+  \makecell[c]{数学公式生成\\方程输出环境} & displaymath、equation \\\hline
+  分栏环境& minipage、columns \\\hline
+\end{tabular}
+\caption{环境}
+\end{table}

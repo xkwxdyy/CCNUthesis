@@ -1,0 +1,344 @@
+%%%%%%%%%%%% 由于宏包冲突, 将定理环境放置此处
+%%%%%%%%% 定理环境
+\def\kg{\mbox{}\qquad}
+\newtheorem{theo}{\kg定理}[section] %定理编号带有节前缀
+\newtheorem{coro}[theo]{\kg推论}
+\newtheorem{prop}[theo]{\kg命题}
+\newtheorem{propt}[theo]{\kg性质}
+\newtheorem{lem}[theo]{\kg引理}
+\newtheorem{defi}[theo]{\kg定义}
+\newtheorem{exam}[theo]{\kg例}
+\newtheorem{ques}[theo]{\kg问题}
+\newtheorem{exa}{\kg例}[section]
+\newtheorem{conj}[theo]{\kg猜想}
+\newtheorem{rema}[theo]{\kg注}
+\numberwithin{equation}{section}
+%%%%%%%%%%%% 定理环境结束
+
+
+%%%%%%%%%%%%% 容错单词表
+\def\pmatrxi{\pmatrix}  \def\mbxo{\mbox}    \def\cdtos{\cdots}
+\def\ldtos{\ldots}      \def\ddtos{\ddots}  \def\vdtos{\vdots}
+\def\imte{\item}        \def\itme{\item}    \def\iemt{\item}
+%%%%%%%%%%%% 容错单词表
+\makeatletter
+\def\breaklong#1{\@tfor\onechar:=#1\do{{\onechar\allowbreak}}}
+    %英文自动断行
+%%%%%%%%%%%%%%% 显示罗马数字
+    \newcommand{\rmnum}[1]{\romannumeral #1}
+    \newcommand{\Rmnum}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+
+%%%%%%颜色
+\def\white#1{\textcolor{white}{#1}}
+\def\red#1{\textcolor{red}{#1}}
+\def\blue#1{\textcolor{blue}{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%% 反斜 三点 idot
+% \cdot \dots \ddots \dots \ldots
+\def\idots{{\mathinner{\mkern2mu\raise1pt\hbox{.}\mkern2mu
+        \raise4pt\hbox{.}\mkern2mu\raise7pt\hbox{.}\mkern1mu}} }
+%%%%%%%%%%%%%%%  idot
+%%% 配对括号
+\def\brac#1{\left(#1\right)}
+\def\set#1{\left\{#1\right\}}
+\def\norm#1{\left\|#1\right\|}
+\def\pare#1{(#1)}
+\def\bpare#1{\big(#1\big)}
+\def\Bpare#1{\Big(#1\Big)}
+\def\lpare#1{\bigg(#1\bigg)}
+\def\brac#1{\{#1\}}
+\def\bbrac#1{\big\{#1\big\}}
+\def\Bbrac#1{\Big\{#1\Big\}}
+\def\lbrac#1{\bigg\{#1\bigg\}}
+\def\ang#1{\langle#1\rangle}
+\def\Ang#1{\left\langle#1\right\rangle}
+
+%%%%%%%%% 下极限
+\def\llim{
+    \mathop{\underline{\lim}}\limits
+    }
+%%%%%%%% 上极限
+\def\ulim{
+    \mathop{\overline{\lim}}\limits
+    }
+
+%%%%%%% 增量
+\providecommand{\Dvar}[1]{\Delta #1}
+\def\Dx{\Dvar x}\def\DX{\Dvar X}
+\def\Dy{\Dvar y}\def\DY{\Dvar Y}
+\def\Dz{\Dvar z}\def\DZ{\Dvar Z}
+\def\Dt{\Dvar t}\def\DT{\Dvar T}
+\def\Ds{\Dvar s}\def\DS{\Dvar S}
+\def\Df{\Dvar f}\def\DF{\Dvar F}
+\def\Du{\Dvar u}\def\DU{\Dvar U}
+\def\Dv{\Dvar v}\def\DV{\Dvar V}
+\def\DD{\Dvar D}\def\DA{\Dvar A}
+% 微分
+\newcommand{\dev}[2][]{{\,\textup{d}}^{#1}#2}
+\def\dx{\dev x}\def\dy{\dev y}\def\dz{\dev z}
+\def\dt{\dev t}\def\du{\dev u}\def\dv{\dev v}
+\def\ds{\dev s}\def\df{\dev f}\def\dg{\dev g}
+\def\dh{\dev h}\def\dw{\dev w}
+\def\dc{\dev c}\def\dS{\dev S}\def\dd{\dev d}\def\dr{\dev r}
+\def\dF{\dev F}\def\dV{\dev V}\def\dU{\dev U}
+%%%%%% 偏导数
+\def\pt{\partial}
+\def\ptx{\pt x}\def\pty{\pt y}\def\ptz{\pt z}
+\def\ptr{\pt r}\def\pts{\pt s}\def\ptt{\pt t}
+\def\ptu{\pt u}\def\ptv{\pt v}\def\ptw{\pt w}
+\def\ptf{\pt f}\def\ptg{\pt g}\def\pth{\pt h}
+\def\ptR{\pt R}\def\ptS{\pt S}\def\ptT{\pt T}
+\def\ptP{\pt P}\def\ptQ{\pt Q}\def\ptW{\pt W}
+\def\ptF{\pt F}\def\ptG{\pt G}\def\ptH{\pt H}
+\def\ptU{\pt U}\def\ptV{\pt V}
+\def\ptX{\pt X}\def\ptY{\pt Y}\def\ptZ{\pt Z}
+\def\ptH{\pt H}\def\ptG{\pt G}
+\def\ptc{\pt c}\def\ptd{\pt d}
+
+% 黑体变量
+ \def\bx{{\mathbf x}}
+ \def\by{{\mathbf y}}
+ \def\bz{{\mathbf z}}
+ \def\bb{{\mathbf b}}
+ \def\bu{{\mathbf u}}
+ \def\bv{{\mathbf v}}
+ \def\bs{{\mathbf s}}
+ \def\bw{{\mathbf w}}
+\def\be{{\bf e}}
+\def\bu{{\bf u}}
+\def\bw{{\bf w}}
+
+
+
+%%%  结束调试
+\def\ed{\end{CJK*}\end{document}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%% 插图命令简化
+\newcommand{\insertjpg}[2][\textwidth]
+    {\includegraphics[width=#1]{#2}}
+
+\newcommand{\eproof}{\hfill$\square$}
+\newcommand{\eqneproof}[1][\eproof]{\eqno{\mbox{#1}}}
+\def\eqeproof{\eqneproof}
+\def\dis{\displaystyle}
+\def\dunhao{、}  %顿号
+\def\pl{\parallel}
+\def\To{\Rightarrow}
+\def\oT{\Leftarrow}
+\def\oTo{\Leftrightarrow}
+\def\sgn{{\textup{\textrm{sgn}}}}
+\def\diag{{\textup{\textrm{diag}}}}
+\def\arccot{{\textup{arccot}}}
+\def\ep{\varepsilon}
+\def\sh{\textrm{\textup{sh}}}
+\def\ch{\textrm{\textup{ch}}}
+\def\dd{{\textup{d\,}}}
+\def\bmu{\boldsymbol{\mu}}
+\def\bA{\boldsymbol{A}}
+\def\bT{\boldsymbol{T}}
+\def\cov{{\textup{cov}}}
+%%%%%%%%% 复数的实部, 虚部
+\def\Re{\textrm{Re}}
+\def\Im{\textrm{Im}}
+
+%%%%%% 数学花体和空心字体
+\def\cA{{\mathcal A}}
+\def\cB{{\mathcal B}}
+\def\cC{{\mathcal C}}
+\def\cD{{\mathcal D}}
+\def\cE{{\mathcal E}}
+\def\cS{{\mathcal S}}
+\def\cT{{\mathcal T}}
+\def\cF{{\mathcal F}}
+\def\cG{{\mathcal G}}
+\def\cH{{\mathcal H}}
+\def\cK{{\mathcal K}}
+\def\cL{{\mathcal L}}
+\def\cM{{\mathcal M}}
+\def\cW{{\mathcal W}}
+\def\cV{{\mathcal V}}
+\def\cU{{\mathcal U}}
+\def\cP{{\mathcal P}}
+\def\cQ{{\mathcal Q}}
+\def\R{{\mathbb R}}
+\def\Z{{\mathbb Z}}
+\def\T{{\mathbb T}}
+\def\C{{\mathbb C}}
+\def\Q{{\mathbb Q}}
+\def\N{{\mathbb N}}
+
+%%%%%% 证明环境
+\newenvironment{proof}[1][证明]
+    {\par\par\indent\textbf{#1}:~}
+    {\hfill$\Box$}
+
+%%%%%% 居中
+\def\centend#1{\cent{\mbox{}\hfill#1 \eproof}}
+%%%%  居中
+\newcommand{\cent}[2][1]
+    {\def\centskipstart{\medskip}\def\centskipend{\medskip}
+    \ifnum#1=2\def\centskipend{}
+        \else\ifnum#1=3\def\centskipstart{}
+            \else\ifnum#1=4
+                \def\centskipend{}\def\centskipstart{}
+                \fi
+            \fi
+        \fi
+    \centskipstart\par\centerline{#2}\centskipend\par}
+
+\newcommand\setcolsep[1][2]   %微调列宽
+    {\setlength\arraycolsep{#1pt}}
+
+%%%%%%%%% 无框单元格
+\newcommand{\MakeBox}[3][s]
+    {\makebox[#2\ccwd][#1]{\let\CJKglue\hfill #3}}
+\newcommand{\MB}[3][c]
+    {\makebox[#2\ccwd][#1]{#3}}
+
+%%%%%%%% 列表环境
+\renewcommand{\labelitemi}{$\bullet$}
+\def\myback{\vspace*{-25pt}}
+\def\myhalfback{\vspace*{-12.5pt}}
+
+
+%%%%%%% 问卷调查选项格式
+   \newlength\chfour\newlength\chtwo\newlength\chthree
+    \setlength\chfour{9\ccwd}
+    \setlength\chthree{12\ccwd}
+    \setlength\chtwo{18\ccwd}
+
+    %\show\chone\show\chtwo\show\chthree
+    %\ifthenelse{\chthree<\chtwo}{Yes}{No}
+
+\def\mychA{A}
+\def\mychB{B}
+\def\mychC{C}
+\def\mychD{D}
+    \def\myyback{-12pt}
+    \newlength\chA\newlength\chB\newlength\chC\newlength\chD \newlength\chtest
+    \newlength\chAB\newlength\chCD\newlength\chAD\newlength\chBC
+    \newcommand{\choneintwoft}[2]
+        {\par\noindent
+        \begin{tabular}{*{2}{@{}p{.5\textwidth}}}
+        \noindent \mychA.#1&\mychB.#2
+        \end{tabular}}
+    \newcommand{\choneintwosd}[2]
+        {\par\noindent
+        \begin{tabular}{@{}p{\textwidth}}
+        \noindent \mychA.#1\\[\myyback]
+        \noindent \mychB.#2
+        \end{tabular}}
+
+    \newcommand{\choneinthreeft}[3]
+        {\par\noindent
+        \begin{tabular}{*{3}{@{}p{.33\textwidth}}}
+           \noindent \mychA.#1&\mychB.#2&\mychC.#3
+        \end{tabular}
+        }
+    \newcommand{\choneinthreesd}[3]{\par
+        \noindent\begin{tabular}{*{2}{@{}p{.49\textwidth}}}
+            \noindent \mychA.#1&\mychB.#2\\[\myyback]
+            \multicolumn{2}{@{}p{\textwidth}}{\noindent \mychC.#3}
+        \end{tabular}}
+    \newcommand{\choneinthreetd}[3]
+        {\par\noindent\begin{tabular}{*{2}{@{}p{.5\textwidth}}}
+            \multicolumn{2}{@{}p{\textwidth}}{\noindent \mychA.#1}\\[\myyback]
+            \noindent \mychB.#2&\mychC.#3
+        \end{tabular}}
+    \newcommand{\choneinthreefh}[3]
+        {\par\noindent\begin{tabular}{@{}p{\textwidth}}
+            \noindent \mychA.#1\\[\myyback] \noindent \mychB.#2\\[\myyback] \noindent \mychC.#3
+        \end{tabular}}
+    \newcommand{\choneinfourft}[4]
+        {\par\noindent
+        \begin{tabular}{*{4}{@{}p{.25\textwidth}}}
+                \mychA.#1&\mychB.#2&\mychC.#3&\mychD.#4
+            \end{tabular}}
+    \newcommand{\choneinfoursd}[4]{\par\noindent
+        \begin{tabular}{*{2}{@{}p{.5\textwidth}}}
+            \mychA.#1&\mychB.#2\\[\myyback]\mychC.#3&\mychD.#4
+        \end{tabular}}
+    \newcommand{\choneinfourtd}[4]{\par\noindent
+        \begin{tabular}{*{2}{@{}p{.5\textwidth}}}
+            \mychA.#1&\mychB.#2\\[\myyback]
+            \multicolumn{2}{@{}p{\textwidth}}{\mychC.#3}\\[\myyback]
+            \multicolumn{2}{@{}p{\textwidth}}{\mychD.#4}
+        \end{tabular}}
+    \newcommand{\choneinfourfh}[4]{\par\noindent
+        \begin{tabular}{*{2}{@{}p{.5\textwidth}}}
+            \multicolumn{2}{@{}p{\textwidth}}{\mychA.#1}\\[\myyback]
+            \multicolumn{2}{@{}p{\textwidth}}{\mychB.#2}\\[\myyback]
+            \mychC.#3&\mychD.#4
+        \end{tabular}}
+    \newcommand{\choneinfourff}[4]{\par\noindent
+        \begin{tabular}{*{2}{@{}p{.5\textwidth}}}
+            \multicolumn{2}{@{}p{\textwidth}}{\mychA.#1}\\[\myyback]
+            \mychB.#2&\mychC.#3\\[\myyback]
+            \multicolumn{2}{@{}p{\textwidth}}{\mychD.#4}
+        \end{tabular}}
+
+
+    \newcommand{\choneinfoursx}[4]{\par\noindent
+        \begin{tabular}{@{}p{\textwidth}}
+        \mychA.#1\\[\myyback]\mychB.#2\\[\myyback]\mychC.#3\\[\myyback]\mychD.#4
+        \end{tabular}}
+
+    \newcommand{\choice}[4][]
+        {
+        \settowidth{\chD}{\mychD.#1}
+        \settowidth{\chA}{\mychA.#2}
+        \settowidth{\chB}{\mychB.#3}
+        \settowidth{\chC}{\mychC.#4}
+        \settowidth{\chtest}{D.}
+        \ifthenelse{\chA>\chB}{\chAB=\chA}{\chAB=\chB}
+        \ifthenelse{\chC>\chD}{\chCD=\chC}{\chCD=\chD}
+        \ifthenelse{\chB>\chC}{\chBC=\chB}{\chBC=\chC}
+        \ifthenelse{\chAB>\chCD}{\chAD=\chAB}{\chAD=\chCD}
+\ifthenelse{\chC<\chtest}
+    {\ifthenelse{\chAB<\chtwo}{\choneintwoft{#2}{#3}}
+            {\choneintwosd{#2}{#3}}}
+    {\ifthenelse{\chD=\chtest}
+        {
+        \ifthenelse{\chAD<\chthree}{\choneinthreeft{#2}{#3}{#4}}
+            {
+            \ifthenelse{\chAB<\chtwo}
+                {\choneinthreesd{#2}{#3}{#4}}
+                {\ifthenelse{\chBC<\chtwo}
+                    {\choneinthreetd{#2}{#3}{#4}}
+                    {\choneinthreefh{#2}{#3}{#4}}
+                }
+            }
+        }
+        {
+        \ifthenelse{\chAD<\chfour}
+            {\choneinfourft{#2}{#3}{#4}{#1}}
+            {
+            \ifthenelse{\chAD<\chtwo}
+                {\choneinfoursd{#2}{#3}{#4}{#1}}
+                {
+                \ifthenelse{\chAB<\chtwo}
+                    {\choneinfourtd{#2}{#3}{#4}{#1}}
+                    {\ifthenelse{\chBC<\chtwo}
+                    {\choneinfourff{#2}{#3}{#4}{#1}}
+                    {
+                    \ifthenelse{\chCD<\chtwo}
+                        {\choneinfourfh{#2}{#3}{#4}{#1}}
+                        {\choneinfoursx{#2}{#3}{#4}{#1}}
+                        }
+                    }
+                }
+            }
+        }
+    }
+    }
+
+\def\chf#1#2#3#4{\choice[#4]{#1}{#2}{#3}}
+%%%% 调用格式 三个选项 \choice{选项1}{选项2}{选项3}
+%%%%          四个选项 \chf{选项1}{选项2}{选项3}{选项4}
+%%%%%% 参考文献上标命令
+\newcommand{\upcite}[2][]
+    {\textsuperscript{\textsuperscript{\cite[#1]{#2}}}}
+%%%%%% 参考文献上标命令结束

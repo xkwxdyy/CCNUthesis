@@ -1,0 +1,443 @@
+\documentclass[a4paper, 12pt, twoside]{ctexart}
+\usepackage{def/format}
+
+\def\arraystretch{1.1}
+
+%%%%%%%%%%%%% 以下内容按需要进行修改
+\def\mytitlenum{16}           %单行题目长度
+\def\school{数学与统计学学院} %院系名字
+\def\major{数\!学\!与\!应\!用\!数\!学(师\!范)} %专业
+\def\grade{2017级}    %年级
+\def\authorname{作者} %作者
+\def\xuehao{2015123456} %学号
+\def\teacher{张三丰 教授 \quad 三丰 教授}%指导教师, 职称
+\def\title{浅谈我们的我们的大学的大大大学我们的大学的大大大大} % 文章题目
+%%%%%%%%%%%%%% 封面信息结束
+%%%%%%%%%%%%%%% 摘要和关键词
+%中文摘要
+\def\myabstract{摘要的字数控制在400个汉字左右. 尽量不要出现公式参考文献. 介绍本文的主要工作以及创新点.}
+%中文关键词
+\def\mykeywords{关键词1\qquad 关键词2\qquad关键词3}
+%英文题目
+\def\mytitle{Discuss}
+%英文摘要
+\def\myabstracten{For. }
+%英文关键词
+\def\mykeywordsen{keywords1\qquad keywords2\qquad keywords3}
+\begin{document}
+\input{def/simplify.def} %加载简化命令
+\input{def/firstpage} %封面
+\input{def/copyright} %版权页
+\newpage %目录新起一页
+\tableofcontents      %目录
+\newpage %摘要新起一页
+\input{def/abstract}  %摘要
+%以上内容不要做修改
+
+%正文开始
+\newpage
+\section{相关概念与理论介绍}
+\subsection{圆锥曲线准线及焦点}
+    \begin{defi}[圆锥曲线统一定义]\label{deficurve}
+        坐标轴上一个动点$P$到定点~(焦点$F$)~ 的距离与到定直线~(准线$\ell$)~的距离的比是定值时, 动点$P$的点的轨迹叫做\textbf{圆锥曲线}.
+    \end{defi}
+
+    当$e<1$圆锥曲线为椭圆; 当$e>1$时圆锥曲线为双曲线; 当$e=1$时圆锥曲线为抛物线. 定义\ref{deficurve}中的定点$F$为圆锥曲线的焦点, 直线$\ell$为圆锥曲线的准线. 我们有
+     \begin{itemize}
+     \item 圆上动$P$点坐标$(x_0, y_0)$, $0<\frac ca<1$. 当动点$P$ 到定点$F$~(焦点)和到定直线$\ell$的距离之比为离心率时, 该直线$\ell$便是椭圆的准线, 其方程为$x=\pm \frac{a^2}{c}$.
+     \item 双曲线上$P$点坐标$(x_0, y_0)$, $\frac{c}{a}>1$. 当动$P$ 点到定点$F$ 和到定直线$\ell$的距离之比为离心率时, 该直线$\ell$便是双曲线的准线, 其方程为$x=\pm \frac{a^2}{c}$.
+     \item 抛物线上动$P$点坐标为$(x_0,y_0)$, $\frac{c}{a}=1$. 当动点$P$到焦点 $F$和到定直线$\ell$的距离之比恒等于离心率1时,  该直线$\ell$是抛物线的准线, 其方程为$x=-\frac{p}{2}$. 抛物线方程为$x^2=2py(p>0)$.
+     \end{itemize}
+
+     圆锥曲线上任意一点与焦点之间所连的长度叫做焦半径; 过圆锥曲线焦点的直线被曲线截得的线段叫做焦点弦.
+\subsection{圆锥曲线切线}
+    如图\ref{fig1}, 设$Q$曲线上不同于$P$的一点, 这时, 直线$PQ$成为曲线$C$的割线. 随着点$Q$沿曲线$C$向点$P$运动, 割纸$PQ$在$P$点附近越来越逼近曲线$C$. 当点$Q$无限逼近点$P$时, 直线$PQ$最终就成为在点$P$处最逼近且曲线的直线$\ell$, 这条直线$\ell$就成为曲线在点$P$点的切线.
+    \begin{figure}[H]
+    \begin{center}
+    %\insertjpg[.5\textwidth]{photo/20.png}
+    \caption{\label{fig1} \textcolor{red}{图形1的说明}}
+    \end{center}
+    \end{figure}
+    \begin{theo}[椭圆切线方程]
+        如果$P(x_0, y_0)$是已知椭圆 $\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}=1(a>b>0)$上任意一点, 那么过 $P$点并与该椭圆相切的直线$\ell$的方程是
+            $$\frac{x_0x}{a^2}+\frac{y_0y}{b^2}=1.$$
+    \end{theo}
+    \begin{proof}
+        设$Q(x_1, y_1)$为直线$\frac{x_0x}{a^2}+\frac{y_0y}{b^2}=1$上的任意一点, 则由基本不等式有
+        $$\Big(\frac{x_1^2}{a^2}+\frac{y_1^2}{b^2}\Big) +\Big(\frac{x_0^2}{a^2}+\frac{y_0^2}{b^2}\Big) \ge 2\Big(\frac{x_0x_1}{a^2}+\frac{y_0y_1}{b^2}\Big)=2,$$
+        即
+            $$\frac{x_1^2}{a^2}+\frac{y_1^2}{b^2} \ge 1,$$
+        当且仅当$x_1=x_0,y_{1}=y_0$时等号成立, 即直线与椭圆只有一个交点,  故直线$\ell$是椭圆的切线.
+    \end{proof}
+    \begin{coro}[双曲线和抛物线的切线方程] $(1)$ 如果$P(x_0, y_0)$ 是已知双曲线$\frac{x^2}{a^2}-\frac{y^2}{b^2}=1$ $(a>0, b>0)$上任意一点, 那么过$P$点并与该戏曲线相切的直线$\ell$的方程是
+            $$\frac{x_0x}{a^2}-\frac{y_0y}{b^2}=1.$$
+        \indent $(2)$ 如果$P(x_0, y_0)$是已知抛物线$y^2=2px(p>0)$上任意一点, 那么过$P$点并与该执物线相切的直线$\ell$的方程是
+        $$y_0y=p(x_0+x).$$
+    \end{coro}
+\subsection{圆锥曲线切点弦}
+    \begin{defi}[切点弦]
+        过圆锥曲线外一点向圆锥曲线引两条切线~(如果存在)~那么经过两个切点的圆锥曲线的弦叫做\textbf{切点弦}.
+    \end{defi}
+
+    如图\ref{fig2}, $AB$为椭圆的切点弦.
+    \begin{figure}[H]
+    \begin{center}
+    %\insertjpg[.5\textwidth]{photo/21.png}
+    \caption{\label{fig2} 图形的说明}
+    \end{center}
+    \end{figure}
+    \begin{itemize}
+        \item 由椭圆$\frac{x^2}{a^2}+\frac{y^2}{b^2}=1(a>b>0)$ 外一点 $P(x_1, y_1)$确定的切点弦方程
+                $$\frac{x_1x}{a^2}+\frac{y_1y}{b^2}=1;$$
+        \item 由双曲线$\frac{x^2}{a^2}-\frac{y^2}{b^2}=1(a>0,  b>0)$ 外一点$P(x_1,y_1)$确定的切点弦方程
+                $$\frac{x_1x}{a^2}-\frac{y_1y}{b^2}=1;$$
+        \item 由抛物线$y^2=2px$外一点$P(x_1,y_1)$确定的切点弦方程
+            $$y_1y=p(x_1+x).$$
+    \end{itemize}
+\subsection{圆锥曲线中点弦}
+    \begin{defi}
+        对于给定点$P$和给定的圆锥曲线$C$,  若$C$的某条弦 $AB$ 过 $P$ 点且被$P$点平分, 则称该弦$AB$为圆锥曲线$C$上过$P$点的\textbf{中点弦}. 其中连接圆锥曲线$C$上不同两点$A,B$的线段$AB$称为圆锥曲线$C$ 的弦.
+    \end{defi}
+
+    \begin{itemize}
+    \item 设$M(x_0, y_0)$是椭圆的弦$\wideparen{AB}$的中点, 则椭圆 $\frac{x^2}{a^2}+\frac{y^2}{b^2}=1(a>b>0)$ 的中点弦方程为$\frac{x_0(x-x_0)}{a^2}+\frac{y_0(y-y_0)}{b^2}=0$, 化为点斜式是
+        $$y-y_0=-\frac{b^2 x_0}{a^2 y_0}(x-x_0)(y_0\ne0).$$
+    \item 设$M(x_0, y_0)$是双曲线的弦$\wideparen{AB}$的中点, 则双曲线 $\frac{x^2}{a^2}-\frac{y^2}{b^2}=1(a>0,  b>0)$的中点弦方程为 $\frac{x_0(x-x_0)}{a^2}-\frac{y_0(y-y_0)}{b^2}=0$, 化为点斜式为
+            $$y-y_0=\frac{b^2 x_0}{a^2 y_0}(x-x_0)(y_0\ne0);$$
+    \item 设$M(x_0,y_0)$是抛物线的弦$\wideparen{AB}$的中点, 则抛物线$y^2=2px$的中点弦方程为$y_0(y-y_0)=p(x-x_0)$, 化为点斜式为
+    $$y-y_0=\frac{p}{y_0}(x-x_0)(y_0\ne0). $$
+    \end{itemize}
+\section{有关焦点弦的一般性结论}
+\subsection{结论1}
+    \begin{propt}\label{propt1}
+    已知$O$为坐标原点,  椭圆$C:  \frac{x^2}{a^2}+\frac{y^2}{b^2}=1(a>b>0)$, $F$是椭圆的焦点. 准线与$x$轴相交于$M$, 过点$F$的直线$\ell$与$C$相交于$A,B$, 则$\angle OMA=\angle OMB$.
+    \end{propt}
+    \begin{figure}
+    \begin{center}
+    %\insertjpg[.5\textwidth]{photo/22.png}
+    \caption{\label{fig3} 图形说明}
+    \end{center}
+    \end{figure}
+    \begin{proof}
+    (1) 当直线 $\ell$与$x$轴重合时, $\angle O M A=\angle O M B=0^{\circ}$;
+
+    (2) 当直线$\ell$与$x$轴垂直时, $OM$为$AB$的垂直平分线, 故$\angle O M A=\angle O M B$;
+
+    (3) 当直线$\ell$与$x$轴既不重合又不垂直时, 点$M$的坐标为 $(\frac{a^2}c,0)$, 直线$\ell$的方程为$y=k(x-c)$. $A,B$两点的坐标为 $A(x_1, y_1), B(x_2,y_2),$ 则$y_1=k(x_1-c)$, $ y_2=k(x_2-c)$. 所以
+    $$k_{M A}+k_{MB} =\frac{y_{1}}{x_1-\frac{a^2}{c}} +\frac{y_{2}}{x_2-\frac{a^2}{c}}=\frac{2 k \alpha_{1} x_2-k\left(c+\frac{a^2}{c}\right)\left(x_1+x_2\right)+2 k a^2}{\left(x_1-\frac{a^2}{c}\right)\left(x_2-\frac{a^2}{c}\right)}$$
+    联立方程
+        $$\left\{\!\!\!\begin{array}{l}
+            y=k(x-c); \\
+            \frac{x^2}{a^2}+\frac{y^2}{b^2}=1
+        \end{array}\right.$$
+    得
+        $$(a^2 k^2+b^2)x^2-2 a^2 k^2cx+a^2 k^2c^2-a^2b^2=0.$$
+    故
+        \begin{eqnarray*}
+            x_1+x_2&=&\frac{2a^2k^2c}{a^2k^2+b^2},\\
+            x_1x_2&=&
+                \frac{a^2 k^2 c^2-a^2 b^2}{a^2 k^2+b^2} \\
+                &=&\frac{2 k x_1 x_2-k\left(c+\frac{a^2}{c}\right)\left(x_1+x_2\right)+2 ka^2}{\left(x_1-\frac{a^2}{c}\right)\left(x_2-\frac{a^2}{c}\right)} \\
+                &=&\frac{2 k \frac{2 a^2 k^2 c}{a^2 k^2+b^2}-k\left(c+\frac{a^2}{c}\right) \frac{2 a^2 k^2 c}{a^2 k^2+b^2}+2 k a^2}{\left(x_1-\frac{a^2}{c}\right)\left(x_2-\frac{a^2}{c}\right)} \\
+            &=&\frac{k^2-2 a^2}{x_{12}^2}=\frac{2 a^2 c^2 c^2 c^2 c^2}{c^2}
+        \end{eqnarray*}
+    所以$k_{M A}+k_{M B}=0$. 这样得到$\angle O M A=\angle O M B$, 故性质得证.
+\end{proof}
+
+    性质\ref{propt1}是有关椭圆焦点弦的结论, 那么对双曲线和抛物线是否有同样的结论? 结论是否具有一般性?
+    \begin{propt}\label{propt2}
+        已知$O$为坐标原点, $F$是双曲线$C$: $\frac{x^2}{a^2}-\frac{y^2}{b^2}=1$, $a>0, b>0$, 的焦点, 准线与$x$ 轴相交于$M$. 过点$F$的直线$\ell$与$C$相交于$A,B$. 则$\angle O M A=\angle OMB$.
+    \end{propt}
+
+    类似于性质\ref{propt1}的证明, 我们可以证得性质\ref{propt2}.
+    \begin{propt}\label{propt3}
+        已知$O$为坐标原点, $F$是抛物线$C$: $y^2=2 p x$的焦点. 准线与$x$ 轴相交于$M$. 过点$F$的直线$\ell$与$C$相交于$A,B,$ 则$\angle OMA=\angle OMB$.
+    \end{propt}
+    \begin{proof}
+        设$A,B$两点的坐标为$A(x_1, y_1),  B(x_2,y_2)$. 由已知点$M$的坐标为$(-\frac{p}{2}, 0), $ 知抛物线准线方程为$x=-\frac{p}{2}$. 联立方程
+            $$\left\{\!\!\!\begin{array}{l}
+                x=m y+\frac{p}{2}; \\
+                y^2=2 p x
+                \end{array}\right.
+            $$
+        得
+        $$y^2-2 p m y-p^{2}=0.$$
+        由韦达定理得
+            $$y_{1}+y_{2}=2 p m, \quad y_1y_{2}=-p^{2}.$$
+        故
+        \begin{eqnarray*}
+            k_{MA}+k_{MB}&=&\frac{y_1}{x_1+\frac p2+\frac{y_2}{x_2+\frac p2}} =\frac{(x_2+\frac p2)y_1+(x_1+\frac p2) y_2} {(x_1+\frac p2) (x_2+\frac p2)} \\
+            &=&\frac{(my_2+p)y_1+(my_1+p)y_2}{(x_1+\frac p2) (x_2+\frac p2)} \\
+            &=&\frac{2my_1y_2+p(y_1+y_2)}{(x_1+\frac p2)(x_2+\frac p2)}
+            =0.
+        \end{eqnarray*}
+    即
+        $$k_{M A}+k_{M B}=0.$$
+    所以$\angle O M A=\angle O M B$.
+\end{proof}
+
+    由上述性质\ref{propt1}-\ref{propt3}, 我们可以得出如下结论.
+    \begin{coro}\label{coro1}
+        已知$O$为坐标原点, 圆锥曲线$C$, $F$是曲线$C$的焦点, 准线与$x$轴相交与$M$,  过点$F$的直线$\ell$与相交于$A, B$,  则$\angle O M A=\angle O M B$
+    \end{coro}
+
+    上述推论对椭圆、双曲线和抛物线均成立, 具有一般性, 可实现较为广泛的应用. 该推论在2015年福建高考(文科)数学卷19题中有所涉及, 在本文结论应用部分给出原题及解答.
+
+\subsection{推论\ref{coro1}的应用}
+    \begin{exa}[2015年福建高考(文科)数学卷19题]
+        已知点$F$为抛物线$E:$  $y^2=2px(p>0)$的焦点, 点$A(2,m)$在抛物线 $E$上, 且$|AF|=3$.\\
+        \indent $(1)$ 求抛物线$E$的方程;\\
+        \indent $(2)$ 已知点$G(-1,0)$, 延长$AF$交抛物线$E$于点$B$. 证明: 以点$F$为圆心且与直线$GA$相切的圆必与直线$GB$相切.
+    \end{exa}
+\begin{center}
+    \insertjpg[.5\textwidth]{photo/23.png}
+    \end{center}
+    \begin{proof}[解]
+    (1) 由抛物线的定义得$|AF|=2+\frac{p}{2}=3$, 解得$p=2$. 所以抛物线$E$ 的方程为$y^2=4x.$
+
+    (2) 抛物线$E$的方程为$y^2=4x$, 则抛物线准线与$x$轴的交点为$(-1,0)$, 即点$G$又直线$AB$是过焦点$F$交抛物线于$A,B$, 所以由推论\ref{coro1}得$\angle AGF=\angle BGF$, 即$x$轴平分$\angle AGB$. 因此点$F$到直线$GA$, $GB$的距离相等, 故以点$F$为圆心且与直线$GA$相切的圆必与直线$GB$相切.
+    \end{proof}
+
+    \textbf{评析}: 本题看似平淡, 但内涵着很多解析几何的知识一般学生很难将点$G$与抛物线的准线和坐标轴交点联系在一起, 而本题就用了这样的一个结论运用于题中, 很容易就可以得到角相等. 结论一大大简化了解题步骤.
+\section{有关切线的一般性结论}
+\subsection{结论2}
+    \begin{propt}\label{propt4}
+        若直线$y=k x+m(k \neq 0)$与椭圆$C: \frac{x^2}{a^2}+\frac{y^2}{b^2}=1$ $(a>b>0)$相切, 切点为$T$. 直线$OT$~($O$为坐标原点)~的斜率记为$k_{OT}$, 则$k_{OT}\cdot k=e^2-1$~($e$为椭圆离心率).
+    \end{propt}
+    \begin{proof}
+        设点$T$的坐标为$(x_0,y_0)$, 直线$y=kx+m$代$\lambda \frac{x^2}{a^2}+\frac{y^2}{b^2}=1$得
+        $\left(a^2 k^2+b^2\right) x^2+2 k a^2 m x+a^2\left(m^2-b^2\right)=0, $ 因为直线 $y=k x+m(k \neq 0)$ 与 $\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$ 相切
+        得 $x_0=-\frac{k a^2 m}{a^2 k^2+b^2},  \quad y_0=-\frac{k a^2 m}{a^2 k^2+b^2}+m=\frac{b^2 m}{a^2 k^2+b^2}$. 故直线的斜率 $k_{O T}=\frac{y_0}{x_0}=-\frac{b^2}{k a^2}$, 所以$k_{O T} \cdot k=-\frac{b^2}{a^2}=-\frac{a^2-c^2}{a^2}=e^2-1$
+    \end{proof}
+
+    性质\ref{propt4}是高考常见的有关椭圆切线的一个定值, 下面我们探究结论在双曲线和抛物线中是否成立, 该结论是否为圆锥曲线一般性结论.
+    \begin{propt}\label{propt5}
+        若直线 $y=kx+m(k\ne0)$与双曲线$C:$ $ \frac{x^2}{a^2}-\frac{y^2}{b^2}=1(a>b>0)$相切, 切点为 $T$直线 $OT$~($O$为坐标原点)~的斜率记为$k_{OT}$, 则$k_{OT}\cdot k=e^2-1$~($e$为双曲线离心率).
+    \end{propt}
+    \begin{proof}
+        设点$T$的坐标为$(x_0, y_0)$, 直线$y=kx+m$代$\lambda \frac{x^2}{a^2}-\frac{y^2}{b^2}=1$ 得
+            $$(b^2-a^2 k^2)x^2-2ka^2mx-a^2(m^2+b^2)=0.$$
+        因为直线$y=kx+m(k\ne0)$与双曲线$\frac{x^2}{a^2}-\frac{y^2}{b^2}=1$ 相切,  得
+        $$x_0=\frac{ka^2m}{b^2-a^2k^2b^2},  \quad
+        y_0=-\frac{ka^2m}{b^2-a^2k^2}+m =\frac{b^2m}{b^2-a^2k^2}.$$
+        故直线的斜率$k_{OT}=\frac{y_0}{x_0}=\frac{b^2}{k a^2}, $ 所以 $k_{O T} \cdot k=\frac{b^2}{a^2}=\frac{c^2-a^2}{a^2}=e^2-1$. 得证
+\end{proof}
+
+    性质\ref{propt4}可以推广到双曲线.
+    \begin{propt}\label{propt6}
+        若直线$y=kx+m(k\ne0)$与抛物线$C:$ $y^2=2px(p>0)$相切, 切点为$T$ 直线$OT$~($O$为坐标原点)~的斜率记为$k_{OT}$, 则$k_{OT}\cdot \frac{1}{k}=2$.
+    \end{propt}
+    \begin{proof}
+        设点$T$的坐标为$(x_0,y_0)$, 直线$y=kx+m$代$\lambda C: y^2=2px$, 得
+        $$(b^2-a^2 k^2)x^2-2ka^2mx-a^2(m^2+b^2)=0.$$
+        因为直线$y=k x+m(k\ne0)$与双曲线$\frac{x^2}{a^2}-\frac{y^2}{b^2}=1$相切, 得
+            $$x_0=\frac{k a^2 m}{b^2-a^2 k^2 b^2},  \quad y_0=-\frac{k a^2 m}{b^2-a^2 k^2}+m=\frac{b^2 m}{b^2-a^2 k^2}.$$
+        故直线的斜率$k_{OT}=\frac{y_0}{x_0}=\frac{kp}{p-km}=2k$, 即 $k_{O T} \cdot \frac{1}{k}=2$. 得证.
+    \end{proof}
+
+    由此可知椭圆有关切线的这条性质在双曲线、椭圆中都成立,  可一般化.
+    \begin{coro}\label{coro2}
+        若直线$y=kx+m(k\ne0)$与曲线$C$相切, 切点为$T$. 直线$OT$~($O$为坐标原点)~的斜率记为$k_{OT}$, 则
+            $$\begin{cases}
+            k_{OT}\cdot k=e^2-1,&\text{$C$为椭圆, 双曲线};\\
+            k_{OT}\cdot\frac 1k=2,&\text{$C$为抛物线}.
+            \end{cases}$$
+    \end{coro}
+
+    推论\ref{coro2}为圆锥曲线有关切线的一般性结论, 该结论在2012年高考理科数学广东卷20题中涉及到,  本文结论应用部分中有具体说明.
+\subsection{结论2应用}
+    \begin{exa}[2012年广东高考文科第20题]
+        在平面直角坐标系$xoy$中, 已知椭圓$C_{1}:  \frac{x^2}{a^2}+\frac{y^2}{b^2}=1(a>b>0)$的左焦点$F_{1}(0,1)$且点$P(0,1)$在$C_{1}$上.\\
+        \indent $(1)$ 求椭圆$C$的方程;\\
+        \indent $(2)$ 设直线$\ell$同时与椭圆$C_{1}$和抛物线$C_{2}:  y^2=4 x$相切, 求直线$\ell$的方程.
+    \end{exa}
+    \begin{proof}[解] (1) 椭圆$C_{1}$的方程为$\frac{x^2}{2}+y^2=1$ (详解略)
+
+     (2) 设直线$\ell$与椭圆$C_{1}$和抛物线$C_{2}$相切的切点分别为 $A(x_1, y_1),  B(x_2,y_2)$. 直线的斜率为$k$. 依题意知, 椭圓$C_{1}$ 的离心率$e=\frac{\sqrt{2}}{2}$. 由推论\ref{coro2}得
+        \begin{equation}\label{eq1}
+        \frac{y_{1}}{x_1} \cdot k=e^2-1=-\frac12.
+        \end{equation}
+    由结论3得:
+        \begin{equation}\label{eq2}
+            \frac{y_{2}}{x_2}=2 k.
+        \end{equation}
+    又
+        \begin{equation}\label{eq3}
+            y_{2}^{2}=4 x_2;
+        \end{equation}
+        \begin{equation}\label{eq4}
+            \frac{x_1^{2}}{2}+y_{1}^{2}=1.
+        \end{equation}
+    又
+        \begin{equation}\label{eq5}
+            \frac{y_{1}-y_{2}}{x_1-x_2}=k.
+        \end{equation}
+    由\eqref{eq2}-\eqref{eq3}得
+        \begin{equation}\label{eq6}
+            k=\frac{2}{y_{2}}.
+        \end{equation}
+    由\eqref{eq3},\eqref{eq5}和\eqref{eq6}得
+        \begin{equation}\label{eq7}
+            \frac{y_{1}-y_{2}}{x_1-\frac{y_{2}^{2}}{4}}=\frac{2}{y_{2}}.
+        \end{equation}
+    由\eqref{eq1}和\eqref{eq6}得
+    \begin{equation}\label{eq8}
+        y_{2}=-\frac{4 y_{1}}{x_1}.
+    \end{equation}
+    由\eqref{eq7}和\eqref{eq8}得$-x_1-2=0$. 解得$x_1=-1, x_2=2$~(舍去). 把 $x_1=-1$代入\eqref{eq4}, 得
+        $$y_{1}=\pm\frac{\sqrt{2}}{2}.$$
+    故点$A$的坐标为 $(-1, -\frac{\sqrt{2}}{2})$或$(-1, \frac{\sqrt{2}}{2}).$
+
+     当点$A$的坐标为$(-1, -\frac{\sqrt{2}}{2})$时, 由\eqref{eq1}得 $k=-\frac{\sqrt{2}}{2}$, 此时, 直线$\ell$的方程为
+        $$y=-\frac{\sqrt{2}}{2} x-\sqrt{2}.$$
+    当点$A$的坐标为$(-1,\frac{\sqrt{2}}{2})$时,  由\eqref{eq1}得 $k=\frac{\sqrt{2}}{2}$, 此时, 直线$\ell$的方程为
+        $$y=\frac{\sqrt{2}}{2} x+\sqrt{2}.$$
+    \end{proof}
+\begin{center}
+    \insertjpg[.5\textwidth]{photo/24.png}
+    \end{center}
+
+\par 评析: 本题主要考察学生的数形结合、逻辑推理能力及解决有关对曲线的斜率、圆锥曲线与直线的位置关系问题的能力,  本题问(2）中考察的就是有关椭圆,  抛物线的切线的斜率的结论,  让学生很容易看出$AB$两点与斜率$k$之间的关系为后面的计算带来了方便.
+
+\section{有关切点弦的一般性结论}
+\subsection{结论3}
+    \begin{propt}\label{prop7}
+        椭圆$C: \frac{x^2}{a^2}+\frac{y^2}{b^2}=1(a>b>0)$, $P(x_0, y_0)$ 是椭圆外一条定直线$\ell:  y=k x+m$上的动点. 过$P$作椭圆的兩条切线$PA,PB$, 切点分别为$A,B$. 则切点弦$AB$所有的直线恒过点
+            $$N\Big(-\frac{k d^{2}}{m},  \frac{b^2}{m}\Big).$$
+    \end{propt}
+    \begin{proof}
+        设$i\frac{n}{2} A(x_i, y_1),  B(x_2,y_2), $ 则切线 $P A:  \frac{x_1x}{a^2}+\frac{y_1y}{b^2}=1,  \quad P B:  \frac{x_2 x}{a^2}+\frac{y_{2} y}{b^2}=1$
+\par 由于点 $P(x_0, y_0)$ 在切线 $P A,  P B$ ,  所以切点弦的方程为 $\frac{x_0 x}{a^2}+\frac{y_{6} y}{b^2}=1$
+\par 又$\mathbb y_0=k \alpha_{0}+m(m \neq 0), $ 所以得 $x_0\left(\frac{x}{a^2}+\frac{k y}{b^2}\right)+\left(\frac{m y}{b^2}-1\right)=0$
+\par 令$\left\{\begin{array}{l}\frac{x}{a^2}+\frac{k y}{b^2}=0 \\ \frac{m y}{b^2}-1=0\end{array}\right.$
+\par 得 $\left\{\begin{array}{l}x=-\frac{k d^{2}}{m} \\ y=\frac{b^2}{m}\end{array}\right.$
+\par 所以切点弦AB 过定点 $\left(-\frac{k d^{2}}{m},  \frac{b^2}{m}\right)$.得证.
+\end{proof}
+
+椭圆外一点作椭圆的两条切线, 切点弦过定点.
+    \begin{propt}\label{propt8}
+        双曲线$C$: $\frac{x^1}{a^2}-\frac{y^1}{b^2}=1(a>0,  b>0),  \quad P(x_0, y_0)$ 是双曲线外一条定直线$\ell$: $y=k x+m$上的动点. 过$P$作双曲线的两条切线$PA,PB$, 切点分别为$A,B$, 则切点弦$AB$所有的直线垣过点$N(-\frac{k a^2}{m}, -\frac{b^2}{m})$.
+    \end{propt}
+
+    性质\ref{propt8}可以类似性质\ref{propt7}证明. 性质\ref{propt7}推广到双曲线中也司以得到相同的结论, 那公在抛物线中是否成立呢?
+    \begin{propt}\label{propt9}
+        抛物线$C:$  $y^2 =2px$, $P(x_0, y_0)$是抛物线外一条定直线$\ell:$  $y=kx+m$ 上的动点, 过$P$作抛物线的两条切线$PA,PB$, 切点分别为$A,B$, 则切点弦$AB$所有的直线恒过点 $N(\frac{m}{k},  \frac{p}{k})$.
+    \end{propt}
+    \begin{rema}
+        抛物线外一定直线上的任意动点作抛物线的两条切线, 切点弦过定点.
+    \end{rema}
+    \begin{proof}[性质\ref{propt9}的证明]
+        设$A(x_1, y_1), B(x_2,y_2),$ 此线$PA: y y_{1}=p\left(x+x_1\right),  P B:  y y_{2}=p\left(x+x_2\right)$, 由于点 $P(x_0, y_0)$ 在切线 $P A,  P B, $ 所以切点弦的方程为 $y_0 y=p(x+x_0)$, 又$y_0=k x_0+m(m \neq 0), $ 所以得 $x_0(k y-p)+(m y-p x)=0$. 令$\left\{\begin{array}{l}k y-p=0 \\ m y-p x=0\end{array}\right.$ 得 $\left\{\begin{array}{l}x=\frac{m}{k} \\ y=\frac{p}{k}\end{array}\right.$
+\par 即切点弦 $A B$ 过定点 $\left(\frac{m}{k},  \frac{p}{k}\right)$.
+    \end{proof}
+
+    由此得出圆锥曲线有关切点弦的一般性结论: 过圆锥曲线外一点作圆锥曲线两条切线, 切点弦过定点.
+    \begin{coro}\label{coro3}
+        圆锥曲线$C$, $P(x_0,y_0)$是圆锥曲线外一条定直线$y=kx+m(m\ne0)$ 上的动点,  过$P$作$C$的两条切线$PA,PB$, 切点分别为$A,B$, 则切点弦$AB$恒过定点$N$, 其中
+        $$N=\begin{cases}
+            (-\frac{k a^2}{m},  \frac{b^2}{m}),&C\text{为椭圆};\\
+            (\frac{ka^2}{m}, -\frac{b^2}{m}),&C\text{为双曲线};\\
+            (\frac{m}{k},\frac{p}{k}),&C\text{为抛物线}.
+        \end{cases}$$
+    \end{coro}
+
+        上述推论\ref{coro3}在巴蜀中学2020届适西性月考五中有应用, 在本文应用部分有详细过程.
+\subsection{结论3应用}
+    \begin{exa}[巴蜀中学2020届适应性月考五11题·改编]
+        已知抛物线 $y^2=4 x$ 的焦点为 $F, $ 过直线设点 $P(x_0, y_0)$ 在直线 $y=x+2$ 上任一点引抛物线的两条切线, 切点$A,B$, 则$F$到直线 $AB$的距离~\hfill(\quad).
+        \begin{tabular}{*{2}{@{}p{.5\textwidth}}}
+            A. 无题小值;&B. 无题大值;\\C. 有题小值,  最小值为1;&
+            D. 有是大值,  最大值为 $\sqrt{5}$.
+        \end{tabular}
+    \end{exa}
+    \begin{proof}[解]
+        由推论\ref{coro3}知切点弦$AB$过定点$N(2,2)$, 当$NF\perp AB$时, 焦点 $F(1, 0)$到$AB$的距离最大, 最大值为 $\sqrt{(0+2)^{2}+(1-2)^{2}}=\sqrt{5}$.
+    \end{proof}
+
+    \textbf{评析}: 巴蜀中学的这道月考题主要考察直线与抛物线的位置关系,  以及点到直线的位置关系,  综合性比较强. 应用结论3将点到直线的距离转化成点到点的距离, 可以简化解题步骤,  降低解题难度.
+\section{有关中点弦的一般性结论}
+\subsection{结论4}
+    \begin{propt}\label{propt10}
+        已知椭圆$C:$  $\frac{x^2}{a^2}+\frac{y^2}{b^2}=1(a>b>0)$, 直线 $\ell$不过原点$O$且不平行于坐标轴, $\ell$与$C$有两个交点$A,B$,   线段$AB$的中点为$M$, 则$k_1\cdot k_{\infty}=-\frac{b^2}{a^2}$.
+    \end{propt}
+    \begin{proof}
+        设 $A(x_1, y_1),  B(x_2,y_2),  M\left(x_{\Delta},  y_{x}\right)$ 将$A(x_i,y_i),  B(x_2,y_2)$
+代入$\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$,
+\par 得$$(1): \frac{x_1^{2}}{a^2}+\frac{y_{1}^{2}}{b^2}=1$$
+$$(2): \frac{x_2^{2}}{a^2}+\frac{y_{2}^{2}}{b^2}=1$$
+\par 由(1)-(2),  得
+$$
+\frac{x_1^{2}-x_2^{2}}{a^2}+\frac{y_{1}^{2}-y_{2}^{2}}{b^2}=0
+$$
+\par 所以 $$\frac{\left(x_1+x_2\right)\left(x_1-x_2\right)}{a^2}+\frac{\left(y_{1}+y_{2}\right)\left(y_{1}-y_{2}\right)}{b^2}=0$$
+\par 即 $$\frac{\frac{x_1+x_2}{2}\left(x_1-x_2\right)}{a^2}+\frac{\frac{y_{1}+y_{2}}{2}\left(y_{1}-y_{2}\right)}{b^2}=0$$
+\par 所以
+$$\frac{b^2}{a^2}=-\frac{y_{x}\left(y_{1}-y_{2}\right)}{x_{x}\left(x_1-x_2\right)}=-k_{a x} \cdot k_{1}$$
+\par 所以
+$$
+k_{0 N} \cdot k_{1}=-\frac{b^2}{a^2}
+$$
+\end{proof}
+\par 我们可以试着将性质10推广到双曲线中,  是否可以得到同样的结论.
+\par 性质11: 已知戏曲线C:  $\frac{x^2}{a^2}-\frac{y^2}{b^2}=1(a>0,  b>0), $ 直线 $\ell$ 不过面点O且不平行于坐
+标轴,  $\ell$与C有两个交点A,  $B, $ 线段 $A B$ 的中点为 $M$,  则$\ k_{1} \cdot k_{o m}=\frac{b^2}{a^2}$
+对于双曲线 $\frac{y^2}{a^2}-\frac{x^2}{b^2}=1(a>0,  b>0), $ 直线 $\ell$ 不过原点O且不平行于坐标轴,  $\ell$与$C$
+有两个交点 $A,  B, $ 线段 $A B$ 的中点为 $M, $ 则 $k_{1} \cdot k_{\alpha \nu}=\frac{a^2}{b^2} .$ 我们也可以用类似椭圆的方法证明结论在双曲线中也是成立的.
+\par 性质 12: 已知$C: y^2 =2px$,  直线$\ell$不过原点O且不平行于坐标轴,   $\ell$ 与C有两个交
+点A, B,  线段 AB的中点为$M(x_0, y_0)$,  则直线OM的斜率与l的斜率的乘积为 $\frac{p}{x_0}$
+$k_{l}\cdot k_{O M}=\frac{p}{x_0} $
+\par 证明:  设 $A(x_1, y_1),  B(x_2,y_2),  \ A,  B$ 所在的方程为 $y=k x+b, $ 代抛物线方程中
+\par 得 $$y^2-\frac{2 p y}{k}+\frac{2 p b}{k}=0$$
+$$
+\frac{y_{1}+y_{2}}{2}=\frac{p}{k}=y_0
+$$
+\par 故
+$$y_{i}^{2}-\frac{2 p y_{1}}{k}+\frac{2 p b}{k}=0$$
+$$y_{z}^{2}-\frac{2 p y_{2}}{k}+\frac{2 p b}{k}=0$$
+\par 又
+$$k_{\mathrm{OM}}=\frac{y_0}{x_0}$$
+所以
+$$
+k_{1} \cdot k_{\mathrm{ov}}=\frac{p}{x_0}
+$$
+\par 综上可以得到圆锥曲线有关中点弦的一般性结论.
+ \par 结论 4: 已知圓锥曲线C,  直线$\ell$不过原点O且不平行于坐标轴,  $\ell$ 与C 有两个交点$A,  B$ 线段 $A B$ 的中点为 $M(x_0, y_0),  k_{1} \cdot$ $k_{\mathrm{OM}}=-\frac{b^2}{a^2}$(椭圆),
+ $k_{1} k_{\mathrm{OM}}=\frac{b^2}{a^2} $(双曲线)
+$k_{1} \cdot k_{OM}=\frac{p}{x_0}$ (抛物线).
+ 结论4在2018年新课标全国卷Ⅲ理科20题中有应用,  本文结论应用部分详细说明.
+\subsection{结论4应用}
+ \par 例4：(（2018年新课标全国卷Ⅲ理数第20题)已知斜率为$k$ 直线 $\ell$与朗園
+$C:  \frac{x^2}{4}+\frac{y^2}{3}=1$ 交于 $A,  B$ 两点,  线段$A B$ 的中点为 $M(1,  m) m>0$.
+\par (1) 证明:  $k<-\frac{1}{2}$
+\par (2) 略
+\par 证明:  由结论 4 得
+ $k \cdot k_{\mathrm{OM}}=-\frac{b^2}{a^2}=-\frac{3}{4}$
+ 即- $\frac{3}{4 m}=k, $ 因为 $M$ 在椭圆内 ,   得 $0<m<\frac{3}{2}$
+\par 所以 $0<-\frac{3}{4 k}<\frac{3}{2}, $ 解得 $k<-\frac{1}{2}$
+\par 评析: 本题主要考察曲线方程,  中点弦以及取值范围有关的知识,  体现数学知识之间的内在联系. 而在本题中用结论4,
+即 $k \cdot k_{OM}=-\frac{b^2}{a^2}=-\frac{3}{4}$
+得- $\frac{3}{4 m}=k, $
+这样可以直接得出k, m的关系,  简化解题步骤.
+\section{总结}
+\par 圆锥曲线统一定义及性质形成了各圆锥曲线的内在联系,  这导致有关结论之间的相似性. 圆锥曲线中的很多结论都存在着一般性,  椭圆中的有些结论可以推广到双曲线中,  双曲线中的有些结论在抛物线也成立. 高考中圆锥曲线和直线结合的题型较为常见,  本文对圆锥曲线中有关焦点弦、切线、切点弦、中点弦的结论进行探究,  以期为学生和教师提供解决类似圆锥曲线问题的途径和方法.
+\newpage
+%正文结束
+
+%参考文献
+\begin{thebibliography}{99}
+\addcontentsline{toc}{section}{\protect参考文献}
+\setlength{\itemsep}{-0.75ex}
+% 请把文献条目填写在下面,  例如
+\bibitem{wang}王伯龙. 中学数学杂志[J]. 两道高考试题的统一推广,  2018,  \textbf{07}:  65-66.
+
+\bibitem{sheng}圣转红. 2018年全国高考数学卷1 理科数学19 题的多种解法的推广, 中学数学教学[J]. 2018, \textbf{4}: 36-40.
+\end{thebibliography}
+\newpage
+
+\section*{\centering致\quad谢}
+\addcontentsline{toc}{section}{\protect致谢}
+感谢!
+
+\end{document}
+
+

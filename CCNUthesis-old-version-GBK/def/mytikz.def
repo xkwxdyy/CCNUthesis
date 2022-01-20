@@ -1,0 +1,110 @@
+%%%%%% 常用坐标平移量, h水平, v竖直, y 坐标长度
+\pgfmathsetmacro{\h}{3}
+\pgfmathsetmacro{\v}{2.3}
+\pgfmathsetmacro{\y}{.8}
+%%%%%%%%%% 图文混排标示
+\newcommand\tikzmark[1]{%
+\tikz[overlay,remember picture]\node[coordinate](#1){};}
+
+\newcommand{\xyarrow}[2][x]
+    {\ifx#1=x
+    \begin{scope}
+        \draw[clip] (#2)-- ++ (-0.05,0.05)-- ++(+0.15,-0.05) -- ++(-0.15,-0.05)-- ++(+0.05,+0.05)--cycle;
+        \fill [black] (#2) circle(0.15cm);
+    \end{scope}
+    \else
+    \begin{scope}
+        \draw[clip] (#2)-- ++ (0.05,-0.05)-- ++(-0.05,0.15)-- ++(-0.05,-0.15)-- ++(+0.05,+0.05)-- cycle;
+        \fill [black] (#2) circle(0.15cm);
+    \end{scope}
+    \fi}
+
+\newcommand{\myaxis}[8][1.5]{
+    %画x和y坐标轴
+    \draw [name path = xaxisline](#2)--(#3);
+    \draw [name path = yaxisline](#4)--(#5);
+    %绘制坐标原点
+    \draw [fill=black,name intersections ={of =xaxisline and yaxisline, by=axis0}](axis0)
+        circle[radius=.1*#1];
+    \node[below left] at (axis0){$#6$};
+    %绘制x箭头
+    \def\axisfacst{#1*0.15}\def\axisfacrd{#1*0.45}%
+    \begin{scope}
+        \draw[clip] (#3)-- ++(-\axisfacst,\axisfacst) --
+        ++(\axisfacrd,-\axisfacst)--++(-\axisfacrd,-\axisfacst)
+            --++(+\axisfacst,+\axisfacst)--cycle;
+        \fill [black] (#3) circle[radius=#1/3];
+    \end{scope}
+    %绘制y箭头
+    \begin{scope}
+        \draw[clip] (#5)-- ++(\axisfacst,-\axisfacst)--
+            ++(-\axisfacst,\axisfacrd)--++(-\axisfacst,-\axisfacrd)
+            --++(+\axisfacst,+\axisfacst)--cycle;
+        \fill [black] (#5) circle[radius=#1/3];
+    \end{scope}
+    %绘制原点, %绘制XY字符
+    \path (#3) node[above](textx){$#7$};
+    \path (#5) node[left](texty){$#8$};
+    }
+\newcommand{\axis}[5][1.5]
+    {\myaxis[#1]{#2}{#3}{#4}{#5}{O}{x}{y}}
+
+    %%\xaxis{x轴起点}{x轴终点}%%例如\xaxis{-1,2}{5,2};
+\newcommand{\xaxis}[3][2]{%画x坐标轴
+    \draw [name path=xaxisline](#2)--(#3);
+    %绘制x箭头
+    \def\axisfacst{#1*0.15}\def\axisfacrd{#1*0.45};
+    \begin{scope}
+        \draw[clip] (#3)-- ++(-\axisfacst,\axisfacst) --
+        ++(\axisfacrd,-\axisfacst)--++(-\axisfacrd,-\axisfacst)
+            --++(+\axisfacst,+\axisfacst)--cycle;
+        \fill [black] (#3) circle[radius=1];
+    \end{scope}
+    %绘制XY字符
+    \path (#3) node[above](textx){$\xlabel$};
+    \draw[fill=black] (\xordm,\yordm) circle[radius=.1*#1]
+        node[below left]{$\orglabel$};}
+\newcommand{\xaxisd}[3][2]{%画x坐标轴
+    \draw [name path=xaxisline](#2)--(#3);
+    %绘制x箭头
+    \def\axisfacst{#1*0.15}\def\axisfacrd{#1*0.45};
+    \begin{scope}
+        \draw[clip] (#3)-- ++(-\axisfacst,\axisfacst) --
+        ++(\axisfacrd,-\axisfacst)--++(-\axisfacrd,-\axisfacst)
+            --++(+\axisfacst,+\axisfacst)--cycle;
+        \fill [black] (#3) circle[radius=1];
+    \end{scope}
+    %绘制XY字符
+    \path (#3) node[above](textx){$\xlabel$};
+    \draw[fill=black] (\xordm,\yordm) circle[radius=.1*#1]
+        node[below right]{$\orglabel$};}
+    %%\yaxis{y轴起点}{y 轴终点}
+    %%例如\yaxis{ 2,-1 }{ 2,3 };
+\newcommand{\yaxis}[3][2]{%画y坐标轴
+    \draw [name path=yaxisline](#2)--(#3);
+
+    %绘制y箭头
+    \def\axisfacst{#1*0.15}\def\axisfacrd{#1*0.45};
+    \begin{scope}
+        \draw[clip] (#3)-- ++(\axisfacst,-\axisfacst)--
+            ++(-\axisfacst,\axisfacrd)--++(-\axisfacst,-\axisfacrd)
+            --++(+\axisfacst,+\axisfacst)--cycle;
+        \fill [black] (#3) circle[radius=1];
+    \end{scope}
+    %绘制XY字符
+    \path (#3) node[left](texty){$\ylabel$};}%===
+
+\newcommand{\zaxis}[3][2]{
+    \draw [->](#2)--(#3);
+    \def\axisfacst{#1*0.15}\def\axisfacrd{#1*0.45}%
+    \path (#3) node[below]{$\zlabel$};}
+\def\xlabel{x}
+\def\ylabel{y}
+\def\zlabel{z}
+\newcommand{\xyzaxis}[5][O]
+    {
+    \foreach \myindex/\mystyle/\myxyzlabel in {{#3}/left/\xlabel,
+        {#4}/right/\ylabel, {#5}/left/\zlabel}
+        \draw[->](#2)--(\myindex)node[\mystyle]{$\myxyzlabel$};
+    \draw(#2)node[below]{$#1$};
+    }
