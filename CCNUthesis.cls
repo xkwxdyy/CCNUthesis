@@ -641,20 +641,21 @@
     \upshape \CJKfamily { \CJKfamilydefault },
   }
 \fancyhf { }
-\cs_new_protected:Npn \__ccnu_fancy_head:nn #1#2
-  {
-    \fancyhead [#1]
-      { \small \ccnu@kai \nouppercase {#2} }
-  }
-\bool_if:NTF \g__ccnu_twoside_bool
-  {
-    \__ccnu_fancy_head:nn { L } { \leftmark  }
-    \__ccnu_fancy_head:nn { R } { \rightmark }
-  }
-  {
-    \__ccnu_fancy_head:nn { L  } { \leftmark  }
-    \__ccnu_fancy_head:nn { R  } { \rightmark }
-  }
+\renewcommand{\headrulewidth}{0pt}
+% \cs_new_protected:Npn \__ccnu_fancy_head:nn #1#2
+%   {
+%     \fancyhead [#1]
+%       { \small \ccnu@kai \nouppercase {#2} }
+%   }
+% \bool_if:NTF \g__ccnu_twoside_bool
+%   {
+%     \__ccnu_fancy_head:nn { L } { \leftmark  }
+%     \__ccnu_fancy_head:nn { R } { \rightmark }
+%   }
+%   {
+%     \__ccnu_fancy_head:nn { L  } { \leftmark  }
+%     \__ccnu_fancy_head:nn { R  } { \rightmark }
+%   }
 \fancyfoot [ C ] { \small \thepage }
 \RenewDocumentCommand \cleardoublepage { }
   {
@@ -963,6 +964,7 @@
     title       .tl_set:N    = \l__ccnu_info_title_tl,
     title*      .tl_set:N    = \l__ccnu_info_title_en_tl,
     date        .tl_set:N    = \l__ccnu_info_date_tl,
+    level        .tl_set:N    = \l__ccnu_info_level_tl,
     author      .tl_set:N    = \l__ccnu_info_author_tl,
     author*     .tl_set:N    = \l__ccnu_info_author_en_tl,
     supervisor  .tl_set:N    = \l__ccnu_info_supervisor_tl,
@@ -1109,12 +1111,12 @@
       {
         \int_case:nn { \l__ccnu_info_degree_type_int }
           {
-            { 1 } { 6 em }
+            { 1 } { 4 em }
             { 2 } { 9 em }
           }
       }
     \begin{minipage} [ c ] { \textwidth }
-      \centering \zihao { 4 }
+      \centering \zihao { -3 } \sffamily
       \clist_set:Nx \l__ccnu_tmpa_clist
         {
           \c__ccnu_name_department_tl,
@@ -1123,17 +1125,21 @@
               { 1 } { \c__ccnu_name_major_tl              }
               { 2 } { \c__ccnu_name_major_professional_tl }
             },
+          \c__ccnu_name_level_tl,
           \c__ccnu_name_author_tl,
+          \c__ccnu_name_student_id_tl,
           \c__ccnu_name_supervisor_tl,
-          \c__ccnu_name_date_tl,
+          % \c__ccnu_name_date_tl,
         }
       \clist_set:Nx \l__ccnu_tmpb_clist
         {
           { \l__ccnu_info_department_tl },
           { \l__ccnu_info_major_tl      },
+          { \l__ccnu_info_level_tl      },
           { \l__ccnu_info_author_tl     },
+          { \l__ccnu_info_student_id_tl },
           { \l__ccnu_info_supervisor_tl },
-          { \l__ccnu_info_date_tl       }
+          % { \l__ccnu_info_date_tl       }
         }
       \__ccnu_get_max_text_width:NN \l__ccnu_tmpb_dim \l__ccnu_tmpb_clist
       \bool_until_do:nn
@@ -1397,7 +1403,8 @@
     \bool_if:NT \l__ccnu_auto_make_cover_bool
       {
         \begin{titlepage}
-          \makecoveri \newpage \makecoverii
+          \makecoveri
+          % \newpage \makecoverii
         \end{titlepage}
       }
   }
@@ -1423,6 +1430,7 @@
         \CTEXnumberline {#1} #2
       }
   }
+\setcounter{tocdepth}{2}
 \__ccnu_patch_cmd:Nnn \tableofcontents
   {
     \section*{\contentsname

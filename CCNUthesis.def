@@ -47,6 +47,7 @@
     { department         } { 学院                          },
     { major              } { 专业                          },
     { major_professional } { 专业学位类别（领域）          },
+    { level              } { 年级                        },
     { author             } { 学生姓名                        },
     { supervisor         } { 指导教师                      },
     { date               } { 完成日期                      },
