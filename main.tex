@@ -1,7 +1,8 @@
 \documentclass{CCNUthesis}
-
+\newcommand{\MakeBox}[3][s]
+    {\makebox[#2\ccwd][#1]{\let \CJKglue \hfill #3}}
 \begin{document}
   \tableofcontents
   \section{1}
-  你好，这是中文。这个：是什么？对（了）
+  \underline{\MakeBox{2}{test}}
 \end{document}

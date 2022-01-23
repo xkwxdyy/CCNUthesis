@@ -4,17 +4,21 @@
   {2022-01-21}{v0.0.1}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e }
-\clist_map_inline:nn { xtemplate, l3keys2e }
-  {
-    \@ifpackagelater {#1} { 2020/07/17 }
-      { } { \msg_error:nnn { ccnuthesis } { l3-too-old } {#1} }
-  }
+\RequirePackage { tikz }
+\RequirePackage { tabularray }
+\RequirePackage { varwidth }
+
 \msg_new:nnn { ccnuthesis } { l3-too-old }
   {
     Package~ "#1"~ is~ too~ old. \\\\
     Please~ update~ an~ up-to-date~ version~ of~ the~ bundles \\
     "l3kernel"~ and~ "l3packages"~ using~ your~ TeX~ package \\
     manager~ or~ from~ CTAN.
+  }
+\clist_map_inline:nn { xtemplate, l3keys2e }
+  {
+    \@ifpackagelater {#1} { 2020/07/17 }
+      { } { \msg_error:nnn { ccnuthesis } { l3-too-old } {#1} }
   }
 \sys_if_engine_xetex:F
   {
@@ -1115,8 +1119,26 @@
             { 2 } { 9 em }
           }
       }
+    \begin{tikzpicture}[remember~picture, overlay]
+      \node[anchor = north] (upperinfo) at 
+        ([shift={(0,-0.1\paperheight)}]current~page.north) 
+        {
+          \begin{varwidth}{\hsize}
+            \begin{tblr}
+              {
+                % vlines, hlines,
+                column{1} = { 0.5\textwidth, l},
+                column{2} = { 0.5\textwidth, l},
+              }
+              \textbf{\zihao{-3} 分类号 \underline{\hspace*{8em}}} & \textbf{\zihao{-3} 论文选题类型 \underline{\hspace*{6em}}} \\
+              \textbf{\zihao{-3} U\,\,D\,\,C \underline{\hspace*{8em}} } & \textbf{\zihao{-3} 编号 \underline{\hspace*{10em}}}
+            \end{tblr}
+          \end{varwidth}
+        };
+    \end{tikzpicture}
+
     \begin{minipage} [ c ] { \textwidth }
-      \centering \zihao { -3 } \sffamily
+      \centering \zihao { -3 } \xeCJKsetup{AutoFakeBold} \bfseries
       \clist_set:Nx \l__ccnu_tmpa_clist
         {
           \c__ccnu_name_department_tl,
@@ -1766,7 +1788,7 @@
     style   / fullwidth-stop  = false,
     style   / auto-make-cover = true,
     style   / logo            = { ccnulogo.png },
-    style   / logo-size       = { 0.5 \textwidth },
+    style   / logo-size       = { 0.43 \textwidth , 3em},
     style   / hyperlink       = color,
     style   / hyperlink-color = default,
     style   / bib-style       = numerical,
