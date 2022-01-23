@@ -1,5 +1,5 @@
 \tl_const:Nn \c__ccnu_name_simp_tl { 华中师范大学         }
-\tl_const:Nn \c__ccnu_name_trad_tl { 復旦大學          }
+\tl_const:Nn \c__ccnu_name_trad_tl { 華中師範大學         }
 \tl_const:Nn \c__ccnu_name_en_tl   { Central~ China~ Normal~ University }
 \clist_map_inline:nn
   {
