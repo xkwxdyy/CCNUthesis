@@ -1,84 +1,9 @@
-\documentclass{ctexart}
-\usepackage{tabularray}
-\usepackage{varwidth}
-\usepackage{geometry}
-\usepackage{fancyhdr}
-\usepackage{lastpage}
-\usepackage{zhlipsum}
-\usepackage{tikz}
+\documentclass{CCNUthesis}
 
-\geometry{
-  a4paper,
-  hmargin={1.5cm},
-  vmargin={2.0cm}
-}
-
-\pagestyle{fancy}
-\renewcommand{\headrulewidth}{0pt}
-\fancyfoot[C]{第 \thepage\ 页，共 \pageref{LastPage}\ 页} 
-
-\ExplSyntaxOn
-\bool_new:N \l__lesson_preparation_content_show_bool
-\bool_set_true:N \l__lesson_preparation_content_show_bool
-\NewDocumentEnvironment{content}{ !b }
-  {
-    \begin{tikzpicture}
-      [
-        % remember~picture,
-        overlay,
-        % scale = 3,
-        % yshift = 1mm,
-        % xshift = 1mm,
-      ]
-      \node[anchor = north~west]
-        {
-          \bool_if:NTF \l__lesson_preparation_content_show_bool
-            {
-              \begin{varwidth}{\hsize}
-                \linespread{2}
-                #1
-              \end{varwidth}
-            }
-            {}
-        };
-    \end{tikzpicture}
-  }
-  {}
-\ExplSyntaxOff
 \begin{document}
-\SetTblrInner{hlines, vlines, vspan=even}
-  \begin{tblr}{column{2}={16.5cm},cell{1}{1}={r=14}{c},cell{15}{1}={r=15}{l},cell{15}{2}={r=1}{r},cell{18}{2}={r=1}{r},cell{21}{2}={r=1}{r},cell{24}{2}={r=1}{r},cell{27}{2}={r=1}{r},cell{29}{2}={r=1}{r},}
-    {\parbox{1em}{教学内容}} &
-    \begin{content}
-      低给天济办作照明，取路豆学丽适市确。如提单各样备再成农各政，设头律走克美技说没，体交才路此在杠。响育油命转处他住有，一须通给对非交矿今该，花象更面据压来。与花断第然调，很处己队音程承明。常系单要外史按机速引也书，个此少管品务美直管战
-    \end{content} \\
-    教学目标 & \\
-    教学过程 &  \\
-    教学过程 &  \\
-    教学重点 &  \\
-    教学难点 &  \\
-    教具准备 &  \\
-    教学过程 &  \\
-    教学过程 &  \\
-    教学过程 &  \\
-    教学过程 &  \\
-    教学过程 &  \\
-    教学过程 &  \\
-    教学过程 &  \\
-    {\parbox{1em}{教学目标}} & （识字、写字目标） \\
-    教学过程 &  \\
-    教学过程 &  \\
-    教学过程 & （阅读目标）\\
-    教学过程 &  \\
-    教学过程 &  \\
-    教学过程 &  （习作目标）\\
-    教学过程 &  \\
-    教学过程 &  \\
-    教学过程 &  （口语交际目标）\\
-    教学过程 &  \\
-    教学过程 &  \\
-    教学过程 &  （综合性学习目标）\\
-    教学过程 &  \\
-    教学过程 &  \\
-  \end{tblr}
+  \tableofcontents
+  \section{1}
+  \subsection{1}
+  66
+  \section{2}
 \end{document}

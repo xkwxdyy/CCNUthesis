@@ -34,7 +34,7 @@
 \clist_const:Nn \c__ccnu_auth_decl_sign_clist
   { 作者签名, 导师签名, 日期 }
 \clist_const:Nn \c__ccnu_thesis_type_clist
-  { 博士学位论文, 硕士学位论文, 本科毕业论文 }
+  { 博士学位论文, 硕士学位论文, {本科毕业论文（设计）} }
 \clist_const:Nn \c__ccnu_degree_type_clist
   { 学术学位, 专业学位 }
 \clist_const:Nn \c__ccnu_secret_clist { 秘密, 机密, 绝密 }
@@ -43,11 +43,11 @@
     { secret_level       } { 密 \qquad 级                  },
     { secret_star        } { \textrm { \bigstar }          },
     { school_id          } { 学校代码                      },
-    { student_id         } { 学 \qquad 号                  },
-    { department         } { 院系                          },
+    { student_id         } { 学号                  },
+    { department         } { 学院                          },
     { major              } { 专业                          },
     { major_professional } { 专业学位类别（领域）          },
-    { author             } { 姓名                          },
+    { author             } { 学生姓名                        },
     { supervisor         } { 指导教师                      },
     { date               } { 完成日期                      },
     { instructors        } { 指导小组成员                  },

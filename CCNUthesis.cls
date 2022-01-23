@@ -39,7 +39,7 @@
 \tl_new:N    \l__ccnu_tmpa_tl
 \tl_new:N    \l__ccnu_tmpb_tl
 \int_new:N \g__ccnu_thesis_type_int
-\clist_new:N \g__ccnu_to_ctexbook_clist
+\clist_new:N \g__ccnu_to_ctexart_clist
 \clist_new:N \g__ccnu_to_hyperref_clist
 \bool_new:N \g__ccnu_twoside_bool
 \bool_set_true:N \g__ccnu_twoside_bool
@@ -116,24 +116,24 @@
     twoside .value_forbidden:n = true,
     oneside .code:n =
       {
-        \clist_gput_right:Nn \g__ccnu_to_ctexbook_clist { oneside }
+        % \clist_gput_right:Nn \g__ccnu_to_ctexart_clist { oneside }
         \bool_set_false:N    \g__ccnu_twoside_bool
       },
     twoside .code:n =
       {
-        \clist_gput_right:Nn \g__ccnu_to_ctexbook_clist { twoside }
+        % \clist_gput_right:Nn \g__ccnu_to_ctexart_clist { twoside }
         \bool_set_true:N     \g__ccnu_twoside_bool
       },
-    draft .choice:,
-    draft / true  .code:n =
-      {
-        \bool_set_true:N     \g__ccnu_draft_bool
-        \clist_gput_right:Nn \g__ccnu_to_ctexbook_clist { draft }
-      },
-    draft / false .code:n =
-      { \bool_set_false:N    \g__ccnu_draft_bool },
-    draft .default:n = true,
-    draft .initial:n = false,
+    % draft .choice:,
+    % draft / true  .code:n =
+    %   {
+    %     \bool_set_true:N     \g__ccnu_draft_bool
+    %     \clist_gput_right:Nn \g__ccnu_to_ctexart_clist { draft }
+    %   },
+    % draft / false .code:n =
+    %   { \bool_set_false:N    \g__ccnu_draft_bool },
+    % draft .default:n = true,
+    % draft .initial:n = false,
     config .tl_set:N = \g__ccnu_config_tl,
     unknown .code:n = { \__ccnu_error:n { unknown-option } }
   }
@@ -155,9 +155,9 @@
     fontset    = none,
     zihao      = -4,
     linespread = \c__ccnu_line_spread_fp,
-    \g__ccnu_to_ctexbook_clist
+    \g__ccnu_to_ctexart_clist
   }
-  { ctexbook }
+  { ctexart }
 \clist_map_inline:nn
   {
     { no-math           } { fontspec },
@@ -165,7 +165,7 @@
     { amsmath, thmmarks } { ntheorem }
   }
   { \PassOptionsToPackage #1 }
-\LoadClass { ctexbook }
+\LoadClass { ctexart }
 \RequirePackage
   {
     amsmath,
@@ -179,6 +179,7 @@
     caption,
     xcolor
   }
+\graphicspath{{figures/}{logo/}}
 \cs_new_protected:Npn \__ccnu_check_package:nnn #1#2#3
   {
     \@ifpackagelater {#1} {#2}
@@ -197,7 +198,7 @@
     Please~ update~ an~ up-to-date~ version~ of~ it \\
     using~ your~ TeX~ package~ manager~ or~ from~ CTAN.
   }
-\__ccnu_check_class:nnn { ctexbook } { 2021/03/14 } { 2.5.6 }
+\__ccnu_check_class:nnn { ctexart } { 2021/03/14 } { 2.5.6 }
 \sys_if_engine_xetex:T
   { \__ccnu_check_package:nnn { xeCJK } { 2020/05/01 } { 3.8.3 } }
 \geometry
@@ -647,8 +648,8 @@
   }
 \bool_if:NTF \g__ccnu_twoside_bool
   {
-    \__ccnu_fancy_head:nn { EL } { \leftmark  }
-    \__ccnu_fancy_head:nn { OR } { \rightmark }
+    \__ccnu_fancy_head:nn { L } { \leftmark  }
+    \__ccnu_fancy_head:nn { R } { \rightmark }
   }
   {
     \__ccnu_fancy_head:nn { L  } { \leftmark  }
@@ -667,14 +668,14 @@
 \pagestyle { fancy }
 \keys_set:nn { ctex }
   {
-    chapter =
-      {
-        format      = \huge \normalfont \sffamily \centering,
-        beforeskip  = 50 pt,
-        afterskip   = 40 pt,
-        number      = \__ccnu_arabic:n { chapter },
-        fixskip     = true
-      },
+    % chapter =
+    %   {
+    %     format      = \huge \normalfont \sffamily \centering,
+    %     beforeskip  = 50 pt,
+    %     afterskip   = 40 pt,
+    %     number      = \__ccnu_arabic:n { chapter },
+    %     fixskip     = true
+    %   },
     section =
       {
         format      = \Large \normalfont \sffamily \raggedright,
@@ -690,23 +691,23 @@
         fixskip     = true
       }
   }
-\cs_new_protected:Npn \__ccnu_chapter:n #1
+\cs_new_protected:Npn \__ccnu_section:n #1
   {
     \group_begin:
-      \ctexset { chapter / numbering = false }
-      \chapter {#1}
-      \__ccnu_chapter_header:n {#1}
+      \ctexset { section / numbering = false }
+      \section {#1}
+      \__ccnu_section_header:n {#1}
     \group_end:
   }
-\cs_generate_variant:Nn \__ccnu_chapter:n { V }
-\cs_new_protected:Npn \__ccnu_chapter_no_toc:n #1
+\cs_generate_variant:Nn \__ccnu_section:n { V }
+\cs_new_protected:Npn \__ccnu_section_no_toc:n #1
   {
-    \chapter *           {#1}
-    \__ccnu_chapter_header:n {#1}
+    \section *           {#1}
+    \__ccnu_section_header:n {#1}
     \pdfbookmark [0] {#1} { toc }
   }
-\cs_generate_variant:Nn \__ccnu_chapter_no_toc:n { V }
-\cs_new_protected:Npn \__ccnu_chapter_header:n #1
+\cs_generate_variant:Nn \__ccnu_section_no_toc:n { V }
+\cs_new_protected:Npn \__ccnu_section_header:n #1
   {
     \bool_if:NTF \g__ccnu_twoside_bool
       { \markboth {#1} {#1} }
@@ -938,9 +939,9 @@
     labelsep = quad
   }
 \cs_set:Npn \thefigure
-  { \thechapter - \__ccnu_arabic:n { figure } }
+  { \thesection - \__ccnu_arabic:n { figure } }
 \cs_set:Npn \thetable
-  { \thechapter - \__ccnu_arabic:n { table  } }
+  { \thesection - \__ccnu_arabic:n { table  } }
 \clist_map_inline:nn
   {
     title, date, author, supervisor, department, major, student_id,
@@ -1311,7 +1312,7 @@
 \DeclareInstance { ccnu / cover } { cover-i-default } { cover-i }
   {
     bottom-skip            = 0 pt plus 1.5 fill,
-    id       / content     = \__ccnu_cover_id:,
+    % id       / content     = \__ccnu_cover_id:,
     logo     / content     = \__ccnu_cover_logo:,
     type     / content     = \__ccnu_cover_type:,
     degree   / content     = \__ccnu_cover_degree:,
@@ -1322,8 +1323,8 @@
       \__ccnu_fixed_width_center_box:nn
         { 0.9 \textwidth } { \l__ccnu_info_title_en_tl },
     info     / content     = \__ccnu_cover_info:,
-    id       / format      = \zihao { -5 },
-    type     / format      = \zihao {  2 },
+    % id       / format      = \zihao { -5 },
+    type     / format      = \zihao {  -1 }\sffamily ,
     degree   / format      = \zihao {  4 },
     title    / format      = \zihao { -2 } \bfseries,
     title-en / format      = \__ccnu_line_spread:n { 1.2 } \zihao { 4 } \bfseries,
@@ -1407,11 +1408,11 @@
     contentsname   = \c__ccnu_name_toc_tl,
     listfigurename = \c__ccnu_name_lof_tl,
     listtablename  = \c__ccnu_name_lot_tl,
-    chapter / tocline =
-      {
-        \normalfont \sffamily
-        \CTEXnumberline {#1} #2
-      },
+    % chapter / tocline =
+    %   {
+    %     \normalfont \sffamily
+    %     \CTEXnumberline {#1} #2
+    %   },
     section / tocline =
       {
         \CTEXnumberline {#1} #2
@@ -1424,33 +1425,33 @@
   }
 \__ccnu_patch_cmd:Nnn \tableofcontents
   {
-    \chapter*{\contentsname
+    \section*{\contentsname
       \@mkboth{\MakeUppercase\contentsname}
               {\MakeUppercase\contentsname}}
   }
-  { \__ccnu_chapter_no_toc:V \contentsname }
+  { \__ccnu_section_no_toc:V \contentsname }
 \__ccnu_patch_cmd:Nnn \listoffigures
   {
-    \chapter*{\listfigurename}
+    \section*{\listfigurename}
     \@mkboth{\MakeUppercase\listfigurename}
             {\MakeUppercase\listfigurename}
   }
-  { \__ccnu_chapter:V \listfigurename }
+  { \__ccnu_section:V \listfigurename }
 \__ccnu_patch_cmd:Nnn \listoftables
   {
-    \chapter*{\listtablename}
+    \section*{\listtablename}
     \@mkboth{\MakeUppercase\listtablename}
             {\MakeUppercase\listtablename}
   }
-  { \__ccnu_chapter:V \listtablename }
-\NewDocumentEnvironment { abstract  } { }
+  { \__ccnu_section:V \listtablename }
+\RenewDocumentEnvironment { abstract  } { }
   { \__ccnu_abstract_begin:    } { \__ccnu_abstract_end:      }
 \NewDocumentEnvironment { abstract* } { }
   { \__ccnu_abstract_en_begin: } { \__ccnu_abstract_en_end:   }
 \cs_new_protected:Npn \__ccnu_abstract_begin:
-  { \__ccnu_chapter:V \c__ccnu_name_abstract_tl    }
+  { \__ccnu_section:V \c__ccnu_name_abstract_tl    }
 \cs_new_protected:Npn \__ccnu_abstract_en_begin:
-  { \__ccnu_chapter:V \c__ccnu_name_abstract_en_tl }
+  { \__ccnu_section:V \c__ccnu_name_abstract_en_tl }
 \cs_new_protected:Npn \__ccnu_abstract_end:
   {
     \__ccnu_keywords:nNn
@@ -1513,7 +1514,7 @@
   }
 \cs_new_protected:Npn \__ccnu_notation_begin:
   {
-    \__ccnu_chapter:V \c__ccnu_name_notation_tl
+    \__ccnu_section:V \c__ccnu_name_notation_tl
   }
 \cs_new_protected:Npn \__ccnu_notation_long_table_setup:
   {
@@ -1594,7 +1595,7 @@
     \ctex_patch_cmd:Nnn \NAT@citexnum
       { - \NAT@penalty }
       { \textendash \NAT@penalty }
-    \cs_set:Npn \bibsection { \__ccnu_chapter:V \bibname }
+    \cs_set:Npn \bibsection { \__ccnu_section:V \bibname }
     \NewDocumentCommand \printbibliography { o }
       {
         \exp_args:NV \bibliography \l__ccnu_bib_resource_clist
@@ -1637,7 +1638,7 @@
     \clist_map_function:NN \l__ccnu_bib_resource_clist \addbibresource
     \__ccnu_biblatex_allow_url_break:
     \__ccnu_biblatex_use_en_dash:
-    \defbibheading { bibliography } [ \bibname ] { \__ccnu_chapter:n {##1} }
+    \defbibheading { bibliography } [ \bibname ] { \__ccnu_section:n {##1} }
   }
 \cs_new:Npn \__ccnu_biblatex_allow_url_break:
   {
@@ -1756,7 +1757,7 @@
     style   / font-size       = -4,
     style   / fullwidth-stop  = false,
     style   / auto-make-cover = true,
-    style   / logo            = { fudan-name.pdf },
+    style   / logo            = { ccnulogo.png },
     style   / logo-size       = { 0.5 \textwidth },
     style   / hyperlink       = color,
     style   / hyperlink-color = default,
@@ -1767,7 +1768,7 @@
     info    / date            = { \zhtoday },
     theorem / header-font     = { \sffamily },
     theorem / body-font       = { \ccnu@kai },
-    theorem / counter         = { chapter }
+    theorem / counter         = { section }
   }
 \NewDocumentCommand \ccnusetup { m }
   { \keys_set:nn { ccnu } {#1} }
