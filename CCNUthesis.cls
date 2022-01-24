@@ -4,9 +4,14 @@
   {2022-01-21}{v0.0.1}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e }
-\RequirePackage { tikz }
+\RequirePackage { tikz, tikzpagenodes }
 \RequirePackage { tabularray }
 \RequirePackage { varwidth }
+% \RequirePackage { xeCJKfntef }
+\RequirePackage { ulem }
+\RequirePackage { calc }
+\RequirePackage { adjustbox }
+
 
 \msg_new:nnn { ccnuthesis } { l3-too-old }
   {
@@ -54,6 +59,36 @@
 \cs_generate_variant:Nn \keys_define:nn   { nx }
 \cs_generate_variant:Nn \tl_map_inline:nn { xn }
 \prg_generate_conditional_variant:Nnn \tl_if_eq:nn { Vn } { T, TF }
+\tl_new:N \l__coloruline_line_color_tl
+\tl_new:N \l__coloruline_text_color_tl
+\dim_new:N \l__coloruline_line_width_dim
+
+\keys_define:nn { coloruline }
+  {
+    textcolor .tl_set:N = \l__coloruline_text_color_tl,
+    textcolor .initial:n = black,
+    linecolor .tl_set:N = \l__coloruline_line_color_tl,
+    linecolor .initial:n = black,
+    line-width .dim_set:N = \l__coloruline_line_width_dim,
+    line-width .initial:n = 0.4pt,
+    thickness .dim_set:N = \l__coloruline_line_width_dim,
+    thickness .initial:n = 0.4pt,
+  }
+\NewDocumentCommand{ \coloruline } { O{} m }
+  {
+    \group_begin:
+      \keys_set:nn { coloruline } {#1}
+      \bgroup
+        \color{ \tl_use:N \l__coloruline_text_color_tl }
+        \markoverwith
+        {
+          \textcolor
+            { \tl_use:N \l__coloruline_line_color_tl }
+            { \rule[-0.5ex]{2pt}{ \l__coloruline_line_width_dim } }
+        }
+        \ULon{#2}
+    \group_end:
+  }
 \cs_new:Npn \__ccnu_quad:  { \skip_horizontal:n { 1 em } }
 \cs_new:Npn \__ccnu_qquad: { \skip_horizontal:n { 2 em } }
 \cs_new_protected:Npn \__ccnu_vspace:N #1
@@ -208,9 +243,13 @@
 \geometry
   {
     paper      = a4paper,
-    vmargin    = 2.54 cm,
-    hmargin    = 3.18 cm,
-    headheight = 15 pt
+    % vmargin    = 2.54 cm,
+    % hmargin    = 3.18 cm,
+    % headheight = 15 pt
+    left = 2.85cm,
+    right = 2.45cm,
+    top = 3cm,
+    bottom = 2.5cm
   }
 \bool_if:NT \g__ccnu_draft_bool { \geometry { showframe } }
 \tl_new:N \g__ccnu_fontset_tl
@@ -1019,13 +1058,34 @@
 \cs_new_protected:Npn \__ccnu_center_box:nn #1#2
   {
     \mode_leave_vertical:
-    \hbox_to_wd:nn {#1} { \hfil #2 \hfil }
+    % \hbox_to_wd:nn {#1} { \hfil #2 \hfil }
+    \hbox_to_wd:nn {#1} { \hfil \UnderlineCentered{6cm}{2mm}{#2} \hfil }
   }
 \cs_generate_variant:Nn \__ccnu_center_box:nn  { Vn }
 \cs_new:Npn \__ccnu_fixed_width_box:nn #1#2
   { \parbox {#1} {#2} }
 \cs_new:Npn \__ccnu_fixed_width_center_box:nn #1#2
   { \parbox {#1} { \centering #2 } }
+% 制作标题的下划线命令
+% https://syvshc.github.io/2021-08-04-thesis-title/
+\newlength\myheight
+\newcommand\Mysavedprevdepth{}%
+\newcommand\UnderlineCentered[3]{%
+  \begin{adjustbox}{minipage=[t]{\dimexpr#1\relax},gstore~totalheight=\myheight, margin=0pt}%
+    \centering\leavevmode#3\par\xdef\Mysavedprevdepth{\the\prevdepth}%
+  \end{adjustbox}%
+  \hspace*{-\dimexpr#1\relax}%
+  \begin{adjustbox}{minipage=[t][\myheight]{\dimexpr#1\relax},margin=0pt}%
+    \vphantom{Eg}\lower\dimexpr#2\relax\hbox to\hsize{\leaders\hrule height1pt\hfill\kern0pt}\par
+    \kern-\dimexpr#2\relax
+    \xleaders\vbox to\baselineskip {\vfill\hbox{\lower\dimexpr#2\relax\hbox to\hsize{\leaders\hrule height1pt\hfill\kern0pt}}\kern-\dimexpr#2\relax}\vfill
+    \kern\Mysavedprevdepth
+  \end{adjustbox}%
+}%
+
+\cs_new:Npn \__ccnu_fixed_width_center_underline_box:nn #1#2
+  % { \parbox {#1} { \centering \uline{#2} } }
+  { \parbox {#1} { \centering \UnderlineCentered{8cm}{1.4mm}{#2} } }
 \cs_new:Npn \__ccnu_get_text_width:Nn #1#2
   {
     \hbox_set:Nn \l__ccnu_tmpa_box {#2}
@@ -1121,7 +1181,7 @@
       }
     \begin{tikzpicture}[remember~picture, overlay]
       \node[anchor = north] (upperinfo) at 
-        ([shift={(0,-0.1\paperheight)}]current~page.north) 
+        ([shift={(0,0\paperheight)}]current~page~text~area.north) 
         {
           \begin{varwidth}{\hsize}
             \begin{tblr}
@@ -1135,6 +1195,12 @@
             \end{tblr}
           \end{varwidth}
         };
+      \node[anchor = south] (date) at (current~page~text~area.south) 
+        {
+          \zihao{3} \bfseries
+          二〇二二\,\,年\,\,\zhnumber{ \int_use:N \c_sys_month_int }\,\,月
+        };
+      \node[] (type) at ([shift = {(0 , -0.35\paperheight)}]current~page.north) {\zihao{-0} \sffamily 本科毕业论文（设计）};
     \end{tikzpicture}
 
     \begin{minipage} [ c ] { \textwidth }
@@ -1342,17 +1408,18 @@
     bottom-skip            = 0 pt plus 1.5 fill,
     % id       / content     = \__ccnu_cover_id:,
     logo     / content     = \__ccnu_cover_logo:,
-    type     / content     = \__ccnu_cover_type:,
+    % type     / content     = \__ccnu_cover_type:,
     degree   / content     = \__ccnu_cover_degree:,
     title    / content     =
-      \__ccnu_fixed_width_center_box:nn
+      % \__ccnu_fixed_width_center_box:nn
+      \__ccnu_fixed_width_center_underline_box:nn
         { 0.9 \textwidth } { \l__ccnu_info_title_tl },
     title-en / content     =
       \__ccnu_fixed_width_center_box:nn
         { 0.9 \textwidth } { \l__ccnu_info_title_en_tl },
     info     / content     = \__ccnu_cover_info:,
     % id       / format      = \zihao { -5 },
-    type     / format      = \zihao {  -1 }\sffamily ,
+    % type     / format      = \zihao {  -1 }\sffamily ,
     degree   / format      = \zihao {  4 },
     title    / format      = \zihao { -2 } \bfseries,
     title-en / format      = \__ccnu_line_spread:n { 1.2 } \zihao { 4 } \bfseries,
