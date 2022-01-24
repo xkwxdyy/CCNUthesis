@@ -1201,6 +1201,8 @@
           二〇二二\,\,年\,\,\zhnumber{ \int_use:N \c_sys_month_int }\,\,月
         };
       \node[] (type) at ([shift = {(0 , -0.35\paperheight)}]current~page.north) {\zihao{-0} \sffamily 本科毕业论文（设计）};
+      \node[] (titlecontent) at ([shift = {(0.05\paperheight, 0)}]current~page.center) {\zihao{-2} \bfseries \UnderlineCentered{8cm}{1.6mm}{\tl_use:N \l__ccnu_info_title_tl}};
+      \node[] (titlelabel) at ([shift = {(-0.15\paperheight, 0)}]current~page.center) { \zihao{-1} \textbf{题\,\,\,目}};
     \end{tikzpicture}
 
     \begin{minipage} [ c ] { \textwidth }
@@ -1410,19 +1412,19 @@
     logo     / content     = \__ccnu_cover_logo:,
     % type     / content     = \__ccnu_cover_type:,
     degree   / content     = \__ccnu_cover_degree:,
-    title    / content     =
+    % title    / content     =
       % \__ccnu_fixed_width_center_box:nn
-      \__ccnu_fixed_width_center_underline_box:nn
-        { 0.9 \textwidth } { \l__ccnu_info_title_tl },
-    title-en / content     =
-      \__ccnu_fixed_width_center_box:nn
-        { 0.9 \textwidth } { \l__ccnu_info_title_en_tl },
+      % \__ccnu_fixed_width_center_underline_box:nn
+        % { 0.9 \textwidth } { \l__ccnu_info_title_tl },
+    % title-en / content     =
+      % \__ccnu_fixed_width_center_box:nn
+        % { 0.9 \textwidth } { \l__ccnu_info_title_en_tl },
     info     / content     = \__ccnu_cover_info:,
     % id       / format      = \zihao { -5 },
     % type     / format      = \zihao {  -1 }\sffamily ,
     degree   / format      = \zihao {  4 },
-    title    / format      = \zihao { -2 } \bfseries,
-    title-en / format      = \__ccnu_line_spread:n { 1.2 } \zihao { 4 } \bfseries,
+    % title    / format      = \zihao { -2 } \bfseries,
+    % title-en / format      = \__ccnu_line_spread:n { 1.2 } \zihao { 4 } \bfseries,
     id       / bottom-skip = 0 pt plus 1.6 fill,
     logo     / bottom-skip = 0 pt plus 0.3 fill,
     type     / bottom-skip = -18 pt,
