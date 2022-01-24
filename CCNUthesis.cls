@@ -4,14 +4,6 @@
   {2022-01-21}{v0.0.1}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e }
-\RequirePackage { tikz, tikzpagenodes }
-\RequirePackage { tabularray }
-\RequirePackage { varwidth }
-% \RequirePackage { xeCJKfntef }
-\RequirePackage { ulem }
-\RequirePackage { calc }
-\RequirePackage { adjustbox }
-
 
 \msg_new:nnn { ccnuthesis } { l3-too-old }
   {
@@ -194,6 +186,7 @@
     fontset    = none,
     zihao      = -4,
     linespread = \c__ccnu_line_spread_fp,
+    oneside,
     \g__ccnu_to_ctexbook_clist
   }
   { ctexbook }
@@ -216,7 +209,13 @@
     graphicx,
     longtable,
     caption,
-    xcolor
+    xcolor,
+    tikz,
+    tikzpagenodes,
+    tabularray,
+    varwidth,
+    ulem,
+    adjustbox
   }
 \graphicspath{{figures/}{logo/}}
 \cs_new_protected:Npn \__ccnu_check_package:nnn #1#2#3
@@ -718,7 +717,8 @@
         beforeskip  = 50 pt,
         afterskip   = 40 pt,
         number      = \__ccnu_arabic:n { chapter },
-        fixskip     = true
+        fixskip     = true,
+        name        = {}
       },
     section =
       {
