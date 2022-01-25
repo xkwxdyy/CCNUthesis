@@ -1,84 +1,173 @@
-\documentclass{ctexart}
-\usepackage{tabularray}
-\usepackage{varwidth}
-\usepackage{geometry}
-\usepackage{fancyhdr}
-\usepackage{lastpage}
-\usepackage{zhlipsum}
-\usepackage{tikz}
+\documentclass{CCNUthesis}
 
-\geometry{
-  a4paper,
-  hmargin={1.5cm},
-  vmargin={2.0cm}
+\ccnusetup{
+  % style 类用于设置论文格式
+  style = {
+    font = times,
+    % 西文字体（包括数学字体）
+    % 允许选项：
+    %   font = garamond|libertinus|lm|palatino|times|times*|none
+    %
+    cjk-font = fandol,
+    % 中文字体
+    % 允许选项：
+    %   cjk-font = adobe|fandol|founder|mac|sinotype|sourcehan|windows|none
+    %
+    % 注意：
+    %   1. 中文字体设置高度依赖于系统。各系统建议方案：
+    %        windows：cjk-font = windows
+    %        mac：    cjk-font = mac
+    %        linux：  cjk-font = fandol（默认值）
+    %   2. 除 fandol 和 sourcehan 外，其余字体均为商用字体，请注意版权问题
+    %   3. 但 fandol 字体缺字比较严重，而 sourcehan 没有配备楷体和仿宋体
+    %   4. 这里中西文字体设置均注释掉了，即使用默认设置：
+    %        font     = times
+    %        cjk-font = fandol
+    %   5. 使用 font = none / cjk-font = none 关闭默认字体设置，需手动进行配置
+    %
+    font-size = 5,
+    % 字号
+    % 允许选项：
+    %   font-size = -4|5
+    %
+    fullwidth-stop = catcode,
+    % 是否把全角实心句点 “．” 作为默认的句号形状
+    % 允许选项：
+    %   fullwidth-stop = catcode|mapping|false
+    % 说明：
+    %   catcode   显式的 “。” 会被替换为 “．”（e.g. 不包括用宏定义保存的 “。”）
+    %   mapping   所有的 “。” 会被替换为 “．”（使用 LuaLaTeX 编译则无效）
+    %   false     不进行替换
+    %
+    footnote-style = xits,
+    % 脚注编号样式
+    % 允许选项：
+    %   footnote-style = plain|libertinus|libertinus*|libertinus-sans|
+    %                    pifont|pifont*|pifont-sans|pifont-sans*|
+    %                    xits|xits-sans|xits-sans*
+    % 默认与西文字体保持一致
+    %
+    hyperlink = none,
+    % 超链接样式
+    % 允许选项：
+    %   hyperlink = border|color|none
+    %
+    hyperlink-color = default,
+    % 超链接颜色
+    % 允许选项：
+    %   hyperlink-color = default|classic|material|graylevel|prl
+    %
+    bib-backend = biblatex,
+    % 参考文献支持方式
+    % 允许选项：
+    %   bib-backend = bibtex|biblatex
+    %
+    % bib-style = numerical,
+    % 参考文献样式
+    % 允许选项：
+    %   bib-style = author-year|numerical|<其他样式>
+    % 说明：
+    %   author-year  著者—出版年制
+    %   numerical    顺序编码制
+    %   <其他样式>   使用其他 .bst（bibtex）或 .bbx（biblatex）格式文件
+    %
+    % cite-style = {},
+    % 引用样式
+    % 默认为空，即与参考文献样式保持一致
+    % 仅适用于 biblatex；如要填写，需保证相应的 .cbx 格式文件能被调用
+    %
+    bib-resource = {CCNUthesis-main.bib},
+    % 参考文献数据源
+    % 可以是单个文件，也可以是用英文逗号 “,” 隔开的一组文件
+    % 如果使用 biblatex，则必须明确给出 .bib 后缀名
+    },
+  info = {
+    title = {Lipschitz函数的若干性质},
+    major = {数学与统计学学院},
+    department = {数学与应用数学（试验）},
+    level = {2017},
+    author = {夏康玮},
+    student-id = {2017214294},
+    supervisor = {李工宝 \quad 教授},
+    keywords = {Lipschitz函数, 可微性, Hausdorff测度, Hausdorff维数},
+    keywords* = {Lipschitz functions, Differentiability, Hausdorff measure, Hausdorff dimension},
+  },
 }
 
-\pagestyle{fancy}
-\renewcommand{\headrulewidth}{0pt}
-\fancyfoot[C]{第 \thepage\ 页，共 \pageref{LastPage}\ 页} 
+% 需要的宏包可以自行调用
+\usepackage{physics}   % 仅为示例用，可删除
 
-\ExplSyntaxOn
-\bool_new:N \l__lesson_preparation_content_show_bool
-\bool_set_true:N \l__lesson_preparation_content_show_bool
-\NewDocumentEnvironment{content}{ !b }
-  {
-    \begin{tikzpicture}
-      [
-        % remember~picture,
-        overlay,
-        % scale = 3,
-        % yshift = 1mm,
-        % xshift = 1mm,
-      ]
-      \node[anchor = north~west]
-        {
-          \bool_if:NTF \l__lesson_preparation_content_show_bool
-            {
-              \begin{varwidth}{\hsize}
-                \linespread{2}
-                #1
-              \end{varwidth}
-            }
-            {}
-        };
-    \end{tikzpicture}
-  }
-  {}
-\ExplSyntaxOff
+% 需要的命令可以自行定义
+\newcommand{\hilbertH}{\symcal{H}}   % 仅为示例用，可删除
+\newcommand{\ee}{\symrm{e}}   % 仅为示例用，可删除
+\newcommand{\ii}{\symrm{i}}   % 仅为示例用，可删除
+
+
 \begin{document}
-\SetTblrInner{hlines, vlines, vspan=even}
-  \begin{tblr}{column{2}={16.5cm},cell{1}{1}={r=14}{c},cell{15}{1}={r=15}{l},cell{15}{2}={r=1}{r},cell{18}{2}={r=1}{r},cell{21}{2}={r=1}{r},cell{24}{2}={r=1}{r},cell{27}{2}={r=1}{r},cell{29}{2}={r=1}{r},}
-    {\parbox{1em}{教学内容}} &
-    \begin{content}
-      低给天济办作照明，取路豆学丽适市确。如提单各样备再成农各政，设头律走克美技说没，体交才路此在杠。响育油命转处他住有，一须通给对非交矿今该，花象更面据压来。与花断第然调，很处己队音程承明。常系单要外史按机速引也书，个此少管品务美直管战
-    \end{content} \\
-    教学目标 & \\
-    教学过程 &  \\
-    教学过程 &  \\
-    教学重点 &  \\
-    教学难点 &  \\
-    教具准备 &  \\
-    教学过程 &  \\
-    教学过程 &  \\
-    教学过程 &  \\
-    教学过程 &  \\
-    教学过程 &  \\
-    教学过程 &  \\
-    教学过程 &  \\
-    {\parbox{1em}{教学目标}} & （识字、写字目标） \\
-    教学过程 &  \\
-    教学过程 &  \\
-    教学过程 & （阅读目标）\\
-    教学过程 &  \\
-    教学过程 &  \\
-    教学过程 &  （习作目标）\\
-    教学过程 &  \\
-    教学过程 &  \\
-    教学过程 &  （口语交际目标）\\
-    教学过程 &  \\
-    教学过程 &  \\
-    教学过程 &  （综合性学习目标）\\
-    教学过程 &  \\
-    教学过程 &  \\
-  \end{tblr}
+% 前置部分包含目录、中英文摘要以及符号表等
+\frontmatter
+% 目录
+\tableofcontents
+
+% 中文摘要
+\begin{abstract}
+  中文摘要
+\end{abstract}
+
+% 英文摘要
+\begin{abstract*}
+  English abstract
+\end{abstract*}
+
+% 符号表
+% 语法与 LaTeX 表格一致：列用 & 区分，行用 \\ 区分
+% 如需修改格式，可以使用可选参数：
+%   \begin{notation}[ll]
+%     $x$ & 坐标 \\
+%     $p$ & 动量
+%   \end{notation}
+% 可选参数与 LaTeX 标准表格的列格式说明语法一致
+% 这里的 “ll” 表示两列均为自动宽度，并且左对齐
+\begin{notation}[ll]
+  $x$                  & 坐标        \\
+  $p$                  & 动量        \\
+  $\psi(x)$            & 波函数      \\
+\end{notation}
+
+
+
+% 主体部分是论文的核心
+\mainmatter
+
+
+% 采用多文件编译的方式
+% 把每一章放进一个单独的 tex 文件里，并在这里用 \include 导入
+% 例如 \include{./body/chapter1.tex}
+% 表示插入main所在目录中的body目录下的chapter1.tex文件
+
+% 章节一般包括【引言】、【预备知识】以及最后的【总结与展望】
+% 中间部分灵活掌握
+% 文件中的标题仅为示例，可根据自己需要进行修改
+\include{./body/chapter1.tex}
+\include{./body/chapter2.tex}
+\include{./body/chapter3.tex}
+\include{./body/chapter4.tex}
+
+
+
+% 后置部分包含参考文献、声明页（自动生成）等
+\backmatter
+
+% 参考文献只需要修改CCNUthesis-main.bib文件
+% 打印参考文献列表
+\printbibliography
+
+
+% 致谢
+\include{./back/Acknowledgements.tex}
+% 附录
+\include{./back/Appendix.tex}
+
+
+
 \end{document}

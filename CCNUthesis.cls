@@ -4,17 +4,18 @@
   {2022-01-21}{v0.0.1}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e }
-\clist_map_inline:nn { xtemplate, l3keys2e }
-  {
-    \@ifpackagelater {#1} { 2020/07/17 }
-      { } { \msg_error:nnn { ccnuthesis } { l3-too-old } {#1} }
-  }
+
 \msg_new:nnn { ccnuthesis } { l3-too-old }
   {
     Package~ "#1"~ is~ too~ old. \\\\
     Please~ update~ an~ up-to-date~ version~ of~ the~ bundles \\
     "l3kernel"~ and~ "l3packages"~ using~ your~ TeX~ package \\
     manager~ or~ from~ CTAN.
+  }
+\clist_map_inline:nn { xtemplate, l3keys2e }
+  {
+    \@ifpackagelater {#1} { 2020/07/17 }
+      { } { \msg_error:nnn { ccnuthesis } { l3-too-old } {#1} }
   }
 \sys_if_engine_xetex:F
   {
@@ -50,6 +51,36 @@
 \cs_generate_variant:Nn \keys_define:nn   { nx }
 \cs_generate_variant:Nn \tl_map_inline:nn { xn }
 \prg_generate_conditional_variant:Nnn \tl_if_eq:nn { Vn } { T, TF }
+\tl_new:N \l__coloruline_line_color_tl
+\tl_new:N \l__coloruline_text_color_tl
+\dim_new:N \l__coloruline_line_width_dim
+
+\keys_define:nn { coloruline }
+  {
+    textcolor .tl_set:N = \l__coloruline_text_color_tl,
+    textcolor .initial:n = black,
+    linecolor .tl_set:N = \l__coloruline_line_color_tl,
+    linecolor .initial:n = black,
+    line-width .dim_set:N = \l__coloruline_line_width_dim,
+    line-width .initial:n = 0.4pt,
+    thickness .dim_set:N = \l__coloruline_line_width_dim,
+    thickness .initial:n = 0.4pt,
+  }
+\NewDocumentCommand{ \coloruline } { O{} m }
+  {
+    \group_begin:
+      \keys_set:nn { coloruline } {#1}
+      \bgroup
+        \color{ \tl_use:N \l__coloruline_text_color_tl }
+        \markoverwith
+        {
+          \textcolor
+            { \tl_use:N \l__coloruline_line_color_tl }
+            { \rule[-0.5ex]{2pt}{ \l__coloruline_line_width_dim } }
+        }
+        \ULon{#2}
+    \group_end:
+  }
 \cs_new:Npn \__ccnu_quad:  { \skip_horizontal:n { 1 em } }
 \cs_new:Npn \__ccnu_qquad: { \skip_horizontal:n { 2 em } }
 \cs_new_protected:Npn \__ccnu_vspace:N #1
@@ -155,6 +186,7 @@
     fontset    = none,
     zihao      = -4,
     linespread = \c__ccnu_line_spread_fp,
+    oneside,
     \g__ccnu_to_ctexbook_clist
   }
   { ctexbook }
@@ -177,8 +209,16 @@
     graphicx,
     longtable,
     caption,
-    xcolor
+    xcolor,
+    tikz,
+    tikzpagenodes,
+    tabularray,
+    varwidth,
+    ulem,
+    adjustbox,
+    calc
   }
+\graphicspath{{figures/}{logo/}}
 \cs_new_protected:Npn \__ccnu_check_package:nnn #1#2#3
   {
     \@ifpackagelater {#1} {#2}
@@ -203,9 +243,13 @@
 \geometry
   {
     paper      = a4paper,
-    vmargin    = 2.54 cm,
-    hmargin    = 3.18 cm,
-    headheight = 15 pt
+    % vmargin    = 2.54 cm,
+    % hmargin    = 3.18 cm,
+    % headheight = 15 pt
+    left = 2.85cm,
+    right = 2.45cm,
+    top = 3cm,
+    bottom = 2.5cm
   }
 \bool_if:NT \g__ccnu_draft_bool { \geometry { showframe } }
 \tl_new:N \g__ccnu_fontset_tl
@@ -640,20 +684,21 @@
     \upshape \CJKfamily { \CJKfamilydefault },
   }
 \fancyhf { }
-\cs_new_protected:Npn \__ccnu_fancy_head:nn #1#2
-  {
-    \fancyhead [#1]
-      { \small \ccnu@kai \nouppercase {#2} }
-  }
-\bool_if:NTF \g__ccnu_twoside_bool
-  {
-    \__ccnu_fancy_head:nn { EL } { \leftmark  }
-    \__ccnu_fancy_head:nn { OR } { \rightmark }
-  }
-  {
-    \__ccnu_fancy_head:nn { L  } { \leftmark  }
-    \__ccnu_fancy_head:nn { R  } { \rightmark }
-  }
+\renewcommand{\headrulewidth}{0pt}
+% \cs_new_protected:Npn \__ccnu_fancy_head:nn #1#2
+%   {
+%     \fancyhead [#1]
+%       { \small \ccnu@kai \nouppercase {#2} }
+%   }
+% \bool_if:NTF \g__ccnu_twoside_bool
+%   {
+%     \__ccnu_fancy_head:nn { L } { \leftmark  }
+%     \__ccnu_fancy_head:nn { R } { \rightmark }
+%   }
+%   {
+%     \__ccnu_fancy_head:nn { L  } { \leftmark  }
+%     \__ccnu_fancy_head:nn { R  } { \rightmark }
+%   }
 \fancyfoot [ C ] { \small \thepage }
 \RenewDocumentCommand \cleardoublepage { }
   {
@@ -673,7 +718,8 @@
         beforeskip  = 50 pt,
         afterskip   = 40 pt,
         number      = \__ccnu_arabic:n { chapter },
-        fixskip     = true
+        fixskip     = true,
+        name        = {}
       },
     section =
       {
@@ -962,6 +1008,7 @@
     title       .tl_set:N    = \l__ccnu_info_title_tl,
     title*      .tl_set:N    = \l__ccnu_info_title_en_tl,
     date        .tl_set:N    = \l__ccnu_info_date_tl,
+    level        .tl_set:N    = \l__ccnu_info_level_tl,
     author      .tl_set:N    = \l__ccnu_info_author_tl,
     author*     .tl_set:N    = \l__ccnu_info_author_en_tl,
     supervisor  .tl_set:N    = \l__ccnu_info_supervisor_tl,
@@ -1012,13 +1059,122 @@
 \cs_new_protected:Npn \__ccnu_center_box:nn #1#2
   {
     \mode_leave_vertical:
-    \hbox_to_wd:nn {#1} { \hfil #2 \hfil }
+    % \hbox_to_wd:nn {#1} { \hfil #2 \hfil }
+    \hbox_to_wd:nn {#1} { \hfil \UnderlineCentered{6cm}{2mm}{#2} \hfil }
   }
 \cs_generate_variant:Nn \__ccnu_center_box:nn  { Vn }
 \cs_new:Npn \__ccnu_fixed_width_box:nn #1#2
   { \parbox {#1} {#2} }
 \cs_new:Npn \__ccnu_fixed_width_center_box:nn #1#2
   { \parbox {#1} { \centering #2 } }
+% 制作标题的下划线命令
+% https://syvshc.github.io/2021-08-04-thesis-title/
+\newlength\myheight
+\newcommand\Mysavedprevdepth{}%
+\newcommand\UnderlineCentered[3]{%
+  \begin{adjustbox}{minipage=[t]{\dimexpr#1\relax},gstore~totalheight=\myheight, margin=0pt}%
+    \centering\leavevmode#3\par\xdef\Mysavedprevdepth{\the\prevdepth}%
+  \end{adjustbox}%
+  \hspace*{-\dimexpr#1\relax}%
+  \begin{adjustbox}{minipage=[t][\myheight]{\dimexpr#1\relax},margin=0pt}%
+    \vphantom{Eg}\lower\dimexpr#2\relax\hbox to\hsize{\leaders\hrule height1pt\hfill\kern0pt}\par
+    \kern-\dimexpr#2\relax
+    \xleaders\vbox to\baselineskip {\vfill\hbox{\lower\dimexpr#2\relax\hbox to\hsize{\leaders\hrule height1pt\hfill\kern0pt}}\kern-\dimexpr#2\relax}\vfill
+    \kern\Mysavedprevdepth
+  \end{adjustbox}%
+}%
+%%%%%%%%%%%%%% 慕子的下划线
+% \makeatletter   % 加
+\renewcommand{\arraystretch}{1.2}
+
+% inner temp length
+\newlength\@tempTitleHt
+\newlength\@tempTitleMaxWd
+
+% length used as parameters， "Wd" is a shorthand for "Width"
+\newlength\titleSingleLineMaxWd
+\newlength\titleMultiLineMaxWd
+\newlength\titleLRExtraWd
+\newlength\titleSepWd
+
+\setlength\titleSingleLineMaxWd{0.6\textwidth}
+\setlength\titleMultiLineMaxWd{0.5\textwidth}
+\setlength\titleLRExtraWd{.5em}
+\setlength\titleSepWd{.5em}
+
+% main macro, using a simple table
+% \newcommand{\multilingualTitles}[2]{%
+%   \par
+%   {\noindent\centering
+%   \begin{tabular}{r @{\hspace{\titleSepWd}} p{\titleSingleLineMaxWd}}
+%   	中文标题           & \titleBox{#1} \\
+%   	                 &               \\[-10pt]
+%   	Title in English & \titleBox{#2}
+%   \end{tabular}\par}%
+% }
+
+% draw a fixed-width underline
+\newcommand{\titleUnderline}{%
+  \rule[-.3em]{\titleSingleLineMaxWd + 2\titleLRExtraWd}{1pt}}
+
+% title content typesetter
+\newcommand\titleBox[1]{%
+  \setlength\@tempTitleMaxWd\titleSingleLineMaxWd
+  % Measure the total height of #1 subject to \titleSingleLineMaxWd.
+  % Here \@titleBox is necessary when #1 contains "\\".
+  \settototalheight\@tempTitleHt{\@titleBox{#1}}%
+  \ifdim\@tempTitleHt=0pt%
+    % case 1: #1 causes empty output
+    \titleUnderline
+  \else
+    % Change to LR mode, for inserting a zero-width box right after.
+    \leavevmode
+    % note: Use \normalbaseineskip instead of \baselineskip, 
+    %       since the latter is set to 0pt inside tabular env.
+    \ifdim\@tempTitleHt>\normalbaselineskip
+      % case 2: #1 is fit for multilines, or contains `\\`, hence
+      %         \titleMultiLineMaxWd is used instead, and the total 
+      %         height of #1 subject to new max width is re-measured.
+      \setlength\@tempTitleMaxWd\titleMultiLineMaxWd
+      \settototalheight\@tempTitleHt{\@titleBox{#1}}%
+      % \rlap{\smash{...}} typesets content of its argument normally 
+      % but sets it into a zero sized box. Here \@titleBox set 
+      % (possiblly) multi-line text into a single box, since \smash 
+      % only takes in argument spreading one line.
+      %
+      % Every line of title content needs an underline, hense we do
+      % a loop to typeset one underline for every line the title 
+      % content actually spreads.
+      \rlap{\smash{\@titleBox{%
+        \@whiledim\@tempTitleHt>0pt%
+        \leavevmode
+        % 
+        \do{%
+          \rlap{\titleUnderline}\\%
+          \addtolength\@tempTitleHt{-\normalbaselineskip}%
+        }%
+      }}}%
+      % Insert h-offset to manually center the title content.
+      \hspace{\dimexpr\titleLRExtraWd + .5\titleSingleLineMaxWd - .5\titleMultiLineMaxWd\relax}%
+      \@titleBox{\centering #1}%
+    \else
+      % case 3: #1 is fit for one line
+      \rlap{\titleUnderline}%
+      \hspace{\titleLRExtraWd}%
+      \@titleBox{\centering #1}%
+    \fi
+  \fi
+}
+
+% common operations on every title content
+\newcommand{\@titleBox}[1]{%
+  \parbox[t]{\@tempTitleMaxWd}{#1}}
+% \makeatother
+
+%%%%%%%%%%%%%
+\cs_new:Npn \__ccnu_fixed_width_center_underline_box:nn #1#2
+  % { \parbox {#1} { \centering \uline{#2} } }
+  { \parbox {#1} { \centering \UnderlineCentered{8cm}{1.4mm}{#2} } }
 \cs_new:Npn \__ccnu_get_text_width:Nn #1#2
   {
     \hbox_set:Nn \l__ccnu_tmpa_box {#2}
@@ -1108,12 +1264,40 @@
       {
         \int_case:nn { \l__ccnu_info_degree_type_int }
           {
-            { 1 } { 6 em }
+            { 1 } { 4 em }
             { 2 } { 9 em }
           }
       }
+    \begin{tikzpicture}[remember~picture, overlay]
+      \node[anchor = north] (upperinfo) at 
+        ([shift={(0,0\paperheight)}]current~page~text~area.north) 
+        {
+          \begin{varwidth}{\hsize}
+            \begin{tblr}
+              {
+                % vlines, hlines,
+                column{1} = { 0.5\textwidth, l},
+                column{2} = { 0.5\textwidth, l},
+              }
+              \textbf{\zihao{-3} 分类号 \underline{\hspace*{8em}}} & \textbf{\zihao{-3} 论文选题类型 \underline{\hspace*{6em}}} \\
+              \textbf{\zihao{-3} U\,\,D\,\,C \underline{\hspace*{8em}} } & \textbf{\zihao{-3} 编号 \underline{\hspace*{10em}}}
+            \end{tblr}
+          \end{varwidth}
+        };
+      \node[anchor = south] (date) at (current~page~text~area.south) 
+        {
+          \zihao{3} \bfseries
+          二〇二二\,\,年\,\,\zhnumber{ \int_use:N \c_sys_month_int }\,\,月
+        };
+      \node[] (type) at ([shift = {(0 , -0.35\paperheight)}]current~page.north) {\zihao{-1} \sffamily 本科毕业论文（设计）};
+      % \node[] (titlecontent) at ([shift = {(0.05\paperheight, 0)}]current~page.center) {\zihao{-2} \bfseries \UnderlineCentered{8cm}{1.6mm}{\tl_use:N \l__ccnu_info_title_tl}};
+      % \node[] (titlecontent) at ([shift = {(0.05\paperheight, 0)}]current~page.center) {\zihao{-2} \bfseries \titleBox{\tl_use:N \l__ccnu_info_title_tl}};
+      \node[] (titlecontent) at ([shift = {(0, 0)}]current~page.center) {\zihao{-2} \bfseries \titleBox{\tl_use:N \l__ccnu_info_title_tl}};
+      % \node[] (titlelabel) at ([shift = {(-0.15\paperheight, 0)}]current~page.center) { \zihao{-1} \textbf{题\,\,\,目}};
+    \end{tikzpicture}
+
     \begin{minipage} [ c ] { \textwidth }
-      \centering \zihao { 4 }
+      \centering \zihao { -3 } \xeCJKsetup{AutoFakeBold} \bfseries
       \clist_set:Nx \l__ccnu_tmpa_clist
         {
           \c__ccnu_name_department_tl,
@@ -1122,17 +1306,21 @@
               { 1 } { \c__ccnu_name_major_tl              }
               { 2 } { \c__ccnu_name_major_professional_tl }
             },
+          \c__ccnu_name_level_tl,
           \c__ccnu_name_author_tl,
+          \c__ccnu_name_student_id_tl,
           \c__ccnu_name_supervisor_tl,
-          \c__ccnu_name_date_tl,
+          % \c__ccnu_name_date_tl,
         }
       \clist_set:Nx \l__ccnu_tmpb_clist
         {
           { \l__ccnu_info_department_tl },
           { \l__ccnu_info_major_tl      },
+          { \l__ccnu_info_level_tl      },
           { \l__ccnu_info_author_tl     },
+          { \l__ccnu_info_student_id_tl },
           { \l__ccnu_info_supervisor_tl },
-          { \l__ccnu_info_date_tl       }
+          % { \l__ccnu_info_date_tl       }
         }
       \__ccnu_get_max_text_width:NN \l__ccnu_tmpb_dim \l__ccnu_tmpb_clist
       \bool_until_do:nn
@@ -1311,22 +1499,23 @@
 \DeclareInstance { ccnu / cover } { cover-i-default } { cover-i }
   {
     bottom-skip            = 0 pt plus 1.5 fill,
-    id       / content     = \__ccnu_cover_id:,
+    % id       / content     = \__ccnu_cover_id:,
     logo     / content     = \__ccnu_cover_logo:,
-    type     / content     = \__ccnu_cover_type:,
+    % type     / content     = \__ccnu_cover_type:,
     degree   / content     = \__ccnu_cover_degree:,
-    title    / content     =
-      \__ccnu_fixed_width_center_box:nn
-        { 0.9 \textwidth } { \l__ccnu_info_title_tl },
-    title-en / content     =
-      \__ccnu_fixed_width_center_box:nn
-        { 0.9 \textwidth } { \l__ccnu_info_title_en_tl },
+    % title    / content     =
+      % \__ccnu_fixed_width_center_box:nn
+      % \__ccnu_fixed_width_center_underline_box:nn
+        % { 0.9 \textwidth } { \l__ccnu_info_title_tl },
+    % title-en / content     =
+      % \__ccnu_fixed_width_center_box:nn
+        % { 0.9 \textwidth } { \l__ccnu_info_title_en_tl },
     info     / content     = \__ccnu_cover_info:,
-    id       / format      = \zihao { -5 },
-    type     / format      = \zihao {  2 },
+    % id       / format      = \zihao { -5 },
+    % type     / format      = \zihao {  -1 }\sffamily ,
     degree   / format      = \zihao {  4 },
-    title    / format      = \zihao { -2 } \bfseries,
-    title-en / format      = \__ccnu_line_spread:n { 1.2 } \zihao { 4 } \bfseries,
+    % title    / format      = \zihao { -2 } \bfseries,
+    % title-en / format      = \__ccnu_line_spread:n { 1.2 } \zihao { 4 } \bfseries,
     id       / bottom-skip = 0 pt plus 1.6 fill,
     logo     / bottom-skip = 0 pt plus 0.3 fill,
     type     / bottom-skip = -18 pt,
@@ -1396,7 +1585,8 @@
     \bool_if:NT \l__ccnu_auto_make_cover_bool
       {
         \begin{titlepage}
-          \makecoveri \newpage \makecoverii
+          \makecoveri
+          % \newpage \makecoverii
         \end{titlepage}
       }
   }
@@ -1594,7 +1784,7 @@
     \ctex_patch_cmd:Nnn \NAT@citexnum
       { - \NAT@penalty }
       { \textendash \NAT@penalty }
-    \cs_set:Npn \bibsection { \__ccnu_chapter:V \bibname }
+    \cs_set:Npn \bibchapter { \__ccnu_chapter:V \bibname }
     \NewDocumentCommand \printbibliography { o }
       {
         \exp_args:NV \bibliography \l__ccnu_bib_resource_clist
@@ -1756,8 +1946,8 @@
     style   / font-size       = -4,
     style   / fullwidth-stop  = false,
     style   / auto-make-cover = true,
-    style   / logo            = { fudan-name.pdf },
-    style   / logo-size       = { 0.5 \textwidth },
+    style   / logo            = { ccnulogo.png },
+    style   / logo-size       = { 0.43 \textwidth , 4em},
     style   / hyperlink       = color,
     style   / hyperlink-color = default,
     style   / bib-style       = numerical,
@@ -1778,3 +1968,5 @@
 \newtheorem  { example     } { \c__ccnu_name_example_tl    }
 \newtheorem  { lemma       } { \c__ccnu_name_lemma_tl      }
 \newtheorem  { theorem     } { \c__ccnu_name_theorem_tl    }
+
+\setcounter{tocdepth}{1}
