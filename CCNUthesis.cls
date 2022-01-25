@@ -1311,7 +1311,7 @@
     \end{tikzpicture}
 
     \begin{minipage} [ c ] { \textwidth }
-      \centering \zihao { -3 } \xeCJKsetup{AutoFakeBold} \bfseries
+      \centering \zihao { -3 }  \bfseries
       \clist_set:Nx \l__ccnu_tmpa_clist
         {
           \c__ccnu_name_department_tl,

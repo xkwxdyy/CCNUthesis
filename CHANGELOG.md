@@ -7,6 +7,8 @@
 - 增加`\ccnu_set_to_width:Nn`函数（等效于`\settowidth`）
 - 增加`\xeCJKsetup{AutoFakeBold}`（被注释掉）
 
+### Removed
+- 去掉封面设置中的`\xeCJKsetup{AutoFakeBold}`（因为已经统一设置过）
 
 ## [v0.0.3] - 2022-01-24
 
