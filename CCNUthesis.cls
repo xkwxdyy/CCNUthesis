@@ -1258,6 +1258,10 @@
         \c__ccnu_fwid_right_paren_tl
       }
   }
+% 复制settowidth命令
+\cs_set_eq:NN \ccnu_set_to_width:Nn \settowidth
+\dim_new:N \l__ccnu_date_zero_radius_dim
+% \ccnu_set_to_width:Nn \l__ccnu_date_zero_radius_dim {二}
 \cs_new_protected:Npn \__ccnu_cover_info:
   {
     \tl_set:Nx \l__ccnu_cover_info_left_width_tl
@@ -1287,7 +1291,15 @@
       \node[anchor = south] (date) at (current~page~text~area.south) 
         {
           \zihao{3} \bfseries
-          二〇二二\,\,年\,\,\zhnumber{ \int_use:N \c_sys_month_int }\,\,月
+          % \ccnu_set_to_width:Nn \l__ccnu_date_zero_radius_dim {二}
+          二
+          % \tikz{\draw (0,0) circle [radius = \dim_use:N \l__ccnu_date_zero_radius_dim ];}
+          % \tikz[baseline = (titledate.base)]
+          %   {
+          %     \node[minimum~size = \dim_use:N \l__ccnu_date_zero_radius_dim, circle, draw] (titledate){};
+          %   }
+          〇
+          二二\,\,年\,\,\zhnumber{ \int_use:N \c_sys_month_int }\,\,月
         };
       \node[] (type) at ([shift = {(0 , -0.35\paperheight)}]current~page.north) {\zihao{-1} \sffamily 本科毕业论文（设计）};
       % \node[] (titlecontent) at ([shift = {(0.05\paperheight, 0)}]current~page.center) {\zihao{-2} \bfseries \UnderlineCentered{8cm}{1.6mm}{\tl_use:N \l__ccnu_info_title_tl}};
