@@ -215,7 +215,8 @@
     tabularray,
     varwidth,
     ulem,
-    adjustbox
+    adjustbox,
+    calc
   }
 \graphicspath{{figures/}{logo/}}
 \cs_new_protected:Npn \__ccnu_check_package:nnn #1#2#3
@@ -1082,7 +1083,95 @@
     \kern\Mysavedprevdepth
   \end{adjustbox}%
 }%
+%%%%%%%%%%%%%% 慕子的下划线
+% \makeatletter   % 加
+\renewcommand{\arraystretch}{1.2}
 
+% inner temp length
+\newlength\@tempTitleHt
+\newlength\@tempTitleMaxWd
+
+% length used as parameters， "Wd" is a shorthand for "Width"
+\newlength\titleSingleLineMaxWd
+\newlength\titleMultiLineMaxWd
+\newlength\titleLRExtraWd
+\newlength\titleSepWd
+
+\setlength\titleSingleLineMaxWd{0.6\textwidth}
+\setlength\titleMultiLineMaxWd{0.5\textwidth}
+\setlength\titleLRExtraWd{.5em}
+\setlength\titleSepWd{.5em}
+
+% main macro, using a simple table
+% \newcommand{\multilingualTitles}[2]{%
+%   \par
+%   {\noindent\centering
+%   \begin{tabular}{r @{\hspace{\titleSepWd}} p{\titleSingleLineMaxWd}}
+%   	中文标题           & \titleBox{#1} \\
+%   	                 &               \\[-10pt]
+%   	Title in English & \titleBox{#2}
+%   \end{tabular}\par}%
+% }
+
+% draw a fixed-width underline
+\newcommand{\titleUnderline}{%
+  \rule[-.3em]{\titleSingleLineMaxWd + 2\titleLRExtraWd}{1pt}}
+
+% title content typesetter
+\newcommand\titleBox[1]{%
+  \setlength\@tempTitleMaxWd\titleSingleLineMaxWd
+  % Measure the total height of #1 subject to \titleSingleLineMaxWd.
+  % Here \@titleBox is necessary when #1 contains "\\".
+  \settototalheight\@tempTitleHt{\@titleBox{#1}}%
+  \ifdim\@tempTitleHt=0pt%
+    % case 1: #1 causes empty output
+    \titleUnderline
+  \else
+    % Change to LR mode, for inserting a zero-width box right after.
+    \leavevmode
+    % note: Use \normalbaseineskip instead of \baselineskip, 
+    %       since the latter is set to 0pt inside tabular env.
+    \ifdim\@tempTitleHt>\normalbaselineskip
+      % case 2: #1 is fit for multilines, or contains `\\`, hence
+      %         \titleMultiLineMaxWd is used instead, and the total 
+      %         height of #1 subject to new max width is re-measured.
+      \setlength\@tempTitleMaxWd\titleMultiLineMaxWd
+      \settototalheight\@tempTitleHt{\@titleBox{#1}}%
+      % \rlap{\smash{...}} typesets content of its argument normally 
+      % but sets it into a zero sized box. Here \@titleBox set 
+      % (possiblly) multi-line text into a single box, since \smash 
+      % only takes in argument spreading one line.
+      %
+      % Every line of title content needs an underline, hense we do
+      % a loop to typeset one underline for every line the title 
+      % content actually spreads.
+      \rlap{\smash{\@titleBox{%
+        \@whiledim\@tempTitleHt>0pt%
+        \leavevmode
+        % 
+        \do{%
+          \rlap{\titleUnderline}\\%
+          \addtolength\@tempTitleHt{-\normalbaselineskip}%
+        }%
+      }}}%
+      % Insert h-offset to manually center the title content.
+      \hspace{\dimexpr\titleLRExtraWd + .5\titleSingleLineMaxWd - .5\titleMultiLineMaxWd\relax}%
+      \@titleBox{\centering #1}%
+    \else
+      % case 3: #1 is fit for one line
+      \rlap{\titleUnderline}%
+      \hspace{\titleLRExtraWd}%
+      \@titleBox{\centering #1}%
+    \fi
+  \fi
+}
+
+% common operations on every title content
+\newcommand{\@titleBox}[1]{%
+  \parbox[t]{\@tempTitleMaxWd}{#1}}
+% \makeatother
+
+%%%%%%%%%%%%%
 \cs_new:Npn \__ccnu_fixed_width_center_underline_box:nn #1#2
   % { \parbox {#1} { \centering \uline{#2} } }
   { \parbox {#1} { \centering \UnderlineCentered{8cm}{1.4mm}{#2} } }
@@ -1200,9 +1289,11 @@
           \zihao{3} \bfseries
           二〇二二\,\,年\,\,\zhnumber{ \int_use:N \c_sys_month_int }\,\,月
         };
-      \node[] (type) at ([shift = {(0 , -0.35\paperheight)}]current~page.north) {\zihao{-0} \sffamily 本科毕业论文（设计）};
-      \node[] (titlecontent) at ([shift = {(0.05\paperheight, 0)}]current~page.center) {\zihao{-2} \bfseries \UnderlineCentered{8cm}{1.6mm}{\tl_use:N \l__ccnu_info_title_tl}};
-      \node[] (titlelabel) at ([shift = {(-0.15\paperheight, 0)}]current~page.center) { \zihao{-1} \textbf{题\,\,\,目}};
+      \node[] (type) at ([shift = {(0 , -0.35\paperheight)}]current~page.north) {\zihao{-1} \sffamily 本科毕业论文（设计）};
+      % \node[] (titlecontent) at ([shift = {(0.05\paperheight, 0)}]current~page.center) {\zihao{-2} \bfseries \UnderlineCentered{8cm}{1.6mm}{\tl_use:N \l__ccnu_info_title_tl}};
+      % \node[] (titlecontent) at ([shift = {(0.05\paperheight, 0)}]current~page.center) {\zihao{-2} \bfseries \titleBox{\tl_use:N \l__ccnu_info_title_tl}};
+      \node[] (titlecontent) at ([shift = {(0, 0)}]current~page.center) {\zihao{-2} \bfseries \titleBox{\tl_use:N \l__ccnu_info_title_tl}};
+      % \node[] (titlelabel) at ([shift = {(-0.15\paperheight, 0)}]current~page.center) { \zihao{-1} \textbf{题\,\,\,目}};
     \end{tikzpicture}
 
     \begin{minipage} [ c ] { \textwidth }
@@ -1521,7 +1612,6 @@
         \CTEXnumberline {#1} #2
       }
   }
-\setcounter{tocdepth}{2}
 \__ccnu_patch_cmd:Nnn \tableofcontents
   {
     \chapter*{\contentsname
@@ -1857,7 +1947,7 @@
     style   / fullwidth-stop  = false,
     style   / auto-make-cover = true,
     style   / logo            = { ccnulogo.png },
-    style   / logo-size       = { 0.43 \textwidth , 3em},
+    style   / logo-size       = { 0.43 \textwidth , 4em},
     style   / hyperlink       = color,
     style   / hyperlink-color = default,
     style   / bib-style       = numerical,
@@ -1878,3 +1968,5 @@
 \newtheorem  { example     } { \c__ccnu_name_example_tl    }
 \newtheorem  { lemma       } { \c__ccnu_name_lemma_tl      }
 \newtheorem  { theorem     } { \c__ccnu_name_theorem_tl    }
+
+\setcounter{tocdepth}{1}
