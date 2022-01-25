@@ -5,6 +5,7 @@
 - 完善示例文件结构
 - 增加参考文献bib文件
 - 增加`\ccnu_set_to_width:Nn`函数（等效于`\settowidth`）
+- 增加`\xeCJKsetup{AutoFakeBold}`（被注释掉）
 
 
 ## [v0.0.3] - 2022-01-24

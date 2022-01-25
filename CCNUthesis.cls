@@ -216,8 +216,10 @@
     varwidth,
     ulem,
     adjustbox,
-    calc
+    calc,
+    % xeCJK
   }
+% \xeCJKsetup{AutoFakeBold}
 \graphicspath{{figures/}{logo/}}
 \cs_new_protected:Npn \__ccnu_check_package:nnn #1#2#3
   {
