@@ -14,6 +14,7 @@ main-utf8.pdf
 *.cb2
 .*.lb
 *.hd
+*.zip
 
 ## Intermediate documents:
 *.dvi
