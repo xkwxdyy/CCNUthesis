@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-01-25}{v0.0.4}
+  {2022-01-27}{v0.0.5}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e }
 
@@ -1491,13 +1491,16 @@
   }
 \NewDocumentCommand \makecoveriii { }
   {
+    % \group_begin:
     \cleardoublepage
     \tl_if_empty:NTF \l__ccnu_declaration_page_tl
       {
         \thispagestyle { empty }
+        % \keys_set:nn { ccnu / style }{ fullwidth-stop = false }
         \UseInstance { ccnu / cover } { cover-iii-default }
       }
       { \includepdf { \l__ccnu_declaration_page_tl } }
+    % \group_end:
   }
 \DeclareCoverTemplate { cover-i   }
   { id, logo, type, degree, title, title-en, info }

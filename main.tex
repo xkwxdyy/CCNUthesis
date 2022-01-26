@@ -25,15 +25,6 @@
     %        cjk-font = fandol
     %   5. 使用 font = none / cjk-font = none 关闭默认字体设置，需手动进行配置
     %
-    fullwidth-stop = catcode,
-    % 是否把全角实心句点 “．” 作为默认的句号形状
-    % 允许选项：
-    %   fullwidth-stop = catcode|mapping|false
-    % 说明：
-    %   catcode   显式的 “。” 会被替换为 “．”（e.g. 不包括用宏定义保存的 “。”）
-    %   mapping   所有的 “。” 会被替换为 “．”（使用 LuaLaTeX 编译则无效）
-    %   false     不进行替换
-    %
     footnote-style = xits,
     % 脚注编号样式
     % 允许选项：
@@ -103,6 +94,17 @@
 \frontmatter
 % 目录
 \tableofcontents
+\ccnusetup{
+  style = { fullwidth-stop = catcode }
+    % 是否把全角实心句点 “．” 作为默认的句号形状
+    % 允许选项：
+    %   fullwidth-stop = catcode|mapping|false
+    % 说明：
+    %   catcode   显式的 “。” 会被替换为 “．”（e.g. 不包括用宏定义保存的 “。”）
+    %   mapping   所有的 “。” 会被替换为 “．”（使用 LuaLaTeX 编译则无效）
+    %   false     不进行替换
+}
+
 
 % 中文摘要
 \begin{abstract}
