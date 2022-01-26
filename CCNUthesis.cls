@@ -200,7 +200,8 @@
 \LoadClass { ctexbook }
 \RequirePackage
   {
-    amsmath,
+    amsmath,    
+    amssymb,
     unicode-math,
     geometry,
     fancyhdr,
@@ -1357,7 +1358,7 @@
     \clist_map_inline:Nn #1
       {
         ##1 \c__ccnu_fwid_colon_tl
-        \__ccnu_blank_underline:n { 6 em }
+        % \__ccnu_blank_underline:n { 6 em }
         \__ccnu_quad:
       }
   }
@@ -1563,11 +1564,26 @@
     originality-decl-name   / content     = \c__ccnu_name_orig_decl_tl,
     originality-decl-text   / content     = \c__ccnu_orig_decl_text_tl,
     originality-decl-sig    / content     =
-      \__ccnu_cover_signature:N \c__ccnu_orig_decl_sign_clist,
+      % { \__ccnu_cover_signature:N \c__ccnu_orig_decl_sign_clist \hspace*{3em}年\hspace*{1.5em}月\hspace*{1.5em}日},
+      { \ttfamily 学位论文作者签名\c__ccnu_fwid_colon_tl \hspace*{7em} 日期\c__ccnu_fwid_colon_tl \hspace*{3em}年\hspace*{1.5em}月\hspace*{1.5em}日 },
     authorization-decl-name / content     = \c__ccnu_name_auth_decl_tl,
     authorization-decl-text / content     = \c__ccnu_auth_decl_text_tl,
+    originality-decl-sig    / format     =
+      \zihao{ -4 },
     authorization-decl-sig  / content     =
-      \__ccnu_cover_signature:N \c__ccnu_auth_decl_sign_clist,
+      % \__ccnu_cover_signature:N \c__ccnu_auth_decl_sign_clist,
+      {
+        本学位论文属于 \par
+
+        1、保密 \quad $\square$，在 \underline{\hspace*{2.5em}}年解密后适用本授权书。\par
+
+        2、不保密 \quad $\square$。\par
+
+        （请在以上相应方框内打“√”）\par
+
+        \ttfamily 学位论文作者签名\c__ccnu_fwid_colon_tl \hspace*{7em} 日期\c__ccnu_fwid_colon_tl \hspace*{3em}年\hspace*{1.5em}月\hspace*{1.5em}日 \par
+        导师签名\c__ccnu_fwid_colon_tl \hspace*{11em} 日期\c__ccnu_fwid_colon_tl \hspace*{3em}年\hspace*{1.5em}月\hspace*{1.5em}日 
+      },
     originality-decl-name   / format      =
       \__ccnu_line_spread:n { 1.2 } \zihao { -2 } \bfseries,
     authorization-decl-name / format      =
@@ -1578,9 +1594,9 @@
     authorization-decl-name / bottom-skip = 0.4 cm,
     authorization-decl-text / bottom-skip = 0.4 cm,
     originality-decl-name   / align       = center,
-    originality-decl-sig    / align       = right,
+    originality-decl-sig    / align       = normal,
     authorization-decl-name / align       = center,
-    authorization-decl-sig  / align       = right,
+    authorization-decl-sig  / align       = normal,
   }
 \bool_new:N \l__ccnu_auto_make_cover_bool
 \tl_new:N   \l__ccnu_declaration_page_tl
@@ -1600,12 +1616,13 @@
       {
         \begin{titlepage}
           \makecoveri
-          % \newpage \makecoverii
+          \newpage 
+          \makecoveriii
         \end{titlepage}
       }
   }
-\__ccnu_gadd_ltxhook:nn { enddocument }
-  { \bool_if:NT \l__ccnu_auto_make_cover_bool { \makecoveriii } }
+% \__ccnu_gadd_ltxhook:nn { enddocument }
+%   { \bool_if:NT \l__ccnu_auto_make_cover_bool { \makecoveriii } }
 \keys_set:nn { ctex }
   {
     contentsname   = \c__ccnu_name_toc_tl,
