@@ -1,24 +1,54 @@
+%%%% 文献类型 %%%%
+% article|book|misc|thesis
+% 
+%%%% 数据类型 %%%% 
+% title 标题
+% author 作者，多个作者之间用“and”连接，如（注意空格
+%        “夏康玮 and 夏康玮 and 夏康玮”
+%        “Feynman, Richard P and Leighton, Robert B and Sands, Matthew”
+% year 年份
+% publisher 出版社
+% address 出版地
+% volume 卷
+% number 期刊号
+% pages 页码，若不是一页，用小横杠“-”连接，如“1-10
+% url 网址（比如网络上的文章），注意如果有“%”要用“\%”来转译%，否则会被当作注释符号
+%%%% 格式 %%%%
+% @文献类型{引用词,
+%   <type1>={<content1>},
+%   <type2>={<content2>},
+%   <type3>={<content3>}
+% }
+% 注意上面的逗号都是英文逗号，且注意<content>中的内容
+% 引用词是在正文里引用时用到的： \cite{<引用词>}
+% 通常由【作者名】、【年份】和【文章名的部分】组成，方便区分以及看到就知道引用的是哪篇文献
+
+
 @book{曾谨言2013量子力学,
-  title={量子力学: 卷 I.},
-  author={曾谨言},
+  title={量子力学: 卷 I},
+  author={傅刚 and 赵承 and 李佳路 and 夏康玮},
   year={2013},
   publisher={科学出版社},
-  address={北京}
+  address={北京},
+  pages={1-10},
 }
-
 @book{feynman2011feynman,
   title={The Feynman lectures on physics, Vol. I: The new millennium edition: mainly mechanics, radiation, and heat},
-  author={Feynman, Richard P and Leighton, Robert B and Sands, Matthew},
+  author={Feynman, Richard P and Leighton, Robert B and Sands, Matthew and Bill},
   volume={1},
   year={2011},
-  publisher={Basic books}
+  publisher={Basic books},
+  pages={2-8}
 }
 
 @article{zurek2014quantum,
   title={Quantum Darwinism, classical reality, and the randomness of quantum jumps},
   author={Zurek, Wojciech H},
   journal={arXiv preprint arXiv:1412.5206},
-  year={2014}
+  year={2014},
+  volume={1},
+  number={7},
+  pages={2-8}
 }
 
 @book{cohen2013claude,

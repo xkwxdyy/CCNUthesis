@@ -49,7 +49,7 @@
     { author_sign        } { 学位论文作者签名               },
     { supervisor_sign    } { 导师签名                      },
     { sign_date          } { 日期                         },
-    { toc                } { 目 \quad 录                   },
+    { toc                } { \zihao{-2}  目 \quad 录                   },
     { lof                } { 插图目录                      },
     { lot                } { 表格目录                      },
     { bib_en             } { Bibliography                  },
@@ -60,8 +60,8 @@
   { \__ccnu_define_name:nn #1 }
 \clist_map_inline:nn
   {
-    { abstract } { 摘 \quad 要 } { Abstract          },
-    { keywords } { 关键字      } { Keywords:         },
+    { abstract } { 内容摘要 } { Abstract          },
+    { keywords } { 关键字      } { Keywords        },
     { clc      } { 中图分类号  } { CLC~ code:        },
     { jel      } { JEL 分类号  } { JEL~ code:        },
     { notation } { 符号表      } { List~ of~ Symbols }

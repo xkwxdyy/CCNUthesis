@@ -1,11 +1,19 @@
 # 更新日志
 ## [v0.0.5] - 2022-01-27
+### Added
+- 参考文献注释信息
 
 ### Changed
 - 将最后一页的原创声明移动到第二页并修改完成
 - 去掉`main.tex`中的字体设置
+- tocdepth设置移动到ctex的key_set中
+- 重新调整目录chapter和正文chapter的格式
+- 将目录页的pagestyle设置合并到`\tableofcontents`中
+- 更改原来的摘要页为华师样式
+- 修改了`\frontmatter`和`\mainmatter`的计数器，达到模版要求的效果
 
-
+### Removed
+- 去掉目录页码
 
 ## [v0.0.4] - 2022-01-25
 ### Added

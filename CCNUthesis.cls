@@ -219,8 +219,9 @@
     adjustbox,
     calc,
     % xeCJK
+    etoolbox
   }
-% \xeCJKsetup{AutoFakeBold}
+\RequirePackage[titles]{tocloft}
 \graphicspath{{figures/}{logo/}}
 \cs_new_protected:Npn \__ccnu_check_package:nnn #1#2#3
   {
@@ -715,29 +716,41 @@
 \pagestyle { fancy }
 \keys_set:nn { ctex }
   {
+    tocdepth = 1 ,
     chapter =
       {
-        format      = \huge \normalfont \sffamily \centering,
-        beforeskip  = 50 pt,
-        afterskip   = 40 pt,
+        format      = \zihao{3} \normalfont \bfseries ,
+        % format      = \huge \normalfont \sffamily \centering,
+        % beforeskip  = 50 pt,
+        beforeskip  = 10pt,
+        % afterskip   = 40 pt,
+        afterskip   = 2.7  ex plus 0.5 ex,
+        % afterskip   = 15pt,
         number      = \__ccnu_arabic:n { chapter },
         fixskip     = true,
-        name        = {}
+        name        = {},
+        % pagestyle   = empty,
       },
     section =
       {
-        format      = \Large \normalfont \sffamily \raggedright,
+        format      = \zihao{-3} \normalfont \bfseries \raggedright,
+        % format      = \Large \normalfont \sffamily \raggedright,
         beforeskip  = 3.5 ex plus 1.0 ex minus 0.2 ex,
         afterskip   = 2.7 ex plus 0.5 ex,
         fixskip     = true
       },
     subsection =
       {
-        format      = \large \normalfont \sffamily \raggedright,
+        format      = \zihao{4} \normalfont \bfseries \raggedright,
+        % format      = \large \normalfont \sffamily \raggedright,
         beforeskip  = 3.25 ex plus 1.0 ex minus 0.2 ex,
         afterskip   = 2.5  ex plus 0.3 ex,
         fixskip     = true
-      }
+      },
+    % chapter =
+    %   {
+    %     format      = \zihao{-2}
+    %   }
   }
 \cs_new_protected:Npn \__ccnu_chapter:n #1
   {
@@ -1633,16 +1646,19 @@
     listtablename  = \c__ccnu_name_lot_tl,
     chapter / tocline =
       {
-        \normalfont \sffamily
+        \normalfont 
+        % \sffamily
         \CTEXnumberline {#1} #2
       },
     section / tocline =
       {
+        \normalfont
         \CTEXnumberline {#1} #2
       },
     subsection / tocline =
       {
-        \ccnu@kai
+        % \ccnu@kai
+        \normalfont
         \CTEXnumberline {#1} #2
       }
   }
@@ -1667,31 +1683,68 @@
             {\MakeUppercase\listtablename}
   }
   { \__ccnu_chapter:V \listtablename }
+% 单独调整摘要页
+\cs_new_protected:Npn \__ccnu_abstract_env:n #1
+  {
+    \group_begin:
+      \ctexset { chapter / numbering = false }
+      % \chapter {#1}
+      \addcontentsline{toc}{chapter}{ \normalfont #1}
+      \__ccnu_chapter_header:n {#1}
+    \group_end:
+  }
+\cs_generate_variant:Nn \__ccnu_abstract_env:n { V }
 \NewDocumentEnvironment { abstract  } { }
-  { \__ccnu_abstract_begin:    } { \__ccnu_abstract_end:      }
+  { 
+    \__ccnu_abstract_begin: 
+    \addcontentsline{toc}{chapter}{\normalfont  \c__ccnu_name_keywords_tl  }   
+  } { \__ccnu_abstract_end:      }
 \NewDocumentEnvironment { abstract* } { }
-  { \__ccnu_abstract_en_begin: } { \__ccnu_abstract_en_end:   }
+  { 
+    \__ccnu_abstract_en_begin: 
+    \addcontentsline{toc}{chapter}{\normalfont  \c__ccnu_name_keywords_en_tl  }
+  } { \__ccnu_abstract_en_end:   }
 \cs_new_protected:Npn \__ccnu_abstract_begin:
-  { \__ccnu_chapter:V \c__ccnu_name_abstract_tl    }
+  { 
+    \newpage
+    \setcounter{page}{1}
+    \__ccnu_abstract_env:V \c__ccnu_name_abstract_tl
+    { \bfseries \c__ccnu_name_abstract_tl : } \c_space_tl  
+  }
 \cs_new_protected:Npn \__ccnu_abstract_en_begin:
-  { \__ccnu_chapter:V \c__ccnu_name_abstract_en_tl }
+  { 
+    \bigskip
+    \textbf{ Title: } \c_space_tl \l__ccnu_info_title_en_tl \par
+    \medskip
+    \__ccnu_abstract_env:V \c__ccnu_name_abstract_en_tl 
+    { \bfseries \c__ccnu_name_abstract_en_tl : } \c_space_tl 
+  }
 \cs_new_protected:Npn \__ccnu_abstract_end:
   {
     \__ccnu_keywords:nNn
-      { \sffamily \c__ccnu_name_keywords_tl \c__ccnu_fwid_colon_tl }
-      \l__ccnu_info_keywords_clist { \c__ccnu_fwid_semicolon_tl }
-    \tl_if_empty:NF \l__ccnu_info_clc_tl
-      {
-        \__ccnu_clc_jel:nn
-          { \sffamily \c__ccnu_name_clc_tl \c__ccnu_fwid_colon_tl }
-          { \l__ccnu_info_clc_tl }
+      { \bfseries \c__ccnu_name_keywords_tl :
+      % \c__ccnu_fwid_colon_tl 
+      % \__ccnu_quad: 
+      \c_space_tl
       }
+      \l__ccnu_info_keywords_clist 
+      % { \c__ccnu_fwid_semicolon_tl }
+      { \qquad }
+    % \tl_if_empty:NF \l__ccnu_info_clc_tl
+    %   {
+    %     \__ccnu_clc_jel:nn
+    %       { \sffamily \c__ccnu_name_clc_tl \c__ccnu_fwid_colon_tl }
+    %       { \l__ccnu_info_clc_tl }
+    %   }
   }
 \cs_new_protected:Npn \__ccnu_abstract_en_end:
   {
     \__ccnu_keywords:nNn
-      { \bfseries \c__ccnu_name_keywords_en_tl \__ccnu_quad: }
-      \l__ccnu_info_keywords_en_clist { ; ~ }
+      { \bfseries \c__ccnu_name_keywords_en_tl : 
+      % \__ccnu_quad: 
+      \c_space_tl
+      }
+      \l__ccnu_info_keywords_en_clist { \qquad }
     \tl_if_empty:NTF \l__ccnu_info_jel_tl
       {
         \tl_if_empty:NF \l__ccnu_info_clc_tl
@@ -1709,7 +1762,9 @@
   }
 \cs_new_protected:Npn \__ccnu_keywords:nNn #1#2#3
   {
-    \par \mode_leave_vertical: \par \noindent
+    % \par \mode_leave_vertical: 
+    \par 
+    % \noindent
     \__ccnu_get_text_width:Nn \l__ccnu_tmpa_dim {#1}
     \group_begin: #1 \group_end:
     \parbox [t] { \dim_eval:n { \textwidth - \l__ccnu_tmpa_dim } }
@@ -1726,6 +1781,12 @@
   }
 \NewDocumentEnvironment { notation } { O { l p { 7.5 cm } } }
   {
+    \keys_set:nn { ctex }
+      {
+        chapter = {
+              format = \zihao{-2} \normalfont \bfseries \centering
+            }
+      }
     \__ccnu_notation_begin:
     \group_begin:
       \__ccnu_notation_long_table_setup:
@@ -1853,6 +1914,8 @@
         \clist_put_right:Nx \l__ccnu_biblatex_options_clist
           { citestyle = \l__ccnu_cite_style_tl }
       }
+    \clist_put_right:Nn \l__ccnu_biblatex_options_clist
+      { style = gb7714-2015, gbalign = gb7714-2015, gbpub = false }
     \exp_args:NV \PassOptionsToPackage \l__ccnu_biblatex_options_clist
       { biblatex }
   }
@@ -2003,4 +2066,93 @@
 \newtheorem  { lemma       } { \c__ccnu_name_lemma_tl      }
 \newtheorem  { theorem     } { \c__ccnu_name_theorem_tl    }
 
-\setcounter{tocdepth}{1}
+
+% 去掉目录的页码
+% https://tex.stackexchange.com/questions/38847/clear-tableofcontents-page-in-book-or-report
+\patchcmd{\tableofcontents}{\@starttoc{toc}}{\thispagestyle{empty}\pagestyle{empty}\@starttoc{toc}}{}{}
+\let\t@bleofcontents\tableofcontents
+\def\tableofcontents
+  {
+    \group_begin:
+      \keys_set:nn { ctex }
+        {
+          chapter = {
+                format = \zihao{-2} \normalfont \bfseries \centering
+              }
+        }
+      \t@bleofcontents
+      \thispagestyle{empty}
+      \newpage
+    \group_end:
+  }
+
+%% 下面重新设置目录样式
+% 设置引导线
+\renewcommand{\cftdot}{$\cdot$}  % 引导线的“点”的样式
+\renewcommand{\cftdotsep}{1.2}
+\renewcommand{\cftchapdotsep}{\cftdotsep}   % 设置章目录的引导线（默认是没有的）
+% section前的额外垂直间距
+\setlength{\cftbeforesecskip}{0.5\baselineskip}
+% chapter前的额外垂直间距
+\setlength{\cftbeforechapskip}{0.5\baselineskip}
+% 页码样式，设置为无样式
+\renewcommand{\cftchappagefont}{}
+
+% 重新设置mainmatter的计数器，不让它重新计数
+\patchcmd{\frontmatter}{\pagenumbering{roman}}{\pagenumbering{arabic}}{}{\fail}
+
+% 重新设置mainmatter的计数器，不让它重新计数
+\patchcmd{\mainmatter}{\pagenumbering{arabic}}{\renewcommand{\thepage}{\arabic{page}}}{}{\fail}
+
+
+\ccnusetup
+  {
+    option / oneside ,
+    style = 
+      {
+        font = times,
+        % 西文字体（包括数学字体）
+        % 允许选项：
+        %   font = garamond|libertinus|lm|palatino|times|times*|none
+        footnote-style = xits,
+        % 脚注编号样式
+        % 允许选项：
+        %   footnote-style = plain|libertinus|libertinus*|libertinus-sans|
+        %                    pifont|pifont*|pifont-sans|pifont-sans*|
+        %                    xits|xits-sans|xits-sans*
+        % 默认与西文字体保持一致
+        hyperlink = none,
+        % 超链接样式
+        % 允许选项：
+        %   hyperlink = border|color|none
+        %
+        hyperlink-color = default,
+        % 超链接颜色
+        % 允许选项：
+        %   hyperlink-color = default|classic|material|graylevel|prl
+        %
+        bib-backend = biblatex,
+        % 参考文献支持方式
+        % 允许选项：
+        %   bib-backend = bibtex|biblatex
+        %
+        bib-style = author-year,
+        % 参考文献样式
+        % 允许选项：
+        %   bib-style = author-year|numerical|<其他样式>
+        % 说明：
+        %   author-year  著者—出版年制
+        %   numerical    顺序编码制
+        %   <其他样式>   使用其他 .bst（bibtex）或 .bbx（biblatex）格式文件
+        %
+        % cite-style = {},
+        % 引用样式
+        % 默认为空，即与参考文献样式保持一致
+        % 仅适用于 biblatex；如要填写，需保证相应的 .cbx 格式文件能被调用
+        %
+        bib-resource = {CCNUthesis-main.bib},
+        % 参考文献数据源
+        % 可以是单个文件，也可以是用英文逗号 “,” 隔开的一组文件
+        % 如果使用 biblatex，则必须明确给出 .bib 后缀名
+      }
+  }
