@@ -1752,7 +1752,7 @@
   }
 \cs_new_protected:Npn \__ccnu_abstract_en_end:
   {
-    \__ccnu_en_keywords:nNn
+    \__ccnu_keywords:nNn
       { \bfseries \c__ccnu_name_keywords_en_tl :
       % \__ccnu_quad: 
       \c_space_tl
@@ -1780,18 +1780,18 @@
     % \noindent
     \__ccnu_get_text_width:Nn \l__ccnu_tmpa_dim {#1}
     \group_begin: #1 \group_end:
+    % \parbox [t] { \dim_eval:n { \textwidth - \parindent - \l__ccnu_tmpa_dim }  }
+    %   {
+    %     \clist_use:Nn #2 {#3} \par
+    %     \cs_gset:Npx \__ccnu_keywords_prevdepth: { \dim_use:N \tex_prevdepth:D }
+    %   }
     \parbox [t] { \dim_eval:n { \textwidth - \parindent - \l__ccnu_tmpa_dim }  }
       {
-        \clist_use:Nn #2 {#3} \par
-        \cs_gset:Npx \__ccnu_keywords_prevdepth: { \dim_use:N \tex_prevdepth:D }
+        \begin{varwidth}[t]{\hsize}
+          \clist_use:Nn #2 {#3} \par
+          \cs_gset:Npx \__ccnu_keywords_prevdepth: { \dim_use:N \tex_prevdepth:D }
+        \end{varwidth}
       }
-    % \parbox [b] { \dim_eval:n { \textwidth - \parindent - \l__ccnu_tmpa_dim }  }
-    %   {
-    %     \begin{varwidth}{\hsize}
-    %       \clist_use:Nn #2 {#3} \par
-    %       \cs_gset:Npx \__ccnu_keywords_prevdepth: { \dim_use:N \tex_prevdepth:D }
-    %     \end{varwidth}
-    %   }
     % \raisebox{-.5\baselineskip}
     %   {
     %     \begin{varwidth}
@@ -1800,34 +1800,6 @@
     %       \cs_gset:Npx \__ccnu_keywords_prevdepth: { \dim_use:N \tex_prevdepth:D }
     %     \end{varwidth}
     %   }
-  }
-\cs_new_protected:Npn \__ccnu_en_keywords:nNn #1#2#3
-  {
-    % \par \mode_leave_vertical: 
-    \par 
-    % \noindent
-    \__ccnu_get_text_width:Nn \l__ccnu_tmpa_dim {#1}
-    \group_begin: #1 \group_end:
-    % \parbox [t] { \dim_eval:n { \textwidth - \parindent - \l__ccnu_tmpa_dim }  }
-    %   {
-    %     \clist_use:Nn #2 {#3} \par
-    %     \cs_gset:Npx \__ccnu_keywords_prevdepth: { \dim_use:N \tex_prevdepth:D }
-    %   }
-    % \parbox [b] { \dim_eval:n { \textwidth - \parindent - \l__ccnu_tmpa_dim }  }
-    %   {
-    %     \begin{varwidth}{\hsize}
-    %       \clist_use:Nn #2 {#3} \par
-    %       \cs_gset:Npx \__ccnu_keywords_prevdepth: { \dim_use:N \tex_prevdepth:D }
-    %     \end{varwidth}
-    %   }
-    \raisebox{-.45\baselineskip}
-      {
-        \begin{varwidth}
-          { \dim_eval:n { \textwidth - \parindent - \l__ccnu_tmpa_dim } }
-          \clist_use:Nn #2 {#3} \par
-          \cs_gset:Npx \__ccnu_keywords_prevdepth: { \dim_use:N \tex_prevdepth:D }
-        \end{varwidth}
-      }
   }
 \cs_new_protected:Npn \__ccnu_clc_jel:nn #1#2
   {
