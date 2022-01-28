@@ -4,7 +4,8 @@
 %%       Required Fields: xxx, xxx, xxx（必须要填写的信息）
 %%       Optional Fields: xxx, xxx, xxx（选填的信息）
 %% 的格式介绍各种文献类型
-% article|book|unpublished|mastersthesis|phdthesis|misc|thesis
+% article|book|unpublished|mastersthesis|phdthesis|
+% inproceedings|proceedings|techreport|misc|
 % article        An article from a journal or magazine. 
 %                Required Fields: author, title, journal, year. 
 %                Optional Fields: volume, number, pages, month, note.
@@ -38,24 +39,28 @@
 %%%% 数据类型 %%%%
 %% 注：下面的数据不是所有文献都有，根据需要自行填写，但尽可能完整全面
 % title 标题
-% author 作者  
-%             多个作者之间用“and”连接，如（注意空格
-%             “夏康玮 and 夏康玮 and 夏康玮”
-%             “Feynman, Richard P and Leighton, Robert B and Sands, Matthew”
-% year 年份
-% publisher 出版社
-% address 出版地
-% edition 版本
-%             第一版不标注
-%             中文用“第二版”
-%             英文用数字“2”
-% volume 卷
-% journal 期刊
-% number 期刊号
-% pages 页码，若不是一页，用小横杠“-”连接，如“1-10
-% school 哪所学校的学位论文
-% url 网址（比如网络上的文章），注意如果有“%”要用“\%”来转译%，否则会被当作注释符号
-% note
+% author       作者  
+%              多个作者之间用“and”连接，如（注意空格
+%              “夏康玮 and 夏康玮 and 夏康玮”
+%              “Feynman, Richard P and Leighton, Robert B and Sands, Matthew”
+% year         年份
+% publisher    出版社
+% address      出版地
+% edition      版本
+%              第一版不标注
+%              中文用“第二版”
+%              英文用数字“2”
+% volume       卷
+% journal      期刊
+% number       期刊号
+% pages        页码，若不是一页，用小横杠“-”连接，如“1-10
+% school       哪所学校的学位论文
+% url          网址（比如网络上的文章）
+%              注意如果有“%”要用“\%”来转译%，否则会被当作注释符号
+% note         Any additional information that can help the reader. 
+%              The First word should be capitalized.
+% howpublished How something strange has been published. 
+%              The First word should be capitalized.
 %%%% 格式 %%%%
 % @文献类型{引用词,
 %   <type1>={<content1>},
