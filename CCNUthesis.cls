@@ -250,8 +250,8 @@
     % vmargin    = 2.54 cm,
     % hmargin    = 3.18 cm,
     % headheight = 15 pt
-    left = 2.85cm,
-    right = 2.45cm,
+    left = 3cm,
+    right = 2.5cm,
     top = 3cm,
     bottom = 2.5cm
   }
@@ -921,7 +921,7 @@
 \RenewDocumentCommand \newtheorem { s o m m }
   {
     \IfBooleanTF {#1}
-      { \tl_set:Nn \l__ccnu_thm_qed_tl { \ensuremath { \QED } } }
+      { \tl_set:Nn \l__ccnu_thm_qed_tl { \ensuremath { \square } } }
       { \tl_set:Nn \l__ccnu_thm_qed_tl { } }
     \tl_set:Nn \l__ccnu_thm_style_tl { plain }
     \IfValueT {#2} { \keys_set:nn { ccnu / theorem } {#2} }
@@ -1510,7 +1510,15 @@
       {
         \thispagestyle { empty }
         % \keys_set:nn { ccnu / style }{ fullwidth-stop = false }
+        \newgeometry
+          { 
+            left   = 2.85cm,
+            right  = 2.45cm,
+            top    = 3cm,
+            bottom = 2.5cm
+          }
         \UseInstance { ccnu / cover } { cover-iii-default }
+        \restoregeometry
       }
       { \includepdf { \l__ccnu_declaration_page_tl } }
     % \group_end:
@@ -1578,17 +1586,24 @@
     top-skip                              = 0 pt plus 0.2 fill,
     bottom-skip                           = 0 pt plus 2.5 fill,
     originality-decl-name   / content     = \c__ccnu_name_orig_decl_tl,
-    originality-decl-text   / content     = \c__ccnu_orig_decl_text_tl,
+    originality-decl-text   / content     = 
+      {
+        \c__ccnu_orig_decl_text_tl
+      },
     originality-decl-sig    / content     =
       % { \__ccnu_cover_signature:N \c__ccnu_orig_decl_sign_clist \hspace*{3em}年\hspace*{1.5em}月\hspace*{1.5em}日},
       { \ttfamily 学位论文作者签名\c__ccnu_fwid_colon_tl \hspace*{7em} 日期\c__ccnu_fwid_colon_tl \hspace*{3em}年\hspace*{1.5em}月\hspace*{1.5em}日 },
-    authorization-decl-name / content     = \c__ccnu_name_auth_decl_tl,
+    authorization-decl-name / content     = 
+      {
+        \c__ccnu_name_auth_decl_tl
+      },
     authorization-decl-text / content     = \c__ccnu_auth_decl_text_tl,
     originality-decl-sig    / format     =
       \zihao{ -4 },
     authorization-decl-sig  / content     =
       % \__ccnu_cover_signature:N \c__ccnu_auth_decl_sign_clist,
       {
+        \vspace*{1.9cm}
         本学位论文属于 \par
 
         1、保密 \quad $\square$，在 \underline{\hspace*{2.5em}}年解密后适用本授权书。\par
@@ -1601,14 +1616,14 @@
         导师签名\c__ccnu_fwid_colon_tl \hspace*{11em} 日期\c__ccnu_fwid_colon_tl \hspace*{3em}年\hspace*{1.5em}月\hspace*{1.5em}日 
       },
     originality-decl-name   / format      =
-      \__ccnu_line_spread:n { 1.2 } \zihao { -2 } \bfseries,
+      \__ccnu_line_spread:n { 1.2 } \zihao { -2 } \bfseries \ccnukaishu ,
     authorization-decl-name / format      =
-      \__ccnu_line_spread:n { 1.2 } \zihao { -2 } \bfseries,
-    originality-decl-name   / bottom-skip = 0.4 cm,
-    originality-decl-text   / bottom-skip = 0.4 cm,
+      \__ccnu_line_spread:n { 1.2 } \zihao { -2 } \bfseries \ccnukaishu,
+    originality-decl-name   / bottom-skip = 0.9 cm,
+    originality-decl-text   / bottom-skip = 0.5\baselineskip,
     originality-decl-sig    / bottom-skip = 0 pt plus 2.5 fill,
-    authorization-decl-name / bottom-skip = 0.4 cm,
-    authorization-decl-text / bottom-skip = 0.4 cm,
+    % authorization-decl-name / bottom-skip = 0.4 cm,
+    % authorization-decl-text / bottom-skip = 0.2 cm,
     originality-decl-name   / align       = center,
     originality-decl-sig    / align       = normal,
     authorization-decl-name / align       = center,
@@ -1717,14 +1732,12 @@
     \textbf{ Title: } \c_space_tl \l__ccnu_info_title_en_tl \par
     \medskip
     \__ccnu_abstract_env:V \c__ccnu_name_abstract_en_tl 
-    { \bfseries \c__ccnu_name_abstract_en_tl : } \c_space_tl 
+    { \bfseries \c__ccnu_name_abstract_en_tl : \c_space_tl} 
   }
 \cs_new_protected:Npn \__ccnu_abstract_end:
   {
     \__ccnu_keywords:nNn
       { \bfseries \c__ccnu_name_keywords_tl :
-      % \c__ccnu_fwid_colon_tl 
-      % \__ccnu_quad: 
       \c_space_tl
       }
       \l__ccnu_info_keywords_clist 
@@ -1739,8 +1752,8 @@
   }
 \cs_new_protected:Npn \__ccnu_abstract_en_end:
   {
-    \__ccnu_keywords:nNn
-      { \bfseries \c__ccnu_name_keywords_en_tl : 
+    \__ccnu_en_keywords:nNn
+      { \bfseries \c__ccnu_name_keywords_en_tl :
       % \__ccnu_quad: 
       \c_space_tl
       }
@@ -1767,10 +1780,53 @@
     % \noindent
     \__ccnu_get_text_width:Nn \l__ccnu_tmpa_dim {#1}
     \group_begin: #1 \group_end:
-    \parbox [t] { \dim_eval:n { \textwidth - \l__ccnu_tmpa_dim } }
+    \parbox [t] { \dim_eval:n { \textwidth - \parindent - \l__ccnu_tmpa_dim }  }
       {
         \clist_use:Nn #2 {#3} \par
         \cs_gset:Npx \__ccnu_keywords_prevdepth: { \dim_use:N \tex_prevdepth:D }
+      }
+    % \parbox [b] { \dim_eval:n { \textwidth - \parindent - \l__ccnu_tmpa_dim }  }
+    %   {
+    %     \begin{varwidth}{\hsize}
+    %       \clist_use:Nn #2 {#3} \par
+    %       \cs_gset:Npx \__ccnu_keywords_prevdepth: { \dim_use:N \tex_prevdepth:D }
+    %     \end{varwidth}
+    %   }
+    % \raisebox{-.5\baselineskip}
+    %   {
+    %     \begin{varwidth}
+    %       { \dim_eval:n { \textwidth - \l__ccnu_tmpa_dim } }
+    %       \clist_use:Nn #2 {#3} \par
+    %       \cs_gset:Npx \__ccnu_keywords_prevdepth: { \dim_use:N \tex_prevdepth:D }
+    %     \end{varwidth}
+    %   }
+  }
+\cs_new_protected:Npn \__ccnu_en_keywords:nNn #1#2#3
+  {
+    % \par \mode_leave_vertical: 
+    \par 
+    % \noindent
+    \__ccnu_get_text_width:Nn \l__ccnu_tmpa_dim {#1}
+    \group_begin: #1 \group_end:
+    % \parbox [t] { \dim_eval:n { \textwidth - \parindent - \l__ccnu_tmpa_dim }  }
+    %   {
+    %     \clist_use:Nn #2 {#3} \par
+    %     \cs_gset:Npx \__ccnu_keywords_prevdepth: { \dim_use:N \tex_prevdepth:D }
+    %   }
+    % \parbox [b] { \dim_eval:n { \textwidth - \parindent - \l__ccnu_tmpa_dim }  }
+    %   {
+    %     \begin{varwidth}{\hsize}
+    %       \clist_use:Nn #2 {#3} \par
+    %       \cs_gset:Npx \__ccnu_keywords_prevdepth: { \dim_use:N \tex_prevdepth:D }
+    %     \end{varwidth}
+    %   }
+    \raisebox{-.45\baselineskip}
+      {
+        \begin{varwidth}
+          { \dim_eval:n { \textwidth - \parindent - \l__ccnu_tmpa_dim } }
+          \clist_use:Nn #2 {#3} \par
+          \cs_gset:Npx \__ccnu_keywords_prevdepth: { \dim_use:N \tex_prevdepth:D }
+        \end{varwidth}
       }
   }
 \cs_new_protected:Npn \__ccnu_clc_jel:nn #1#2
@@ -2086,6 +2142,17 @@
     \group_end:
   }
 
+% 定义\ccnukaishu命令
+\setCJKfamilyfont{zhkai}{FandolKai-Regular.otf}[AutoFakeBold]
+\NewDocumentCommand \ccnukaishu   { } 
+  { \CJKfamily { zhkai   } }
+% 重定义\emph命令
+\RenewDocumentCommand{ \emph }{ m  }
+  {
+    \group_begin:
+      \ccnukaishu \bfseries #1
+    \group_end:
+  }
 %% 下面重新设置目录样式
 % 设置引导线
 \renewcommand{\cftdot}{$\cdot$}  % 引导线的“点”的样式
@@ -2104,7 +2171,6 @@
 % 重新设置mainmatter的计数器，不让它重新计数
 \patchcmd{\mainmatter}{\pagenumbering{arabic}}{\renewcommand{\thepage}{\arabic{page}}}{}{\fail}
 
-
 \ccnusetup
   {
     option / oneside ,
@@ -2114,6 +2180,17 @@
         % 西文字体（包括数学字体）
         % 允许选项：
         %   font = garamond|libertinus|lm|palatino|times|times*|none
+        cjk-font = mac,
+        % 中文字体
+        % 允许选项：
+        %   cjk-font = adobe|fandol|founder|mac|sinotype|sourcehan|windows|none
+        % 注意：
+        %   1. 中文字体设置高度依赖于系统。各系统建议方案：
+        %        windows：cjk-font = windows
+        %        mac：    cjk-font = mac
+        %        linux：  cjk-font = fandol（默认值）
+        %   2. 除 fandol 和 sourcehan 外，其余字体均为商用字体，请注意版权问题
+        %   3. 但 fandol 字体缺字比较严重，而 sourcehan 没有配备楷体和仿宋体
         footnote-style = xits,
         % 脚注编号样式
         % 允许选项：

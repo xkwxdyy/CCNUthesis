@@ -1,44 +1,129 @@
 %%%% 文献类型 %%%%
-% article|book|misc|thesis
-% 
-%%%% 数据类型 %%%% 
+%% 注：下面以
+%% xxx   <xxx的文献类型>
+%%       Required Fields: xxx, xxx, xxx（必须要填写的信息）
+%%       Optional Fields: xxx, xxx, xxx（选填的信息）
+%% 的格式介绍各种文献类型
+% article|book|unpublished|mastersthesis|phdthesis|misc|thesis
+% article        An article from a journal or magazine. 
+%                Required Fields: author, title, journal, year. 
+%                Optional Fields: volume, number, pages, month, note.
+%  book          A book with an explicit publisher. 
+%                Required Fields: author or editor, title, publisher, year. 
+%                Optional Fields: volume or number, series, address, edition, month, note.
+% unpublished    A document having an author and title, but not formally published.
+%                Required Fields: author, title, note. 
+%                Optional Fields: month, year.
+% mastersthesis  A Master's thesis. 
+%                Required Fields: author, title, school, year. 
+%                Optional Fields: type, address, month, note.
+%  phdthesis     A PhD thesis. 
+%                Required Fields: author, title, school, year. 
+%                Optional Fields: type, address, month, note.
+% inproceedings  An article in a conference proceedings. 
+%                Required Fields: author, title, booktitle, year. 
+%                Optional Fields: editor, volume or number, series, pages, 
+%                                 address, month, organization, publisher, note.
+%  proceedings   The proceedings of a conference. 
+%                Required Fields: title, year.
+%                Optional Fields: editor, volume or number, series, address, month,
+%                                 organization, publisher, note.
+%  techreport    A report published by a school or other institution, 
+%                                   usually numbered within a series. 
+%                Required Fields: author, title, institution, year.
+%                Optional Fields: type, number, address, month, note.
+%   misc         Use this type when nothing else fits. 
+%                Required Fields: none. 
+%                Optional Fields: author, title, howpublished, month, year, note.
+%%%% 数据类型 %%%%
+%% 注：下面的数据不是所有文献都有，根据需要自行填写，但尽可能完整全面
 % title 标题
-% author 作者，多个作者之间用“and”连接，如（注意空格
-%        “夏康玮 and 夏康玮 and 夏康玮”
-%        “Feynman, Richard P and Leighton, Robert B and Sands, Matthew”
+% author 作者  
+%             多个作者之间用“and”连接，如（注意空格
+%             “夏康玮 and 夏康玮 and 夏康玮”
+%             “Feynman, Richard P and Leighton, Robert B and Sands, Matthew”
 % year 年份
 % publisher 出版社
 % address 出版地
+% edition 版本
+%             第一版不标注
+%             中文用“第二版”
+%             英文用数字“2”
 % volume 卷
+% journal 期刊
 % number 期刊号
 % pages 页码，若不是一页，用小横杠“-”连接，如“1-10
+% school 哪所学校的学位论文
 % url 网址（比如网络上的文章），注意如果有“%”要用“\%”来转译%，否则会被当作注释符号
+% note
 %%%% 格式 %%%%
 % @文献类型{引用词,
 %   <type1>={<content1>},
 %   <type2>={<content2>},
 %   <type3>={<content3>}
 % }
-% 注意上面的逗号都是英文逗号，且注意<content>中的内容
+% 注意上面的逗号都是【英文逗号】，且注意<content>中的内容中的空格
 % 引用词是在正文里引用时用到的： \cite{<引用词>}
-% 通常由【作者名】、【年份】和【文章名的部分】组成，方便区分以及看到就知道引用的是哪篇文献
+%                           通常由【作者名】、【年份】和【文章名的部分】组成
+%                           方便区分以及看到就知道引用的是哪篇文献
+%%%% 示例 %%%%
+% 下面的数据内容仅为示例用，可能有误
+% @book{曾谨言2013量子力学,
+%   title={量子力学: 卷 I},
+%   author={曾谨言 and 曾谨言 and 曾谨言 and 曾谨言},
+%   year={2013},
+%   publisher={科学出版社},
+%   address={北京},
+%   pages={1-10},
+% }
+% @book{feynman2011feynman,
+%   title={The Feynman lectures on physics, Vol. I: The new millennium edition: mainly mechanics, radiation, and heat},
+%   author={Feynman, Richard P and Leighton, Robert B and Sands, Matthew},
+%   year={2011},
+%   publisher={Basic books},
+%   volume={1},
+%   pages={2-8}
+% }
+
+% @article{zurek2014quantum,
+%   title={Quantum Darwinism, classical reality, and the randomness of quantum jumps},
+%   author={Zurek, Wojciech H},
+%   journal={arXiv preprint arXiv:1412.5206},
+%   year={2014},
+%   volume={1},
+%   number={7},
+%   pages={2-8}
+% }
+
+% @misc{wikimedia:stern-gerlach-experiment,
+%   author={Wikimedia Commons},
+%   title={File:Stern-Gerlach experiment zh.png --- Wikimedia Commons{,} the free media repository},
+%   year={2016},
+%   url={https://commons.wikimedia.org/w/index.php?title=File:Stern-Gerlach_experiment_zh.png&oldid=221590546},
+%   note={[Online; accessed 25-July-2019]},
+% }
+%%%% 示例结束  %%%%
 
 
+
+%%%% 用户的bib数据库 %%%%
 @book{曾谨言2013量子力学,
   title={量子力学: 卷 I},
-  author={傅刚 and 赵承 and 李佳路 and 夏康玮},
+  author={曾谨言 and 曾谨言 and 曾谨言 and 曾谨言},
   year={2013},
   publisher={科学出版社},
   address={北京},
   pages={1-10},
+  edition={第二版}
 }
 @book{feynman2011feynman,
   title={The Feynman lectures on physics, Vol. I: The new millennium edition: mainly mechanics, radiation, and heat},
-  author={Feynman, Richard P and Leighton, Robert B and Sands, Matthew and Bill},
+  author={Feynman, Richard P and Leighton, Robert B and Sands, Matthew},
   volume={1},
   year={2011},
   publisher={Basic books},
-  pages={2-8}
+  pages={2-8},
+  edition={7},
 }
 
 @article{zurek2014quantum,
@@ -48,7 +133,7 @@
   year={2014},
   volume={1},
   number={7},
-  pages={2-8}
+  pages={2-8},
 }
 
 @book{cohen2013claude,
@@ -56,7 +141,8 @@
   author={Cohen-Tannoudji, Claude and Diu, Bernard and Lalo{\"e}, Franck},
   volume={1},
   year={2013},
-  publisher={Walter de Gruyter}
+  publisher={Walter de Gruyter},
+  edition={Second},
 }
 
 @misc{zettili2003quantum,

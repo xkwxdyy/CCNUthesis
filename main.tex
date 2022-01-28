@@ -1,26 +1,13 @@
 \documentclass{CCNUthesis}
 
 \ccnusetup{
-  % style 类用于设置论文格式
-  style = {
-    cjk-font = fandol,
-    % 中文字体
-    % 允许选项：
-    %   cjk-font = adobe|fandol|founder|mac|sinotype|sourcehan|windows|none
-    % 注意：
-    %   1. 中文字体设置高度依赖于系统。各系统建议方案：
-    %        windows：cjk-font = windows
-    %        mac：    cjk-font = mac
-    %        linux：  cjk-font = fandol（默认值）
-    %   2. 除 fandol 和 sourcehan 外，其余字体均为商用字体，请注意版权问题
-    %   3. 但 fandol 字体缺字比较严重，而 sourcehan 没有配备楷体和仿宋体
-    },
   % 个人信息
   info = {
     % 论文的中文标题
     title = {Lipschitz函数的若干性质},
     % 论文的英文标题
-    title* = {Some properties of the Lipschitz functions
+    title* = {
+      Some properties of the Lipschitz functions
     }, 
     % 学院
     major = {数学与统计学学院},
@@ -35,24 +22,34 @@
     % 指导教师
     supervisor = {李工宝 \quad 教授},
     % 论文中文关键词，用英文“,”隔开
-    keywords = {Lipschitz函数, 可微性, Hausdorff测度, Hausdorff维数},
+    keywords = {
+      Lipschitz函数,
+      可微性,
+      Hausdorff测度,
+      Hausdorff维数
+    },
     % 论文英文关键词，用英文“,”隔开
-    keywords* = {Lipschitz functions, Differentiability, Hausdorff measure, Hausdorff dimension} 
+    keywords* = {
+      Lipschitz functions,
+      Differentiability,
+      Hausdorff measure,
+      Hausdorff dimension
+    } 
   }
 }
 
 % 需要的宏包可以自行调用
 \usepackage{physics}   % 仅为示例用，可删除
 
+
 % 需要的命令可以自行定义
 \newcommand{\hilbertH}{\symcal{H}}   % 仅为示例用，可删除
 \newcommand{\ee}{\symrm{e}}   % 仅为示例用，可删除
 \newcommand{\ii}{\symrm{i}}   % 仅为示例用，可删除
 
-\begin{document}
-% 前置部分包含目录、中英文摘要以及符号表等
-\frontmatter
 
+
+\begin{document}
 \ccnusetup{
   style = { fullwidth-stop = catcode }
     % 是否把全角实心句点 “．” 作为默认的句号形状，即正文中输入“。” 最终编译效果为“. ”
@@ -66,9 +63,12 @@
     %   false     不进行替换
 }
 
+% \frontmatter开启论文前置部分
+% 前置部分包含目录、中英文摘要以及符号表等
+\frontmatter
+
 % 目录
 \tableofcontents
-
 
 % 中文摘要
 \begin{abstract}
@@ -89,46 +89,46 @@
 %   \end{notation}
 % 可选参数与 LaTeX 标准表格的列格式说明语法一致
 % 这里的 “ll” 表示两列均为自动宽度，并且左对齐
+% 注：如果不需要符号表的话就把"\begin{notation}...\end{notation}"注释掉
 \begin{notation}[ll]
   $x$                  & 坐标        \\
   $p$                  & 动量        \\
   $\psi(x)$            & 波函数      \\
 \end{notation}
 
-
-
+% \mainmatter进入论文主体部分
 % 主体部分是论文的核心
 \mainmatter
 
-
-% 采用多文件编译的方式
-% 把每一章放进一个单独的 tex 文件里，并在这里用 \include 导入
+% 主体采用多文件编译的方式
+% 即把每一章放进一个单独的 tex 文件里，并在这里用 \include 导入
 % 例如 \include{./body/chapter1.tex}
 % 表示插入main所在目录中的body目录下的chapter1.tex文件
 
-% 章节一般包括【引言】、【预备知识】以及最后的【总结与展望】
-% 中间部分灵活掌握
-% 文件中的标题仅为示例，可根据自己需要进行修改
+% 章节「一般」包括【引言】、【预备知识】以及最后的【总结与展望】
+% 中间部分根据自己的需要灵活掌握
+% 子文件中的标题和内容【仅为示例】，可根据自己需要进行修改
+
 \include{./body/chapter1.tex}
 \include{./body/chapter2.tex}
 \include{./body/chapter3.tex}
 \include{./body/chapter4.tex}
 
-
-
-% 后置部分包含参考文献、声明页（自动生成）等
+% \backmatter开启后置部分，包含参考文献、致谢、附录等
 \backmatter
 
-
+%%%% 参考文献 %%%%
 % 参考文献只需要修改CCNUthesis-main.bib文件
+% 向CCNUthesis-main.bib里面添加文献信息
+% 具体参看CCNUthesis-main.bib中的注释
+
 % 打印参考文献列表
 \printbibliography
 
-% 致谢
+%%%% 致谢 %%%%
 \include{./back/Acknowledgements.tex}
-% 附录
+
+%%%% 附录 %%%%
 \include{./back/Appendix.tex}
-
-
 
 \end{document}
