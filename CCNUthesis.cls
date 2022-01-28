@@ -2152,7 +2152,7 @@
         % 西文字体（包括数学字体）
         % 允许选项：
         %   font = garamond|libertinus|lm|palatino|times|times*|none
-        cjk-font = mac,
+        cjk-font = fandol,
         % 中文字体
         % 允许选项：
         %   cjk-font = adobe|fandol|founder|mac|sinotype|sourcehan|windows|none
