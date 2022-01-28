@@ -39,13 +39,15 @@
 }
 
 % 需要的宏包可以自行调用
-\usepackage{physics}   % 仅为示例用，可删除
+\usepackage{physics}    % 为示例用，可删除，但正文示例文本中调用了该宏包的命令
+                        % 删除时把chapter2中的正文也删除，填写自己的内容
+                        % 下面的三个命令也是同理
 
 
 % 需要的命令可以自行定义
-\newcommand{\hilbertH}{\symcal{H}}   % 仅为示例用，可删除
-\newcommand{\ee}{\symrm{e}}   % 仅为示例用，可删除
-\newcommand{\ii}{\symrm{i}}   % 仅为示例用，可删除
+\newcommand{\hilbertH}{\symcal{H}}   % 为示例用，可删除
+\newcommand{\ee}{\symrm{e}}          % 为示例用，可删除
+\newcommand{\ii}{\symrm{i}}          % 为示例用，可删除
 
 
 
@@ -107,6 +109,8 @@
 
 % 章节「一般」包括【引言】、【预备知识】以及最后的【总结与展望】
 % 中间部分根据自己的需要灵活掌握
+% 仅加入4个chapter作为示例，如果要添加或删除的话到body目录下进行添加删除
+% 并向下面的方式一样进行增添\include或删除
 % 子文件中的标题和内容【仅为示例】，可根据自己需要进行修改
 \include{./body/chapter1.tex}
 \include{./body/chapter2.tex}
