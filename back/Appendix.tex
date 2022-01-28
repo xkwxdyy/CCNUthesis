@@ -2,3 +2,23 @@
 \addcontentsline{toc}{chapter}{\normalfont 附录}
 
 此处可以写调查问卷，访谈记录等
+
+用\verb|\choices{}|命令可以排版任意个选项，用\&\&分隔即可，效果：
+
+\choices{
+  选项1 &&
+  选项2 &&
+  选项3 && 
+  选项4 &&
+}
+
+\choices[label-style = quan]{
+  选项1 &&
+  选项2 &&
+  选项3 && 
+  选项4 &&
+  选项5 &&
+  选项6 &&
+  选项7 && 
+  选项8 &&
+}
