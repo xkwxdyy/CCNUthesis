@@ -38,7 +38,17 @@
   }
 }
 
-% 需要的宏包可以自行调用
+%%%%% 需要的宏包可以自行调用 %%%%% 
+%%%% 已经载入的宏包有(不用重复调用) %%%%
+% amsmath, mathtools, amssymb, extarrows, unicode-math, 
+% (数学常用的宏包都已经加载了)
+% geometry(页面设置), ntheorem(定义新定理), choices(选择题选项排版)
+% graphicx(插图), xcolor(颜色), tabularray(表格),
+% longtable, caption,
+% tikz, tikzpagenodes, 
+% varwidth, ulem, fancyhdr, footmisc, 
+% adjustbox, calc, etoolbox
+
 \usepackage{physics}    % 为示例用，可删除，但正文示例文本中调用了该宏包的命令
                         % 删除时把chapter2中的正文也删除，填写自己的内容
                         % 下面的三个命令也是同理
@@ -112,6 +122,7 @@
 % 仅加入4个chapter作为示例，如果要添加或删除的话到body目录下进行添加删除
 % 并向下面的方式一样进行增添\include或删除
 % 子文件中的标题和内容【仅为示例】，可根据自己需要进行修改
+
 \include{./body/chapter1.tex}
 \include{./body/chapter2.tex}
 \include{./body/chapter3.tex}

@@ -200,8 +200,9 @@
 \LoadClass { ctexbook }
 \RequirePackage
   {
-    amsmath,    
+    mathtools,    
     amssymb,
+    extarrows,
     unicode-math,
     geometry,
     fancyhdr,
@@ -218,8 +219,8 @@
     ulem,
     adjustbox,
     calc,
-    % xeCJK
-    etoolbox
+    etoolbox,
+    choices
   }
 \RequirePackage[titles]{tocloft}
 \graphicspath{{figures/}{logo/}}
