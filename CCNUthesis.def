@@ -61,7 +61,7 @@
 \clist_map_inline:nn
   {
     { abstract } { 内容摘要 } { Abstract          },
-    { keywords } { 关键字      } { Keywords        },
+    { keywords } { 关键词      } { Keywords        },
     { clc      } { 中图分类号  } { CLC~ code:        },
     { jel      } { JEL 分类号  } { JEL~ code:        },
     { notation } { 符号表      } { List~ of~ Symbols }
