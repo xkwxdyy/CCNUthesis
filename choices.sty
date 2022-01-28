@@ -1,0 +1,1198 @@
+\NeedsTeXFormat{LaTeX2e}[2018/04/01]
+\RequirePackage{expl3}
+\ProvidesExplPackage {choices} {2022-01-26} {3.2.4}
+  {
+    A package for flexibly LaTeXing choice items based on hlist and LaTeX3.
+    Kangwei Xia
+    <kangweixia_xdyy@163.com>
+  }
+\RequirePackage { xtemplate, l3keys2e, l3draw, xparse }
+\msg_new:nnn { choices } { l3-too-old }
+  {
+    Package~ "#1"~ is~ too~ old. \\\\
+    Please~ update~ an~ up-to-date~ version~ of~ the~ bundles \\
+    "l3kernel"~ and~ "l3packages"~ using~ your~ TeX~ package \\
+    manager~ or~ from~ CTAN.
+  }
+\clist_map_inline:nn { expl3, xparse, xtemplate, l3keys2e }
+  {
+    \@ifpackagelater {#1} { 2018/05/12 }
+      { } { \msg_error:nnn { choices } { l3-too-old } {#1} }
+  }
+\sys_if_engine_xetex:F
+  {
+    \sys_if_engine_luatex:F
+      {
+        \msg_fatal:nnx { choices } { unsupported-engine }
+          { \c_sys_engine_str }
+      }
+  }
+\msg_new:nnn { choices } { unsupported-engine }
+  {
+    The~ choice~ package~ requires~ either~ XeTeX~ or~ LuaTeX. \\\\
+    "#1"~ is~ not~ supported~ at~ present.~ You~ must~ change \\
+    your~ typesetting~ engine~ to~ "xelatex"~ or~ "lualatex".
+  }
+\RequirePackage{ hlist }     % 对位宏包
+\RequirePackage{ varwidth }  % 提供varwidth环境，以获得内容的宽度
+
+\RequirePackage{ tikz }      % 绘制带圈数字
+
+% hlist相关参数设置
+\sethlist{
+  pre~label = ,   % 加上的话label就没有加粗效果
+  label~align = right,
+  % pre skip=0pt,
+  % post skip=0pt,
+}
+
+% LaTeX3语法开启
+% \ExplSyntaxOn
+% \makeatletter
+% 要使用quan来作用与hlisti计数器得先把这计数器的值转化为number输出
+\def \hlstarabic #1 { \number\csname c@\detokenize{#1} \endcsname }
+% \makeatother
+% 剩下的工作就是设置key-value将quan选项也能纳入进去
+
+\dim_new:N \l__quan_height_of_number_dim        % quan: 储存数字的高度
+\dim_new:N \l__quan_radius_of_circle_dim        % quan: 圆的半径
+\dim_new:N \l__choices_max_width_dim            % choice: 选项的最大宽度
+\dim_new:N \l__line_width_dim                   % 储存当时行宽
+
+\fp_new:N \l__quan_xscale_of_number_fp          % quan: 数字的水平压缩比例
+\fp_new:N \l__quan_yscale_of_number_fp          % quan: 数字的垂直压缩比例
+
+\seq_new:N \l__choices_items_seq                % choice: 储存选项
+
+\tl_new:N \l__choices_check_tl                  % choice: 将输入进行初步过滤：去掉尾部的&（若有的话）
+\tl_new:N \l__hlistchoice_label_style_tl        % hlistchoice: 用于设置选项的label-style
+\tl_new:N \l__coffinchoice_label_style_tl       % coffinchoice: 用于设置选项的label-style
+\tl_new:N \l__choices_prelabel_tl               % choice: label的前面的设置
+\tl_new:N \l__choices_poslabel_tl               % choice: label的后面的设置
+\tl_new:N \l__hlistchoice_show_label_tl         % hlistchoice: 控制是否显示label
+
+\str_new:N \l__choices_check_last_item_str      % choice: 用于储存\l__choices_check_tl中最后一个字符
+\str_new:N \l__choices_current_anchor_str       % choices: 用于储存当前的anchor
+
+\int_new:N \l__choices_item_number_int          % choice: 储存一共有多少个选项
+\int_new:N \l__choices_items_per_line_int       % choice: 每行排多少个
+\int_new:N \l__choices_line_number_int          % choice: 一共有几行
+
+\bool_new:N \l__choices_items_shuffle_bool      % choice: 是否打乱顺序
+
+\cs_set_eq:NN \my_settoheight:Nn \settoheight  % 获取高度
+
+% 产生变体
+\prg_generate_conditional_variant:Nnn \dim_compare:nNn {nNv} {F}
+\prg_generate_conditional_variant:Nnn \dim_compare:nNn {vNv} {F}
+\prg_generate_conditional_variant:Nnn \str_if_eq:nn {Vn} {TF}
+\cs_generate_variant:Nn \dim_set:Nn { Nv, cv}
+\cs_generate_variant:Nn \dim_max:nn { nv }
+\cs_generate_variant:Nn \coffin_join:NnnNnnnn {cVVcVVnn, NVVNVVnn}
+\cs_generate_variant:Nn \coffin_attach:NnnNnnnn {cVVcVVnn, NVVNVVnn}
+\cs_generate_variant:Nn \coffin_typeset:Nnnnn {cVVnn}
+\cs_generate_variant:Nn \seq_set_split:Nnn {NnV}
+\cs_generate_variant:Nn \str_case:nn {Vn}
+% 检查最后一行是否用&&结尾，是的话就去掉，否则choice命令会多出一项
+\cs_new:Npn \__choices_check:n #1
+  {
+    \tl_set:Nn \l__choices_check_tl {#1}
+    \str_set:Nx \l__choices_check_last_item_str { \tl_item:Nn \l__choices_check_tl {-1} }
+    \str_if_eq:VnTF { \l__choices_check_last_item_str  } { & }
+      {
+        \tl_reverse:N \l__choices_check_tl
+        \tl_remove_once:Nn \l__choices_check_tl {&}
+        \tl_reverse:N \l__choices_check_tl
+        \str_set:Nx \l__choices_check_last_item_str { \tl_item:Nn \l__choices_check_tl {-1} }
+        \str_if_eq:VnT { \l__choices_check_last_item_str  } { & }
+        \tl_reverse:N \l__choices_check_tl
+        \tl_remove_once:Nn \l__choices_check_tl {&}
+        \tl_reverse:N \l__choices_check_tl
+        \seq_set_split:NnV \l__choices_items_seq {&&} \l__choices_check_tl
+      }
+      {
+        \seq_set_split:NnV \l__choices_items_seq {&&} \l__choices_check_tl
+      }
+    % 检测是否含有includegraphics命令
+    % 自动变更anchor
+    \str_if_in:NnTF \l__choices_check_tl 
+      {
+        includegraphics
+      }
+      {
+        \bool_set_true:N \l__coffinchoice_check_graphics_bool
+      }
+      {
+        \str_if_in:NnTF \l__choices_check_tl 
+          {
+            includesvg
+          }
+          {
+            \bool_set_true:N \l__coffinchoice_check_graphics_bool
+          }
+          {
+            \bool_set_false:N \l__coffinchoice_check_graphics_bool
+          }
+      }
+  }
+
+% 打乱顺序
+\cs_new:Npn \__choices_items_shuffle:n #1
+  {
+    \bool_if:NTF \l__choices_items_shuffle_bool
+      {
+        \seq_shuffle:N #1
+      }
+      {}
+  }
+% coffinchoice相关
+% 检测内容中是否有插图命令，默认将anchor改变
+\bool_new:N \l__coffinchoice_check_graphics_bool
+\str_new:N \l__coffinchoice_check_graphics_anchor_str
+% 控制对应anchor的bool来控制anchor不同的其它操作比如content的升降
+% \clist_map_inline:nn
+%   {
+%     north, south, west, east,
+%     northwest, northeast, southwest, southeast
+%   }
+%   {
+%     \bool_new:c { l__coffinchoice_anchor_#1_bool}
+%   }
+% 对齐方式
+\tl_new:N \l__coffinchoice_align_tl
+% labelcoffin的水平基准点
+\tl_new:N \l__labelcoffin_horizontal_position_tl
+% labelcoffin的垂直基准点
+\tl_new:N \l__labelcoffin_vertical_position_tl
+% contentcoffin的水平基准点
+\tl_new:N \l__contentcoffin_horizontal_position_tl
+% contentcoffin的垂直基准点
+\tl_new:N \l__contentcoffin_vertical_position_tl
+% typeset的水平基准点
+\tl_new:N \l__typeset_horizontal_position_tl
+% typeset的垂直基准点
+\tl_new:N \l__typeset_vertical_position_tl
+% typeset的xshift
+\dim_new:N \l__typeset_horizontal_xshift_dim
+% typeset的yshift
+\dim_new:N \l__typeset_vertical_yshift_dim
+% labelcontent对齐的xshift
+\dim_new:N \l__labelcontentcoffin_join_horizontal_xshift_dim
+% labelcontent对齐的yshift
+\dim_new:N \l__labelcontentcoffin_join_vertical_yshift_dim
+% topsep：第一行距离上面的间距
+\dim_new:N \l__coffinchoice_top_sep_dim
+\dim_new:N \l__coffinchoice_top_sep_add_dim
+% bottom：最后一行距离下面的间距
+\dim_new:N \l__coffinchoice_bottom_sep_dim
+\dim_new:N \l__coffinchoice_bottom_sep_add_dim
+% 第一列到左边的距离
+\dim_new:N \l__coffinchoice_first_column_sep_dim
+\dim_new:N \l__coffinchoice_first_column_sep_add_dim   % 用于用户增减距离
+% >1的列到左边的距离
+\dim_new:N \l__coffinchoice_greater_than_first_column_sep_dim
+\dim_new:N \l__coffinchoice_greater_than_first_column_sep_add_dim
+% 行间距
+\dim_new:N \l__coffinchoice_row_sep_dim
+\dim_new:N \l__coffinchoice_row_sep_add_dim
+% 计算coffin的深度+高度（源自hanzibox.sty）
+\cs_new_nopar:Npn \__coffinchoice_ht_plus_dp:N #1
+  {
+    \coffin_ht:N #1 + \coffin_dp:N #1
+  }
+
+\cs_generate_variant:Nn \__coffinchoice_ht_plus_dp:N {c}
+
+
+\@ifclassloaded { exam }
+  { 
+    \RenewDocumentCommand { \choices } { s O{} +m}
+      {
+        \IfBooleanTF {#1}
+        { \coffinchoice[#2] {#3} }
+        { \hlistchoice[#2] {#3} }
+      }
+  }
+  { 
+    \NewDocumentCommand{ \choices } { s O{} +m}
+      {
+        \IfBooleanTF {#1}
+        { \coffinchoice[#2] {#3} }
+        { \hlistchoice[#2] {#3} }
+      }
+  }
+
+\cs_new:Npn \choices_coffin_set_anchor:n #1
+  {
+    \use:c { choices_coffin_set_anchor_#1: }
+  }
+\cs_new:Nn \choices_coffin_set_anchor_north:
+  {
+    % \bool_gset_true:N \l__coffinchoice_anchor_north_bool
+    % \clist_map_inline:nn
+    %   {
+    %     south, west, east,
+    %     northwest, northeast, southwest, southeast
+    %   }
+    %   {
+    %     \bool_set_false:c { l__coffinchoice_anchor_#1_bool }
+    %   }
+    \str_set:Nn \l__choices_current_anchor_str {north}
+    \tl_set:Nn \l__labelcoffin_horizontal_position_tl { hc }
+    \tl_set:Nn \l__labelcoffin_vertical_position_tl { H }
+    \tl_set:Nn \l__contentcoffin_horizontal_position_tl { hc }
+    \tl_set:Nn \l__contentcoffin_vertical_position_tl { t }
+    \dim_set:Nn \l__labelcontentcoffin_join_horizontal_xshift_dim
+      { 0pt }
+    \dim_set:Nn \l__labelcontentcoffin_join_vertical_yshift_dim
+      { -6pt }
+    \tl_set:Nn \l__typeset_horizontal_position_tl { hc }
+    \tl_set:Nn \l__typeset_vertical_position_tl { t }
+    \bool_if:NTF \l__coffinchoice_check_graphics_bool
+    {
+      % 图片版本
+      \dim_set:Nn \l__typeset_horizontal_xshift_dim { 0em }
+      \dim_set:Nn \l__typeset_vertical_yshift_dim { 0em }
+      \dim_set:Nn \l__coffinchoice_top_sep_dim { 0.5em }
+      \dim_set:Nn \l__coffinchoice_bottom_sep_dim { 0.5em }
+      \dim_set:Nn \l__coffinchoice_row_sep_dim { 0.5em }
+      \dim_set:Nn \l__coffinchoice_first_column_sep_dim { 1em }
+      \dim_set:Nn \l__coffinchoice_greater_than_first_column_sep_dim { 7em }
+    }
+    {
+      % 文字版本
+      \dim_set:Nn \l__typeset_horizontal_xshift_dim { 0em }
+      \dim_set:Nn \l__typeset_vertical_yshift_dim { 0em }
+      \dim_set:Nn \l__coffinchoice_top_sep_dim { 0em }
+      \dim_set:Nn \l__coffinchoice_bottom_sep_dim { 0.5em }
+      \dim_set:Nn \l__coffinchoice_row_sep_dim { 0.5em }
+      \dim_set:Nn \l__coffinchoice_first_column_sep_dim { 1em }
+      \dim_set:Nn \l__coffinchoice_greater_than_first_column_sep_dim { 8em }
+    }
+  }
+
+\cs_new:Nn \choices_coffin_set_anchor_south:
+  {
+    % \bool_gset_true:N \l__coffinchoice_anchor_south_bool
+    % \clist_map_inline:nn
+    %   {
+    %     north, west, east,
+    %     northwest, northeast, southwest, southeast
+    %   }
+    %   {
+    %     \bool_set_false:c { l__coffinchoice_anchor_#1_bool }
+    %   }
+    \str_set:Nn \l__choices_current_anchor_str {south}
+    \tl_set:Nn \l__labelcoffin_horizontal_position_tl { hc }
+    \tl_set:Nn \l__labelcoffin_vertical_position_tl { t }
+    \tl_set:Nn \l__contentcoffin_horizontal_position_tl { hc }
+    \tl_set:Nn \l__contentcoffin_vertical_position_tl { b }
+    \dim_set:Nn \l__labelcontentcoffin_join_horizontal_xshift_dim
+      { 0pt }
+    \dim_set:Nn \l__labelcontentcoffin_join_vertical_yshift_dim
+      { 8pt }
+    \tl_set:Nn \l__typeset_horizontal_position_tl { hc }
+    \tl_set:Nn \l__typeset_vertical_position_tl { b }
+    \bool_if:NTF \l__coffinchoice_check_graphics_bool
+    {
+      % 图片版本
+      \dim_set:Nn \l__typeset_horizontal_xshift_dim { 0em }
+      \dim_set:Nn \l__typeset_vertical_yshift_dim { -1em }
+      \dim_set:Nn \l__coffinchoice_top_sep_dim { 3em }
+      \dim_set:Nn \l__coffinchoice_bottom_sep_dim { 0.3em }
+      \dim_set:Nn \l__coffinchoice_row_sep_dim { 0.5em }
+      \dim_set:Nn \l__coffinchoice_first_column_sep_dim { 1em }
+      \dim_set:Nn \l__coffinchoice_greater_than_first_column_sep_dim { 7em }
+    }
+    {
+      % 文字版本
+      \dim_set:Nn \l__typeset_horizontal_xshift_dim { 0em }
+      \dim_set:Nn \l__typeset_vertical_yshift_dim { -1em }
+      \dim_set:Nn \l__coffinchoice_top_sep_dim { 1em }
+      \dim_set:Nn \l__coffinchoice_bottom_sep_dim { 0.3em }
+      \dim_set:Nn \l__coffinchoice_row_sep_dim { 0.7em }
+      \dim_set:Nn \l__coffinchoice_first_column_sep_dim { 1em }
+      \dim_set:Nn \l__coffinchoice_greater_than_first_column_sep_dim { 8em }
+    }
+  }
+
+\cs_new:Nn \choices_coffin_set_anchor_east:
+  {
+    % \bool_set_true:N \l__coffinchoice_anchor_east_bool
+    % \clist_map_inline:nn
+    %   {
+    %     north, south, west,
+    %     northwest, northeast, southwest, southeast
+    %   }
+    %   {
+    %     \bool_set_false:c { l__coffinchoice_anchor_#1_bool }
+    %   }
+    \str_set:Nn \l__choices_current_anchor_str {east}
+    \tl_set:Nn \l__labelcoffin_horizontal_position_tl { l }
+    \tl_set:Nn \l__labelcoffin_vertical_position_tl { vc }
+    \tl_set:Nn \l__contentcoffin_horizontal_position_tl { r }
+    \tl_set:Nn \l__contentcoffin_vertical_position_tl { vc }
+    \dim_set:Nn \l__labelcontentcoffin_join_horizontal_xshift_dim
+      { -8pt }
+    \dim_set:Nn \l__labelcontentcoffin_join_vertical_yshift_dim
+      { -1pt }
+    \tl_set:Nn \l__typeset_horizontal_position_tl { r }
+    \tl_set:Nn \l__typeset_vertical_position_tl { vc }
+    \bool_if:NTF \l__coffinchoice_check_graphics_bool
+    {
+      % 图片版本
+      \dim_set:Nn \l__typeset_horizontal_xshift_dim { 0em }
+      \dim_set:Nn \l__typeset_vertical_yshift_dim { 0em }
+      \dim_set:Nn \l__coffinchoice_top_sep_dim { 0.6em }
+      \dim_set:Nn \l__coffinchoice_bottom_sep_dim { 1em }
+      \dim_set:Nn \l__coffinchoice_row_sep_dim { 0em }
+      \dim_set:Nn \l__coffinchoice_first_column_sep_dim { 4em }
+      \dim_set:Nn \l__coffinchoice_greater_than_first_column_sep_dim { 10em }
+    }
+    {
+      % 文字版本
+      \dim_set:Nn \l__typeset_horizontal_xshift_dim { 0em }
+      \dim_set:Nn \l__typeset_vertical_yshift_dim { 0em }
+      \dim_set:Nn \l__coffinchoice_top_sep_dim { 0.6em }
+      \dim_set:Nn \l__coffinchoice_bottom_sep_dim { 0.3em }
+      \dim_set:Nn \l__coffinchoice_row_sep_dim { 0.3em }
+      \dim_set:Nn \l__coffinchoice_first_column_sep_dim { 5em }
+      \dim_set:Nn \l__coffinchoice_greater_than_first_column_sep_dim { 8.5em }
+    }
+  }
+
+\cs_new:Nn \choices_coffin_set_anchor_west:
+  {
+    % \bool_set_true:N \l__coffinchoice_anchor_west_bool
+    % \clist_map_inline:nn
+    %   {
+    %     north, south, east,
+    %     northwest, northeast, southwest, southeast
+    %   }
+    %   {
+    %     \bool_set_false:c { l__coffinchoice_anchor_#1_bool }
+    %   }
+    \str_set:Nn \l__choices_current_anchor_str {west}
+    \tl_set:Nn \l__labelcoffin_horizontal_position_tl { r }
+    \tl_set:Nn \l__labelcoffin_vertical_position_tl { vc }
+    \tl_set:Nn \l__contentcoffin_horizontal_position_tl { l }
+    \tl_set:Nn \l__contentcoffin_vertical_position_tl { vc }
+    \dim_set:Nn \l__labelcontentcoffin_join_horizontal_xshift_dim
+      { 8pt }
+    \dim_set:Nn \l__labelcontentcoffin_join_vertical_yshift_dim
+      { -1pt }
+    \tl_set:Nn \l__typeset_horizontal_position_tl { l }
+    \tl_set:Nn \l__typeset_vertical_position_tl { vc }
+    \bool_if:NTF \l__coffinchoice_check_graphics_bool
+    {
+      % 图片版本
+      \dim_set:Nn \l__typeset_horizontal_xshift_dim { 0em }
+      \dim_set:Nn \l__typeset_vertical_yshift_dim { 0em }
+      \dim_set:Nn \l__coffinchoice_top_sep_dim { 1em }
+      \dim_set:Nn \l__coffinchoice_bottom_sep_dim { 0.5em }
+      \dim_set:Nn \l__coffinchoice_row_sep_dim { 0em }
+      \dim_set:Nn \l__coffinchoice_first_column_sep_dim { -4em }
+      \dim_set:Nn \l__coffinchoice_greater_than_first_column_sep_dim { 2em }
+    }
+    {
+      % 文字版本
+      \dim_set:Nn \l__typeset_horizontal_xshift_dim { 0em }
+      \dim_set:Nn \l__typeset_vertical_yshift_dim { 0em }
+      \dim_set:Nn \l__coffinchoice_top_sep_dim { 0.5em }
+      \dim_set:Nn \l__coffinchoice_bottom_sep_dim { 0.2em }
+      \dim_set:Nn \l__coffinchoice_row_sep_dim { 0.2em }
+      \dim_set:Nn \l__coffinchoice_first_column_sep_dim { -2em }
+      \dim_set:Nn \l__coffinchoice_greater_than_first_column_sep_dim { 6em }
+    }
+  }
+
+\cs_new:Nn \choices_coffin_set_anchor_northeast:
+  {
+    % \bool_set_true:N \l__coffinchoice_anchor_northeast_bool
+    % \clist_map_inline:nn
+    %   {
+    %     north, south, west, east,
+    %     northwest, southwest, southeast
+    %   }
+    %   {
+    %     \bool_set_false:c { l__coffinchoice_anchor_#1_bool }
+    %   }
+    \str_set:Nn \l__choices_current_anchor_str {northeast}
+    \tl_set:Nn \l__labelcoffin_horizontal_position_tl { l }
+    \tl_set:Nn \l__labelcoffin_vertical_position_tl { H }
+    \tl_set:Nn \l__contentcoffin_horizontal_position_tl { r }
+    \tl_set:Nn \l__contentcoffin_vertical_position_tl { t }
+    \dim_set:Nn \l__labelcontentcoffin_join_horizontal_xshift_dim
+      { -4pt }
+    \dim_set:Nn \l__labelcontentcoffin_join_vertical_yshift_dim
+      { -4pt }
+    \tl_set:Nn \l__typeset_horizontal_position_tl { r }
+    \tl_set:Nn \l__typeset_vertical_position_tl { t }
+    \bool_if:NTF \l__coffinchoice_check_graphics_bool
+    {
+      % 图片版本
+      \dim_set:Nn \l__typeset_horizontal_xshift_dim { 0em }
+      \dim_set:Nn \l__typeset_vertical_yshift_dim { 0em }
+      \dim_set:Nn \l__coffinchoice_top_sep_dim { 0em }
+      \dim_set:Nn \l__coffinchoice_bottom_sep_dim { 0.5em }
+      \dim_set:Nn \l__coffinchoice_row_sep_dim { 0em }
+      \dim_set:Nn \l__coffinchoice_first_column_sep_dim { 4em }
+      \dim_set:Nn \l__coffinchoice_greater_than_first_column_sep_dim { 9em }
+    }
+    {
+      % 文字版本
+      \dim_set:Nn \l__typeset_horizontal_xshift_dim { 0em }
+      \dim_set:Nn \l__typeset_vertical_yshift_dim { 0em }
+      \dim_set:Nn \l__coffinchoice_top_sep_dim { 0em }
+      \dim_set:Nn \l__coffinchoice_bottom_sep_dim { 0.5em }
+      \dim_set:Nn \l__coffinchoice_row_sep_dim { 0.5em }
+      \dim_set:Nn \l__coffinchoice_first_column_sep_dim { 6em }
+      \dim_set:Nn \l__coffinchoice_greater_than_first_column_sep_dim { 9em }
+    }
+  }
+
+\cs_new:Nn \choices_coffin_set_anchor_northwest:
+  {
+    % \bool_set_true:N \l__coffinchoice_anchor_northwest_bool
+    % \clist_map_inline:nn
+    %   {
+    %     north, south, west, east,
+    %     northeast, southwest, southeast
+    %   }
+    %   {
+    %     \bool_set_false:c { l__coffinchoice_anchor_#1_bool }
+    %   }
+    \str_set:Nn \l__choices_current_anchor_str {northwest}
+    \tl_set:Nn \l__labelcoffin_horizontal_position_tl { r }
+    \tl_set:Nn \l__labelcoffin_vertical_position_tl { H }
+    \tl_set:Nn \l__contentcoffin_horizontal_position_tl { l }
+    \tl_set:Nn \l__contentcoffin_vertical_position_tl { t }
+    \dim_set:Nn \l__labelcontentcoffin_join_horizontal_xshift_dim
+      { 4pt }
+    \dim_set:Nn \l__labelcontentcoffin_join_vertical_yshift_dim
+      { -4pt }
+    \tl_set:Nn \l__typeset_horizontal_position_tl { l }
+    \tl_set:Nn \l__typeset_vertical_position_tl { t }
+    \bool_if:NTF \l__coffinchoice_check_graphics_bool
+    {
+      % 图片版本
+      \dim_set:Nn \l__typeset_horizontal_xshift_dim { 0em }
+      \dim_set:Nn \l__typeset_vertical_yshift_dim { 0em }
+      \dim_set:Nn \l__coffinchoice_top_sep_dim { 0em }
+      \dim_set:Nn \l__coffinchoice_bottom_sep_dim { 0.5em }
+      \dim_set:Nn \l__coffinchoice_row_sep_dim { 0em }
+      \dim_set:Nn \l__coffinchoice_first_column_sep_dim { -1em }
+      \dim_set:Nn \l__coffinchoice_greater_than_first_column_sep_dim { 4em }
+    }
+    {
+      % 文字版本
+      \dim_set:Nn \l__typeset_horizontal_xshift_dim { 0em }
+      \dim_set:Nn \l__typeset_vertical_yshift_dim { 0em }
+      \dim_set:Nn \l__coffinchoice_top_sep_dim { 0em }
+      \dim_set:Nn \l__coffinchoice_bottom_sep_dim { 0.5em }
+      \dim_set:Nn \l__coffinchoice_row_sep_dim { 0.5em }
+      \dim_set:Nn \l__coffinchoice_first_column_sep_dim { -2em }
+      \dim_set:Nn \l__coffinchoice_greater_than_first_column_sep_dim { 8em }
+    }
+  }
+
+\cs_new:Nn \choices_coffin_set_anchor_southeast:
+  {
+    % \bool_set_true:N \l__coffinchoice_anchor_southeast_bool
+    % \clist_map_inline:nn
+    %   {
+    %     north, south, west, east,
+    %     northwest, northeast, southwest
+    %   }
+    %   {
+    %     \bool_set_false:c { l__coffinchoice_anchor_#1_bool }
+    %   }
+    \str_set:Nn \l__choices_current_anchor_str {southeast}
+    \tl_set:Nn \l__labelcoffin_horizontal_position_tl { l }
+    \tl_set:Nn \l__labelcoffin_vertical_position_tl { t }
+    \tl_set:Nn \l__contentcoffin_horizontal_position_tl { r }
+    \tl_set:Nn \l__contentcoffin_vertical_position_tl { H }
+    \dim_set:Nn \l__labelcontentcoffin_join_horizontal_xshift_dim
+      { -8pt }
+    \dim_set:Nn \l__labelcontentcoffin_join_vertical_yshift_dim
+      { 0pt }
+    \tl_set:Nn \l__typeset_horizontal_position_tl { r }
+    \tl_set:Nn \l__typeset_vertical_position_tl { H }
+    \bool_if:NTF \l__coffinchoice_check_graphics_bool
+    {
+      % 图片版本
+      \dim_set:Nn \l__typeset_horizontal_xshift_dim { 0em }
+      \dim_set:Nn \l__typeset_vertical_yshift_dim { 0em }
+      \dim_set:Nn \l__coffinchoice_top_sep_dim { 0.5em }
+      \dim_set:Nn \l__coffinchoice_bottom_sep_dim { 0.2em }
+      \dim_set:Nn \l__coffinchoice_row_sep_dim { 0em }
+      \dim_set:Nn \l__coffinchoice_first_column_sep_dim { 5em }
+      \dim_set:Nn \l__coffinchoice_greater_than_first_column_sep_dim { 10em }
+    }
+    {
+      % 文字版本
+      \dim_set:Nn \l__typeset_horizontal_xshift_dim { 0em }
+      \dim_set:Nn \l__typeset_vertical_yshift_dim { 0em }
+      \dim_set:Nn \l__coffinchoice_top_sep_dim { 1.5em }
+      \dim_set:Nn \l__coffinchoice_bottom_sep_dim { 0.2em }
+      \dim_set:Nn \l__coffinchoice_row_sep_dim { 0.5em }
+      \dim_set:Nn \l__coffinchoice_first_column_sep_dim { 7em }
+      \dim_set:Nn \l__coffinchoice_greater_than_first_column_sep_dim { 9em }
+    }
+  }
+
+\cs_new:Nn \choices_coffin_set_anchor_southwest:
+  {
+    % \bool_set_true:N \l__coffinchoice_anchor_southwest_bool
+    % \clist_map_inline:nn
+    %   {
+    %     north, south, west, east,
+    %     northwest, northeast, southeast
+    %   }
+    %   {
+    %     \bool_set_false:c { l__coffinchoice_anchor_#1_bool }
+    %   }
+    \str_set:Nn \l__choices_current_anchor_str {southwest}
+    \tl_set:Nn \l__labelcoffin_horizontal_position_tl { r }
+    \tl_set:Nn \l__labelcoffin_vertical_position_tl { t }
+    \tl_set:Nn \l__contentcoffin_horizontal_position_tl { l }
+    \tl_set:Nn \l__contentcoffin_vertical_position_tl { H }
+    \dim_set:Nn \l__labelcontentcoffin_join_horizontal_xshift_dim
+      { 6pt }
+    \dim_set:Nn \l__labelcontentcoffin_join_vertical_yshift_dim
+      { 5pt }
+    \tl_set:Nn \l__typeset_horizontal_position_tl { l }
+    \tl_set:Nn \l__typeset_vertical_position_tl { H }
+    \bool_if:NTF \l__coffinchoice_check_graphics_bool
+    {
+      % 图片版本
+      \dim_set:Nn \l__typeset_horizontal_xshift_dim { 0em }
+      \dim_set:Nn \l__typeset_vertical_yshift_dim { 0em }
+      \dim_set:Nn \l__coffinchoice_top_sep_dim { 0.5em }
+      \dim_set:Nn \l__coffinchoice_bottom_sep_dim { 0.2em }
+      \dim_set:Nn \l__coffinchoice_row_sep_dim { 0.3em }
+      \dim_set:Nn \l__coffinchoice_first_column_sep_dim { -5em }
+      \dim_set:Nn \l__coffinchoice_greater_than_first_column_sep_dim { 3em }
+    }
+    {
+      % 文字版本
+      \dim_set:Nn \l__typeset_horizontal_xshift_dim { 0em }
+      \dim_set:Nn \l__typeset_vertical_yshift_dim { 0em }
+      \dim_set:Nn \l__coffinchoice_top_sep_dim { 1em }
+      \dim_set:Nn \l__coffinchoice_bottom_sep_dim { 0.2em }
+      \dim_set:Nn \l__coffinchoice_row_sep_dim { 0.5em }
+      \dim_set:Nn \l__coffinchoice_first_column_sep_dim { -2em }
+      \dim_set:Nn \l__coffinchoice_greater_than_first_column_sep_dim { 8em }
+    }
+  }
+
+\keys_define:nn { choice / coffinchoice }
+  {
+    anchor .choices:nn =
+      { north , south , east , west , northeast , northwest , southeast , southwest }
+      { 
+        \exp_args:NV \choices_coffin_set_anchor:n \l_keys_choice_tl 
+      },
+    anchor .initial:n = west,
+    items .int_set:N = \l__choices_items_per_line_int,
+    xshift .dim_set:N = \l__coffinchoice_first_column_sep_add_dim,
+    % xshift .initial:n = 0pt,
+    yshift .dim_set:N = \l__coffinchoice_top_sep_add_dim,
+    below-sep .dim_set:N = \l__typeset_vertical_yshift_dim,
+    below-sep .initial:n = 0pt,
+    label-xshift .dim_set:N = \l__labelcontentcoffin_join_horizontal_xshift_dim,
+    label-yshift .dim_set:N = \l__labelcontentcoffin_join_vertical_yshift_dim,
+    top .dim_set:N = \l__coffinchoice_top_sep_add_dim,
+    top-sep .dim_set:N = \l__coffinchoice_top_sep_add_dim,
+    bottom-sep .dim_set:N = \l__coffinchoice_bottom_sep_add_dim,
+    bottom .dim_set:N = \l__coffinchoice_bottom_sep_add_dim,
+    row-sep .dim_set:N = \l__coffinchoice_row_sep_add_dim,
+    col-sep .dim_set:N = \l__coffinchoice_greater_than_first_column_sep_add_dim,
+    items-sep .dim_set:N = \l__coffinchoice_greater_than_first_column_sep_add_dim,
+    pre-label .tl_set:N = \l__choices_prelabel_tl,
+    post-label .tl_set:N = \l__choices_poslabel_tl,
+    post-label .initial:n = {.},
+    label-style .code:n = 
+      {
+        \str_if_eq:nnTF { #1 } { arabic }
+          {
+            \tl_set:Nn \l__coffinchoice_label_style_tl {}
+          }
+          {
+            \str_if_eq:nnTF { #1 } { quan }
+              {
+                \tl_set:Nn \l__coffinchoice_label_style_tl { quan }
+                \tl_set:Nn \l__choices_poslabel_tl {}
+                \tl_set:Nn \l__choices_prelabel_tl {}
+              }
+              {
+                    \tl_set:Nn \l__coffinchoice_label_style_tl { int_to_#1:n }
+              }
+          }
+      },
+    label-style .default:n = Alph,
+    align .choice:,
+    align / center.code:n =
+      {
+        \tl_set:Nn \l__coffinchoice_align_tl { \centering }
+      },
+    align / left.code:n =
+      {
+        \tl_set:Nn \l__coffinchoice_align_tl { \raggedright }
+      },
+    align / right.code:n =
+      {
+        \tl_set:Nn \l__coffinchoice_align_tl { \raggedleft }
+      },
+    align .initial:n = center,
+    % autopic-anchor .str_set:N = \l__coffinchoice_check_graphics_anchor_str,
+    autopic-anchor .code:n =
+      {
+        \str_set:Nn \l__coffinchoice_check_graphics_anchor_str {#1}
+      },
+    autopic-anchor .initial:n = south,
+    random-items .bool_set:N = \l__choices_items_shuffle_bool,
+    random-items .initial:n = false,
+    unknown .code:n = { \msg_error:nnn { choices } { unknown-option } {#1} }
+  }
+\msg_new:nnn { choices } { unknown-option }
+  { package~ option~ "\l_keys_key_tl"~ is~ unknown. }
+\keys_define:nn { choice / hlistchoice }
+  {
+    items .int_set:N = \l__choices_items_per_line_int,
+    item .int_set:N = \l__choices_items_per_line_int,
+    anchor .choice:,
+    anchor / north.code:n = ,
+    anchor / south.code:n = ,
+    anchor / west.code:n = ,
+    anchor / east.code:n = ,
+    anchor / northwest.code:n = ,
+    anchor / northeast.code:n = ,
+    anchor / southwest.code:n = ,
+    anchor / southeast.code:n = ,
+    xshift .code:n = ,
+    yshift .code:n = ,
+    below-sep .code:n = ,
+    label-xshift .code:n = ,
+    label-yshift .code:n = ,
+    top-sep .code:n = ,
+    top .code:n = ,
+    bottom-sep .code:n = ,
+    bottom .code:n = ,
+    row-sep .code:n = ,
+    col-sep .code:n = ,
+    item-sep.code:n = ,
+    % firstcolumnsep .code:n = ,
+    % firstcolumn-sep .code:n = ,
+    % firstcolsep .code:n = ,
+    % firstcol-sep .code:n = ,
+    pre-label .tl_set:N = \l__choices_prelabel_tl,
+    post-label .tl_set:N = \l__choices_poslabel_tl,
+    post-label .initial:n = {.},
+    label-style .code:n =   % 设置label的样式: arabic, alph, Alph, roman, Roman, quan
+      {
+        \str_if_eq:nnTF { #1 } { quan }
+          {
+            \tl_set:Nn \l__hlistchoice_label_style_tl
+              {
+                \quan { \hlstarabic { hlisti } }
+              }
+            \tl_set:Nn \l__choices_poslabel_tl {~}
+            \tl_set:Nn \l__choices_prelabel_tl {}
+          }
+          {
+            \str_if_eq:nnTF { #1 } { arabic }
+              {
+                \tl_set:Nn \l__hlistchoice_label_style_tl
+                  {
+                    \hlstarabic { hlisti }
+                  }
+                % \tl_set:Nn \l__choices_poslabel_tl { . }
+              }
+              {
+                % \str_if_eq:nnTF { #1 } { none }
+                %   {
+                %     \tl_set:Nn \l__hlistchoice_show_label_tl {show~label = false}
+                %     \tl_set:Nn \l__choices_poslabel_tl {}
+                %   }
+                  % {
+                    \tl_set:Nn \l__hlistchoice_label_style_tl
+                    {
+                      \cs:w #1 \cs_end: { hlisti }
+                    }
+                  % \tl_set:Nn \l__choices_poslabel_tl {.}
+                  % }
+              }
+          }
+      },
+    label-style .default:n = Alph,
+    align .choice:,
+    align / center.code:n = ,
+    align / left.code:n = ,
+    align / right.code:n = ,
+    autopic-anchor .code:n = ,
+    random-items .bool_set:N = \l__choices_items_shuffle_bool,
+    random-items .initial:n = false,
+    unknown .code:n = { \msg_error:nnn {choices} { unknown-option } {#1} }
+  }
+\NewDocumentCommand{ \choicesetup } { m }
+  {
+    \keys_set:nn { choice / hlistchoice } { #1 }
+    \keys_set:nn { choice / coffinchoice } { #1 }
+  }
+
+\NewDocumentCommand{ \coffinchoice } { O{} +m }
+{
+  \group_begin:
+    % \keys_set:nn { choice / coffinchoice } { #1 }
+    % \clist_map_inline:nn
+    %   {
+    %     north, south, west, east,
+    %     northwest, northeast, southwest, southeast
+    %   }
+    %   {
+    %     \bool_if:cTF { l__coffinchoice_anchor_##1_bool }
+    %     { ##1 true \par }
+    %     { ##1 false \par }
+    %   }
+    \dim_set_eq:NN \l__line_width_dim \linewidth   % 储存行宽
+    \__choices_check:n {#2}
+    \__choices_items_shuffle:n { \l__choices_items_seq }
+    \bool_if:NT \l__coffinchoice_check_graphics_bool
+      {
+        \exp_args:NV \choices_coffin_set_anchor:n \l__coffinchoice_check_graphics_anchor_str
+      }
+    \int_set:Nn \l__choices_item_number_int { \seq_count:N \l__choices_items_seq }
+    \int_step_inline:nn { \l__choices_item_number_int } 
+      {
+        % coffin变量储存内容
+        \coffin_if_exist:cF
+          { l__content_ \int_to_roman:n { ##1 } _coffin }
+          {
+            \coffin_new:c { l__content_ \int_to_roman:n { ##1 } _coffin }
+          }
+        \coffin_if_exist:cF
+          { l__label_ \int_to_roman:n { ##1 } _coffin }
+          {
+            \coffin_new:c { l__label_ \int_to_roman:n { ##1 } _coffin }
+          }
+        % dim变量储存每个选项的宽度
+        \dim_if_exist:cF
+          { l__coffinchoice_measure_width_ \int_to_roman:n { ##1 } _dim }
+          {
+            \dim_new:c { l__coffinchoice_measure_width_ \int_to_roman:n { ##1 } _dim }
+          }
+        \hcoffin_set:cw { l__content_ \int_to_roman:n { ##1 } _coffin }
+          % {
+            % \fbox{
+            % \raisebox{1em}{
+            \begin{varwidth}{\hsize}
+              \seq_item:Nn \l__choices_items_seq { ##1 } 
+            \end{varwidth}
+            % }
+            % }
+          % }
+        \hcoffin_set_end:
+        % \hcoffin_set:cn { l__label_ \int_to_roman:n { ##1 } _coffin }
+        %   {
+        %     \l__choices_prelabel_tl
+        %     \cs:w \l__coffinchoice_label_style_tl \cs_end: {##1}
+        %     % \cs_meaning:N \l__coffinchoice_label_style_tl
+        %     \l__choices_poslabel_tl
+        %   }
+        % 把选项的长度进行储存
+        \dim_set:cn { l__coffinchoice_measure_width_ \int_to_roman:n { ##1 } _dim }
+          {
+            \coffin_wd:c { l__content_ \int_to_roman:n { ##1 } _coffin }
+          }
+      }
+    \dim_set_eq:NN \l__choices_max_width_dim \l__coffinchoice_measure_width_i_dim 
+    \int_step_inline:nn { \l__choices_item_number_int }
+      { 
+        \dim_compare:nNvF { \l__choices_max_width_dim  } > { l__coffinchoice_measure_width_ \int_to_roman:n { ##1 } _dim }
+        % 把大的储存到max里面
+        { \dim_set:Nv \l__choices_max_width_dim  { l__coffinchoice_measure_width_ \int_to_roman:n { ##1 } _dim } }
+      }
+    % 下面进行最大宽度与行宽的比较来决定每行排多少个
+    \dim_compare:nNnTF { \l__choices_max_width_dim } > { 0.4 \l__line_width_dim }
+    { \int_set:Nn \l__choices_items_per_line_int {1} }
+    {
+      \dim_compare:nNnTF { \l__choices_max_width_dim } > { 0.2 \l__line_width_dim }
+        { \int_set:Nn \l__choices_items_per_line_int {2} }
+        { \int_set:Nn \l__choices_items_per_line_int {4} }
+    }
+    \keys_set:nn { choice / coffinchoice } { label-style = Alph, #1 }
+
+    % 储存总行数
+    \int_set:Nn \l__choices_line_number_int
+      {
+        \int_compare:nNnTF
+          {
+            \int_mod:nn { \l__choices_item_number_int } { \l__choices_items_per_line_int }
+          } = { 0 }
+          {
+            \int_div_truncate:nn 
+              { \l__choices_item_number_int }
+              { \l__choices_items_per_line_int }
+          }
+          {
+            \int_div_truncate:nn 
+              { \l__choices_item_number_int }
+              { \l__choices_items_per_line_int } +1
+          }
+      }
+    % 创建行高度最大值变量
+    % 注意要用##1, 因为是在coffinchoice命令中定义
+    \int_step_inline:nn { \l__choices_line_number_int }
+      {
+        \dim_if_exist:cTF { l__coffinchoice_max_height_ \int_to_roman:n {##1}_dim }
+        {}
+        {
+          \dim_new:c { l__coffinchoice_max_height_ \int_to_roman:n {##1}_dim }
+        }
+      }
+    \int_step_inline:nn { \l__choices_item_number_int }
+      {
+        \hcoffin_set:cw { l__content_ \int_to_roman:n { ##1 } _coffin }
+            \begin{varwidth}{\hsize}
+              \seq_item:Nn \l__choices_items_seq { ##1 } 
+            \end{varwidth}
+        \hcoffin_set_end:
+        % \coffin_scale:cnn { l__content_ \int_to_roman:n { ##1 } _coffin }
+          % {1} {0.6}
+      }
+    % 先把每行第一个的总高度存到max_行里面
+    \int_step_inline:nn { \l__choices_item_number_int }
+      {
+        \int_compare:nNnTF { \int_mod:nn {##1} { \l__choices_items_per_line_int } } = {1}
+          {
+            \dim_set:cn { l__coffinchoice_max_height_ \int_to_roman:n { \int_div_truncate:nn {##1} { \l__choices_items_per_line_int } +1}_dim }
+              {
+                \__coffinchoice_ht_plus_dp:c  { l__content_ \int_to_roman:n { ##1 } _coffin }
+              }
+          }
+          {}
+      }
+    \int_step_inline:nn { \l__choices_item_number_int }
+      {
+        % 新建每项的高度变量
+        \dim_if_exist:cTF { l__coffinchoice_height_ \int_to_roman:n {##1}_dim }
+        {}
+        {
+          \dim_new:c { l__coffinchoice_height_ \int_to_roman:n {##1}_dim }
+        }
+        \dim_set:cn { l__coffinchoice_height_ \int_to_roman:n {##1}_dim }
+          {
+            \__coffinchoice_ht_plus_dp:c  { l__content_ \int_to_roman:n { ##1 } _coffin }
+            % \coffin_ht:c { l__content_ \int_to_roman:n { ##1 } _coffin }
+          }
+        % 每项的高度改变量
+        \dim_if_exist:cTF { l__coffinchoice_height_change_ \int_to_roman:n {##1}_dim }
+        {}
+        {
+          \dim_new:c { l__coffinchoice_height_change_ \int_to_roman:n {##1}_dim }
+        }
+        % \dim_use:c { l__coffinchoice_height_ \int_to_roman:n {##1}_dim }
+      }
+    % 下面将获取每行的高度最大值并储存到max_行里面
+    \int_step_inline:nn { \l__choices_line_number_int }
+      {
+        \int_step_inline:nn { \l__choices_item_number_int }
+          {
+            \int_compare:nNnTF
+              { \l__choices_items_per_line_int * (##1 -1) } < { ####1 }
+              {
+                \int_compare:nNnTF
+                  { ####1 } < { \l__choices_items_per_line_int * ##1 +1 }
+                  {
+                    \dim_compare:vNvF { l__coffinchoice_max_height_ \int_to_roman:n {##1}_dim  } > { l__coffinchoice_height_ \int_to_roman:n {####1}_dim }
+                    % 把大的储存到max里面
+                    {
+                      \dim_set:cv 
+                        { l__coffinchoice_max_height_ \int_to_roman:n {##1}_dim  } 
+                        { l__coffinchoice_height_ \int_to_roman:n {####1}_dim } 
+                    }
+                  }
+                  {}
+              }
+              {}
+          }
+      }
+    % 搞不懂为什么bool为什么没有用
+    % \clist_map_inline:nn
+    %   {
+    %     north, south, west, east,
+    %     northwest, northeast, southwest, southeast
+    %   }
+    %   {
+    %     \bool_if:cTF { l__coffinchoice_anchor_##1_bool }
+    %     { ##1 true \par }
+    %     { ##1 false \par }
+    %   }
+    \int_step_inline:nn { \l__choices_line_number_int }
+      {
+        \int_step_inline:nn { \l__choices_item_number_int }
+          {
+            \dim_set:cn { l__coffinchoice_height_change_ \int_to_roman:n {##1}_dim }
+              {
+                % 0pt
+                \dim_use:c { l__coffinchoice_max_height_ \int_to_roman:n {##1}_dim } * \dim_ratio:nn { 1 pt } { 2.5 pt } - \dim_use:c { l__coffinchoice_height_ \int_to_roman:n {####1}_dim } * \dim_ratio:nn { 1 pt } { 3 pt }
+              }
+            \hcoffin_set:cw { l__content_ \int_to_roman:n { ####1 } _coffin }
+                \raisebox
+                  {
+                    % 0em
+                    \str_if_eq:VnTF \l__choices_current_anchor_str  {south}
+                      {
+                        \dim_use:c { l__coffinchoice_height_change_ \int_to_roman:n {##1}_dim }
+                      }
+                      {
+                        \str_if_eq:VnTF  \l__choices_current_anchor_str {north}
+                          {
+                            -\dim_use:c { l__coffinchoice_height_change_ \int_to_roman:n {##1}_dim }
+                          }
+                          {0em}
+                      }
+                    % \bool_if:NTF \l__coffinchoice_anchor_north_bool
+                    %   {-1.3em}
+                    %   {0em}
+                    % \bool_if:NTF \l__coffinchoice_anchor_south_bool
+                    %   {1em}
+                    %   {0em}
+                  }
+                  {
+                    \begin{varwidth}{\hsize}
+                      \seq_item:Nn \l__choices_items_seq { ####1 } 
+                    \end{varwidth}
+                  }
+                % }
+              % }
+            \hcoffin_set_end:
+          }
+      }
+    \int_step_inline:nn { \l__choices_item_number_int }
+      {
+        \hcoffin_set:cn { l__label_ \int_to_roman:n { ##1 } _coffin }
+        {
+          % 之所以要把label的设置从上面放到这里
+          % 是因为需要通过key-val的选项设置来设置label的样式
+          % 但是keys_set因为需要加入手动调整每行个数
+          % 所以要放在上面的判断的后面
+          % 好在这个时候还没用到label的coffin
+          \l__choices_prelabel_tl
+          \cs:w \l__coffinchoice_label_style_tl \cs_end: {##1}
+          % \cs_meaning:N \l__coffinchoice_label_style_tl
+          \l__choices_poslabel_tl
+        }
+      }
+    \par
+    % \noindent
+    \tl_use:N \l__coffinchoice_align_tl
+    \vspace* { \dim_eval:n { \l__coffinchoice_top_sep_dim + \l__coffinchoice_top_sep_add_dim} }   % topsep
+    \int_step_inline:nn { \l__choices_item_number_int }
+      {
+        % 把join改成attach就解决了对齐问题
+        % \coffin_attach:cVVcVVnn
+        \coffin_join:cVVcVVnn
+          { l__label_ \int_to_roman:n { ##1 } _coffin }
+          % { l__content_ \int_to_roman:n { ##1 } _coffin }
+            \l__labelcoffin_horizontal_position_tl 
+            \l__labelcoffin_vertical_position_tl
+          { l__content_ \int_to_roman:n { ##1 } _coffin }
+          % { l__label_ \int_to_roman:n { ##1 } _coffin }
+            \l__contentcoffin_horizontal_position_tl 
+            \l__contentcoffin_vertical_position_tl
+          { \dim_use:N \l__labelcontentcoffin_join_horizontal_xshift_dim }
+          { \dim_use:N \l__labelcontentcoffin_join_vertical_yshift_dim }
+        % item的水平间距（第一列保持不动，单独控制）
+        \int_compare:nNnTF { \int_mod:nn { ##1 } { \l__choices_items_per_line_int } } = {1}
+          { \hspace { \dim_eval:n { \l__coffinchoice_first_column_sep_dim + \l__coffinchoice_first_column_sep_add_dim } } }   % 第一列的xshift
+          { \hspace { \dim_eval:n { \l__coffinchoice_greater_than_first_column_sep_dim + \l__coffinchoice_greater_than_first_column_sep_add_dim } }}   % >1列的xshift
+        \coffin_typeset:cVVnn 
+          { l__label_ \int_to_roman:n { ##1 } _coffin } 
+          \l__typeset_horizontal_position_tl
+          \l__typeset_vertical_position_tl
+          { \dim_use:N \l__typeset_horizontal_xshift_dim }
+          { \dim_use:N \l__typeset_vertical_yshift_dim }
+        % item的垂直间距（第一行保持不动，不影响最后一行后的距离（此距离单独控制））
+        \int_compare:nNnTF
+          { \int_mod:nn { \l__choices_item_number_int } { \l__choices_items_per_line_int } } = {0}
+          {
+            \int_compare:nNnTF
+              { ##1 } < 
+                {
+                  (\int_div_truncate:nn { \l__choices_item_number_int } { \l__choices_items_per_line_int } -1) * \l__choices_items_per_line_int
+                }
+              { \vspace* { \dim_eval:n { \l__coffinchoice_row_sep_dim + \l__coffinchoice_row_sep_add_dim } } }  % 垂直间距
+              { \vspace* { \dim_eval:n { \l__coffinchoice_bottom_sep_dim + \l__coffinchoice_bottom_sep_add_dim } } }  % bottom
+          }
+          {
+            \int_compare:nNnTF
+              { ##1 } <
+                {
+                  \int_div_truncate:nn { \l__choices_item_number_int } { \l__choices_items_per_line_int } * \l__choices_items_per_line_int
+                }
+              { \vspace* { \dim_eval:n { \l__coffinchoice_row_sep_dim + \l__coffinchoice_row_sep_add_dim } } }  % 垂直间距
+              { \vspace* { \dim_eval:n { \l__coffinchoice_bottom_sep_dim + \l__coffinchoice_bottom_sep_add_dim } } }  % bottom
+          }
+        % \hfill
+        \int_compare:nNnTF
+          { \l__choices_items_per_line_int } = {1}
+          { \par }
+          {
+            \int_compare:nNnTF 
+              { \int_mod:nn { ##1 } { \l__choices_items_per_line_int } } = {0}
+              { \par }
+              {}
+          }
+      }
+  \par
+  \group_end:
+}
+
+\NewDocumentCommand{ \hlistchoice } { O{} +m }
+  {
+    \group_begin:
+      \dim_set_eq:NN \l__line_width_dim \linewidth   % 储存行宽
+      % 将内容分割
+      % \seq_set_split:Nnn \l__choices_items_seq {&} {#2}
+      % % 对内容进行过滤（若尾部是&则会多产生一项，如果是的话就要去掉seq的最后一项
+      % \tl_set:Nn \l__choices_check_tl {#2}
+      % \str_set:Nx \l__choices_check_last_item_str { \tl_item:Nn \l__choices_check_tl {-1} }
+      % \str_if_eq:VnT { \l__choices_check_last_item_str  } { & }
+      %   {
+      %     \seq_pop_right:NN \l__choices_items_seq \l_tmpa_seq
+      %   }
+      \__choices_check:n {#2}
+      \__choices_items_shuffle:n { \l__choices_items_seq }
+      \int_set:Nn \l__choices_item_number_int { \seq_count:N \l__choices_items_seq }
+      \int_step_inline:nn { \l__choices_item_number_int } 
+        {
+          % box变量储存内容
+          \box_if_exist:cF
+            { l__hlistchoice_measure_width_ \int_to_roman:n { ##1 } _box }
+            {
+              \box_new:c { l__hlistchoice_measure_width_ \int_to_roman:n { ##1 } _box }
+            } 
+          % dim变量储存每个选项的宽度
+          \dim_if_exist:cF
+            { l__hlistchoice_measure_width_ \int_to_roman:n { ##1 } _dim }
+            {
+              \dim_new:c { l__hlistchoice_measure_width_ \int_to_roman:n { ##1 } _dim }
+            }
+          % 把每个选项存到对应的盒子里面
+          \hbox_set:cn { l__hlistchoice_measure_width_ \int_to_roman:n { ##1 } _box }
+            {
+              \begin{varwidth}{\hsize}
+                \seq_item:Nn \l__choices_items_seq { ##1 } 
+              \end{varwidth}
+            }
+          % 把选项的长度进行储存
+          \dim_set:cn { l__hlistchoice_measure_width_ \int_to_roman:n { ##1 } _dim }
+            {
+              \box_wd:c { l__hlistchoice_measure_width_ \int_to_roman:n { ##1 } _box }
+            }
+        }
+      \dim_set_eq:NN \l__choices_max_width_dim \l__hlistchoice_measure_width_i_dim 
+      \int_step_inline:nn { \l__choices_item_number_int }
+        { 
+          \dim_set:Nn \l__choices_max_width_dim
+            {
+              \dim_max:nv { \l__choices_max_width_dim } { l__hlistchoice_measure_width_ \int_to_roman:n { ##1 } _dim }
+            }
+        }
+      % 下面进行最大宽度与行宽的比较来决定每行排多少个
+      \dim_compare:nNnTF { \l__choices_max_width_dim } > { 0.4 \l__line_width_dim }
+      { \int_set:Nn \l__choices_items_per_line_int {1} }
+      {
+        \dim_compare:nNnTF { \l__choices_max_width_dim } > { 0.2 \l__line_width_dim }
+          { \int_set:Nn \l__choices_items_per_line_int {2} }
+          { \int_set:Nn \l__choices_items_per_line_int {4} }
+      }
+      \keys_set:nn { choice / hlistchoice } { label-style = Alph, #1}
+      % \sethlist
+        % {
+          % \tl_use:N \l__hlistchoice_show_label_tl
+          
+        % }
+      \begin{hlist}
+        [
+          % pre label = \l__choices_prelabel_tl,
+          label = \l__choices_prelabel_tl
+            \l__hlistchoice_label_style_tl
+            \l__choices_poslabel_tl
+        ] \int_use:N \l__choices_items_per_line_int
+        \seq_map_inline:Nn \l__choices_items_seq { \hitem ##1 }
+      \end{hlist}
+    \group_end:
+  }
+
+\NewDocumentCommand{ \quan }{ m }
+  {
+    % 根据数字大小设置压缩系数
+    \fp_set:Nn \l__quan_xscale_of_number_fp
+      {
+        \int_compare:nNnTF {#1} < { 10 } 
+          { 0.9 }
+          {
+            \int_compare:nNnTF {#1} < { 100 }
+              { 0.7 }
+              { 0.5 }
+          } 
+      }
+    \fp_set:Nn \l__quan_yscale_of_number_fp
+      {
+        \int_compare:nNnTF {#1} < { 10 } 
+          { 0.9 }
+          {
+            \int_compare:nNnTF {#1} < { 100 }
+              { 0.8 }
+              { 0.6 }
+          } 
+      }
+    % 获取数字的高度
+    \my_settoheight:Nn \l__quan_height_of_number_dim {#1}
+    % 设置圆的半径
+    \dim_set:Nn \l__quan_radius_of_circle_dim 
+      { \dim_eval:n { \l__quan_height_of_number_dim / 2 + 0.34 ex } }
+    % 绘制
+    \tikz[baseline]
+      {
+        \node at (0, \dim_use:N \l__quan_height_of_number_dim / 2 ) 
+          {
+            \makebox[0.35em][c]
+              { 
+                \scalebox { \fp_use:N \l__quan_xscale_of_number_fp } 
+                [ \fp_use:N \l__quan_yscale_of_number_fp ] 
+                  {
+                    \int_compare:nNnTF {#1} > {99}
+                      { \textbf {#1} }
+                      {#1}
+                  } 
+              }
+          };
+        \draw (0, \dim_use:N \l__quan_height_of_number_dim / 2 )
+          circle ( \l__quan_radius_of_circle_dim );
+      }
+  }
+
+
+% \cs_new_protected:Npn \xchoices_collect_items:n #1
+%   {
+%     \seq_put_right:Nn
+%       {
+%         #1 &&
+%       }
+%   }
+% \NewDocumentCommand { \xitem } { +m }
+%   {
+%     \xchoices_collect_items:n
+%   }
+
+% \NewDocumentEnvironment { xchoices } { O{} b }
+%   {
+
+%   }
+%   {
+
+%   }
