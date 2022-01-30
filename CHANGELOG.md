@@ -1,4 +1,9 @@
 # 更新日志
+
+## [v1.0.1] - 2022-01-30
+### Fixed
+- 解决`\mathcal`和`\mathscr`效果相同的问题 （[#I4SKB1](https://gitee.com/xkwxdyy/CCNUthesis/issues/I4SKB1)）
+
 ## [v1.0.0] - 2022-01-28
 ### Added
 - 增加bib文件参考文献部分注释
