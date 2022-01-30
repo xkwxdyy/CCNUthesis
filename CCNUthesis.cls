@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-01-28}{v1.0.0}
+  {2022-01-30}{v1.0.1}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e }
 
@@ -501,8 +501,18 @@
         BoldItalicFont = *-bolditalic,
         Ligatures      = CommonOff
       }
-    \__ccnu_setmathfont:nn { \g__ccnu_font_name_xits_math_rm_tl .otf }
-      { BoldFont = \g__ccnu_font_name_xits_math_bf_tl .otf }
+    % \__ccnu_setmathfont:nn { \g__ccnu_font_name_xits_math_rm_tl .otf }
+    %   { BoldFont = \g__ccnu_font_name_xits_math_bf_tl .otf }
+    % \setmainfont{STIXTwoText}
+    %   [
+    %     Extension      = .otf,
+    %     UprightFont    = *-Regular,
+    %     BoldFont       = *-Bold,
+    %     ItalicFont     = *-Italic,
+    %     BoldItalicFont = *-Bolditalic,
+    %   ]
+    \setmathfont{STIXTwoMath-Regular.otf}
+    \setmathfont{STIXTwoMath-Regular.otf}[range={scr,bfscr},StylisticSet=01]
   }
 \cs_new_protected:cpn { __ccnu_load_font_ times* : }
   {
