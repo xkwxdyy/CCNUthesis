@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-01-30}{v1.0.1}
+  {2022-02-01}{v1.0.2}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e }
 
@@ -220,7 +220,6 @@
     adjustbox,
     calc,
     etoolbox,
-    choices
   }
 \RequirePackage[titles]{tocloft}
 \graphicspath{{figures/}{logo/}}
