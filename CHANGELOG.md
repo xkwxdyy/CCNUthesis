@@ -1,5 +1,9 @@
 # 更新日志
 
+## [v1.0.2] - 2022-02-01
+### Fixed
+- 修改`table`和`figure`环境的标题样式（[#I4SKXE](https://gitee.com/xkwxdyy/CCNUthesis/issues/I4SKXE)）
+
 ## [v1.0.1] - 2022-01-30
 ### Fixed
 - 解决`\mathcal`和`\mathscr`效果相同的问题 （[#I4SKB1](https://gitee.com/xkwxdyy/CCNUthesis/issues/I4SKB1)）
