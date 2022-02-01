@@ -3,31 +3,31 @@
 
 此处可以写调查问卷，访谈记录等
 
-用\verb|xchoices{}|环境可以排版任意个选项，用\verb|\item|分隔即可，效果：
+用\verb|xchoices{}|环境可以排版任意个选项，用\verb|\item|分隔即可（现将代码注释掉，如有需要取消注释即可，如果不需要，可自行删除或不管（因为不影响编译效果）
 
-\begin{xchoices}
-  \item 选项1
-  \item 选项2
-  \item 选项3
-  \item 选项4
-\end{xchoices}
+% \begin{xchoices}
+%   \item 选项1
+%   \item 选项2
+%   \item 选项3
+%   \item 选项4
+% \end{xchoices}
 
-\begin{xchoices}[
-  items = 2,            % 手动控制每行多少个选项
-  label-style = alph,   % label的样式：alph, Alph, roman, Roman, 
-                        %            quan(带圈数字), chinese, none
-  pre-label = {(},      % label前面的内容
-  post-label = {)},     % label后面的内容
-]
-  \item 选项1
-  \item 选项2
-  \item 选项3
-  \item 选项4
-\end{xchoices}
+% \begin{xchoices}[
+%   items = 2,            % 手动控制每行多少个选项
+%   label-style = alph,   % label的样式：alph, Alph, roman, Roman, 
+%                         %            quan(带圈数字), chinese, none
+%   pre-label = {(},      % label前面的内容
+%   post-label = {)},     % label后面的内容
+% ]
+%   \item 选项1
+%   \item 选项2
+%   \item 选项3
+%   \item 选项4
+% \end{xchoices}
 
-\begin{xchoices}[label-style = quan]
-  \item 选项1
-  \item 选项2
-  \item 选项3
-  \item 选项4
-\end{xchoices}
+% \begin{xchoices}[label-style = quan]
+%   \item 选项1
+%   \item 选项2
+%   \item 选项3
+%   \item 选项4
+% \end{xchoices}
