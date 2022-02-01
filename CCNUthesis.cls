@@ -1003,17 +1003,20 @@
 \captionsetup [ figure ]
   {
     font     = small,
-    labelsep = quad
+    labelsep = colon
   }
 \captionsetup [ table  ]
   {
-    font     = { small, sf },
-    labelsep = quad
+    % font     = { small, sf },
+    font     = small,
+    labelsep = colon
   }
 \cs_set:Npn \thefigure
-  { \thechapter - \__ccnu_arabic:n { figure } }
+  { \__ccnu_arabic:n { figure } }
+  % { \thechapter - \__ccnu_arabic:n { figure } }
 \cs_set:Npn \thetable
-  { \thechapter - \__ccnu_arabic:n { table  } }
+  % { \thechapter - \__ccnu_arabic:n { table  } }
+  { \__ccnu_arabic:n { table  } }
 \clist_map_inline:nn
   {
     title, date, author, supervisor, department, major, student_id,
