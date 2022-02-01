@@ -1,6 +1,10 @@
 # 更新日志
 
 ## [v1.0.2] - 2022-02-01
+### Changed
+- 修改`choices`宏包为`xchoices`宏包
+- 增加`xchoices`环境示例
+
 ### Fixed
 - 修改`table`和`figure`环境的标题样式（[#I4SKXE](https://gitee.com/xkwxdyy/CCNUthesis/issues/I4SKXE)）
 

@@ -220,7 +220,6 @@
     adjustbox,
     calc,
     etoolbox,
-    choices
   }
 \RequirePackage[titles]{tocloft}
 \graphicspath{{figures/}{logo/}}
