@@ -1,4 +1,5 @@
 main.pdf
+CCNUthesis-manual.pdf
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
@@ -304,3 +305,5 @@ TSWLatexianTemp*
 #*Notes.bib
 
 参考资料/
+
+CCNUthesis-manual.pdf
