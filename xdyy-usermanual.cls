@@ -1,7 +1,18 @@
 \NeedsTeXFormat{LaTeX2e}[2018/04/01]
 \ProvidesClass{xdyy-usermanual}
-              [2022/01/31 v0.0.1 Class for Writing usermanual document.]
+              [2022/02/01 v0.0.1 Class for Writing usermanual document.]
 \LoadClass{l3doc}
+% \xdyymanualsetup{
+%   info = {
+%     author            = {夏康玮},
+%     title             = {用户手册},
+%     email             = {kangweixia_xdyy@163.com},
+%     date              = {2022-01-31},
+%     version           = {0.0.1},
+%     github-repository = {https://github.com/xkwxdyy/},
+%     gitee-repository  = {https://gitee.com/xkwxdyy/},
+%   }
+% }
 % \meta{xxx}: <xxx>
 % \marg{xxx}: {xxx}
 % \oarg{xxx}: [xxx]
@@ -29,12 +40,14 @@
   minted,
   sourcecodepro,
   mwe,
-  graphicx,
+  % graphicx,
   hyperref
 }
 
 \setminted{formatcom=\xeCJKVerbAddon}
 
+% 设置latexcode和bashcode的背景颜色
+\definecolor{codebg}{rgb}{0.95,0.95,0.95}
 %%%% 重新设计个人信息接口 %%%%
 \ExplSyntaxOn
 \tl_new:N \l__xdyymanual_info_author_tl                % 作者名
@@ -123,7 +136,7 @@
   \group_begin:
     \par \large
     \color{violet}
-    作者注：
+    注：
       #1
   \group_end:
 }
@@ -255,7 +268,7 @@
 \newminted{latex}{
   linenos,   % 显示行数
   % firstnumber = last,    % 行数接着上一个minted环境
-  gobble = 2,    % 吃掉开头的多少空格
+  % gobble = 2,    % 吃掉开头的多少空格
   % showspaces,   % 显示空格
   breaklines,     % 断行，并显示换行符
   breakautoindent=false,
@@ -277,7 +290,7 @@
 \newminted{bash}{
   linenos,   % 显示行数
   % firstnumber = last,    % 行数接着上一个minted环境
-  gobble = 2,    % 吃掉开头的多少空格
+  % gobble = 2,    % 吃掉开头的多少空格
   % showspaces,   % 显示空格
   breaklines,     % 断行，并显示换行符
   breakautoindent=false,
