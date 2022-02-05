@@ -1956,7 +1956,12 @@
           { citestyle = \l__ccnu_cite_style_tl }
       }
     \clist_put_right:Nn \l__ccnu_biblatex_options_clist
-      { style = gb7714-2015, gbalign = gb7714-2015, gbpub = false }
+      {
+        style = gb7714-2015,
+        gbalign = gb7714-2015,
+        gbpub = false,
+        gbpunctin = false
+      }
     \exp_args:NV \PassOptionsToPackage \l__ccnu_biblatex_options_clist
       { biblatex }
   }
