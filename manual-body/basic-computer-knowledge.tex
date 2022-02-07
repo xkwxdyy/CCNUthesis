@@ -348,10 +348,31 @@ UTF-8编码方式，利用ctex宏集，xelatex方式进行编译}。解决了原
 
 因此，新旧模板的源代码的编码方式不同！但主流通用的代码编辑器默认都是UTF-8编码，比如TeXstudio，Visual Studio Code。
 因此打开旧模板时，会直接乱码，要么采用记事本等文本编辑器，要么更改文件的编码，这就带来了许多麻烦。
+
+
+
 \subsubsection{更改文件的编码}
 
 
 通过上面的内容我们知道，当遇到乱码时或者编程语言对编码有要求时，我们都需要更改文件的编码方式。
+手册《install-latex-guide-zh-cn》的第5.1.2节中提供了通过TeXstudio更改tex文件的编码方式的方法，该教程
+基于英文版的TeXstudio，如果已经把界面设置为中文，请自行对照相应按键。
+
+下面介绍使用记事本更改编码的方法：
+\begin{enumerate}
+  \item 找到要修改的文件，单击右键，选择“打开方式”，然后选择使用记事本打开。
+  \item 菜单栏点击文件，选择另存为，在下方的编码选项中将其改为UTF-8。
+  \item 最后点击保存，得到的新文件就会以UTF-8方式编码，原文件编码方式不变。
+\end{enumerate}
+\begin{center}
+  \includegraphics[scale=0.5]{16.png}
+\end{center}
+
+记事本在保存时，默认的编码为ANSI，表示当地计算机的默认编码，在中国大陆就是GBK！
+因此使用记事本写代码容易因为编码而不能编译，而许多代码编辑器默认都是UTF-8编码，这
+又是一个不推荐使用记事本写代码的理由。
+
+
 \subsection{PDF阅读器}
 
 
@@ -373,7 +394,11 @@ Windows中重复编译时，要先关闭已经由Adobe Reader打开的PDF文档�
 一般在写论文途中采用其他的PDF阅读器。
 
 下载地址:\url{https://www.adobe.com/cn/acrobat/pdf-reader.html}
+
+
 \subsubsection{SumatraPDF}
+
+
 SumatraPDF是一个很小的开源PDF阅读器，具有免安装版(Portable)，可以放在U盘随身携带，并且打开速度非常快，适合在写作途中查看文档效果，
 可以通过设置使得PDF可以反向搜索（定位到对应的代码）。当然，如果只是预览，Texwork编译后会自动弹出预览窗口。
 
