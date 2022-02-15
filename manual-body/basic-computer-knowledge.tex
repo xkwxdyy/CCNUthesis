@@ -1,3 +1,32 @@
+\section*{FAQ:}
+\begin{enumerate}
+  \item 我不太会\LaTeX{}有什么可以参考的资料吗？\,\,\emph{安装和升级详见}《install-latex-guide-zh-cn》，\emph{入门教程}见《Ishort-zh-cn》，\emph{都在群文件},本手册第一章内容是计算机基础知识(已完成)\emph{许多
+  常见的问题可以在这里找到}。
+  第二章是\LaTeX{}基础知识(待完善)，后面是手册的使用说明(待完善)。纸质书籍推荐《LaTeX入门》，《LaTeX范例学习与试卷论文排版》。
+  \item 使用哪个\LaTeX{}发行版？\,\,夏学长的新模版使用\TeX{} Live，邓老师的旧模版使用C\TeX{}，两个发行版不可以混用，发行版的相关知识见\ref{subsub:fxb}节。C\TeX{}存在一些
+        无法解决的问题，因此现在不推荐，详见\ref{subsub:labmwt}节。
+  \item 如何检测自己装了哪个版本？\,\,命令行(控制台)运行命令latex，观察弹出来的信息可以知道版本。本群的教程安装的是\TeX{} Live。
+  \item 好多资料都提到“运行xx指令”，“命令行/控制台运行xx”都是什么意思？\,\,都是指在命令行下运行指令，相关知识见\ref{subsec:mlh}节。
+  \item 新旧模版有什么区别？新模版有什么优势？\,\,在基本的语法指令方面，两个模版基本没有区别。旧模版的存在的问题详见\url{https://gitee.com/xkwxdyy/CCNUthesis}拉到下面有原因说明，
+        新模版是为了解决这些问题而进行的重写。
+  \item 安装好后桌面怎么没有图标？\,\,请认真阅读\ref{sub:by}节。
+  \item 用Texstudio一打开模版就全是乱码，怎么办？\,\,你一定打开了邓老师的旧模板，原因和解决方案详见\ref{bm}节编码的知识。
+  
+        \emph{补充说明:}Texstudio仅仅是个代码编辑器(详见\ref{sub:by})，能不能正常使用模版与选择的代码编辑器无关，与发行版有关！
+  \item 一编译就报一堆错怎么办？\,\,先确认安装的\LaTeX{}发行版和使用的模版是否配套！新模版还需要保证模版是最新的，并且将宏包升级到最新，仍然详见《install-latex-guide-zh-cn》。
+  报错信息分成两类，warning(警告)和error(错误)，一般情况下只需要在意error。其次，我们应该通过翻译器等方式读懂报错信息，
+       并定位错误的代码，检查自己是否有语法错误或者打错，必要时借助搜索引擎或者直接提问，查错的经验需要多多积累。
+
+       \emph{快速排查}：（1）首次编译模版报大量错误，基本上说明发行版和模版不匹配！请检查版本！（2）检查编译方式，新模板为xelatex，旧模版为pdflatex，编译方式的内容见\ref{subsub:yy}节。
+       （3）错误\verb"“File ‘ninecolors.sty’ not found. \begin{document}”"的解决办法：如果安装的是TeX Live 2021此错误的原因是没有更新宏包，更新的方法详见群文件《install-latex-guide-zh-cn》1.4节或者在开始菜单找TeX Live Shell来更新。如果安装了版本较旧比如是2020，需要卸载后重新安装，方法仍见《install-latex-guide-zh-cn》第一章。
+  \item 遇到了自己无法解决的问题应该怎么办？\,\,到链接\url{https://gitee.com/xkwxdyy/CCNUthesis}，选择\emph{issues}菜单，里面有开启中和已完成，
+        “已完成”中的问题是有人问过且已经被解决的，应当优先查阅；“开启中”的问题是尚未解决的。如果自己的问题没有找到别人的解决方案，就选右上角的新建Issue提出问题。
+  
+ 
+\end{enumerate}
+
+最后建议大家在动手写作前多学一些知识，先认真阅读群里的手册和本手册，许多概念都在本手册的第一章一一解释了，并且在使用模版过程中积极提问，提问优先到gitee提issue，还需要善于使用搜索引擎。祝大家顺利完成毕业论文！
+\newpage
 \section{计算机基础知识}
 
 
@@ -5,13 +34,13 @@
 然后阅读此部分，能够帮助你。
 
 
-\subsection{编译环境和代码编辑器}
+\subsection{编译环境和代码编辑器}\label{sub:by}
 常看到这样的提问“为什么我的\LaTeX{}界面和别人不一样？”，“非得安装TeXstudio吗？”，“安装完桌面为什么没有图标？”；学习LaTeX时也会碰到许多
 相似的概念如\TeX{} Live，C\TeX{}，xelatex，TeXworks等，使人感到迷惑。这些问题的根源在于，\LaTeX{}是一种计算机语言，与Word等软件并不一样，下面就来一一阐述。
 
 
 
-\subsubsection{计算机语言}
+\subsubsection{计算机语言}\label{subsub:yy}
 
 人类社会有汉语，英语，法语等多种语言。然而，计算机并不能读懂人类的语言，要想指挥计算机完成各种任务，就要使用计算机语言。
 计算机能直接识别并运行的只有由0和1组成的二进制代码，称为\emph{机器语言}，由于其可读性太差，科学家又创造了C，Java等采用
@@ -23,7 +52,7 @@
 
 根据不同的需求，\LaTeX{}系统在编译时可供调用的程序有不少（其中有编译器）。最初只有\TeX{}，通过命令行下的命令tex调用，后来又
 开发了不少扩展，\TeX{}程序连同这些扩展称为不同的\TeX{}\emph{引擎}，常见的有\TeX{}，pdf\TeX{}，\XeTeX{}，Lua\TeX{}。
-通过不同的命令，可以调用不同的引擎以不同的方式编译源代码输出不同格式的文档，这些命令称作
+通过命令行下输入不同的命令，可以调用不同的引擎以不同的方式编译源代码输出不同格式的文档，这些命令称作
 \emph{编译方式}，常用的有pdflatex，xelatex，lualatex，分别调用了pdf\TeX{}，\XeTeX{}，Lua\TeX{}引擎输出PDF文件
 \footnote{其实最早\LaTeX{}输出格式是DVI，随着时代发展，后来编译时会调用xdvipdfmx程序直接输出PDF格式。}。
 
@@ -61,7 +90,7 @@ TeXstudio功能那么多，所以就会出现很多人推荐TeXstudio，导致�
 
 
 
-\subsubsection{发行版}
+\subsubsection{发行版}\label{subsub:fxb}
 
 
 发行版指的是\LaTeX{}整个软件包的版本，\TeX{} Live，C\TeX{}，MiK\TeX{}指的就是发行版，通常问安装哪个版本，指的是哪个发行版。有些模版和代码只能特定
@@ -79,7 +108,7 @@ TeXstudio功能那么多，所以就会出现很多人推荐TeXstudio，导致�
 
 
 \subsection{命令行}\label{subsec:mlh}
-
+在\ref{sub:by}节，FAQ和许多资料中都常常出现“命令行/控制台运行xx”，那么这是什么意思呢？本节解决这个问题。
 
 \subsubsection{GUI与CLI}
 
@@ -172,7 +201,8 @@ TeXstudio功能那么多，所以就会出现很多人推荐TeXstudio，导致�
 \emph{总结}:本节的操作方法适用于所有需要在命令行下运行的程序，基本方法就是先用命令cd+路径或者右键菜单切换到文件的
 路径，然后用程序名+（设置参数）+（文件名）的格式运行，加括号是因为有些程序不需要输入文件，或不需要设置参数。
 
-如果你有认真读了\LaTeX{}的安装手册《install-latex-guide-zh-cn》
+如果你有认真读了\LaTeX{}的安装手册《install-latex-guide-zh-cn》，你会发现里面的所有操作都是基于命令行的，
+通过命令行的方式进行描述使得叙述变得简单明了，碰到对应问题，在命令行下运行对应指令即可，运行指令的方法就是本节的内容。
 \subsection{重要的环境变量Path}
 
 
@@ -272,7 +302,7 @@ Hexo\footnote{基于Git的开源博客框架\url{https://hexo.io/zh-cn/index.htm
 \emph{千万不要无脑点击下一步！}而是要注意勾选“添加到Path（Add to the Path）”。
 
 
-\subsection{编码}
+\subsection{编码}\label{bm}
 
 
 当你打开某些文件时，你可能发现眼前是完全无法阅读的一团乱码（比如用TeXstudio打开邓老师的旧模版），这里涉及到了编码的问题，
@@ -311,14 +341,14 @@ Hexo\footnote{基于Git的开源博客框架\url{https://hexo.io/zh-cn/index.htm
 
 不同的编码还给编程带来了许多麻烦，你也许听过这样的说法“安装xx时，路径不能含有中文”，“在编程时，文件夹和源代码都不能含有中文”，“系统用户名不能含有中文”。
 这些问题的根源都在于简体中文版Windows系统默认采用GBK编码，而一些程序可能不支持GBK，这就产生了各种各样的问题！比如
-在安装\TeX{}Live 2021时，如果系统用户名含有中文，就可能导致无法安装，解决方法还是参见《install-latex-guide-zh-cn》的1.1.3节。
+在安装\TeX{} Live 2021时，如果系统用户名含有中文，就可能导致无法安装，解决方法还是参见《install-latex-guide-zh-cn》的1.1.3节。
 
 然而，Mac系统却很少出现上一段的这些麻烦的问题，这是因为Mac系统默认采用UTF-8编码，兼容性好，因此Mac是非常适合编程的电脑。
 一些厉害的程序员使用Mac系统编程，某些大型互联网公司甚至提供Mac作为办公电脑。
 
 
 
-\subsubsection{\LaTeX{}中的编码问题}
+\subsubsection{\LaTeX{}中的编码问题}\label{subsub:labmwt}
 
 
 许多编程语言都对源代码采用的编码方式有要求，否则无法正常编译，比如Python要求代码采用UTF-8编码方式。\LaTeX{}
