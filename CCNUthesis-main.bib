@@ -1,0 +1,427 @@
+%%%% 文献类型 %%%%
+%% 注：下面以
+%% xxx   <xxx的文献类型>
+%%       Required Fields: xxx, xxx, xxx（必须要填写的信息）
+%%       Optional Fields: xxx, xxx, xxx（选填的信息）
+%% 的格式介绍各种文献类型
+% article|book|unpublished|mastersthesis|phdthesis|
+% inproceedings|proceedings|techreport|misc|
+% article        An article from a journal or magazine. 
+%                Required Fields: author, title, journal, year. 
+%                Optional Fields: volume, number, pages, month, note.
+%  book          A book with an explicit publisher. 
+%                Required Fields: author or editor, title, publisher, year. 
+%                Optional Fields: volume or number, series, address, edition, month, note.
+% unpublished    A document having an author and title, but not formally published.
+%                Required Fields: author, title, note. 
+%                Optional Fields: month, year.
+% mastersthesis  A Master's thesis. 
+%                Required Fields: author, title, school, year. 
+%                Optional Fields: type, address, month, note.
+%  phdthesis     A PhD thesis. 
+%                Required Fields: author, title, school, year. 
+%                Optional Fields: type, address, month, note.
+% inproceedings  会议论文【集】的一篇文章 
+%                An article in a conference proceedings. 
+%                Required Fields: author, title, booktitle, year. 
+%                Optional Fields: editor, volume or number, series, pages, 
+%                                 address, month, organization, publisher, note.
+%  proceedings   The proceedings of a conference. 
+%                Required Fields: title, year.
+%                Optional Fields: editor, volume or number, series, address, month,
+%                                 organization, publisher, note.
+%  techreport    A report published by a school or other institution, 
+%                                   usually numbered within a series. 
+%                Required Fields: author, title, institution, year.
+%                Optional Fields: type, number, address, month, note.
+%   misc         Use this type when nothing else fits. 
+%                Required Fields: none. 
+%                Optional Fields: author, title, howpublished, month, year, note.
+%%%% 数据类型 %%%%
+%% 注：下面的数据不是所有文献都有，根据需要自行填写，但尽可能完整全面
+% title 标题
+% author       作者  
+%              多个作者之间用“and”连接，如（注意空格
+%              “夏康玮 and 夏康玮 and 夏康玮”
+%              “Feynman, Richard P and Leighton, Robert B and Sands, Matthew”
+% year         年份
+% publisher    出版社
+% address      出版地
+% edition      版本
+%              第一版不标注
+%              中文用“第二版”
+%              英文用数字“2”
+% volume       卷
+% journal      期刊
+% number       期刊号
+% pages        页码，若不是一页，用小横杠“-”连接，如“1-10
+% school       哪所学校的学位论文
+% url          网址（比如网络上的文章）
+%              注意如果有“%”要用“\%”来转译%，否则会被当作注释符号
+% note         Any additional information that can help the reader. 
+%              The First word should be capitalized.
+% howpublished How something strange has been published. 
+%              The First word should be capitalized.
+%%%% 格式 %%%%
+% @文献类型{引用词,
+%   <type1>={<content1>},
+%   <type2>={<content2>},
+%   <type3>={<content3>}
+% }
+% 注意上面的逗号都是【英文逗号】，且注意<content>中的内容中的空格
+% 引用词是在正文里引用时用到的： \cite{<引用词>} \parencite
+%                           通常由【作者名】、【年份】和【文章名的部分】组成
+%                           方便区分以及看到就知道引用的是哪篇文献
+%%%% 示例 %%%%
+% 下面的数据内容仅为示例用，可能有误
+% @book{曾谨言2013量子力学,
+%   title={量子力学: 卷 I},
+%   author={曾谨言 and 曾谨言 and 曾谨言 and 曾谨言},
+%   year={2013},
+%   publisher={科学出版社},
+%   address={北京},
+%   pages={1-10},
+% }
+% @book{feynman2011feynman,
+%   title={The Feynman lectures on physics, Vol. I: The new millennium edition: mainly mechanics, radiation, and heat},
+%   author={Feynman, Richard P and Leighton, Robert B and Sands, Matthew},
+%   year={2011},
+%   publisher={Basic books},
+%   volume={1},
+%   pages={2-8}
+% }
+
+% @article{zurek2014quantum,
+%   title={Quantum Darwinism, classical reality, and the randomness of quantum jumps},
+%   author={Zurek, Wojciech H},
+%   journal={arXiv preprint arXiv:1412.5206},
+%   year={2014},
+%   volume={1},
+%   number={7},
+%   pages={2-8}
+% }
+
+% @misc{wikimedia:stern-gerlach-experiment,
+%   author={Wikimedia Commons},
+%   title={File:Stern-Gerlach experiment zh.png --- Wikimedia Commons{,} the free media repository},
+%   year={2016},
+%   url={https://commons.wikimedia.org/w/index.php?title=File:Stern-Gerlach_experiment_zh.png&oldid=221590546},
+%   note={[Online; accessed 25-July-2019]},
+% }
+%%%% 示例结束  %%%%
+
+
+
+%%%% 用户的bib数据库 %%%%
+@book{曾谨言2013量子力学,
+  title={量子力学: 卷 I},
+  author={曾谨言 and 曾谨言 and 曾谨言 and 曾谨言},
+  year={2013},
+  publisher={科学出版社},
+  address={北京},
+  pages={1-10},
+  edition={第二版}
+}
+@book{feynman2011feynman,
+  title={The Feynman lectures on physics, Vol. I: The new millennium edition: mainly mechanics, radiation, and heat},
+  author={Feynman, Richard P and Leighton, Robert B and Sands, Matthew},
+  volume={1},
+  year={2011},
+  publisher={Basic books},
+  pages={2-8},
+  edition={7},
+}
+
+@article{zurek2014quantum,
+  title={Quantum Darwinism, classical reality, and the randomness of quantum jumps},
+  author={Zurek, Wojciech H},
+  journal={arXiv preprint arXiv:1412.5206},
+  year={2014},
+  volume={1},
+  number={7},
+  pages={2-8},
+}
+
+@book{cohen2013claude,
+  title={Claude Cohen-Tannoudji; Bernard Diu; Franck Lalo{\"e}: Quantenmechanik},
+  author={Cohen-Tannoudji, Claude and Diu, Bernard and Lalo{\"e}, Franck},
+  volume={1},
+  year={2013},
+  publisher={Walter de Gruyter},
+  edition={Second},
+}
+
+@misc{zettili2003quantum,
+  title={Quantum mechanics: concepts and applications},
+  author={Zettili, Nouredine},
+  year={2003},
+  publisher={AAPT}
+}
+
+@misc{wikimedia:stern-gerlach-experiment,
+  author={Wikimedia Commons},
+  title={File:Stern-Gerlach experiment zh.png --- Wikimedia Commons{,} the free media repository},
+  year={2016},
+  url={https://commons.wikimedia.org/w/index.php?title=File:Stern-Gerlach_experiment_zh.png&oldid=221590546},
+  note={[Online; accessed 25-July-2019]},
+}
+
+@inproceedings{邱泽奇建构与分化,
+  author       = {邱泽奇},
+  title        = {建构与分化：当代中国社会结构的过程},
+  booktitle    = {社区研究与社会发展},
+  year         = {2012},
+  editor       = {潘乃谷，马戎},
+  editortype   = {editor},
+  booksubtitle = {中国社会学纪念费孝通教授学术活动60周年学术讨论会},
+  date         = {2012},
+  location     = {北京},
+  address      = {天津},
+  publisher    = {海洋出版社},
+  organization = {组织}
+}
+
+%%3,4,6的部分条目由于水平所限做了手动调整（输出结果含有见：的）（欺骗电脑，都有注释），使用时建议照着例子修改，防止出错
+%%1.期刊文献
+@article{李晓东,
+  author          = {李晓东 and 张庆红 and 叶瑾琳},
+  title           = {气候学研究的若干理论问题},
+  journaltitle    = {北京大学学报：自然科学版},
+  year            = {1999},
+  volume          = {35},
+  number          = {1},
+  pages           = {101-106}
+}
+
+%这里的author采用了原样抄录法，这个时候输入什么输出什么
+@article{Ahn,
+  author          = {{Ahn S} and {Tanksley SD}},
+  title           = {Comparative linkage maps of the rice and maize genomes},
+  journaltitle    = {Proceedings of the National Academy of Sciences of the United States of America},
+  year            = {1993},
+  volume          = {90},
+  pages           = {7980-7984}
+}
+%%2.杂志（报纸）文献
+@newspaper{丁文祥,
+  author          = {丁文祥},
+  title           = {数字革命与竞争国际化},
+  journaltitle    = {中国青年报},
+  date            = {2000-11-20},
+  number          = {15}
+}
+
+%%3.会议论文集
+%%为了与学校标准的标点符号一模一样，条目editor把编者和文集名写在一起这种操作是不得已而为之
+@inproceedings{张启发,
+  author          = {张启发 and 李建雄},
+  title           = {水稻杂种优势的遗传和分子生物学基础的研究进展},
+  editor          = {王连铮 and 戴景瑞主编 and 全国作物育种学术讨论会论文集},
+  booktitle       = {中国作物学会第六届理事会暨全国作物育种学术讨论会，北京，1998},
+  location        = {北京},
+  publisher       = {中国农业科技术出版社},
+  year            = {1998},
+  pages           = {1-10},
+}
+%下面的例子没有使用骗系统的方法
+@proceedings{雷光春,
+  author          = {雷光春},
+  title           = {综合湿地管理：综合湿地管理国际研讨会论文集},
+  location        = {北京},
+  publisher       = {海洋出版社},
+  year            = {2012},
+}
+%%4.会议论文（两个例子都借用了article类）
+%不得不使用article进行伪装，利用usera域手动改为字母C
+%两个volume都填了地点（本来这个是填入卷数），同样也是为了与标准一致
+@article{邱泽奇,  
+  usera        = {C},
+  author       = {邱泽奇},
+  title        = {建构与分化：当代中国社会结构的过程},
+  journaltitle = {中国社会学纪念费孝通教授学术活动 60 周年学术讨论会 },
+  year         = {1996},
+  volume       = {北京},
+}
+%%拼音姓名，姓首字母大写并写全称，名写缩写，取每个字的拼音首字母大写
+@article{zhang,  
+  usera        = {C},
+  author       = {{Zhang Q} and {Gao YJ} and {Yang SH} and {Ragab R}},
+  title        = {Molecular marker-based analysis of heterosis in hybrid rice},
+  journaltitle = {Abstract, 7th Annual Meeting of the Rockefeller Foundation's International Program on Rice Biotechnology},
+  year         = {1994},
+  volume       = {Bali, Indonesia},
+}
+
+%5.普通图书
+@book{唐绪军,
+  author       = {唐绪军},
+  title        = {报业经济与报业经营},
+  location     = {北京},
+  publisher    = {新华出版社},
+  year         = {1999},
+  pages        = {117-121},
+}
+
+@book{昂温,
+  author       = {{昂温, G} and {昂温, P S}},
+  title        = {外国出版史},
+  translator   = {陈生铮},
+  location     = {北京},
+  publisher    = {中国书籍出版社},
+  year         = {1988},
+}
+%这里的author采用了系统自动，英文姓名会自动调整顺序并且全部大写（GB/T 7714-2015），
+%你在书的封面看到的是Henry D. Foth ,但录入为参考文献时变为FOTH H D,
+%也可采用1中第二个实例的直接抄录，但是要自己调整顺序，顺序规范详见GB/T 7714-2015.
+@book{Foth,
+  author       = {Henry D. Foth},
+  title        = {Fundamentals of soil science},
+  edition      = {7},
+  location     = {New York},
+  publisher    = {John Wiley & Sons},
+  year         = {1984},
+  pages        = {151-159},
+}
+
+%6.专著章节或文集
+杨国枢．中国人对现代化的反应：心理学的观点[M]．见：乔健主编, 中国人
+的观念与行为．天津：天津人民出版社，1995：209-239．
+
+%仍然是条件所限，为了与学校的要求一致的标点符号，把编者和书名同时写在booktitle
+@inbook{杨国枢,
+  author       = {杨国枢},
+  title        = {中国人对现代化的反应：心理学的观点},
+  booktitle    = {乔健主编, 中国人的观念与行为},
+  location     = {天津},
+  publisher    = {天津人民出版社},
+  year         = {1995},
+  pages        = {209-239},
+}
+%仍然是条件所限，为了与学校的要求一致的标点符号，把编者和书名同时写在booktitle
+%英文姓名录入采用原样抄录
+%遇到文献名称有公式符号时，与正文一致，在$$中见写入相应的TeX代码，如$\mathrm{CO}_2$%
+@inbook{Morison,
+  author       = {{Morison JIL}},
+  title        = {Intercellular $\mathrm{CO}_2$ concentration and stomatal responses to $\mathrm{CO}_2$},
+  booktitle    = {Zeiger E, Farquhar GD, Cowan IR eds., Stomatal Function},
+  location     = {Stanford},
+  publisher    = {Stanford University Press},
+  year         = {1987},
+  pages        = {229-251}
+}
+为了达到一模一样的效果，对底层文件gb7714-2015.bbx进行了修改，
+将第919行in={in\intitlepunct}改为in={In\intitlepunct}使得in中的i大写
+
+%%7.学位论文
+%%由于要打出[硕士/博士学位论文]不得不借用book类型，用edition输入[博士学位论文] 
+%%原来的机构institution变为publisher填写学校
+@book{张志祥,
+  usera        = {D},
+  author       = {张志祥},
+  title        = {间断动力系统的随机扰动及其在守恒律方程中的应用},
+  edition      = {[博士学位论文]},
+  location     = {北京},
+  publisher    = {北京大学},
+  year         = {1998}
+}
+
+@book{Aldemita,
+  usera        = {D},
+  author       = {{Aldemita RR}},
+  title        = {Genetic Engineering of rice: Agrobacterium tumefaciens-mediatedtransformation of rice and evaluation of a corn pollen-specific promoter using the gusA gene in transgenic rice},
+  edition      = {(Ph D dissertation)},
+  location     = {West Lafyatte},
+  publisher    = {Purdue University},
+  year         = {1998}
+}
+
+%%8.专利
+@patent{张凯军,
+  author       = {张凯军},
+  title        = {轨道火车及高速轨道火车紧急安全制动辅助装置},
+  number       = {201220158825.2},     
+  date         = {2012-04-05}
+}
+%%国别和专利号同时写在number中
+@patent{Kosek,
+  author       = {{Kosek A} and {Momose H} and {Kawahito M} and {Alan Turling}},
+  title        = {Compiler},
+  number       = {US, 828402},     
+  date         = {2002-05-25}
+}
+
+%%9.技术标准
+@standard{文献编写,
+  author       = {全国文献工作标准化技术委员会第六分委员会},
+  title        = {GB 6447-86. 文献编写规则},
+  location     = {北京},
+  publisher    = {中国标准出版社},
+  year         = {1986}
+}
+
+
+%%10.报告
+%%biblatex对这个地方信息缺省时处理，只好把两个时间都写在一起并借用条目location
+两个时间第一个是出版时间，第二个是引用时间
+%%有关OL：当有录入信息url时，就会有OL表示online，这里没有提供网址，但是
+%%是online的，因此手动输入
+@report{国防白皮,
+  usera        = {R/OL},
+  author       = {中华人民共和国国务院新闻办公室},
+  title        = {国防白皮书：中国武装力量的多样化运用},
+  location     = {2013-04-16[2014-06-11]} 
+}
+%当author是个组织的时候一定要使用直接抄录
+@report{federal,
+  author       = {{U.S. Department of Transportation Federal Highway Administration}},
+  title        = {Guidelines for bandling excavated acid-producing materials, PB 91-194001},
+  location     = {Springfield},
+  institution  = {U.S. Department of Commerce National Information Service},
+  year         = {1990},
+  pages        = {22-23} 
+}
+
+@report{health,
+  author       = {{World Health Organization}},
+  title        = {Factors regulating the immune response: report of WHO Scientific Group},
+  location     = {Geneva},
+  institution  = {WHO},
+  year         = {1970},
+  pages        = {10-11} 
+}
+
+%%11.电子资源
+关于[文献类型标识/文献载体标识]的确定
+文献载体标识包括OL：联机网络  CD：光盘  DK：磁盘 MT：磁带
+只要有url项，文献载体标识就会是OL，如果无法录入url但是是从网上下载的资源，
+需要手动添加usera={x/OL}, x由文献类别决定
+如果这个文献是纯电子资源或电子公告，文献类型标识为EB
+这个EB不包括电子专著，电子连续出版物，电子学位论文，电子专利
+@article{江向东,
+  author          = {江向东},
+  title           = {互联网环境下的信息处理与图书管理系统解决方案},
+  journal         = {情报学报},
+  number          = {2},
+  volume          = {18},
+  year            = {1998},
+  pages           = {4},
+  urldate         = {2000-01-18},
+  url             = {http://www.chinainfo.gov.cn/periodical/gbxb/gbxb99/gbxb990203}
+}
+
+%%bib包不够完善当同时出现（更新或修改日期）[引用日期]且没有出版年的时候，
+需要同时写在organization中
+@online{萧钮,
+  author          = {萧钮},
+  title           = {出版业信息化迈入快车道},
+  organization    = {2001-12-19[2002-04-15]},
+  url             = {http://www.creader.com/news/20011219/200112190019.html}
+}
+%%录入英文文献时，需要区分各个信息的种类！
+@online{PACS-L,
+  title           = {PACS-L; the publi-access computer systems forum},
+  organization    = {Houston, Tex：University of Houston Libraries},
+  year            = {1989},
+  urldate         = {1995-05-17},
+  url             = {http://info.lib.uh.edu/pacsl.html}
+}
