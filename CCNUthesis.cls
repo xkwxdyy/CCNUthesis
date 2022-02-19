@@ -17,6 +17,12 @@
     \@ifpackagelater {#1} { 2020/07/17 }
       { } { \msg_error:nnn { ccnuthesis } { l3-too-old } {#1} }
   }
+\msg_new:nnn { ccnuthesis } { unsupported-engine }
+  {
+    The~ ccnuthesis~ class~ requires~ either~ XeTeX~ or~ LuaTeX. \\\\
+    "#1"~ is~ not~ supported~ at~ present.~ You~ must~ change \\
+    your~ typesetting~ engine~ to~ "xelatex"~ or~ "lualatex".
+  }
 \sys_if_engine_xetex:F
   {
     \sys_if_engine_luatex:F
@@ -24,12 +30,6 @@
         \msg_fatal:nnx { ccnuthesis } { unsupported-engine }
           { \c_sys_engine_str }
       }
-  }
-\msg_new:nnn { ccnuthesis } { unsupported-engine }
-  {
-    The~ ccnuthesis~ class~ requires~ either~ XeTeX~ or~ LuaTeX. \\\\
-    "#1"~ is~ not~ supported~ at~ present.~ You~ must~ change \\
-    your~ typesetting~ engine~ to~ "xelatex"~ or~ "lualatex".
   }
 \box_new:N   \l__ccnu_tmpa_box
 \clist_new:N \l__ccnu_tmpa_clist
