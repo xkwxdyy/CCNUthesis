@@ -194,7 +194,7 @@
   {
     { no-math           } { fontspec },
     { perpage           } { footmisc },
-    { amsmath, thmmarks } { ntheorem }
+    % { amsmath, thmmarks } { ntheorem }
   }
   { \PassOptionsToPackage #1 }
 \LoadClass { ctexbook }
@@ -207,7 +207,7 @@
     geometry,
     fancyhdr,
     footmisc,
-    ntheorem,
+    % ntheorem,
     graphicx,
     longtable,
     caption,
@@ -220,6 +220,8 @@
     adjustbox,
     calc,
     etoolbox,
+    amsthm,
+    thmtools
   }
 \RequirePackage[titles]{tocloft}
 \graphicspath{{figures/}{logo/}}
@@ -909,96 +911,96 @@
     \hbox_to_wd:nn { 1.5 em } { \@thefnmark \hfil }
     #1
   }
-\clist_const:Nn \c__ccnu_thm_style_plain_clist
-  { plain, margin, change }
-\clist_const:Nn \c__ccnu_thm_style_break_clist
-  { break, marginbreak, changebreak }
-\tl_new:N \l__ccnu_thm_style_tl
-\tl_new:N \l__ccnu_thm_header_font_tl
-\tl_new:N \l__ccnu_thm_body_font_tl
-\tl_new:N \l__ccnu_thm_qed_tl
-\tl_new:N \l__ccnu_thm_counter_tl
-\keys_define:nn { ccnu / theorem }
-  {
-    style       .tl_set:N  = \l__ccnu_thm_style_tl,
-    header-font .tl_set:N  = \l__ccnu_thm_header_font_tl,
-    body-font   .tl_set:N  = \l__ccnu_thm_body_font_tl,
-    qed         .tl_set:N  = \l__ccnu_thm_qed_tl,
-    counter     .tl_set:N  = \l__ccnu_thm_counter_tl
-  }
-\cs_new_eq:NN \__ccnu_thm_ntheorem_style:n \theoremstyle
-\cs_new_eq:NN \__ccnu_thm_ntheorem_new:w   \newtheorem
-\RenewDocumentCommand \newtheorem { s o m m }
-  {
-    \IfBooleanTF {#1}
-      { \tl_set:Nn \l__ccnu_thm_qed_tl { \ensuremath { \square } } }
-      { \tl_set:Nn \l__ccnu_thm_qed_tl { } }
-    \tl_set:Nn \l__ccnu_thm_style_tl { plain }
-    \IfValueT {#2} { \keys_set:nn { ccnu / theorem } {#2} }
-    \ccnu_thm_set_header_font:V \l__ccnu_thm_header_font_tl
-    \ccnu_thm_set_body_font:V   \l__ccnu_thm_body_font_tl
-    \ccnu_thm_set_qed:V         \l__ccnu_thm_qed_tl
-    \IfBooleanTF {#1}
-      {
-        \clist_if_in:nVF { plain, break } \l__ccnu_thm_style_tl
-          {
-            \clist_if_in:NVTF
-              \c__ccnu_thm_style_plain_clist \l__ccnu_thm_style_tl
-              { \__ccnu_thm_redefine_style:n { plain } }
-              {
-                \clist_if_in:NVTF
-                  \c__ccnu_thm_style_break_clist \l__ccnu_thm_style_tl
-                  { \__ccnu_thm_redefine_style:n { break } }
-                  {
-                    \__ccnu_error:nx { unknown-theorem-style }
-                      { \l__ccnu_thm_style_tl }
-                  }
-              }
-          }
-        \tl_put_left:Nn \l__ccnu_thm_style_tl { nonumber }
-        \ccnu_thm_new_no_number:Vxx \l__ccnu_thm_style_tl {#3} {#4}
-      }
-      {
-        \clist_clear:N \l__ccnu_tmpa_clist
-        \clist_concat:NNN \l__ccnu_tmpa_clist
-          \c__ccnu_thm_style_plain_clist \c__ccnu_thm_style_break_clist
-        \clist_if_in:NVF \l__ccnu_tmpa_clist \l__ccnu_thm_style_tl
-          {
-            \__ccnu_error:nx { unknown-theorem-style }
-              { \l__ccnu_thm_style_tl }
-          }
-        \ccnu_thm_new:VVxx \l__ccnu_thm_style_tl \l__ccnu_thm_counter_tl
-          {#3} {#4}
-      }
-  }
-\cs_new:Npn \__ccnu_thm_redefine_style:n #1
-  {
-    \__ccnu_warning:nxx { redefine-theorem-style }
-      {#1} { \l__ccnu_thm_style_tl }
-    \tl_set:Nn \l__ccnu_thm_style_tl {#1}
-  }
-\__ccnu_msg_new:nn { redefine-theorem-style }
-  { Theorem~ style~ "#2"~ will~ be~ redefined~ as~ "#1". }
-\__ccnu_msg_new:nn { unknown-theorem-style }
-  { Theorem~ style~ "#1"~ is~ unknown. }
-\cs_new:Npn \ccnu_thm_new:nnnn #1#2#3#4
-  {
-    \__ccnu_thm_ntheorem_style:n {#1}
-    \__ccnu_thm_ntheorem_new:w   {#3} {#4} [#2]
-  }
-\cs_generate_variant:Nn \ccnu_thm_new:nnnn { VVxx }
-\cs_new:Npn \ccnu_thm_new_no_number:nnn #1#2#3
-  {
-    \__ccnu_thm_ntheorem_style:n {#1}
-    \__ccnu_thm_ntheorem_new:w   {#2} {#3}
-  }
-\cs_generate_variant:Nn \ccnu_thm_new_no_number:nnn { Vxx }
-\cs_new:Npn \ccnu_thm_set_qed:n         #1 { \theoremsymbol     {#1} }
-\cs_new:Npn \ccnu_thm_set_header_font:n #1 { \theoremheaderfont {#1} }
-\cs_new:Npn \ccnu_thm_set_body_font:n   #1 { \theorembodyfont   {#1} }
-\cs_generate_variant:Nn \ccnu_thm_set_qed:n         { V }
-\cs_generate_variant:Nn \ccnu_thm_set_header_font:n { V }
-\cs_generate_variant:Nn \ccnu_thm_set_body_font:n   { V }
+% \clist_const:Nn \c__ccnu_thm_style_plain_clist
+%   { plain, margin, change }
+% \clist_const:Nn \c__ccnu_thm_style_break_clist
+%   { break, marginbreak, changebreak }
+% \tl_new:N \l__ccnu_thm_style_tl
+% \tl_new:N \l__ccnu_thm_header_font_tl
+% \tl_new:N \l__ccnu_thm_body_font_tl
+% \tl_new:N \l__ccnu_thm_qed_tl
+% \tl_new:N \l__ccnu_thm_counter_tl
+% \keys_define:nn { ccnu / theorem }
+%   {
+%     style       .tl_set:N  = \l__ccnu_thm_style_tl,
+%     header-font .tl_set:N  = \l__ccnu_thm_header_font_tl,
+%     body-font   .tl_set:N  = \l__ccnu_thm_body_font_tl,
+%     qed         .tl_set:N  = \l__ccnu_thm_qed_tl,
+%     counter     .tl_set:N  = \l__ccnu_thm_counter_tl
+%   }
+% \cs_new_eq:NN \__ccnu_thm_ntheorem_style:n \theoremstyle
+% \cs_new_eq:NN \__ccnu_thm_ntheorem_new:w   \newtheorem
+% \RenewDocumentCommand \newtheorem { s o m m }
+%   {
+%     \IfBooleanTF {#1}
+%       { \tl_set:Nn \l__ccnu_thm_qed_tl { \ensuremath { \square } } }
+%       { \tl_set:Nn \l__ccnu_thm_qed_tl { } }
+%     \tl_set:Nn \l__ccnu_thm_style_tl { plain }
+%     \IfValueT {#2} { \keys_set:nn { ccnu / theorem } {#2} }
+%     \ccnu_thm_set_header_font:V \l__ccnu_thm_header_font_tl
+%     \ccnu_thm_set_body_font:V   \l__ccnu_thm_body_font_tl
+%     \ccnu_thm_set_qed:V         \l__ccnu_thm_qed_tl
+%     \IfBooleanTF {#1}
+%       {
+%         \clist_if_in:nVF { plain, break } \l__ccnu_thm_style_tl
+%           {
+%             \clist_if_in:NVTF
+%               \c__ccnu_thm_style_plain_clist \l__ccnu_thm_style_tl
+%               { \__ccnu_thm_redefine_style:n { plain } }
+%               {
+%                 \clist_if_in:NVTF
+%                   \c__ccnu_thm_style_break_clist \l__ccnu_thm_style_tl
+%                   { \__ccnu_thm_redefine_style:n { break } }
+%                   {
+%                     \__ccnu_error:nx { unknown-theorem-style }
+%                       { \l__ccnu_thm_style_tl }
+%                   }
+%               }
+%           }
+%         \tl_put_left:Nn \l__ccnu_thm_style_tl { nonumber }
+%         \ccnu_thm_new_no_number:Vxx \l__ccnu_thm_style_tl {#3} {#4}
+%       }
+%       {
+%         \clist_clear:N \l__ccnu_tmpa_clist
+%         \clist_concat:NNN \l__ccnu_tmpa_clist
+%           \c__ccnu_thm_style_plain_clist \c__ccnu_thm_style_break_clist
+%         \clist_if_in:NVF \l__ccnu_tmpa_clist \l__ccnu_thm_style_tl
+%           {
+%             \__ccnu_error:nx { unknown-theorem-style }
+%               { \l__ccnu_thm_style_tl }
+%           }
+%         \ccnu_thm_new:VVxx \l__ccnu_thm_style_tl \l__ccnu_thm_counter_tl
+%           {#3} {#4}
+%       }
+%   }
+% \cs_new:Npn \__ccnu_thm_redefine_style:n #1
+%   {
+%     \__ccnu_warning:nxx { redefine-theorem-style }
+%       {#1} { \l__ccnu_thm_style_tl }
+%     \tl_set:Nn \l__ccnu_thm_style_tl {#1}
+%   }
+% \__ccnu_msg_new:nn { redefine-theorem-style }
+%   { Theorem~ style~ "#2"~ will~ be~ redefined~ as~ "#1". }
+% \__ccnu_msg_new:nn { unknown-theorem-style }
+%   { Theorem~ style~ "#1"~ is~ unknown. }
+% \cs_new:Npn \ccnu_thm_new:nnnn #1#2#3#4
+%   {
+%     \__ccnu_thm_ntheorem_style:n {#1}
+%     \__ccnu_thm_ntheorem_new:w   {#3} {#4} [#2]
+%   }
+% \cs_generate_variant:Nn \ccnu_thm_new:nnnn { VVxx }
+% \cs_new:Npn \ccnu_thm_new_no_number:nnn #1#2#3
+%   {
+%     \__ccnu_thm_ntheorem_style:n {#1}
+%     \__ccnu_thm_ntheorem_new:w   {#2} {#3}
+%   }
+% \cs_generate_variant:Nn \ccnu_thm_new_no_number:nnn { Vxx }
+% \cs_new:Npn \ccnu_thm_set_qed:n         #1 { \theoremsymbol     {#1} }
+% \cs_new:Npn \ccnu_thm_set_header_font:n #1 { \theoremheaderfont {#1} }
+% \cs_new:Npn \ccnu_thm_set_body_font:n   #1 { \theorembodyfont   {#1} }
+% \cs_generate_variant:Nn \ccnu_thm_set_qed:n         { V }
+% \cs_generate_variant:Nn \ccnu_thm_set_header_font:n { V }
+% \cs_generate_variant:Nn \ccnu_thm_set_body_font:n   { V }
 \captionsetup [ figure ]
   {
     font     = small,
@@ -2098,20 +2100,70 @@
     info    / secret-level    = none,
     info    / school-id       = { 10246 },
     info    / date            = { \zhtoday },
-    theorem / header-font     = { \sffamily },
-    theorem / body-font       = { \ccnu@kai },
-    theorem / counter         = { chapter }
+    % theorem / header-font     = { \sffamily },
+    % theorem / body-font       = { \ccnu@kai },
+    % theorem / counter         = { chapter }
   }
 \NewDocumentCommand \ccnusetup { m }
   { \keys_set:nn { ccnu } {#1} }
-\newtheorem* { proof       } { \c__ccnu_name_proof_tl      }
-\newtheorem  { axiom       } { \c__ccnu_name_axiom_tl      }
-\newtheorem  { corollary   } { \c__ccnu_name_corollary_tl  }
-\newtheorem  { definition  } { \c__ccnu_name_definition_tl }
-\newtheorem  { example     } { \c__ccnu_name_example_tl    }
-\newtheorem  { lemma       } { \c__ccnu_name_lemma_tl      }
-\newtheorem  { theorem     } { \c__ccnu_name_theorem_tl    }
+% \newtheorem* { proof       } { \c__ccnu_name_proof_tl      }
+% \newtheorem  { axiom       } { \c__ccnu_name_axiom_tl      }
+% \newtheorem  { corollary   } { \c__ccnu_name_corollary_tl  }
+% \newtheorem  { definition  } { \c__ccnu_name_definition_tl }
+% \newtheorem  { example     } { \c__ccnu_name_example_tl    }
+% \newtheorem  { lemma       } { \c__ccnu_name_lemma_tl      }
+% \newtheorem  { theorem     } { \c__ccnu_name_theorem_tl    }
 
+\cs_new:Npn \__xdyymath_declare_theorem_with_counter_within:n #1
+  {
+    \declaretheorem
+      [
+        name =  \clist_item:nn {#1} {1} ,
+        refname = \clist_item:nn {#1} {2} ,
+        within = \clist_item:nn {#1} {3} ,
+      ]
+      { \clist_item:nn {#1} {4} }
+  }
+\cs_new:Npn \__xdyymath_declare_theorem_with_counter_sibling:n #1
+  {
+    \declaretheorem
+      [
+        name =  \clist_item:nn {#1} {1} ,
+        refname = \clist_item:nn {#1} {2} ,
+        sibling = \clist_item:nn {#1} {3} ,
+      ]
+      { \clist_item:nn {#1} {4} }
+  }
+\cs_new:Npn \__xdyymath_declare_theorem_without_counter:n #1
+  {
+    \declaretheorem
+      [
+        name =  \clist_item:nn {#1} {1} ,
+        refname = \clist_item:nn {#1} {2},
+        numbered = no,
+        % headpunct = {},
+        style = withoutcounterstyle
+      ]
+      { \clist_item:nn {#1} {3} }
+  }
+\clist_map_function:nN
+  {
+    { 定理, 定理, chapter, theorem },
+    { 例, 例, chapter, example },
+    { 问题, 问题, chapter, question },
+  }\__xdyymath_declare_theorem_with_counter_within:n
+
+\clist_map_function:nN
+  {
+    { 定义, 定义, theorem, definition },
+    { 性质, 性质, theorem, property },
+    { 命题, 命题, theorem, proposition },
+    { 推论, 推论, theorem, corollary },
+    { 引理, 引理, theorem, lemma },
+    { 公理, 公理, theorem, axiom },
+    { 反例, 反例, theorem, antiexample },
+    { 猜想, 猜想, theorem, conjecture },
+  }\__xdyymath_declare_theorem_with_counter_sibling:n
 
 % 去掉目录的页码
 % https://tex.stackexchange.com/questions/38847/clear-tableofcontents-page-in-book-or-report
