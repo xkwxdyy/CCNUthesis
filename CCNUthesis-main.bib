@@ -181,7 +181,7 @@
   organization = {组织}
 }
 
-%%3,4,6的部分条目由于水平所限做了手动调整（输出结果含有见：的）（欺骗电脑，都有注释），使用时建议照着例子修改，防止出错
+%% 3,4,6的部分条目由于水平所限做了手动调整（输出结果含有见：的）（欺骗电脑，都有注释），使用时建议照着例子修改，防止出错
 %%1.期刊文献
 @article{李晓东,
   author          = {李晓东 and 张庆红 and 叶瑾琳},
@@ -193,7 +193,7 @@
   pages           = {101-106}
 }
 
-%这里的author采用了原样抄录法，这个时候输入什么输出什么
+% 这里的author采用了原样抄录法，这个时候输入什么输出什么
 @article{Ahn,
   author          = {{Ahn S} and {Tanksley SD}},
   title           = {Comparative linkage maps of the rice and maize genomes},
@@ -223,7 +223,7 @@
   year            = {1998},
   pages           = {1-10},
 }
-%下面的例子没有使用骗系统的方法
+% 下面的例子没有使用骗系统的方法
 @proceedings{雷光春,
   author          = {雷光春},
   title           = {综合湿地管理：综合湿地管理国际研讨会论文集},
@@ -231,9 +231,9 @@
   publisher       = {海洋出版社},
   year            = {2012},
 }
-%%4.会议论文（两个例子都借用了article类）
-%不得不使用article进行伪装，利用usera域手动改为字母C
-%两个volume都填了地点（本来这个是填入卷数），同样也是为了与标准一致
+%% 4.会议论文（两个例子都借用了article类）
+% 不得不使用article进行伪装，利用usera域手动改为字母C
+% 两个volume都填了地点（本来这个是填入卷数），同样也是为了与标准一致
 @article{邱泽奇,  
   usera        = {C},
   author       = {邱泽奇},
@@ -242,7 +242,7 @@
   year         = {1996},
   volume       = {北京},
 }
-%%拼音姓名，姓首字母大写并写全称，名写缩写，取每个字的拼音首字母大写
+%% 拼音姓名，姓首字母大写并写全称，名写缩写，取每个字的拼音首字母大写
 @article{zhang,  
   usera        = {C},
   author       = {{Zhang Q} and {Gao YJ} and {Yang SH} and {Ragab R}},
@@ -252,7 +252,7 @@
   volume       = {Bali, Indonesia},
 }
 
-%5.普通图书
+% 5.普通图书
 @book{唐绪军,
   author       = {唐绪军},
   title        = {报业经济与报业经营},
@@ -270,9 +270,9 @@
   publisher    = {中国书籍出版社},
   year         = {1988},
 }
-%这里的author采用了系统自动，英文姓名会自动调整顺序并且全部大写（GB/T 7714-2015），
-%你在书的封面看到的是Henry D. Foth ,但录入为参考文献时变为FOTH H D,
-%也可采用1中第二个实例的直接抄录，但是要自己调整顺序，顺序规范详见GB/T 7714-2015.
+% 这里的author采用了系统自动，英文姓名会自动调整顺序并且全部大写（GB/T 7714-2015），
+% 你在书的封面看到的是Henry D. Foth ,但录入为参考文献时变为FOTH H D,
+% 也可采用1中第二个实例的直接抄录，但是要自己调整顺序，顺序规范详见GB/T 7714-2015.
 @book{Foth,
   author       = {Henry D. Foth},
   title        = {Fundamentals of soil science},
@@ -283,9 +283,8 @@
   pages        = {151-159},
 }
 
-%6.专著章节或文集
-杨国枢．中国人对现代化的反应：心理学的观点[M]．见：乔健主编, 中国人
-的观念与行为．天津：天津人民出版社，1995：209-239．
+% 6.专著章节或文集
+杨国枢．中国人对现代化的反应：心理学的观点[M]．见：乔健主编, 中国人的观念与行为．天津：天津人民出版社，1995：209-239．
 
 %仍然是条件所限，为了与学校的要求一致的标点符号，把编者和书名同时写在booktitle
 @inbook{杨国枢,
@@ -297,9 +296,9 @@
   year         = {1995},
   pages        = {209-239},
 }
-%仍然是条件所限，为了与学校的要求一致的标点符号，把编者和书名同时写在booktitle
-%英文姓名录入采用原样抄录
-%遇到文献名称有公式符号时，与正文一致，在$$中见写入相应的TeX代码，如$\mathrm{CO}_2$%
+% 仍然是条件所限，为了与学校的要求一致的标点符号，把编者和书名同时写在booktitle
+% 英文姓名录入采用原样抄录
+% 遇到文献名称有公式符号时，与正文一致，在$$中见写入相应的TeX代码，如$\mathrm{CO}_2$%
 @inbook{Morison,
   author       = {{Morison JIL}},
   title        = {Intercellular $\mathrm{CO}_2$ concentration and stomatal responses to $\mathrm{CO}_2$},
@@ -312,9 +311,9 @@
 为了达到一模一样的效果，对底层文件gb7714-2015.bbx进行了修改，
 将第919行in={in\intitlepunct}改为in={In\intitlepunct}使得in中的i大写
 
-%%7.学位论文
-%%由于要打出[硕士/博士学位论文]不得不借用book类型，用edition输入[博士学位论文] 
-%%原来的机构institution变为publisher填写学校
+%% 7.学位论文
+%% 由于要打出[硕士/博士学位论文]不得不借用book类型，用edition输入[博士学位论文] 
+%% 原来的机构institution变为publisher填写学校
 @book{张志祥,
   usera        = {D},
   author       = {张志祥},
@@ -335,14 +334,14 @@
   year         = {1998}
 }
 
-%%8.专利
+%% 8.专利
 @patent{张凯军,
   author       = {张凯军},
   title        = {轨道火车及高速轨道火车紧急安全制动辅助装置},
   number       = {201220158825.2},     
   date         = {2012-04-05}
 }
-%%国别和专利号同时写在number中
+%% 国别和专利号同时写在number中
 @patent{Kosek,
   author       = {{Kosek A} and {Momose H} and {Kawahito M} and {Alan Turling}},
   title        = {Compiler},
@@ -350,7 +349,7 @@
   date         = {2002-05-25}
 }
 
-%%9.技术标准
+%% 9.技术标准
 @standard{文献编写,
   author       = {全国文献工作标准化技术委员会第六分委员会},
   title        = {GB 6447-86. 文献编写规则},
@@ -360,11 +359,11 @@
 }
 
 
-%%10.报告
-%%biblatex对这个地方信息缺省时处理，只好把两个时间都写在一起并借用条目location
+%% 10.报告
+%% biblatex对这个地方信息缺省时处理，只好把两个时间都写在一起并借用条目location
 两个时间第一个是出版时间，第二个是引用时间
-%%有关OL：当有录入信息url时，就会有OL表示online，这里没有提供网址，但是
-%%是online的，因此手动输入
+%% 有关OL：当有录入信息url时，就会有OL表示online，这里没有提供网址，但是
+%% 是online的，因此手动输入
 @report{国防白皮,
   usera        = {R/OL},
   author       = {中华人民共和国国务院新闻办公室},
