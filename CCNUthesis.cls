@@ -2164,6 +2164,7 @@
     { 反例, 反例, theorem, antiexample },
     { 猜想, 猜想, theorem, conjecture },
     { 断言, 断言, theorem, claim },
+    { 注, 注, theorem, remark },
   }\__xdyymath_declare_theorem_with_counter_sibling:n
 
 % 去掉目录的页码
