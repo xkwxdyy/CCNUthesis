@@ -2163,6 +2163,7 @@
     { 公理, 公理, theorem, axiom },
     { 反例, 反例, theorem, antiexample },
     { 猜想, 猜想, theorem, conjecture },
+    { 断言, 断言, theorem, claim },
   }\__xdyymath_declare_theorem_with_counter_sibling:n
 
 % 去掉目录的页码
