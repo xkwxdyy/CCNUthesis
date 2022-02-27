@@ -747,7 +747,7 @@
       {
         format      = \zihao{-3} \normalfont \bfseries \raggedright,
         % format      = \Large \normalfont \sffamily \raggedright,
-        beforeskip  = 3.5 ex plus 1.0 ex minus 0.2 ex,
+        beforeskip  = 5.5 ex plus 1.0 ex minus 0.2 ex,
         afterskip   = 2.7 ex plus 0.5 ex,
         fixskip     = true
       },
@@ -755,7 +755,7 @@
       {
         format      = \zihao{4} \normalfont \bfseries \raggedright,
         % format      = \large \normalfont \sffamily \raggedright,
-        beforeskip  = 3.25 ex plus 1.0 ex minus 0.2 ex,
+        beforeskip  = 5.25 ex plus 1.0 ex minus 0.2 ex,
         afterskip   = 2.5  ex plus 0.3 ex,
         fixskip     = true
       },
