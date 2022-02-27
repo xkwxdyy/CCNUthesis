@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-02-19}{v1.0.3}
+  {2022-02-27}{v1.0.4}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e }
 
@@ -2235,6 +2235,413 @@
 
 % 重新设置mainmatter的计数器，不让它重新计数
 \patchcmd{\mainmatter}{\pagenumbering{arabic}}{\renewcommand{\thepage}{\arabic{page}}}{}{\fail}
+
+
+% 添加 exam-zh 项目的 choices 环境
+% https://gitee.com/zepinglee/exam-zh/blob/main/exam-zh-choices.sty
+\dim_new:N \l__examzh_choices_column_sep_dim
+\int_new:N \l__examzh_choices_columns_int
+\tl_new:N \l__examzh_choices_label_tl
+\tl_new:N \l__examzh_choices_label_pos_tl
+\dim_new:N \l__examzh_choices_label_sep_dim
+\dim_new:N \l__examzh_choices_label_width_dim
+\int_new:N \l__examzh_choices_max_columns_int
+
+\keys_define:nn { exam-zh }
+  { choices .meta:nn = { exam-zh / choices } {#1} }
+
+\keys_define:nn { exam-zh / choices }
+  {
+    column-sep  .dim_set:N = \l__examzh_choices_column_sep_dim ,
+    columns     .int_set:N = \l__examzh_choices_columns_int ,
+    label       .tl_set:N  = \l__examzh_choices_label_tl ,
+    label-pos   .choices:nn =
+      { auto , top-left , left , bottom }
+      { \tl_set_eq:NN \l__examzh_choices_label_pos_tl \l_keys_choice_tl } ,
+    label-sep   .dim_set:N = \l__examzh_choices_label_sep_dim ,
+    label-width .dim_set:N = \l__examzh_choices_label_width_dim ,
+    max-columns .int_set:N = \l__examzh_choices_max_columns_int ,
+  }
+
+\keys_set:nn { exam-zh / choices }
+  {
+    column-sep  = 1em ,
+    columns     = 0 ,
+    label       = \Alph*. ,
+    label-pos   = auto ,
+    label-sep   = .5em ,
+    label-width = 0pt ,
+    max-columns = 4 ,
+  }
+
+\NewDocumentCommand \setchoices { m }
+  { \keys_set:nn { exam-zh / choices } {#1} }
+
+
+\tl_new:N \l__examzh_choices_counters_tl
+
+\NewDocumentCommand \AddChoicesCounter { m m m }
+  {
+    \tl_put_right:Nn \l__examzh_choices_counters_tl
+      { \l__examzh_process_counter:NN #1 #2 }
+    \cs_set_eq:cN { __examzh_chioces_save_ \cs_to_str:N #1 : } #2
+    \cs_set_eq:cN { __examzh_chioces_save_ \cs_to_str:N #2 : } #2
+  }
+
+\AddChoicesCounter \arabic \@arabic { 0 }
+\AddChoicesCounter \alph   \@alph   { m }
+\AddChoicesCounter \Alph   \@Alph   { M }
+\AddChoicesCounter \roman  \@roman  { viii }
+\AddChoicesCounter \Roman  \@Roman  { VIII }
+
+
+\dim_new:N \l__examzh_choices_total_width_dim
+\seq_new:N \l__examzh_choices_seq
+
+\NewDocumentEnvironment { choices } { O { } +b }
+  {
+    \par \nopagebreak
+    % 严格禁止孤行和寡行
+    \int_set:Nn \clubpenalty { 10000 }
+    \int_set:Nn \widowpenalty { 10000 }
+    % 尽量避免在选项中间换行
+    \int_set:Nn \interlinepenalty { 301 }
+    \noindent
+    \dim_set_eq:NN \l__examzh_choices_total_width_dim \linewidth
+    \int_zero:N \l__examzh_choices_columns_int
+    \dim_zero:N \l__examzh_choices_label_width_dim
+    \keys_set:nn { exam-zh / choices } {#1}
+  }
+  {
+    \seq_set_split:Nnn \l__examzh_choices_seq { \item } {#2}
+    \seq_if_empty:NF \l__examzh_choices_seq
+      { \seq_pop_left:NN \l__examzh_choices_seq \l_tmpa_tl }
+    % 计算标签和选项内容的最大自然宽度
+    \__examzh_choices_calc_max_width:N \l__examzh_choices_seq
+    % label-pos = auto 时自动选择标签位置
+    \__examzh_choices_set_auto_label_pos:
+    % 如果用户没有声明列数，计算合适的列数
+    \int_compare:nNnT { \l__examzh_choices_columns_int } < {1}
+      { \__examzh_choices_calc_columns: }
+    % 计算每个选项内容的宽度 \l__examzh_choices_item_width_dim
+    \__examzh_choices_calc_item_width:
+    % 输出选项
+    \__examzh_print_choices:N \l__examzh_choices_seq
+  }
+
+
+\dim_new:N \l__examzh_choices_item_width_dim
+\dim_new:N \l__examzh_choices_item_min_height_dim
+
+% 计算标签和选项内容的最大宽度，
+% 分别保存到 \l__examzh_choices_label_width_dim 和 \l__examzh_choices_item_width_dim
+% #1: \l__examzh_choices_seq
+\cs_new:Npn \__examzh_choices_calc_max_width:N #1
+  {
+    \dim_zero:N \l__examzh_choices_item_width_dim
+    \dim_set_eq:NN \l__examzh_choices_item_min_height_dim \c_max_dim
+    \seq_map_indexed_inline:Nn #1
+      {
+        % 标签
+        \hbox_set:Nn \l_tmpa_box { \__examzh_choices_make_label:n {##1} }
+        \dim_set:Nn \l_tmpa_dim { \box_wd:N \l_tmpa_box }
+        \dim_compare:nNnT
+          { \l_tmpa_dim } > { \l__examzh_choices_label_width_dim }
+          { \dim_set_eq:NN \l__examzh_choices_label_width_dim \l_tmpa_dim }
+        % 选项内容
+        \hbox_set:Nn \l_tmpa_box {##2}
+        \dim_set:Nn \l_tmpa_dim { \box_wd:N \l_tmpa_box }
+        \dim_compare:nNnT
+          { \l_tmpa_dim } > { \l__examzh_choices_item_width_dim }
+          {
+            \dim_set_eq:NN \l__examzh_choices_item_width_dim
+              \l_tmpa_dim
+          }
+        % 找到最小高度
+        \dim_set:Nn \l_tmpb_dim { \box_ht:N \l_tmpa_box }
+        \dim_compare:nNnT
+          { \l_tmpb_dim } < { \l__examzh_choices_item_min_height_dim }
+          { \dim_set_eq:NN \l__examzh_choices_item_min_height_dim \l_tmpb_dim }
+        \box_clear:N \l_tmpa_box
+      }
+  }
+
+
+\int_new:N \l__examzh_choices_index_int
+
+% \Alph* 生成正确的标签
+\cs_new:Npn \__examzh_choices_make_label:n #1
+  {
+    \group_begin:
+      \int_set:Nn \l__examzh_choices_index_int {#1}
+      \l__examzh_choices_counters_tl
+      \l__examzh_choices_label_tl
+    \group_end:
+  }
+
+\cs_new:Npn \l__examzh_process_counter:NN #1#2
+  {
+    \cs_set:Npn #1 { \l__examzh_process_counter_aux:Nn #2 }
+    \cs_set:Npn #2 { \l__examzh_process_counter_aux:Nn #2 }
+  }
+
+\cs_new:Npn \l__examzh_process_counter_aux:Nn #1#2
+  {
+    \tl_if_eq:nnTF {#2} { * }
+      {
+        \use:c { __examzh_chioces_save_ \cs_to_str:N #1 : }
+          { \l__examzh_choices_index_int }
+      }
+      {
+        \use:c { __examzh_chioces_save_ \cs_to_str:N #1 : } {#2}
+      }
+  }
+
+
+% 超过这一高度阈值的选项视为插图模式
+% 注意使用 tl
+\tl_new:N \l__examzh_choices_figure_mode_threshold_tl
+\tl_set:Nn \l__examzh_choices_figure_mode_threshold_tl { 2 \baselineskip }
+
+\cs_new:Npn \__examzh_choices_set_auto_label_pos:
+  {
+    \tl_if_eq:NnT \l__examzh_choices_label_pos_tl { auto }
+      {
+        % 若最小高度超过阈值，推测其中包含插图，将标签位置改为左居中
+        \dim_compare:nNnTF
+          { \l__examzh_choices_item_min_height_dim } >
+            { \l__examzh_choices_figure_mode_threshold_tl }
+          { \tl_set:Nn \l__examzh_choices_label_pos_tl { left } }
+          { \tl_set:Nn \l__examzh_choices_label_pos_tl { top-left } }
+      }
+  }
+
+
+\int_new:N \l__examzh_tmp_int
+
+% 计算选项的合适列数，存到 \l__examzh_choices_columns_int
+\cs_new:Npn \__examzh_choices_calc_columns:
+  {
+    % 若标签不在底部，将 label-width 和 label-sep 算进来
+    \tl_if_eq:NnF \l__examzh_choices_label_pos_tl { bottom }
+      {
+        \dim_add:Nn \l__examzh_choices_item_width_dim
+          { \l__examzh_choices_label_width_dim + \l__examzh_choices_label_sep_dim }
+      }
+    \int_set:Nn \l__examzh_choices_columns_int
+      {
+        \int_div_truncate:nn
+          { \l__examzh_choices_total_width_dim + \l__examzh_choices_column_sep_dim }
+          { \l__examzh_choices_item_width_dim + \l__examzh_choices_column_sep_dim }
+      }
+    \int_compare:nNnTF { \l__examzh_choices_columns_int } = {0}
+      { \int_set:Nn \l__examzh_choices_columns_int {1} }
+    % 从允许的最大列数开始，每次除以 2，直到行宽允许排下
+    \int_set_eq:NN \l__examzh_tmp_int \l__examzh_choices_max_columns_int
+    \int_while_do:nNnn
+      { \l__examzh_tmp_int } > { \l__examzh_choices_columns_int }
+      {
+        \int_set:Nn \l__examzh_tmp_int
+          { \int_div_truncate:nn { \l__examzh_tmp_int } {2} }
+      }
+    \int_set_eq:NN \l__examzh_choices_columns_int \l__examzh_tmp_int
+  }
+
+
+% 计算选项的最终宽度，保存到 \l__examzh_choices_item_width_dim
+\cs_new:Npn \__examzh_choices_calc_item_width:
+  {
+    \dim_set:Nn \l__examzh_choices_item_width_dim
+      {
+        ( \l__examzh_choices_total_width_dim
+          - \l__examzh_choices_columns_int \l__examzh_choices_column_sep_dim
+          + \l__examzh_choices_column_sep_dim
+        ) / \l__examzh_choices_columns_int
+      }
+    % 若标签不在底部，将 label-width 和 label-sep 算进来
+    \tl_if_eq:NnF \l__examzh_choices_label_pos_tl { bottom }
+      {
+        \dim_sub:Nn \l__examzh_choices_item_width_dim
+          { \l__examzh_choices_label_width_dim + \l__examzh_choices_label_sep_dim }
+      }
+  }
+
+
+\int_new:N \l__examzh_choices_current_col_int
+
+% #1: \l__examzh_choices_seq
+\cs_new:Npn \__examzh_print_choices:N #1
+  {
+    \int_zero:N \l__examzh_choices_current_col_int
+    \seq_map_indexed_inline:Nn \l__examzh_choices_seq
+      {
+        \int_incr:N \l__examzh_choices_current_col_int
+        % 当前列号重置为 1
+        \int_compare:nNnT
+          { \l__examzh_choices_current_col_int } > { \l__examzh_choices_columns_int }
+          {
+            % \par \noindent
+            \newline
+            \int_set:Nn \l__examzh_choices_current_col_int {1}
+          }
+        \int_compare:nNnT { \l__examzh_choices_current_col_int } > {1}
+          {
+            \skip_horizontal:N \l__examzh_choices_column_sep_dim
+            % 增加一点弹性
+            \skip_horizontal:n {0pt plus 1pt minus 1pt}
+          }
+        \__examzh_print_single_choice:nn {##1} {##2}
+      }
+    \par
+  }
+
+
+\coffin_new:N \l__examzh_choices_item_coffin
+\coffin_new:N \l__examzh_choices_label_coffin
+
+\cs_new:Npn \__examzh_print_single_choice:nn #1#2
+  {
+    % 选项标签
+    \__examzh_choices_make_label_coffin:n {#1}
+    % 选项内容
+    \__examzh_choices_make_item_coffin:n {#2}
+    % 合并选项的标签和内容
+    \str_case:Vn \l__examzh_choices_label_pos_tl
+      {
+        { top-left }
+          {
+            \coffin_join:NnnNnnnn
+              \l__examzh_choices_item_coffin  {l} {H}
+              \l__examzh_choices_label_coffin {r} {H}
+              { - \l__examzh_choices_label_sep_dim }
+              { 0pt }
+          }
+        { left }
+          {
+            \coffin_join:NnnNnnnn
+              \l__examzh_choices_item_coffin  {l} {vc}
+              \l__examzh_choices_label_coffin {r} {vc}
+              { - \l__examzh_choices_label_sep_dim }
+              { 0pt }
+          }
+        { bottom }
+          {
+            \coffin_join:NnnNnnnn
+              \l__examzh_choices_item_coffin  {hc} {b}
+              \l__examzh_choices_label_coffin {hc} {t}
+              { 0pt }
+              % { - \l__examzh_choices_label_sep_dim }
+              { 0pt }
+          }
+      }
+    % 输出合并后
+    \coffin_typeset:Nnnnn \l__examzh_choices_item_coffin {l} {H} {0pt} {0pt}
+    \coffin_clear:N \l__examzh_choices_item_coffin
+    \coffin_clear:N \l__examzh_choices_label_coffin
+  }
+
+% 将标签内容存入 coffin
+\cs_new:Npn \__examzh_choices_make_label_coffin:n #1
+  {
+    \hcoffin_set:Nn \l__examzh_choices_label_coffin
+      {
+        \vcoffin_set:Nnn \l_tmpa_coffin
+          { \l__examzh_choices_label_width_dim }
+          { \noindent \hfill \__examzh_choices_make_label:n {#1} \strut }
+        \coffin_typeset:Nnnnn \l_tmpa_coffin {l} {T} {0pt} {0pt}
+        \coffin_clear:N \l_tmpa_coffin
+      }
+  }
+
+\bool_new:N \l__examzh_choices_figure_mode_bool
+
+% 将选项内容存入 coffin
+\cs_new:Npn \__examzh_choices_make_item_coffin:n #1
+  {
+    \hcoffin_set:Nn \l__examzh_choices_item_coffin
+      {
+        % 优先尝试使用 bbox，这是因为在 \vcoffin_set 外部能保留原来的 \linewidth 和
+        % \textwidth，方便用户在 \includegraphics 中使用
+        \hbox_set:Nn \l_tmpa_box {#1}
+        % 若盒子的自然高度大于 2 行，且深度为 0pt，设置为插图模式
+        \bool_lazy_and:nnT
+          {
+            \dim_compare_p:nNn { \box_ht:N \l_tmpa_box } >
+            { \l__examzh_choices_figure_mode_threshold_tl }
+          }
+          { \dim_compare_p:nNn { \box_dp:N \l_tmpa_box } < { 1pt } }
+          { \bool_set_true:N \l__examzh_choices_figure_mode_bool }
+        \vcoffin_set:Nnn \l_tmpa_coffin
+          { \l__examzh_choices_item_width_dim }
+          {
+            \dim_set_eq:NN \parskip \c_zero_dim
+            \dim_set_eq:NN \parindent \listparindent
+            \noindent
+            % \strut
+            % 若标签在底部，将图片居中对齐。
+            \tl_if_eq:NnT \l__examzh_choices_label_pos_tl { bottom }
+              { \centering }
+            \dim_compare:nNnTF
+              { \box_wd:N \l_tmpa_box } > { \l__examzh_choices_item_width_dim }
+              { #1 }
+              { \box_use_drop:N \l_tmpa_box }
+            % 使用 \strut 将行距撑开，防止跟下一行选项的间距过小
+            \mode_if_horizontal:T { \strut }
+          }
+        \dim_set:Nn \l_tmpa_dim { \coffin_ht:N \l_tmpa_coffin }
+        \bool_if:NT \l__examzh_choices_figure_mode_bool
+          {
+            \coffin_set_horizontal_pole:Nnn \l_tmpa_coffin {T}
+              { \l_tmpa_dim - 0.7 \baselineskip }
+          }
+        \coffin_typeset:Nnnnn \l_tmpa_coffin {l} {T} {0pt} {0pt}
+        \coffin_clear:N \l_tmpa_coffin
+      }
+  }
+
+
+% 使用中文字体直接输出 unicode 带圈数字
+% \circlednumber 的参数既可以接受 LaTeX2e 的 <counter>，也可以直接接受 <intexpr>。
+\NewDocumentCommand \circlednumber { m }
+  {
+    \int_if_exist:cTF { c@ #1 }
+      { \int_set_eq:Nc \l_tmpa_int { c@#1 } }
+      { \int_set:Nn \l_tmpa_int { #1 } }
+    \exp_args:Nx \__examzh_choices_circled_number:n { \int_use:N \l_tmpa_int }
+  }
+
+\cs_new:Npn \__examzh_choices_circled_number:n #1
+  {
+    \int_set:Nn \l_tmpa_int {#1}
+    \int_compare:nNnTF { \l_tmpa_int } = { 0 }
+      { \int_set:Nn \l_tmpa_int { "24EA } }
+      {
+        \int_compare:nNnTF { \l_tmpa_int } < { 21 }
+          { \int_add:Nn \l_tmpa_int { "245F } }
+          {
+            \int_compare:nNnTF { \l_tmpa_int } < { 36 }
+              { \int_add:Nn \l_tmpa_int { "3250 } }
+              {
+                \int_compare:nNnTF { \l_tmpa_int } < { 51 }
+                  { \int_add:Nn \l_tmpa_int { "32B0 } }
+                  {
+                    \msg_error:nnn { exam-zh / choices }
+                      { invalid-circled-number } { \int_use:N \l_tmpa_int }
+                  }
+              }
+          }
+      }
+    \group_begin:
+      \CJKfamily+ { }
+      \symbol { \l_tmpa_int }
+    \group_end:
+  }
+
+\msg_new:nnn { exam-zh / choices } { invalid-circled-number }
+  { Invalid~ circled~ number~ #1. }
+
+\AddChoicesCounter \circlednumber \__examzh_choices_circled_number:n {1}
+
 
 \ccnusetup
   {
