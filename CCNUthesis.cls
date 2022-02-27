@@ -171,7 +171,7 @@
 \__ccnu_msg_new:nn { unknown-option }
   { Class~ option~ "\l_keys_key_str"~ is~ unknown. }
 \ProcessKeysOptions { ccnu / option }
-\file_input:n { ccnuthesis.def }
+\file_input:n { CCNUthesis.def }
 \tl_if_empty:NF \g__ccnu_config_tl
   {
     \file_input:V \g__ccnu_config_tl
@@ -747,7 +747,7 @@
       {
         format      = \zihao{-3} \normalfont \bfseries \raggedright,
         % format      = \Large \normalfont \sffamily \raggedright,
-        beforeskip  = 5.5 ex plus 1.0 ex minus 0.2 ex,
+        beforeskip  = 4.5 ex plus 1.0 ex minus 0.2 ex,
         afterskip   = 2.7 ex plus 0.5 ex,
         fixskip     = true
       },
@@ -755,7 +755,7 @@
       {
         format      = \zihao{4} \normalfont \bfseries \raggedright,
         % format      = \large \normalfont \sffamily \raggedright,
-        beforeskip  = 5.25 ex plus 1.0 ex minus 0.2 ex,
+        beforeskip  = 4.25 ex plus 1.0 ex minus 0.2 ex,
         afterskip   = 2.5  ex plus 0.3 ex,
         fixskip     = true
       },
