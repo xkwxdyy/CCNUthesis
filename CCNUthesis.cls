@@ -2114,10 +2114,23 @@
 % \newtheorem  { lemma       } { \c__ccnu_name_lemma_tl      }
 % \newtheorem  { theorem     } { \c__ccnu_name_theorem_tl    }
 
+% 去掉.号，但只能通过新定义style的方式进行
+\declaretheoremstyle
+  [
+    spaceabove = 3pt,
+    spacebelow = 3pt,
+    headfont = \bfseries,
+    bodyfont = \normalfont,
+    headpunct = {},
+    postheadspace = { 0.5em },
+    headindent = {},
+    notefont = { \fontseries \mddefault \upshape }
+  ]{ccnustyle}
 \cs_new:Npn \__xdyymath_declare_theorem_with_counter_within:n #1
   {
     \declaretheorem
       [
+        style = ccnustyle,
         name =  \clist_item:nn {#1} {1} ,
         refname = \clist_item:nn {#1} {2} ,
         within = \clist_item:nn {#1} {3} ,
@@ -2128,23 +2141,12 @@
   {
     \declaretheorem
       [
+        style = ccnustyle ,
         name =  \clist_item:nn {#1} {1} ,
         refname = \clist_item:nn {#1} {2} ,
         sibling = \clist_item:nn {#1} {3} ,
       ]
       { \clist_item:nn {#1} {4} }
-  }
-\cs_new:Npn \__xdyymath_declare_theorem_without_counter:n #1
-  {
-    \declaretheorem
-      [
-        name =  \clist_item:nn {#1} {1} ,
-        refname = \clist_item:nn {#1} {2},
-        numbered = no,
-        % headpunct = {},
-        style = withoutcounterstyle
-      ]
-      { \clist_item:nn {#1} {3} }
   }
 \clist_map_function:nN
   {
@@ -2166,6 +2168,25 @@
     { 断言, 断言, theorem, claim },
     { 注, 注, theorem, remark },
   }\__xdyymath_declare_theorem_with_counter_sibling:n
+
+
+\RenewDocumentEnvironment { proof } { O{\proofname} +b }
+  {
+    \par
+    \pushQED { \qed }
+    \normalfont \topsep6 \p@ \@plus6 \p@ \relax
+    \trivlist
+    \item \relax
+    \group_begin:
+      \bfseries #1\@addpunct{:}
+    \group_end:
+    \hspace \labelsep \ignorespaces
+    #2
+  }
+  {
+    \popQED \endtrivlist \@endpefalse
+  }
+
 
 % 去掉目录的页码
 % https://tex.stackexchange.com/questions/38847/clear-tableofcontents-page-in-book-or-report
