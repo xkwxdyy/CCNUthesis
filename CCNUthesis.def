@@ -67,15 +67,4 @@
     { notation } { 符号表      } { List~ of~ Symbols }
   }
   { \__ccnu_define_name:nnn #1 }
-\clist_map_inline:nn
-  {
-    { proof      } { 证明 } { Proof      },
-    { axiom      } { 公理 } { Axiom      },
-    { corollary  } { 推论 } { Corollary  },
-    { definition } { 定义 } { Definition },
-    { example    } { 例   } { Example    },
-    { lemma      } { 引理 } { Lemma      },
-    { theorem    } { 定理 } { Theorem    }
-  }
-  { \__ccnu_define_name:nnn #1 }
 \endinput
