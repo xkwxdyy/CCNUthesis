@@ -207,7 +207,6 @@
     geometry,
     fancyhdr,
     footmisc,
-    % ntheorem,
     graphicx,
     longtable,
     caption,
@@ -223,6 +222,7 @@
     amsthm,
     thmtools
   }
+\RequirePackage[physics]{physicx}
 \RequirePackage[titles]{tocloft}
 \graphicspath{{figures/}{logo/}}
 \cs_new_protected:Npn \__ccnu_check_package:nnn #1#2#3
@@ -2117,14 +2117,8 @@
 % 去掉.号，但只能通过新定义style的方式进行
 \declaretheoremstyle
   [
-    spaceabove = 3pt,
-    spacebelow = 3pt,
-    headfont = \bfseries,
-    bodyfont = \normalfont,
     headpunct = {},
     postheadspace = { 0.5em },
-    headindent = {},
-    notefont = { \fontseries \mddefault \upshape }
   ]{ccnustyle}
 \cs_new:Npn \__xdyymath_declare_theorem_with_counter_within:n #1
   {
