@@ -37,9 +37,11 @@
   }
 }
 
-%%%%% 需要的宏包可以自行调用 %%%%% 
+%%%%% 需要的宏包可以在此处自行调用 %%%%% 
 %%%% 已经载入的宏包有(不用重复调用) %%%%
-% amsmath, mathtools, amssymb, extarrows, unicode-math, 
+% mathtools, amssymb, extarrows, unicode-math, 
+% amsmath（由mathtools载入）
+% physicx(提供\abs，\norm，\dd, \dv, \pdv等命令)
 % (数学常用的宏包都已经加载了)
 % geometry(页面设置), amsthm, thnmtools (定理类环境)
 % graphicx(插图), xcolor(颜色), tabularray(表格),
@@ -49,10 +51,6 @@
 % adjustbox, calc, etoolbox
 
 
-
-\usepackage{physics}    % 为示例用，可删除，但正文示例文本中调用了该宏包的命令
-                        % 删除时把chapter2中的正文也删除，填写自己的内容
-                        % 下面的三个命令也是同理
 
 
 % 需要的命令可以自行定义
@@ -85,7 +83,7 @@
 
 % 中文摘要
 \begin{abstract}
-  Lipschitz函数作为1阶H\"older连续函数的像集与图像的Hausdorff测度和Hausdorff维数具有特殊的性质; Rademacher证明了 $R^n$ 上的Lipschitz函数的可微性.  本文主要通过系统梳理测度论有关基础理论知识并对参考书籍中一些必要的或是欠严谨的地方进行适当补充, 给出Rademacher定理以及Hausdorff测度有关性质相对自封闭的证明, 使得学过实变函数论的本科生能够较为容易地理解与学习。
+  Lipschitz 函数作为 1 阶 H\"older 连续函数的像集与图像的Hausdorff 测度和 Hausdorff 维数具有特殊的性质; Rademacher 证明了 $R^n$ 上的 Lipschitz 函数的可微性.  本文主要通过系统梳理测度论有关基础理论知识并对参考书籍中一些必要的或是欠严谨的地方进行适当补充, 给出 Rademacher 定理以及 Hausdorff 测度有关性质相对自封闭的证明, 使得学过实变函数论的本科生能够较为容易地理解与学习。
 \end{abstract}
 
 % 英文摘要
