@@ -223,6 +223,9 @@
     thmtools
   }
 \RequirePackage[physics]{physicx}
+% \RequirePackage{physics}
+% 修复\vu的上标偏移问题
+% \DeclareDocumentCommand\vectorunit{ s m }{\IfBooleanTF{#1}{\boldsymbol{\hat{#2}}}{\mathbf{\hat{#2}}}}
 \RequirePackage[titles]{tocloft}
 \graphicspath{{figures/}{logo/}}
 \cs_new_protected:Npn \__ccnu_check_package:nnn #1#2#3
