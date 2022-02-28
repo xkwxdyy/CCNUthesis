@@ -115,7 +115,7 @@
 
 \subsection{physics 宏包的一些命令}
 
-\verb|CCNUthesis.cls| 已经默认加载了 \verb|physics| 宏包，提供了很多很方便的命令，本小节介绍部分，更多的请阅读宏包文档（命令行输入 \verb|texdoc physics|）
+\verb|CCNUthesis.cls| 已经默认加载了 \verb|physics| 宏包，提供了很多很方便的命令，本小节介绍部分，更多的命令请阅读宏包文档（命令行输入 \verb|texdoc physics|）
 
 \begin{itemize}
   \item 向量 $\vb{a}, \vb*{a}, \va{a}, \va*{a}, \vu{a}, \vu*{a}$
@@ -123,6 +123,14 @@
     \[
       \int_{0}^{1} x \dd{x},
       \dd[3]{x}, \dd(\cos\theta),
+    \]
+    \[
+      \int xyz \dd{x} \dd{y} \dd{z}
+    \]
+    \[
+      % \␣产生空格，使被积函数和dxdydz之前产生一个空格
+      % 注意\dd{x}的dx左右各有一个空格 \dd x则没有
+      \int xyz \ \dd x \dd y \dd z    
     \]
   \item 微分
     \[
