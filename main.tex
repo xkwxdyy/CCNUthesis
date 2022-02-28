@@ -54,18 +54,19 @@
 
 
 % 需要的命令可以自行定义
-\newcommand{\hilbertH}{\symcal{H}}   % 为示例用，可删除
-\newcommand{\ee}{\symrm{e}}          % 为示例用，可删除
-\newcommand{\ii}{\symrm{i}}          % 为示例用，可删除
+\newcommand{\upe}{\symrm{e}}    % 直立的e，用于表示常量，如自然常数      
+\newcommand{\upi}{\symrm{i}}    % 直立的i，用于表示常量，如虚数单位
+\newcommand{\hilbertH}{\symcal{H}}
 
 
 
 \begin{document}
+
 \ccnusetup{
   style = { fullwidth-stop = catcode }
     % 是否把全角实心句点 “．” 作为默认的句号形状，即正文中输入“。” 最终编译效果为“. ”
     % 一般科技类文章需要替换，防止“. ”与“。”混淆
-    % 放在此处是为了防止干扰版权页的句号设置
+    % 【放在此处是为了防止干扰版权页的句号设置】
     % 允许选项：
     %   fullwidth-stop = catcode|mapping|false
     % 说明：
@@ -73,6 +74,8 @@
     %   mapping   所有的 “。” 会被替换为 “．”（使用 LuaLaTeX 编译则无效）
     %   false     不进行替换
 }
+
+
 
 % \frontmatter开启论文前置部分
 % 前置部分包含目录、中英文摘要以及符号表等
@@ -91,6 +94,7 @@
   As H\"older continuous functions with exponent 1, the Lipschitz functions' images and graphes have some special properties with respect to their Hausdorff measures and Hausdorff dimensions; the differentiability of Lipschitz functions on $R^n$ have been proved by Rademacher.  By systematically sorting out the basic theoretical knowledge of measure theory and appropriately supplementing some necessary or less rigorous points in the books referred to, we provide relatively self-closed proofs of Rademacher's Theorem and some properties involving Hausdorff measures, which makes it easier for undergraduates who have learned the theory of real functions to understand and learn.
 \end{abstract*}
 
+
 % 符号表
 % 语法与 LaTeX 表格一致：列用 & 区分，行用 \\ 区分
 % 如需修改格式，可以使用可选参数：
@@ -107,6 +111,9 @@
   $\psi(x)$            & 波函数      \\
 \end{notation}
 
+
+
+
 % \mainmatter进入论文主体部分
 % 主体部分是论文的核心
 \mainmatter
@@ -122,13 +129,17 @@
 % 并向下面的方式一样进行增添\include或删除
 % 子文件中的标题和内容【仅为示例】，可根据自己需要进行修改
 
+\include{./body/chapter0.tex}   % 常用命令环境示例，不需要时注释掉即可
 \include{./body/chapter1.tex}
 \include{./body/chapter2.tex}
 \include{./body/chapter3.tex}
 \include{./body/chapter4.tex}
 
+
+
 % \backmatter开启后置部分，包含参考文献、致谢、附录等
 \backmatter
+
 
 %%%% 参考文献 %%%%
 % 参考文献只需要修改CCNUthesis-main.bib文件
@@ -140,8 +151,12 @@
 % 打印参考文献列表
 \printbibliography
 
+
+
 %%%% 致谢 %%%%
 \include{./back/Acknowledgements.tex}
+
+
 
 %%%% 附录 %%%%
 \include{./back/Appendix.tex}
