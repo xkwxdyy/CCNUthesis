@@ -247,6 +247,7 @@
     using~ your~ TeX~ package~ manager~ or~ from~ CTAN.
   }
 \__ccnu_check_class:nnn { ctexbook } { 2021/03/14 } { 2.5.6 }
+\__ccnu_check_package:nnn { expl3 } { 2021/08/27 } { }
 \sys_if_engine_xetex:T
   { \__ccnu_check_package:nnn { xeCJK } { 2020/05/01 } { 3.8.3 } }
 \geometry
