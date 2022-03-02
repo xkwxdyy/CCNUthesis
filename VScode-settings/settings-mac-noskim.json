@@ -1,10 +1,12 @@
 {
-  "latex-workshop.latex.magic.args": [
-    "-synctex=1",
-    "-interaction=nonstopmode",
-    "-file-line-error",
-    "%DOC%"
-  ],
+  "[latex]": {
+      "editor.tabSize": 2
+  },
+  "latex-workshop.intellisense.package.enabled": true,
+  "latex-workshop.showContextMenu": true,
+  "latex-workshop.latex.autoBuild.run": "never",
+  "latex-workshop.message.error.show": false,
+  "latex-workshop.message.warning.show": false,   
   "latex-workshop.latex.tools": [
     {
       "name": "latexmk",
@@ -188,20 +190,23 @@
       "*.log",
       "*.fdb_latexmk"
   ],
-  "latex-workshop.message.error.show": false,
-  "latex-workshop.message.warning.show": false,  
-  "latex-workshop.synctex.afterBuild.enabled": true,
-  "latex-workshop.latex.autoBuild.run": "never",
-  "latex-workshop.view.pdf.viewer": "tab",
-  "latex-workshop.view.pdf.internal.synctex.keybinding": "ctrl-click",
-  "editor.tabSize": 2,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs":"active",
+  "editor.accessibilitySupport": "off",
   "editor.wordWrap": "bounded",
   "editor.wordWrapColumn": 120,
   "editor.fontSize": 20,
-  "editor.fontFamily": "'Sarasa Term SC','JetBrains Mono','Fira Code', 'Source Code Pro',  Consolas, 'Courier New', monospace",
-  "diffEditor.ignoreTrimWhitespace": false,
-  "files.autoSave": "onWindowChange",
-  "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font', 'Sarasa Term SC'",
-  "terminal.integrated.fontSize": 17,
-  "editor.suggestSelection": "first"
+  "latex-workshop.view.pdf.viewer": "tab",
+  "latex-workshop.view.pdf.internal.synctex.keybinding": "ctrl-click",
+  "files.associations": {
+    "*.sty": "latex-expl3",
+    "*.def": "latex-expl3",
+    "*.tex": "latex",
+    "*.cls": "latex-expl3"
+  },
+  "editor.tabSize": 2,
+  "debug.console.fontSize": 20,
+  "window.zoomLevel": -1,
+  "editor.suggestSelection": "first",
+  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue"
 }
