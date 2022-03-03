@@ -1,4 +1,9 @@
 # 更新日志
+## [v1.0.5] - 2022-03-03
+
+### Removed
+
+- 将`CCNUthesis.def`的代码移到`CCNUthesis.cls`里
 
 ## [v1.0.4] - 2022-02-28
 

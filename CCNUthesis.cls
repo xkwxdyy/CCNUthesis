@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-02-27}{v1.0.4}
+  {2022-03-03}{v1.0.5}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e }
 
@@ -171,7 +171,76 @@
 \__ccnu_msg_new:nn { unknown-option }
   { Class~ option~ "\l_keys_key_str"~ is~ unknown. }
 \ProcessKeysOptions { ccnu / option }
-\file_input:n { CCNUthesis.def }
+% \file_input:n { CCNUthesis.def }
+\tl_const:Nn \c__ccnu_name_simp_tl { 华中师范大学         }
+\tl_const:Nn \c__ccnu_name_trad_tl { 華中師範大學         }
+\tl_const:Nn \c__ccnu_name_en_tl   { Central~ China~ Normal~ University }
+\clist_map_inline:nn
+  {
+    { ideo_comma       } { ^^^^3001 },
+    { ideo_full_stop   } { ^^^^3002 },
+    { fwid_comma       } { ^^^^ff0c },
+    { fwid_full_stop   } { ^^^^ff0e },
+    { fwid_colon       } { ^^^^ff1a },
+    { fwid_semicolon   } { ^^^^ff1b },
+    { fwid_left_paren  } { ^^^^ff08 },
+    { fwid_right_paren } { ^^^^ff09 }
+  }
+  { \__ccnu_define_punct:nn #1 }
+\fp_const:Nn \c__ccnu_line_spread_fp
+  { \dim_ratio:nn { 20 pt } { 12 bp } / 1.2 }
+\tl_const:Nn \c__ccnu_orig_decl_text_tl
+  {
+    本人郑重声明：所呈交的学位论文是本人在导师指导下独立进行研究工作所取得的研究成果。除了文中特别加以标注引用的内容外，本论文不包含任何其他个人或集体已经发表或撰写的成果作品。本人完全意识到本声明的法律后果由本人承担。
+  }
+\tl_const:Nn \c__ccnu_auth_decl_text_tl
+  {
+    本学位论文作者完全了解学校有关保障、使用学位论文的规定，同意学校保留并向有关学位论文管理部门或机构送交论文的复印件和电子版，允许论文被查阅和借阅。本人授权省级优秀学士学位论文评选机构将本学位论文的全部或部分内容编入有关数据库进行检索，可以采用影印、缩印或扫描等复制手段保存和汇编本学位论文。
+  }
+\clist_const:Nn \c__ccnu_orig_decl_sign_clist
+  { 作者签名, 日期 }
+\clist_const:Nn \c__ccnu_auth_decl_sign_clist
+  { 作者签名, 导师签名, 日期 }
+\clist_const:Nn \c__ccnu_thesis_type_clist
+  { 博士学位论文, 硕士学位论文, {本科毕业论文（设计）} }
+\clist_const:Nn \c__ccnu_degree_type_clist
+  { 学术学位, 专业学位 }
+\clist_const:Nn \c__ccnu_secret_clist { 秘密, 机密, 绝密 }
+\clist_map_inline:nn
+  {
+    { secret_level       } { 密 \qquad 级                  },
+    { secret_star        } { \textrm { \bigstar }          },
+    { school_id          } { 学校代码                      },
+    { student_id         } { 学号                  },
+    { department         } { 学院                          },
+    { major              } { 专业                          },
+    { major_professional } { 专业学位类别（领域）          },
+    { level              } { 年级                        },
+    { author             } { 学生姓名                        },
+    { supervisor         } { 指导教师                      },
+    { date               } { 完成日期                      },
+    { instructors        } { 指导小组成员                  },
+    { author_sign        } { 学位论文作者签名               },
+    { supervisor_sign    } { 导师签名                      },
+    { sign_date          } { 日期                         },
+    { toc                } { \zihao{-2}  目 \quad 录                   },
+    { lof                } { 插图目录                      },
+    { lot                } { 表格目录                      },
+    { bib_en             } { Bibliography                  },
+    { pdf_creator        } { LaTeX~ with~ ccnuthesis~ class },
+    { orig_decl          } { \c__ccnu_name_simp_tl \\[15pt] 学位论文原创性声明   },
+    { auth_decl          } { 学位论文版权使用授权书 }
+  }
+  { \__ccnu_define_name:nn #1 }
+\clist_map_inline:nn
+  {
+    { abstract } { 内容摘要 } { Abstract          },
+    { keywords } { 关键词      } { Keywords        },
+    { clc      } { 中图分类号  } { CLC~ code:        },
+    { jel      } { JEL 分类号  } { JEL~ code:        },
+    { notation } { 符号表      } { List~ of~ Symbols }
+  }
+  { \__ccnu_define_name:nnn #1 }
 \tl_if_empty:NF \g__ccnu_config_tl
   {
     \file_input:V \g__ccnu_config_tl
