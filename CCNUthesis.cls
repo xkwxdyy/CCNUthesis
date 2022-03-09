@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-03-03}{v1.0.5}
+  {2022-03-09}{v1.0.6}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e }
 
@@ -2033,9 +2033,9 @@
     \clist_put_right:Nn \l__ccnu_biblatex_options_clist
       {
         style = gb7714-2015,
-        gbalign = gb7714-2015,
-        gbpub = false,
-        gbpunctin = false
+        % gbalign = gb7714-2015,
+        % gbpub = false,
+        % gbpunctin = false
       }
     \exp_args:NV \PassOptionsToPackage \l__ccnu_biblatex_options_clist
       { biblatex }
@@ -2046,6 +2046,30 @@
     \__ccnu_biblatex_allow_url_break:
     \__ccnu_biblatex_use_en_dash:
     \defbibheading { bibliography } [ \bibname ] { \__ccnu_chapter:n {##1} }
+    % 修改\parencite，使得\parencite[foo]{label}的效果为 [x, foo]
+    % https://github.com/hushidong/biblatex-gb7714-2015/issues/120#issuecomment-1062562732
+    % \DeclareCiteCommand { \cite }%[\mkbibbrackets]
+    %   {
+    %     \mkbibleftborder \usebibmacro{cite:init}
+    %     \usebibmacro{prenote}
+    %   }
+    %   {
+    %     \usebibmacro{citeindex}
+    %     \usebibmacro{cite:comp}
+    %   }
+    %   {}
+    %   { \usebibmacro{cite:dump} \addcomma \addspace \printfield{postnote} \mkbibrightborder }
+    \DeclareCiteCommand { \parencite }%[\mkbibbrackets]
+      {
+        \mkbibleftborder \usebibmacro{cite:init}
+        \usebibmacro{prenote}
+      }
+      {
+        \usebibmacro{citeindex}
+        \usebibmacro{cite:comp}
+      }
+      {}
+      { \usebibmacro{cite:dump}\addcomma\addspace\printfield{postnote}\mkbibrightborder }
   }
 \cs_new:Npn \__ccnu_biblatex_allow_url_break:
   {
@@ -2719,17 +2743,6 @@
         % 西文字体（包括数学字体）
         % 允许选项：
         %   font = garamond|libertinus|lm|palatino|times|times*|none
-        cjk-font = fandol,
-        % 中文字体
-        % 允许选项：
-        %   cjk-font = adobe|fandol|founder|mac|sinotype|sourcehan|windows|none
-        % 注意：
-        %   1. 中文字体设置高度依赖于系统。各系统建议方案：
-        %        windows：cjk-font = windows
-        %        mac：    cjk-font = mac
-        %        linux：  cjk-font = fandol（默认值）
-        %   2. 除 fandol 和 sourcehan 外，其余字体均为商用字体，请注意版权问题
-        %   3. 但 fandol 字体缺字比较严重，而 sourcehan 没有配备楷体和仿宋体
         footnote-style = xits,
         % 脚注编号样式
         % 允许选项：
@@ -2766,10 +2779,6 @@
         % 默认为空，即与参考文献样式保持一致
         % 仅适用于 biblatex；如要填写，需保证相应的 .cbx 格式文件能被调用
         %
-        bib-resource = {CCNUthesis-main.bib},
-        % 参考文献数据源
-        % 可以是单个文件，也可以是用英文逗号 “,” 隔开的一组文件
-        % 如果使用 biblatex，则必须明确给出 .bib 后缀名
       }
   }
  
