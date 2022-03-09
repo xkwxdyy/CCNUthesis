@@ -2048,17 +2048,17 @@
     \defbibheading { bibliography } [ \bibname ] { \__ccnu_chapter:n {##1} }
     % 修改\parencite，使得\parencite[foo]{label}的效果为 [x, foo]
     % https://github.com/hushidong/biblatex-gb7714-2015/issues/120#issuecomment-1062562732
-    % \DeclareCiteCommand { \cite }%[\mkbibbrackets]
-    %   {
-    %     \mkbibleftborder \usebibmacro{cite:init}
-    %     \usebibmacro{prenote}
-    %   }
-    %   {
-    %     \usebibmacro{citeindex}
-    %     \usebibmacro{cite:comp}
-    %   }
-    %   {}
-    %   { \usebibmacro{cite:dump} \addcomma \addspace \printfield{postnote} \mkbibrightborder }
+    \DeclareCiteCommand{\cite}[\mkbibsuperscript]%利用mkbibsuperbracket添加方括号 
+      {
+        \mkbibleftborder \usebibmacro{cite:init}
+        \usebibmacro{prenote}
+      }
+      {
+        \usebibmacro{citeindex}
+        \usebibmacro{cite:comp}
+      }
+      {}
+      { \usebibmacro{cite:dump}\addcomma\addspace\printfield{postnote}\mkbibrightborder }
     \DeclareCiteCommand { \parencite }%[\mkbibbrackets]
       {
         \mkbibleftborder \usebibmacro{cite:init}
