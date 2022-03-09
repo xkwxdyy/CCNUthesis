@@ -1,7 +1,7 @@
 # CCNUthesis
 
 ## 欢迎使用CCNUthesis（华中师范大学论文模版）
-本模版目前支持华中师范大学理科本科毕业论文撰写，基于[fduthesis](https://github.com/stone-zeng/fduthesis)编写而成，借助现代 LaTeX 技术，希望达到用户接口简明、内容格式规范和模板样式可定制的统一。
+本模版目前支持华中师范大学数学与统计学学院本科毕业论文撰写，基于[fduthesis](https://github.com/stone-zeng/fduthesis)编写而成，借助现代 LaTeX 技术，希望达到用户接口简明、内容格式规范和模板样式可定制的统一。
 
 本模板目前支持 XeTeX 和 LuaTeX 引擎，仅支持 UTF-8 编码。
 
