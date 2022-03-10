@@ -219,17 +219,14 @@
 %   {}
 %   {\usebibmacro{cite:dump}\mkbibrightborder%
 %    \printfield{postnote}}%\kern\p@ \kern\z@
-\DeclareCiteCommand{\cite}[\mkbibsuperscript]%利用mkbibsuperbracket添加方括号 
-  {%
-    \mkbibleftborder \usebibmacro{cite:init}%
-    \usebibmacro{prenote}%
-  }
-  {%
-    \usebibmacro{citeindex}%
-    \usebibmacro{cite:comp}%
-  }
+\DeclareCiteCommand{\cite}[\mkbibsuperscript]%利用mkbibsuperbracket添加方括号
+  {\mkbibleftborder\usebibmacro{cite:init}%
+   \usebibmacro{prenote}}
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite:comp}}
   {}
-  {\usebibmacro{cite:dump}\addcomma\addspace\printfield{postnote}\mkbibrightborder}
+  {\usebibmacro{cite:dump}\setunit{\addcomma\addspace}%
+   \printfield{postnote}\mkbibrightborder}
 
 %\renewcommand{\cite}[1]{\textsuperscript{[\supercite{#1}]}\kern\z@}
 %   v1.0p 以前用的方式
@@ -262,17 +259,15 @@
 %   {%[
 %   \usebibmacro{cite:dump}\mkbibrightborder%
 %    \mkbibsuperscriptusp{\printfield{postnote}}}
-\DeclareCiteCommand{\parencite}%[\mkbibsuperscript]%利用mkbibsuperbracket添加方括号 
-  {%
-    \mkbibleftborder \usebibmacro{cite:init}%
-    \usebibmacro{prenote}%
-  }
-  {%
-    \usebibmacro{citeindex}%
-    \usebibmacro{cite:comp}%
-  }
+\DeclareCiteCommand{\parencite}%[\mkbibbrackets]
+  {\mkbibleftborder\usebibmacro{cite:init}%
+   \usebibmacro{prenote}}%
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite:comp}}
   {}
-  {\usebibmacro{cite:dump}\addcomma\addspace\printfield{postnote}\mkbibrightborder}
+  {\usebibmacro{cite:dump}\setunit{\addcomma\addspace}\printfield{postnote}\mkbibrightborder}
+
+
 %
 %   新定义pagescite命令，以满足标签带页码的国标要求
 %

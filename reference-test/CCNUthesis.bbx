@@ -22,9 +22,6 @@
 \MFUnocap{and}%
 \MFUnocap{for}%
 
-\RequirePackage{xpatch}
-
-
 % 增加一个控制标点是英文还是中文的选项
 \DeclareBibliographyOption{ccnuthesispunctcn}[true]{%biblatex低版本
   \ifstrequal{#1}{false}{\execccnuthesispuncten}{}
@@ -117,6 +114,7 @@
     andothers     = {et al.},
     andotherscn   = {等},
     bytranslator  = {\addcomma\ 译},
+    byeditor      = {\mkbibparens{Eds\adddot\isdot}},
     in            = {In:\space},
     incn          = {见：},
     mathesis      = {(Master dissertation)},

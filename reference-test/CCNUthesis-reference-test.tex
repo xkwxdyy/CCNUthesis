@@ -2,9 +2,18 @@
 \usepackage{geometry}
 \usepackage[
   backend   = biber,
-  style     = CCNUthesis
+  style     = gb7714-2015
+  % bibstyle     = CCNUthesis,
+  % citestyle    = gb7714-2015
   ]{biblatex}
 
+\DeclareCiteCommand{\parencite}%[\mkbibbrackets]
+  {\mkbibleftborder\usebibmacro{cite:init}%
+    \usebibmacro{prenote}}%
+  {\usebibmacro{citeindex}%
+    \usebibmacro{cite:comp}}
+  {}
+  {\usebibmacro{cite:dump}\addcomma\addspace\printfield{postnote}\mkbibrightborder}
 \addbibresource{\jobname.bib}
 
 
@@ -12,7 +21,7 @@
 
   text\parencite[thm1]{李晓东CCNUtype}
 
-  text\cite{AhnCCNUtype}
+  text\parencite{AhnCCNUtype}
 
   text\cite{Ahnrawtype}
 
