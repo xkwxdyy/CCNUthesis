@@ -22,6 +22,8 @@
 \MFUnocap{and}%
 \MFUnocap{for}%
 
+\RequirePackage{xpatch}
+
 
 % 增加一个控制标点是英文还是中文的选项
 \DeclareBibliographyOption{ccnuthesispunctcn}[true]{%biblatex低版本
@@ -29,38 +31,38 @@
 }
 
 
-%==================================================
-%考虑多音字增加multipinyin排序，是其可以根据key域添加拼音来排序
-%==================================================
-\DeclareSortingTemplate{multipinyin}{
-  \sort{
-    \field{presort}
-  }
-  \sort{
-    \field{lansortorder}%language
-  }
-  \sort{
-    \field{sortkey}
-  }
-  \sort{%[direction=descending]
-    \field{sortname}
-    \field{author}
-    \field{editor}
-    \field{translator}
-  }
-  \sort{
-    \field{sortyear}
-    \field{year}
-  }
-  \sort{
-    \field{sorttitle}
-    \field{title}
-  }
-  \sort{
-    \field{volume}
-    \literal{0}
-  }
-}
+% %==================================================
+% %考虑多音字增加multipinyin排序，是其可以根据key域添加拼音来排序
+% %==================================================
+% \DeclareSortingTemplate{multipinyin}{
+%   \sort{
+%     \field{presort}
+%   }
+%   \sort{
+%     \field{lansortorder}%language
+%   }
+%   \sort{
+%     \field{sortkey}
+%   }
+%   \sort{%[direction=descending]
+%     \field{sortname}
+%     \field{author}
+%     \field{editor}
+%     \field{translator}
+%   }
+%   \sort{
+%     \field{sortyear}
+%     \field{year}
+%   }
+%   \sort{
+%     \field{sorttitle}
+%     \field{title}
+%   }
+%   \sort{
+%     \field{volume}
+%     \literal{0}
+%   }
+% }
 
 %==================================================
 %选项设置
@@ -68,11 +70,18 @@
 \ExecuteBibliographyOptions{
   maxbibnames  = 99,
   gbpunctin    = false,
-  gbfieldtype  = true,
+  gbfieldtype  = true,       % 输出type域，主要处理学位论文
+  gbnamefmt    = lowercase   % 不知如何实现中英文分开处理
 }
 
+% 根据《通知》调整间距和缩进
+\setlength{\biblabelsep}{0mm}
+\setlength{\bibitemindent}{3em} % bibitemindent表示一条文献中第一行相对后面各行的缩进
+\setlength{\bibhang}{0pt}
+
+
 %==================================================
-%定义一些标点为中文全角标点
+% 定义一些标点为中文全角标点
 %==================================================
 \def\ccnuthesispunctdot{．}%
 \def\ccnuthesispunctmark{、}%
@@ -101,27 +110,49 @@
 %为标注和文献表中标点格式，重设and本地化字符串
 %==================================================
 \DefineBibliographyStrings{english}{
-    and         = {\addcomma}, % and后面的空格在finalnamedelim已经加过了，所以这里去掉20191009
-    % andcn       = {\ccnuthesispunctcomma\unspace},
-    andincitecn = {和}, %将标注中的分开，便于与文献表中的区分
-    andincite   = {\&},
-    andothers   = {et al.},
-    andotherscn = {等},
-    bytranslator= {\addcomma\ 译},
-    in          = {In:\space},
-    incn        = {见：},
-    mathesis    = {(Master dissertation)},
-    mathesiscn  = {[硕士学位论文]},
-    phdthesis   = {(Ph D dissertation)},
-    phdthesiscn = {[博士学位论文]},
+    and           = {\addcomma}, % and后面的空格在finalnamedelim已经加过了，所以这里去掉20191009
+    % andcn         = {\ccnuthesispunctcomma\unspace},
+    andincitecn   = {和}, %将标注中的分开，便于与文献表中的区分
+    andincite     = {\&},
+    andothers     = {et al.},
+    andotherscn   = {等},
+    bytranslator  = {\addcomma\ 译},
+    in            = {In:\space},
+    incn          = {见：},
+    mathesis      = {(Master dissertation)},
+    mathesiscn    = {[硕士学位论文]},
+    phdthesis     = {(Ph D dissertation)},
+    phdthesiscn   = {[博士学位论文]},
 }
 
 
 %==================================================
 %设置一些标点格式为中文的标点
 %==================================================
+% 修改中文文献author和title之间的.为全角．
+\renewcommand{\labelnamepunct}{%
+  \iffieldequalstr{userd}{chinese}{\ccnuthesispunctdot}{\adddot\addspace}%
+}
+% 修改中文文献行末的.为全角．
+\renewcommand{\finentrypunct}{%
+  \iffieldequalstr{userd}{chinese}{\ccnuthesispunctdot}{\adddot\addspace}%
+}
+% 修改`page`前的冒号
+\renewcommand{\bibpagespunct}{%
+  \iffieldequalstr{userd}{chinese}{\unskip\ccnuthesispunctcolon}{\addcolon\addspace}%
+}
+%% 本想修改“In”或“见”后面的标点，但是无效，就把冒号加在了
+%% DefineBibliographyStrings的`in`和`incn`里面
+% \renewcommand{\intitlepunct}{%
+%   \iffieldequalstr{userd}{chinese}{\ccnuthesispunctcolon}{\addcolon\addspace}%
+% }
+
+
+
+
+
 % \DeclareFieldFormat{titlecase}{\iffieldequalstr{userd}{chinese}{#1}{\capitalisewords{#1}}}
-% \DeclareFieldFormat*{title}{\iffieldequalstr{userd}{chinese}{\ccnuthesispunctttl#1\ccnuthesispunctttr}{#1\isdot}}
+% \DeclareFieldFormat*{title}{\iffieldequalstr{userd}{chinese}{\ccnuthesispunctttl #1\ccnuthesispunctttr}{#1\isdot}}
 % \DeclareFieldFormat[article]{title}{\iffieldequalstr{userd}{chinese}{\ccnuthesispunctttl#1\ccnuthesispunctttr}{\mkbibquote{#1}\isdot}}
 % \DeclareFieldFormat*{journaltitle}{\iffieldequalstr{userd}{chinese}{\ccnuthesispunctttl#1\ccnuthesispunctttr}{\textit{#1}}}%
 % %\DeclareFieldFormat*{booktitle}{\ccnuthesispunctttl#1\ccnuthesispunctttr}
