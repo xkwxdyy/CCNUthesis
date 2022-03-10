@@ -2744,7 +2744,7 @@
     option / oneside ,
     style = 
       {
-        font = times,
+        font = times*,
         % 西文字体（包括数学字体）
         % 允许选项：
         %   font = garamond|libertinus|lm|palatino|times|times*|none
@@ -2786,4 +2786,3 @@
         %
       }
   }
- 
