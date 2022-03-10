@@ -2047,10 +2047,10 @@
     \__ccnu_biblatex_use_en_dash:
     \defbibheading { bibliography } [ \bibname ] { \__ccnu_chapter:n {##1} }
     % 修改\parencite，使得\parencite[foo]{label}的效果为 [x, foo]
-    % https://github.com/hushidong/biblatex-gb7714-2015/issues/120#issuecomment-1062562732
-    \DeclareCiteCommand{\cite}[\mkbibsuperscript]%利用mkbibsuperbracket添加方括号 
+    % https://github.com/hushidong/biblatex-gb7714-2015/issues/120#issuecomment-1063764782
+    \DeclareCiteCommand{\parencite}
       {
-        \mkbibleftborder \usebibmacro{cite:init}
+        \mkbibleftborder\usebibmacro{cite:init}
         \usebibmacro{prenote}
       }
       {
@@ -2058,10 +2058,12 @@
         \usebibmacro{cite:comp}
       }
       {}
-      { \usebibmacro{cite:dump}\addcomma\addspace\printfield{postnote}\mkbibrightborder }
-    \DeclareCiteCommand { \parencite }%[\mkbibbrackets]
       {
-        \mkbibleftborder \usebibmacro{cite:init}
+        \usebibmacro{cite:dump}\setunit{\addcomma\addspace}\printfield{postnote}\mkbibrightborder
+      }
+    \DeclareCiteCommand{\cite}[\mkbibsuperscript]  % 利用mkbibsuperbracket添加方括号
+      {
+        \mkbibleftborder\usebibmacro{cite:init}
         \usebibmacro{prenote}
       }
       {
@@ -2069,7 +2071,10 @@
         \usebibmacro{cite:comp}
       }
       {}
-      { \usebibmacro{cite:dump}\addcomma\addspace\printfield{postnote}\mkbibrightborder }
+      {
+        \usebibmacro{cite:dump}\setunit{\addcomma\addspace}
+        \printfield{postnote}\mkbibrightborder
+      }
   }
 \cs_new:Npn \__ccnu_biblatex_allow_url_break:
   {
