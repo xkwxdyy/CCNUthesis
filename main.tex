@@ -4,36 +4,34 @@
   % 个人信息
   info = {
     % 论文的中文标题
-    title = {Lipschitz函数的若干性质},
+    title = {论文的中文标题},
     % 论文的英文标题
     title* = {
-      Some properties of the Lipschitz functions
+      Thesis Title
     }, 
     % 学院
-    major = {数学与统计学学院},
+    department = {数学与统计学学院},
     % 专业
-    department = {数学与应用数学（试验）},
+    major = {数学与应用数学（试验）},
     % 年级
-    level = {2017},
+    level = {2018},
     % 姓名
-    author = {夏康玮},
+    author = {你的姓名},
     % 学号
-    student-id = {0000000000},
+    student-id = {学号},
     % 指导教师
-    supervisor = {李工宝 \quad 教授},
+    supervisor = {xxx \quad 教授},
     % 论文中文关键词，用英文“,”隔开
     keywords = {
-      Lipschitz函数,
-      可微性,
-      Hausdorff测度,
-      Hausdorff维数
+      关键词1,
+      关键词2,
+      关键词3
     },
     % 论文英文关键词，用英文“,”隔开
     keywords* = {
-      Lipschitz functions,
-      Differentiability,
-      Hausdorff measure,
-      Hausdorff dimension
+      keyword1,
+      keyword2,
+      keyword3
     } 
   },
   style = {
@@ -48,30 +46,18 @@
         %        linux：  cjk-font = fandol（默认值）
         %   2. 除 fandol 和 sourcehan 外，其余字体均为商用字体，请注意版权问题
         %   3. 但 fandol 字体缺字比较严重，而 sourcehan 没有配备楷体和仿宋体
-    bib-resource = {CCNUthesis-main.bib},
+    bib-resource = {CCNUthesis-main.bib}
         % 参考文献数据源，需要加bib后缀
   }
 }
 
 %%%%% 需要的宏包可以在此处自行调用 %%%%% 
-%%%% 已经载入的宏包有(不用重复调用) %%%%
-% mathtools, amssymb, extarrows, unicode-math, 
-% amsmath（由mathtools载入）
-% physicx(提供\abs，\norm，\dd, \dv, \pdv等命令)
-% (数学常用的宏包都已经加载了)
-% geometry(页面设置), amsthm, thnmtools (定理类环境)
-% graphicx(插图), xcolor(颜色), tabularray(表格),
-% longtable, caption,
-% tikz, tikzpagenodes, 
-% varwidth, ulem, fancyhdr, footmisc, 
-% adjustbox, calc, etoolbox
 
 
 
-
-% 需要的命令可以自行定义
-\newcommand{\upe}{\symrm{e}}    % 直立的e，用于表示常量，如自然常数      
-\newcommand{\upi}{\symrm{i}}    % 直立的i，用于表示常量，如虚数单位
+% 需要的命令环境可以自行定义
+\newcommand{\upe}{\symrm{e}}        % 直立的e，用于表示常量，如自然常数      
+\newcommand{\upi}{\symrm{i}}        % 直立的i，用于表示常量，如虚数单位
 \newcommand{\hilbertH}{\symcal{H}}
 
 
@@ -102,12 +88,12 @@
 
 % 中文摘要
 \begin{abstract}
-  Lipschitz 函数作为 1 阶 H\"older 连续函数的像集与图像的Hausdorff 测度和 Hausdorff 维数具有特殊的性质; Rademacher 证明了 $R^n$ 上的 Lipschitz 函数的可微性.  本文主要通过系统梳理测度论有关基础理论知识并对参考书籍中一些必要的或是欠严谨的地方进行适当补充, 给出 Rademacher 定理以及 Hausdorff 测度有关性质相对自封闭的证明, 使得学过实变函数论的本科生能够较为容易地理解与学习。
+  中文摘要
 \end{abstract}
 
 % 英文摘要
 \begin{abstract*}
-  As H\"older continuous functions with exponent 1, the Lipschitz functions' images and graphes have some special properties with respect to their Hausdorff measures and Hausdorff dimensions; the differentiability of Lipschitz functions on $R^n$ have been proved by Rademacher.  By systematically sorting out the basic theoretical knowledge of measure theory and appropriately supplementing some necessary or less rigorous points in the books referred to, we provide relatively self-closed proofs of Rademacher's Theorem and some properties involving Hausdorff measures, which makes it easier for undergraduates who have learned the theory of real functions to understand and learn.
+  English abstract
 \end{abstract*}
 
 
@@ -137,13 +123,8 @@
 % 主体采用多文件编译的方式
 % 即把每一章放进一个单独的 tex 文件里，并在这里用 \include 导入
 % 例如 \include{./body/chapter1.tex}
-% 表示插入main所在目录中的body目录下的chapter1.tex文件
+% 表示插入 main 所在目录中的 body 目录下的 chapter1.tex 文件
 
-% 章节「一般」包括【引言】、【预备知识】以及最后的【总结与展望】
-% 中间部分根据自己的需要灵活掌握
-% 仅加入4个chapter作为示例，如果要添加或删除的话到body目录下进行添加删除
-% 并向下面的方式一样进行增添\include或删除
-% 子文件中的标题和内容【仅为示例】，可根据自己需要进行修改
 
 \include{./body/chapter0.tex}   % 常用命令环境示例，不需要时注释掉即可
 \include{./body/chapter1.tex}
@@ -158,9 +139,6 @@
 
 
 %%%% 参考文献 %%%%
-% 参考文献只需要修改CCNUthesis-main.bib文件
-% 向CCNUthesis-main.bib里面添加文献信息
-% 具体参看CCNUthesis-main.bib中的注释
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 数学类引用使用行间引用：\parencite{} or \parencite[]{} %%
 %% 师范类引用使用上标引用：\cite{} or \cite[]{} %%
