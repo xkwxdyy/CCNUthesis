@@ -116,9 +116,8 @@
 \subsection{physics 宏包的一些命令}
 
 \verb|CCNUthesis.cls| 已经默认加载了 \verb|physics| 宏包，提供了很多很方便的命令，本小节介绍部分，更多的命令请阅读宏包文档（命令行输入 \verb|texdoc physics|）
-
+\newpage
 \begin{itemize}
-  \item 向量 $\vb{a}, \vb*{a}, \va{a}, \va*{a}, \vu{a}, \vu*{a}$
   \item 积分
     \[
       \int_{0}^{1} x \dd{x},
@@ -140,9 +139,38 @@
     \[
       \pdv{x}, \pdv{f}{x}, \pdv[n]{f}{x}
     \]
+\end{itemize}
+
+
+
+\subsection{physicx 宏包的一些命令}
+
+\verb|physicx| 宏包是对 \verb|physics| 宏包的优化（已默认载入）。介绍几个常用的：
+
+\begin{itemize}
   \item 绝对值 $\abs{x^3}, \abs{\frac{1}{2}}$
   \item 范数 $\norm{f}, \norm{f_n}_{2}^{2}$
+  \item \verb|\qxqty|: 统一可变长度括号类命令
+    \begin{itemize}
+      \item $\qxqty{\frac{1}{2}}$
+      \item $\qxqty[p]{\frac{1}{2}}$
+      \item $\qxqty[v]{\frac{1}{2}}$
+      \item $\qxqty[V]{\frac{1}{2}}$
+      \item $\qxqty[b]{\frac{1}{2}}$
+      \item $\qxqty[B]{\frac{1}{2}}$
+      \item $\qxqty[a]{\frac{1}{2}}$
+    \end{itemize}
+  \item \verb|\qxqty| 还可以用来排版一些简单矩阵：
+    \[
+      \qxqty[pm]{ ABC & dec \\ hij & HJK } \quad
+      \qxqty[bm]{ ABC & dec \\ hij & HJK } \quad
+      \qxqty[Bm]{ ABC & dec \\ hij & HJK } \quad 
+      \qxqty[vm]{ ABC & dec \\ hij & HJK } \quad
+      \qxqty[Vm]{ ABC & dec \\ hij & HJK }
+    \]
 \end{itemize}
+
+\verb|physicx| 宏包也可以排版一些更复杂的矩阵，功能非常强大，更多使用细节参看目录中的“physicx.pdf”手册进行查看（该宏包未收录于CTAN，所以无法使用 texdoc 查看文档）
 
 
 \section{参考文献引用}
