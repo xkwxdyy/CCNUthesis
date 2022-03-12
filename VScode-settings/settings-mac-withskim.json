@@ -1,0 +1,223 @@
+{
+  "[latex]": {
+      "editor.tabSize": 2
+  },
+  "latex-workshop.intellisense.package.enabled": true,
+  "latex-workshop.showContextMenu": true,
+  "latex-workshop.latex.autoBuild.run": "never",
+  "latex-workshop.message.error.show": false,
+  "latex-workshop.message.warning.show": false,   
+  "latex-workshop.latex.tools": [
+    {
+      "name": "latexmk",
+      "command": "latexmk",
+      "args": [
+        "-pvc-",
+        "%DOCFILE%"
+      ]
+    },
+    {
+      "name": "latexmk-xelatex",
+      "command": "latexmk",
+      "args": [
+        "-xelatex",
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-halt-on-error",
+        "-file-line-error",
+        "-pv",
+        "%DOCFILE%"
+      ]
+    },
+    {
+      "name": "xelatex",
+      "command": "xelatex",
+      "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "%DOC%"
+      ]
+    },  
+    {
+      "name": "xelatex-shell-escape",
+      "command": "xelatex",
+      "args": [
+        "-shell-escape",
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-pdf",
+        "%DOCFILE%"
+      ]
+    },        
+    {
+      "name": "pdflatex",
+      "command": "pdflatex",
+      "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "%DOC%"
+      ]
+    },
+    {
+      "name": "pdflatex-shell-escape",
+      "command": "pdflatex",
+      "args": [
+        "-shell-escape",
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-pdf",
+        "%DOCFILE%"
+      ]
+    },
+    {
+      "name": "bibtex",
+      "command": "bibtex",
+      "args": [
+        "%DOCFILE%"
+      ]
+    },
+    {
+      "name": "biber",
+      "command": "biber",
+      "args": [
+        "%DOCFILE%"
+      ]
+    }
+  ],
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "xelatex",
+      "tools": [
+        "xelatex"
+      ]
+    },
+    {
+      "name": "latexmk",
+      "tools": [
+        "latexmk"
+      ]
+    },
+    // {
+    //   "name": "latexmk-xelatex",
+    //   "tools": [
+    //     "latexmk-xelatex"
+    //   ]
+    // },
+    {
+      "name": "xelatex*2",
+      "tools": [
+        "xelatex",
+        "xelatex"
+      ]
+    },
+    {
+      "name": "xelatex -> bibtex -> xelatex*2",
+      "tools": [
+        "xelatex",
+        "bibtex",
+        "xelatex",
+        "xelatex"
+      ]
+    },
+    {
+      "name": "xelatex -> biber -> xelatex*2",
+      "tools": [
+        "xelatex",
+        "biber",
+        "xelatex",
+        "xelatex"
+      ]
+    },
+    // {
+    //   "name": "xelatex-shell-escape",
+    //   "tools": [
+    //     "xelatex-shell-escape"
+    //   ]
+    // },
+    // {
+    //   "name": "pdflatex",
+    //   "tools": [
+    //     "pdflatex"
+    //   ]
+    // },
+    // {
+    //   "name": "pdflatex-shell-escape",
+    //   "tools": [
+    //     "pdflatex-shell-escape"
+    //   ]
+    // },
+    // {
+    //   "name": "pdflatex -> biblatex -> pdflatex*2",
+    //   "tools": [
+    //     "pdflatex",
+    //     "bibtex",
+    //     "pdflatex",
+    //     "pdflatex"
+    //   ]
+    // },
+    // {
+    //   "name": "pdflatex -> biber -> pdflatex*2",
+    //   "tools": [
+    //     "pdflatex",
+    //     "biber",
+    //     "pdflatex",
+    //     "pdflatex"
+    //   ]
+    // }
+  ],
+  "latex-workshop.latex.clean.fileTypes": [
+      "*.aux",
+      "*.bbl",
+      "*.blg",
+      "*.idx",
+      "*.ind",
+      "*.lof",
+      "*.lot",
+      "*.out",
+      "*.toc",
+      "*.acn",
+      "*.acr",
+      "*.alg",
+      "*.glg",
+      "*.glo",
+      "*.gls",
+      "*.ist",
+      "*.fls",
+      "*.log",
+      "*.fdb_latexmk"
+  ],
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs":"active",
+  "editor.accessibilitySupport": "off",
+  "editor.wordWrap": "bounded",
+  "editor.wordWrapColumn": 120,
+  "editor.fontSize": 20,
+  "latex-workshop.view.pdf.viewer": "external",
+  "latex-workshop.view.pdf.external.synctex.command": "/Applications/Skim.app/Contents/SharedSupport/displayline",
+  "latex-workshop.view.pdf.external.synctex.args": [
+    "-r",
+    "%LINE%",
+    "%PDF%",
+    "%TEX%"
+  ],
+  "latex-workshop.view.pdf.external.viewer.command": "/Applications/Skim.app/Contents/SharedSupport/displayline",
+  "latex-workshop.view.pdf.external.viewer.args": [
+    "0",
+    "%PDF%"
+  ],
+  "files.associations": {
+    "*.sty": "latex-expl3",
+    "*.def": "latex-expl3",
+    "*.tex": "latex",
+    "*.cls": "latex-expl3"
+  },
+  "editor.tabSize": 2,
+  "debug.console.fontSize": 20,
+  "window.zoomLevel": -1,
+  "editor.suggestSelection": "first",
+  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue"
+}

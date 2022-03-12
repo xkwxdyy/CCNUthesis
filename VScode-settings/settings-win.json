@@ -1,0 +1,207 @@
+{
+  "latex-workshop.latex.magic.args": [
+    "-synctex=1",
+    "-interaction=nonstopmode",
+    "-file-line-error",
+    "%DOC%"
+  ],
+  "latex-workshop.latex.tools": [
+    {
+      "name": "latexmk",
+      "command": "latexmk",
+      "args": [
+        "-pvc-",
+        "%DOCFILE%"
+      ]
+    },
+    {
+      "name": "latexmk-xelatex",
+      "command": "latexmk",
+      "args": [
+        "-xelatex",
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-halt-on-error",
+        "-file-line-error",
+        "-pv",
+        "%DOCFILE%"
+      ]
+    },
+    {
+      "name": "xelatex",
+      "command": "xelatex",
+      "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "%DOC%"
+      ]
+    },  
+    {
+      "name": "xelatex-shell-escape",
+      "command": "xelatex",
+      "args": [
+        "-shell-escape",
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-pdf",
+        "%DOCFILE%"
+      ]
+    },        
+    {
+      "name": "pdflatex",
+      "command": "pdflatex",
+      "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "%DOC%"
+      ]
+    },
+    {
+      "name": "pdflatex-shell-escape",
+      "command": "pdflatex",
+      "args": [
+        "-shell-escape",
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-pdf",
+        "%DOCFILE%"
+      ]
+    },
+    {
+      "name": "bibtex",
+      "command": "bibtex",
+      "args": [
+        "%DOCFILE%"
+      ]
+    },
+    {
+      "name": "biber",
+      "command": "biber",
+      "args": [
+        "%DOCFILE%"
+      ]
+    }
+  ],
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "xelatex",
+      "tools": [
+        "xelatex"
+      ]
+    },
+    {
+      "name": "latexmk",
+      "tools": [
+        "latexmk"
+      ]
+    },
+    // {
+    //   "name": "latexmk-xelatex",
+    //   "tools": [
+    //     "latexmk-xelatex"
+    //   ]
+    // },
+    {
+      "name": "xelatex*2",
+      "tools": [
+        "xelatex",
+        "xelatex"
+      ]
+    },
+    {
+      "name": "xelatex -> bibtex -> xelatex*2",
+      "tools": [
+        "xelatex",
+        "bibtex",
+        "xelatex",
+        "xelatex"
+      ]
+    },
+    {
+      "name": "xelatex -> biber -> xelatex*2",
+      "tools": [
+        "xelatex",
+        "biber",
+        "xelatex",
+        "xelatex"
+      ]
+    },
+    // {
+    //   "name": "xelatex-shell-escape",
+    //   "tools": [
+    //     "xelatex-shell-escape"
+    //   ]
+    // },
+    // {
+    //   "name": "pdflatex",
+    //   "tools": [
+    //     "pdflatex"
+    //   ]
+    // },
+    // {
+    //   "name": "pdflatex-shell-escape",
+    //   "tools": [
+    //     "pdflatex-shell-escape"
+    //   ]
+    // },
+    // {
+    //   "name": "pdflatex -> biblatex -> pdflatex*2",
+    //   "tools": [
+    //     "pdflatex",
+    //     "bibtex",
+    //     "pdflatex",
+    //     "pdflatex"
+    //   ]
+    // },
+    // {
+    //   "name": "pdflatex -> biber -> pdflatex*2",
+    //   "tools": [
+    //     "pdflatex",
+    //     "biber",
+    //     "pdflatex",
+    //     "pdflatex"
+    //   ]
+    // }
+  ],
+  "latex-workshop.latex.clean.fileTypes": [
+      "*.aux",
+      "*.bbl",
+      "*.blg",
+      "*.idx",
+      "*.ind",
+      "*.lof",
+      "*.lot",
+      "*.out",
+      "*.toc",
+      "*.acn",
+      "*.acr",
+      "*.alg",
+      "*.glg",
+      "*.glo",
+      "*.gls",
+      "*.ist",
+      "*.fls",
+      "*.log",
+      "*.fdb_latexmk"
+  ],
+  "latex-workshop.message.error.show": false,
+  "latex-workshop.message.warning.show": false,  
+  "latex-workshop.synctex.afterBuild.enabled": true,
+  "latex-workshop.latex.autoBuild.run": "never",
+  "latex-workshop.view.pdf.viewer": "tab",
+  "latex-workshop.view.pdf.internal.synctex.keybinding": "ctrl-click",
+  "editor.tabSize": 2,
+  "editor.wordWrap": "bounded",
+  "editor.wordWrapColumn": 120,
+  "editor.fontSize": 20,
+  "editor.fontFamily": "'Sarasa Term SC','JetBrains Mono','Fira Code', 'Source Code Pro',  Consolas, 'Courier New', monospace",
+  "diffEditor.ignoreTrimWhitespace": false,
+  "files.autoSave": "onWindowChange",
+  "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font', 'Sarasa Term SC'",
+  "terminal.integrated.fontSize": 17,
+  "editor.suggestSelection": "first"
+}

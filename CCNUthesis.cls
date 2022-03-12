@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-02-27}{v1.0.4}
+  {2022-03-12}{v1.0.7}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e }
 
@@ -171,7 +171,76 @@
 \__ccnu_msg_new:nn { unknown-option }
   { Class~ option~ "\l_keys_key_str"~ is~ unknown. }
 \ProcessKeysOptions { ccnu / option }
-\file_input:n { CCNUthesis.def }
+% \file_input:n { CCNUthesis.def }
+\tl_const:Nn \c__ccnu_name_simp_tl { 华中师范大学         }
+\tl_const:Nn \c__ccnu_name_trad_tl { 華中師範大學         }
+\tl_const:Nn \c__ccnu_name_en_tl   { Central~ China~ Normal~ University }
+\clist_map_inline:nn
+  {
+    { ideo_comma       } { ^^^^3001 },
+    { ideo_full_stop   } { ^^^^3002 },
+    { fwid_comma       } { ^^^^ff0c },
+    { fwid_full_stop   } { ^^^^ff0e },
+    { fwid_colon       } { ^^^^ff1a },
+    { fwid_semicolon   } { ^^^^ff1b },
+    { fwid_left_paren  } { ^^^^ff08 },
+    { fwid_right_paren } { ^^^^ff09 }
+  }
+  { \__ccnu_define_punct:nn #1 }
+\fp_const:Nn \c__ccnu_line_spread_fp
+  { \dim_ratio:nn { 20 pt } { 12 bp } / 1.2 }
+\tl_const:Nn \c__ccnu_orig_decl_text_tl
+  {
+    本人郑重声明：所呈交的学位论文是本人在导师指导下独立进行研究工作所取得的研究成果。除了文中特别加以标注引用的内容外，本论文不包含任何其他个人或集体已经发表或撰写的成果作品。本人完全意识到本声明的法律后果由本人承担。
+  }
+\tl_const:Nn \c__ccnu_auth_decl_text_tl
+  {
+    本学位论文作者完全了解学校有关保障、使用学位论文的规定，同意学校保留并向有关学位论文管理部门或机构送交论文的复印件和电子版，允许论文被查阅和借阅。本人授权省级优秀学士学位论文评选机构将本学位论文的全部或部分内容编入有关数据库进行检索，可以采用影印、缩印或扫描等复制手段保存和汇编本学位论文。
+  }
+\clist_const:Nn \c__ccnu_orig_decl_sign_clist
+  { 作者签名, 日期 }
+\clist_const:Nn \c__ccnu_auth_decl_sign_clist
+  { 作者签名, 导师签名, 日期 }
+\clist_const:Nn \c__ccnu_thesis_type_clist
+  { 博士学位论文, 硕士学位论文, {本科毕业论文（设计）} }
+\clist_const:Nn \c__ccnu_degree_type_clist
+  { 学术学位, 专业学位 }
+\clist_const:Nn \c__ccnu_secret_clist { 秘密, 机密, 绝密 }
+\clist_map_inline:nn
+  {
+    { secret_level       } { 密 \qquad 级                  },
+    { secret_star        } { \textrm { \bigstar }          },
+    { school_id          } { 学校代码                      },
+    { student_id         } { 学号                  },
+    { department         } { 学院                          },
+    { major              } { 专业                          },
+    { major_professional } { 专业学位类别（领域）          },
+    { level              } { 年级                        },
+    { author             } { 学生姓名                        },
+    { supervisor         } { 指导教师                      },
+    { date               } { 完成日期                      },
+    { instructors        } { 指导小组成员                  },
+    { author_sign        } { 学位论文作者签名               },
+    { supervisor_sign    } { 导师签名                      },
+    { sign_date          } { 日期                         },
+    { toc                } { \zihao{-2}  目 \quad 录                   },
+    { lof                } { 插图目录                      },
+    { lot                } { 表格目录                      },
+    { bib_en             } { Bibliography                  },
+    { pdf_creator        } { LaTeX~ with~ ccnuthesis~ class },
+    { orig_decl          } { \c__ccnu_name_simp_tl \\[15pt] 学位论文原创性声明   },
+    { auth_decl          } { 学位论文版权使用授权书 }
+  }
+  { \__ccnu_define_name:nn #1 }
+\clist_map_inline:nn
+  {
+    { abstract } { 内容摘要 } { Abstract          },
+    { keywords } { 关键词      } { Keywords        },
+    { clc      } { 中图分类号  } { CLC~ code:        },
+    { jel      } { JEL 分类号  } { JEL~ code:        },
+    { notation } { 符号表      } { List~ of~ Symbols }
+  }
+  { \__ccnu_define_name:nnn #1 }
 \tl_if_empty:NF \g__ccnu_config_tl
   {
     \file_input:V \g__ccnu_config_tl
@@ -220,7 +289,8 @@
     calc,
     etoolbox,
     amsthm,
-    thmtools
+    thmtools,
+    enumitem
   }
 \RequirePackage[physics]{physicx}
 % \RequirePackage{physics}
@@ -247,6 +317,7 @@
     using~ your~ TeX~ package~ manager~ or~ from~ CTAN.
   }
 \__ccnu_check_class:nnn { ctexbook } { 2021/03/14 } { 2.5.6 }
+\__ccnu_check_package:nnn { expl3 } { 2021/08/27 } { }
 \sys_if_engine_xetex:T
   { \__ccnu_check_package:nnn { xeCJK } { 2020/05/01 } { 3.8.3 } }
 \geometry
@@ -1963,9 +2034,9 @@
     \clist_put_right:Nn \l__ccnu_biblatex_options_clist
       {
         style = gb7714-2015,
-        gbalign = gb7714-2015,
-        gbpub = false,
-        gbpunctin = false
+        % gbalign = gb7714-2015,
+        % gbpub = false,
+        % gbpunctin = false
       }
     \exp_args:NV \PassOptionsToPackage \l__ccnu_biblatex_options_clist
       { biblatex }
@@ -1976,6 +2047,35 @@
     \__ccnu_biblatex_allow_url_break:
     \__ccnu_biblatex_use_en_dash:
     \defbibheading { bibliography } [ \bibname ] { \__ccnu_chapter:n {##1} }
+    % 修改\parencite，使得\parencite[foo]{label}的效果为 [x, foo]
+    % https://github.com/hushidong/biblatex-gb7714-2015/issues/120#issuecomment-1063764782
+    \DeclareCiteCommand{\parencite}
+      {
+        \mkbibleftborder\usebibmacro{cite:init}
+        \usebibmacro{prenote}
+      }
+      {
+        \usebibmacro{citeindex}
+        \usebibmacro{cite:comp}
+      }
+      {}
+      {
+        \usebibmacro{cite:dump}\setunit{\addcomma\addspace}\printfield{postnote}\mkbibrightborder
+      }
+    \DeclareCiteCommand{\cite}[\mkbibsuperscript]  % 利用mkbibsuperbracket添加方括号
+      {
+        \mkbibleftborder\usebibmacro{cite:init}
+        \usebibmacro{prenote}
+      }
+      {
+        \usebibmacro{citeindex}
+        \usebibmacro{cite:comp}
+      }
+      {}
+      {
+        \usebibmacro{cite:dump}\setunit{\addcomma\addspace}
+        \printfield{postnote}\mkbibrightborder
+      }
   }
 \cs_new:Npn \__ccnu_biblatex_allow_url_break:
   {
@@ -2645,21 +2745,10 @@
     option / oneside ,
     style = 
       {
-        font = times,
+        font = times*,
         % 西文字体（包括数学字体）
         % 允许选项：
         %   font = garamond|libertinus|lm|palatino|times|times*|none
-        cjk-font = fandol,
-        % 中文字体
-        % 允许选项：
-        %   cjk-font = adobe|fandol|founder|mac|sinotype|sourcehan|windows|none
-        % 注意：
-        %   1. 中文字体设置高度依赖于系统。各系统建议方案：
-        %        windows：cjk-font = windows
-        %        mac：    cjk-font = mac
-        %        linux：  cjk-font = fandol（默认值）
-        %   2. 除 fandol 和 sourcehan 外，其余字体均为商用字体，请注意版权问题
-        %   3. 但 fandol 字体缺字比较严重，而 sourcehan 没有配备楷体和仿宋体
         footnote-style = xits,
         % 脚注编号样式
         % 允许选项：
@@ -2696,10 +2785,5 @@
         % 默认为空，即与参考文献样式保持一致
         % 仅适用于 biblatex；如要填写，需保证相应的 .cbx 格式文件能被调用
         %
-        bib-resource = {CCNUthesis-main.bib},
-        % 参考文献数据源
-        % 可以是单个文件，也可以是用英文逗号 “,” 隔开的一组文件
-        % 如果使用 biblatex，则必须明确给出 .bib 后缀名
       }
   }
- 

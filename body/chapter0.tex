@@ -3,6 +3,43 @@
 此章用于展示一些常用的命令环境的效果，用户在具体写论文过程中可以用来参考效果，如果不需要此章出现在正文中，只需要将主文件 \verb|main.tex| 文件中的 \verb|\include{./body/chapter0.tex}| 代码注释掉即可（不建议删除，因为随时可以取消注释查看效果）。
 
 
+\section{列表环境}
+
+
+如果要修改 \verb|enumerate| 环境的 label 样式的话：
+
+\begin{enumerate}
+  \item 第一项
+  \item 第二项
+\end{enumerate}
+
+\begin{enumerate}[label = (\arabic*)]
+  \item 第一项
+  \item 第二项
+\end{enumerate}
+
+\begin{enumerate}[label = (\alph*)]
+  \item 第一项
+  \item 第二项
+\end{enumerate}
+
+\begin{enumerate}[label = (\Alph*)]
+  \item 第一项
+  \item 第二项
+\end{enumerate}
+
+\begin{enumerate}[label = \roman*.]
+  \item 第一项
+  \item 第二项
+\end{enumerate}
+
+\begin{enumerate}[label = \Roman*.]
+  \item 第一项
+  \item 第二项
+\end{enumerate}
+
+
+
 \section{已定义好的一些数学定理环境}
 
 定理环境内的括号，不管是中文还是西文括号，都不会出现倾斜，不需要像旧模版一样需要用手动用 \verb|\textit| 调整
@@ -115,7 +152,7 @@
 
 \subsection{physics 宏包的一些命令}
 
-\verb|CCNUthesis.cls| 已经默认加载了 \verb|physics| 宏包，提供了很多很方便的命令，本小节介绍部分，更多的请阅读宏包文档（命令行输入 \verb|texdoc physics|）
+\verb|CCNUthesis.cls| 已经默认加载了 \verb|physics| 宏包，提供了很多很方便的命令，本小节介绍部分，更多的命令请阅读宏包文档（命令行输入 \verb|texdoc physics|）
 
 \begin{itemize}
   \item 向量 $\vb{a}, \vb*{a}, \va{a}, \va*{a}, \vu{a}, \vu*{a}$
@@ -123,6 +160,15 @@
     \[
       \int_{0}^{1} x \dd{x},
       \dd[3]{x}, \dd(\cos\theta),
+    \]
+    \[
+      \int xyz \dd{x} \dd{y} \dd{z}
+    \]
+    \[
+      % \␣产生空格，使被积函数和dxdydz之前产生一个空格
+      % 注意\dd{x}的dx左右各有一个空格 \dd x则没有
+      % 对于重积分，自己根据规范使用
+      \int xyz \ \dd x \dd y \dd z    
     \]
   \item 微分
     \[
@@ -135,3 +181,51 @@
   \item 绝对值 $\abs{x^3}, \abs{\frac{1}{2}}$
   \item 范数 $\norm{f}, \norm{f_n}_{2}^{2}$
 \end{itemize}
+
+
+
+\subsection{physicx 宏包的一些命令}
+
+\verb|physicx| 宏包是对 \verb|physics| 宏包的优化（已默认载入）。介绍几个常用的：
+
+\begin{itemize}
+  \item 绝对值 $\abs{x^3}, \abs{\frac{1}{2}}$
+  \item 范数 $\norm{f}, \norm{f_n}_{2}^{2}$
+  \item \verb|\qxqty|: 统一可变长度括号类命令
+    \begin{itemize}
+      \item $\qxqty{\frac{1}{2}}$
+      \item $\qxqty[p]{\frac{1}{2}}$
+      \item $\qxqty[v]{\frac{1}{2}}$
+      \item $\qxqty[V]{\frac{1}{2}}$
+      \item $\qxqty[b]{\frac{1}{2}}$
+      \item $\qxqty[B]{\frac{1}{2}}$
+      \item $\qxqty[a]{\frac{1}{2}}$
+    \end{itemize}
+  \item \verb|\qxqty| 还可以用来排版一些简单矩阵：
+    \[
+      \qxqty[pm]{ ABC & dec \\ hij & HJK } \quad
+      \qxqty[bm]{ ABC & dec \\ hij & HJK } \quad
+      \qxqty[Bm]{ ABC & dec \\ hij & HJK } \quad 
+      \qxqty[vm]{ ABC & dec \\ hij & HJK } \quad
+      \qxqty[Vm]{ ABC & dec \\ hij & HJK }
+    \]
+\end{itemize}
+
+\verb|physicx| 宏包也可以排版一些更复杂的矩阵，功能非常强大，更多使用细节参看目录中的“physicx.pdf”手册进行查看（该宏包未收录于CTAN，所以无法使用 texdoc 查看文档）
+
+
+\section{参考文献引用}
+
+\subsection{数学类}
+
+行间\parencite[thm 3.1]{zurek2014quantum}
+
+行间\parencite{zurek2014quantum}
+
+
+
+\subsection{师范类}
+
+上标\cite[test]{zurek2014quantum}
+
+上标\cite{zurek2014quantum}
