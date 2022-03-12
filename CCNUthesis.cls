@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-03-09}{v1.0.6}
+  {2022-03-12}{v1.0.7}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e }
 
@@ -289,7 +289,8 @@
     calc,
     etoolbox,
     amsthm,
-    thmtools
+    thmtools,
+    enumitem
   }
 \RequirePackage[physics]{physicx}
 % \RequirePackage{physics}
