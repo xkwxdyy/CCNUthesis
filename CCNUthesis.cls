@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-03-12}{v1.0.7}
+  {2022-03-13}{v1.1.0}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e }
 
@@ -805,7 +805,7 @@
     tocdepth = 1 ,
     chapter =
       {
-        format      = \zihao{3} \normalfont \bfseries ,
+        format      = \zihao{3} \normalfont \bfseries,
         % format      = \huge \normalfont \sffamily \centering,
         % beforeskip  = 50 pt,
         beforeskip  = 10pt,
@@ -2036,17 +2036,15 @@
           }
           { \l__ccnu_bib_style_tl }
       }
-    \tl_if_empty:NF \l__ccnu_cite_style_tl
+    \tl_if_empty:NF \l__ccnu_cite_style_tlj
       {
         \clist_put_right:Nx \l__ccnu_biblatex_options_clist
           { citestyle = \l__ccnu_cite_style_tl }
       }
     \clist_put_right:Nn \l__ccnu_biblatex_options_clist
       {
-        style = gb7714-2015,
-        % gbalign = gb7714-2015,
-        % gbpub = false,
-        % gbpunctin = false
+        backend   = biber,
+        style     = CCNUthesis
       }
     \exp_args:NV \PassOptionsToPackage \l__ccnu_biblatex_options_clist
       { biblatex }
@@ -2085,6 +2083,20 @@
       {
         \usebibmacro{cite:dump}\setunit{\addcomma\addspace}
         \printfield{postnote}\mkbibrightborder
+      }
+    % 修改 \printbibliography
+    \cs_set_eq:NN \__ccnu_printbibliography_old \printbibliography
+    \cs_new:Npn \__ccnu_printbibliography:n ##1 
+      {
+        \__ccnu_printbibliography_old [ ##1 ] 
+      }
+    \RenewDocumentCommand { \printbibliography } { O{} } 
+      {
+        \group_begin:
+          \ctexset{ chapter / afterskip = 2.7em }
+          \sloppy
+          \__ccnu_printbibliography:n { ##1 }
+        \group_end:
       }
   }
 \cs_new:Npn \__ccnu_biblatex_allow_url_break:
