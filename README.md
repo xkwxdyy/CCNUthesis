@@ -8,7 +8,9 @@
 
 本模版支持在 Windows、Mac、Linux 系统上运行。
 
-在使用`CCNUthesis`之前，请仔细阅读 [wiki中的用户必读](https://gitee.com/xkwxdyy/CCNUthesis/wikis/%E7%94%A8%E6%88%B7%E5%BF%85%E8%AF%BB)
+由于有些[问题](https://gitee.com/xkwxdyy/CCNUthesis/issues/I4VPO2)，请不要在 `overleaf` 上编译，请根据 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis/%E7%94%A8%E6%88%B7%E5%BF%85%E8%AF%BB) 中的指导进行 `TeX Live` 的正确安装，并进行本地编译。
+
+在使用 `CCNUthesis` 之前，请阅读 「[lshort-zh-cn](https://ctan.math.illinois.edu/info/lshort/chinese/lshort-zh-cn.pdf)」 学习 LaTeX 基本知识，并仔细阅读 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis/%E7%94%A8%E6%88%B7%E5%BF%85%E8%AF%BB)
 
 ## 模版的核心组成
 
