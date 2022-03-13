@@ -1,5 +1,12 @@
 # 更新日志
 
+## [v1.1.0] - 2022-03-14
+
+### Added
+
+- 增加 `CCNUthesis.bbx` 和 `CCNUthesis.cbx` 对参考文献进行格式修改
+
+
 ## [v1.1.0] - 2022-03-13
 
 ### Changed
