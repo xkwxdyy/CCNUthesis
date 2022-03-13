@@ -3,11 +3,17 @@
 %% CCNUthesis.bbx --- A bibliography style for CCNUthesis template
 %% ---------------------------------------------------------------
 %%
-
 %%用法：类似于标准的样式在biblatex加载时设置样式
 %%文献表正常处理，标注命令主要用cite和parencite
 \ProvidesFile{CCNUthesis.bbx}
-  [2022/03/10 v0.1a a biblatex bibliography style for CCNUthesis]
+  [2022/03/10 v0.1 a biblatex bibliography style for CCNUthesis]
+
+
+%关于格式和bib文件的注意点
+%1. bib文件按照正常的模式写，除了patent将国别放到number里。
+%2. bib文件中会议文集和会议论文区分清楚，会议论文是带in的那种。若会议文集有附加的出版信息请一并放入publisher中。
+%3. 标识为J的都是article，不管是否有url，所以不是online。
+%4. 若inbook需要给出主编这种信息，需要给出editortype域，否则就当bookauthor处理。
 
 
 %==================================================
@@ -17,9 +23,10 @@
 
 
 % 增加一个控制标点是英文还是中文的选项
-\DeclareBibliographyOption{ccnuthesispunctcn}[true]{%biblatex低版本
-  \ifstrequal{#1}{false}{\execccnuthesispuncten}{}
+\DeclareBibliographyOption{CCNUpunctcn}[true]{%biblatex低版本
+  \ifstrequal{#1}{false}{\execpuncten}{}
 }
+
 
 %==================================================
 %选项设置
@@ -27,7 +34,7 @@
 \ExecuteBibliographyOptions{
   gbpunctin    = false,
   gbfieldtype  = true,       % 输出type域，主要处理学位论文
-  gbnamefmt    = lowercase
+  gbnamefmt=lowercase
 }
 
 % 根据《通知》调整间距和缩进
@@ -35,7 +42,6 @@
 \setlength{\bibitemindent}{0em} % bibitemindent表示一条文献中第一行相对后面各行的缩进
 \setlength{\bibhang}{1.2ex}
 \setlength{\bibparsep}{0em}
-
 
 %==================================================
 % 定义一些标点为中文全角标点
@@ -49,39 +55,40 @@
 \def\erjpunctcolonlanen{\addcolon\addspace}%
 \def\erjpunctsemicolon{；}%
 \def\erjpunctsemicolonlanen{\addsemicolon\addspace}%
-\def\erjpunctttl{《}%
-\def\erjpunctttr{》}
 \def\erjpunctparenl{（}%
 \def\erjpunctparenr{）}%
 
-
-\def\execerjpuncten{%
-\def\erjpunctdot{\adddot}%
-\def\erjpunctdotlanen{\adddot}%
+\def\execpuncten{%
+\def\erjpunctdot{\adddot\addspace}%
+\def\erjpunctdotlanen{\adddot\addspace}%
 \def\erjpunctmark{\addcomma\addspace}%
 \def\erjpunctcomma{\addcomma\addspace}%
 \def\erjpunctcommalanen{\addcomma\addspace}%
 \def\erjpunctcolon{\addcolon\addspace}%
 \def\erjpunctcolonlanen{\addcolon\addspace}%
-\def\erjpunctsemicolon{\addsemicolon\addspace}%
-\def\erjpunctttl{《}%
-\def\erjpunctttr{》}%
+\def\erjpunctsemicolon{\addcolon\addspace}%
+\def\erjpunctsemicolonlanen{\addsemicolon\addspace}%
+\def\erjpunctparenl{(}%
+\def\erjpunctparenr{)}%
 }
+
+
 
 %==================================================
 %为标注和文献表中标点格式，重设and本地化字符串
 %==================================================
 \DefineBibliographyStrings{english}{
-    and           = {\addcomma}, % and后面的空格在finalnamedelim已经加过了，所以这里去掉20191009
+    and           = {\addcomma},
     andcn         = {\erjpunctcomma},
     andincitecn   = {和}, %将标注中的分开，便于与文献表中的区分
     andincite     = {\&},
     andothers     = {et al.},
     andotherscn   = {等},
     bytranslator  = {\addcomma\ 译},
-    byeditor      = {\mkbibparens{Eds\adddot\isdot}},
-    in            = {In:\space},
-    incn          = {见：},
+    editors       = {\MakeLowercase{eds}\adddot\isdot},
+    editor        = {\MakeLowercase{ed}\adddot\isdot},
+    in            = {In:\addspace},
+    incn          = {见\iffieldequalstr{userd}{chinese}{\erjpunctcolon}{\erjpunctcolonlanen}},
     mathesis      = {(Master dissertation)},
     mathesiscn    = {[硕士学位论文]},
     phdthesis     = {(Ph D dissertation)},
@@ -101,8 +108,6 @@
 \renewcommand{\aftertransdelim}{\iffieldequalstr{userd}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}
 \DeclareDelimFormat*{multinamedelim}{\iffieldequalstr{userd}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}%\addcomma\addspace
 \DeclareDelimFormat{finalnamedelim}{%
-  %\ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
-  %\addspace%
   \edef\userfieldabcde{userd}%
   \ifcurrentname{translator}{\edef\userfieldabcde{usere}}{}%
   \ifcurrentname{editor}{\edef\userfieldabcde{userc}}{}%
@@ -115,15 +120,12 @@
     \iffieldequalstr{\userfieldabcde}{english}{\space\bibstring{andincite}\space}{}%
     \iffieldequalstr{\userfieldabcde}{french}{\bibstring{and}}{}%
     \iffieldequalstr{\userfieldabcde}{russian}{\bibstring{and}}{}%
-%\space%
   \or%
-  \bibstring{andincitecn}\space%
+  \bibstring{andincitecn}%
   \or%
-  \bibstring{andincite}\space%
+  \bibstring{andincite}%
   \fi}
 \DeclareDelimFormat[bib,biblist]{finalnamedelim}{%
-%  \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
-%  \addspace%
   \edef\userfieldabcde{userd}%
   \ifcurrentname{translator}{\edef\userfieldabcde{usere}}{}%
   \ifcurrentname{editor}{\edef\userfieldabcde{userc}}{}%
@@ -136,11 +138,10 @@
     \iffieldequalstr{\userfieldabcde}{english}{\bibstring{and}}{}%
     \iffieldequalstr{\userfieldabcde}{french}{\bibstring{and}}{}%
     \iffieldequalstr{\userfieldabcde}{russian}{\bibstring{and}}{}%
-\space%
   \or%
-  \bibstring{andcn}\space%
+  \bibstring{andcn}%
   \or%
-  \bibstring{and}\space%
+  \bibstring{and}%
   \fi}
 \DeclareDelimFormat{nameyeardelim}{\iffieldequalstr{userd}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}%\addcomma\addspace
 \DeclareDelimFormat[bib,biblist]{nameyeardelim}{\iffieldequalstr{userd}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}%\addcomma\addspace
@@ -150,9 +151,9 @@
 \renewcommand{\publocpunct}{\iffieldequalstr{userd}{chinese}{\erjpunctcolon}{\addcolon\addspace}}%出版项中：出版社地址后面的标点
 
 
-% %==================================================
-% %调整部分域的输出格式
-% %==================================================
+%==================================================
+%调整部分域的输出格式
+%==================================================
 
 %
 %   调整期刊名的格式
@@ -190,8 +191,10 @@
   %\setunit*{\adddot}%去掉点号
   %\printfield{number}%
   \iffieldundef{number}{}{%
+  \iffieldequalstr{entrysubtype}{news}{\printtext{\mkbibparens{\printfield{number}}}}{%
   \iffieldequalstr{userd}{chinese}{\printtext{\erjpunctparenl\printfield{number}\erjpunctparenr}}%
-  {\printtext{\mkbibparens{\printfield{number}}}}}%增加一个圆括号
+  {\printtext{\mkbibparens{\printfield{number}}}}}%
+  }%增加一个圆括号
   \iffieldundef{eid}{}{%
   \setunit{\addcomma\space}%
   \printfield{eid}}}}
@@ -298,9 +301,7 @@ test {\iflistundef{location}} and test {\iflistundef{institution}}%
     {\printnames{editor}%
     \iffieldundef{editortype}%增加一个类型判断，用于存在editortype的情况
     {\setunit{\iffieldequalstr{userd}{chinese}{\erjpunctdot}{\erjpunctdotlanen}}}%当没有editortype时，直接用句点
-    {%\setunit{\addcomma\space}%
-     \usebibmacro{editorstrg}\setunit{\iffieldequalstr{userd}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}}%
-     %\clearname{editor}
+    {\usebibmacro{editorstrg}\setunit{\iffieldequalstr{userd}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}}%
      }%
     {}}
 
@@ -322,8 +323,6 @@ test {\iflistundef{location}} and test {\iflistundef{institution}}%
   \newunit\newblock%
   \printfield{edition}%
   \newunit\newblock
-  %\printfield{note}%
-  %\newunit\newblock
   \usebibmacro{publisher+location+date}}
 
 
@@ -340,95 +339,3 @@ test {\iflistundef{location}} and test {\iflistundef{institution}}%
                          {\printtext{\bibstring{incn}}}%
                          {\printtext{\bibstring{in}}}%
                          }}%\newunit\newblock\intitlepunct
-
-
-
-% %
-% %   修改number和volume的格式
-% %
-% \newcounter{numberwithoutzero}
-% \DeclareFieldFormat[article,periodical]{number}%
-%     {\iffieldequalstr{userd}{chinese}{%
-%         \iffieldint{number}{\setcounter{numberwithoutzero}{#1}\printtext{\bibstring{serialcn}\addthinspace\arabic{numberwithoutzero}\addthinspace 期}}%
-%         {\printtext{\bibstring{serialcn}\addthinspace#1\addthinspace 期}}%
-%     }%
-%         {\printtext{(}#1\printtext{)}}}%\kern\z@
-% \DeclareFieldFormat[article,periodical]{volume}%
-%     {\iffieldequalstr{userd}{chinese}{}%
-%     {#1}}% volume of a book
-
-% %
-% %   调整期刊名的格式
-% %
-% %   原理方法:因为作者年制年份提到前面，因此涉及到期刊名与后面的卷期的关系。
-% %   v1.0k,20180425,增加了字体控制命令，hzz
-% \renewbibmacro*{journal+issuetitle}{\bibpubfont%源来自standard.bbx
-%   \usebibmacro{journal}%
-%   %\setunit*{\addspace}%
-%   %\setunit*{\addcomma\addspace}%修改为增加一个逗号
-%   \iffieldundef{series}%
-%     {}%
-%     {\newunit%
-%      \printfield{series}%
-%      \setunit{\addspace}}%
-%   %\usebibmacro{volume+number+eid}%
-%   %\setunit{\addspace}%
-%   \usebibmacro{issue+date}%
-%   %\setunit{\addcolon\space}%
-%   %\iffieldundef{volume}{}{\setunit{\addcomma\space}}%
-%   %换成逗号和空格
-%   \usebibmacro{issue}%
-%   \usebibmacro{volume+number+eid}%把卷期放到年份后面
-%   %\newunit
-%   }
-
-% %   调整期刊卷和期的格式
-% %
-% \renewbibmacro*{volume+number+eid}{%源来自standard.bbx
-% \iffieldequalstr{userd}{chinese}{%\printfield{volume}%
-%   \iffieldundef{number}{}{\printfield{number}}%区别于顺序编码制
-%     }
-%   {\newunit\printfield{volume}%
-%   %\setunit*{\adddot\space}%
-%   \printfield{number}%
-%   \setunit{\addcomma\space}%
-%   \printfield{eid}}}
-
-% %
-% %   重设title的输出
-% %
-% %   20180425，v1.0k，为标题增加字体控制命令，Hu Zhenzhen
-% %   原理方法:将文献类型标识符输出出去，原输出来自biblatex.def文件
-% %   利用toggle做标识符是否输出的判断
-% \renewbibmacro*{title}{%
-%   \ifboolexpr{%
-%     test{\iffieldundef{title}}%
-%     and
-%     test{\iffieldundef{subtitle}}%
-%   }%
-%     {}%
-%     {\setunit{\iffieldequalstr{userd}{chinese}{\ccnuthesispunctcolon}{\ccnuthesispunctcolonlanen}}\printtext[title]{\bibtitlefont%增加字体控制命令%增加了标点：
-%        \printfield[titlecase]{title}%
-%        \ifboolexpr{test {\iffieldundef{subtitle}}}%这里增加了对子标题的判断，解决不判断多一个点的问题
-%        {}{\setunit{\subtitlepunct}%
-%        \printfield[titlecase]{subtitle}}%
-%        \iffieldundef{titleaddon}{}%判断一下titleaddon，否则直接加可能多一个空格
-%         {\setunit{\subtitlepunct}\printfield{titleaddon}}%
-%         \iftoggle{bbx:gbtype}{%
-%          \iffieldundef{entrysubtype}{\printfield[gbtypeflag]{usera}}%在标题后直接给出文献标识字母，判断一下，是否是报纸和标准
-%         {\iffieldequalstr{entrysubtype}{standard}{\printfield[gbtypeflags]{usera}}%判断是否为标准
-%                                          {\iffieldequalstr{entrysubtype}{news}{\printfield[gbtypeflagn]{usera}}% 判断是否为报纸
-%                                                                       {\printfield[gbtypeflag]{usera}}}% 其它
-%         }}{}%
-%      %\iffieldundef{booktitle}{\newunit}{}%当title是析出时，不要标点
-%      %\newunit
-%      }%
-% }}
-
-% \DeclareFieldFormat{pages}{\iffieldequalstr{userd}{chinese}{}{#1}}%页码引用格式的修改%去掉前面引导页码的pp.等字符
-
-% \setlength{\bibitemindent}{1.5\ccwd} % bibitemindent表示一条文献中第一行相对后面各行的缩进
-% \setlength{\bibhang}{0pt} % 作者年制中 bibhang 表示的各行起始位置到页
-%                           % 边的距离,顺序编码制中
-%                           % bibhang+labelnumberwidth 表示各行起始位置
-%                           % 到页边的距离

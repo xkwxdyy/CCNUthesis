@@ -2043,8 +2043,9 @@
       }
     \clist_put_right:Nn \l__ccnu_biblatex_options_clist
       {
-        backend   = biber,
-        style     = CCNUthesis
+        backend      = biber,
+        style        = CCNUthesis,
+        CCNUpunctcn  = false
       }
     \exp_args:NV \PassOptionsToPackage \l__ccnu_biblatex_options_clist
       { biblatex }
