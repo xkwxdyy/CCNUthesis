@@ -1591,27 +1591,28 @@
     \clist_if_empty:NF \l__ccnu_info_instructors_clist
       { \UseInstance { ccnu / cover } { cover-ii-default } }
   }
-\NewDocumentCommand \makecoveriii { }
+% \NewDocumentCommand \makecoveriii { }
   {
     % \group_begin:
-    \cleardoublepage
-    \tl_if_empty:NTF \l__ccnu_declaration_page_tl
-      {
-        \thispagestyle { empty }
-        % \keys_set:nn { ccnu / style }{ fullwidth-stop = false }
-        \newgeometry
-          { 
-            left   = 2.85cm,
-            right  = 2.45cm,
-            top    = 3cm,
-            bottom = 2.5cm
-          }
-        \UseInstance { ccnu / cover } { cover-iii-default }
-        \restoregeometry
-      }
-      { \includepdf { \l__ccnu_declaration_page_tl } }
-    % \group_end:
-  }
+    % \cleardoublepage
+    % \tl_if_empty:NTF \l__ccnu_declaration_page_tl
+    %   {
+    %     \thispagestyle { empty }
+    %     % \keys_set:nn { ccnu / style }{ fullwidth-stop = false }
+    %     \newgeometry
+    %       { 
+    %         left   = 2.85cm,
+    %         right  = 2.45cm,
+    %         top    = 3cm,
+    %         bottom = 2.5cm
+    %       }
+    %     \UseInstance { ccnu / cover } { cover-iii-default }
+    %     \restoregeometry
+    %   }
+    %   { \includepdf { \l__ccnu_declaration_page_tl } }
+    % % \group_end:
+    
+  % }
 \DeclareCoverTemplate { cover-i   }
   { id, logo, type, degree, title, title-en, info }
 \DeclareCoverTemplate { cover-ii  } { title, name-list }
@@ -1737,7 +1738,16 @@
         \begin{titlepage}
           \makecoveri
           \newpage 
-          \makecoveriii
+          % \makecoveriii
+          \pagestyle { empty }
+          \begin{tikzpicture}[remember~picture, overlay]
+            \node at (current~page.center) 
+              {
+                \includegraphics
+                  [ width = \Gm@layoutwidth, height = \Gm@layoutheight ]
+                    { figures / Originality_Copyright.pdf }
+              };
+          \end{tikzpicture}
         \end{titlepage}
       }
   }
