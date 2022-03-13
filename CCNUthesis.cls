@@ -289,9 +289,9 @@
     calc,
     etoolbox,
     amsthm,
-    thmtools,
-    enumitem
+    thmtools
   }
+\RequirePackage[shortlabels]{enumitem}
 \RequirePackage[physics]{physicx}
 % \RequirePackage{physics}
 % 修复\vu的上标偏移问题
