@@ -211,22 +211,14 @@
 %
 %   方法:\DeclareCiteCommand{\cite}[\mkbibparens]{precode}{loopcode}{sepcode}{postcode}
 %    v1.0p版后将cite的处理方式修改为类似pagescite，而不再使用biblatex的标准方式
-% \DeclareCiteCommand{\cite}[\mkbibsuperscript]%利用mkbibsuperbracket添加方括号 \textsuperscript
-%   {\mkbibleftborder\usebibmacro{cite:init}%
-%    \usebibmacro{prenote}}
-%   {\usebibmacro{citeindex}%
-%    \usebibmacro{cite:comp}}
-%   {}
-%   {\usebibmacro{cite:dump}\mkbibrightborder%
-%    \printfield{postnote}}%\kern\p@ \kern\z@
-\DeclareCiteCommand{\cite}[\mkbibsuperscript]%利用mkbibsuperbracket添加方括号
+\DeclareCiteCommand{\cite}[\mkbibsuperscript]%利用mkbibsuperbracket添加方括号 \textsuperscript
   {\mkbibleftborder\usebibmacro{cite:init}%
    \usebibmacro{prenote}}
   {\usebibmacro{citeindex}%
    \usebibmacro{cite:comp}}
   {}
-  {\usebibmacro{cite:dump}\setunit{\addcomma\addspace}%
-   \printfield{postnote}\mkbibrightborder}
+  {\usebibmacro{cite:dump}\mkbibrightborder%
+   \printfield{postnote}}%\kern\p@ \kern\z@
 
 %\renewcommand{\cite}[1]{\textsuperscript{[\supercite{#1}]}\kern\z@}
 %   v1.0p 以前用的方式
@@ -250,23 +242,15 @@
 %
 %   重定义parencite命令，以满足标签带页码的国标要求
 %
-% \DeclareCiteCommand{\parencite}%[\mkbibbrackets]
-%   {\mkbibleftborder\usebibmacro{cite:init}%
-%    \usebibmacro{prenote}}%
-%   {\usebibmacro{citeindex}%
-%    \usebibmacro{cite:comp}}
-%   {}
-%   {%[
-%   \usebibmacro{cite:dump}\mkbibrightborder%
-%    \mkbibsuperscriptusp{\printfield{postnote}}}
 \DeclareCiteCommand{\parencite}%[\mkbibbrackets]
   {\mkbibleftborder\usebibmacro{cite:init}%
    \usebibmacro{prenote}}%
   {\usebibmacro{citeindex}%
    \usebibmacro{cite:comp}}
   {}
-  {\usebibmacro{cite:dump}\setunit{\addcomma\addspace}\printfield{postnote}\mkbibrightborder}
-
+  {%[
+  \usebibmacro{cite:dump}\mkbibrightborder%
+   \mkbibsuperscriptusp{\printfield{postnote}}}
 
 %
 %   新定义pagescite命令，以满足标签带页码的国标要求
@@ -557,7 +541,7 @@
 \DeclareCiteCommand{\cite}[\mkbibsuperscript]%
   {\mkbibleftborder\usebibmacro{prenote}}
   {\usebibmacro{citeindex}%
-    \usebibmacro{cite}}
+   \usebibmacro{cite}}
   {\multicitedelim}
   {\mkbibrightborder\usebibmacro{postnote}}
 \DeclareCiteCommand{\parencite}%
