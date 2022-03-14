@@ -51,6 +51,16 @@ test
   \item 第四项
 \end{enumerate}
 
+\begin{enumerate}[label = \textbf{断言} \Alph*]
+  \item 一般来说使用断言，推荐使用 claim 环境
+  \item 但是如果真要有一些断言的层级分化的话
+  \item 可以考虑用 enumerate 环境的 label 选项
+\end{enumerate}
+
+\begin{enumerate}[\textbf{断言} A]
+  \item 1
+  \item 2
+\end{enumerate}
 
 
 \section{已定义好的一些数学定理环境}
@@ -242,19 +252,3 @@ test
 上标\cite[test]{zurek2014quantum}
 
 上标\cite{zurek2014quantum}
-
-
-\begin{theorem}
-  \begin{enumerate}[(1)]
-    \item 1
-    \item 2
-  \end{enumerate}
-\end{theorem}
-
-\begin{theorem}
-  test
-  \begin{enumerate}[(1)]
-    \item 1
-    \item 2
-  \end{enumerate}
-\end{theorem}
