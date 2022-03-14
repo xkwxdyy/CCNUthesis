@@ -10,6 +10,11 @@
 
 - 修改 `main.tex` 中关于 `parencite` 和 `\cite` 的使用注释
 
+
+### Removed
+
+- 去掉 `calc` 宏包
+
 ## [v1.1.0] - 2022-03-13
 
 ### Changed

@@ -286,7 +286,6 @@
     varwidth,
     ulem,
     adjustbox,
-    calc,
     etoolbox,
     amsthm,
     thmtools
