@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-03-13}{v1.1.0}
+  {2022-03-16}{v1.1.1}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e }
 
@@ -593,8 +593,12 @@
     \__ccnu_setmainfont:nn { Times~ New~ Roman    } { }
     \__ccnu_setsansfont:nn { Arial                } { }
     \__ccnu_setmonofont:nn { Courier~ New         } { }
-    \__ccnu_setmathfont:nn { \g__ccnu_font_name_xits_math_rm_tl .otf }
-      { BoldFont = \g__ccnu_font_name_xits_math_bf_tl .otf }
+    % \__ccnu_setmathfont:nn { \g__ccnu_font_name_xits_math_rm_tl .otf }
+      % { BoldFont = \g__ccnu_font_name_xits_math_bf_tl .otf }
+    \__ccnu_setmathfont:nn { STIXTwoMath-Regular.otf }
+      { BoldFont = STIXTwoMath-Regular.otf }
+    % \setmathfont{STIXTwoMath-Regular.otf}
+    \setmathfont{STIXTwoMath-Regular.otf}[range={scr,bfscr},StylisticSet=01]
   }
 \cs_new_protected:Npn \__ccnu_load_cjk_font_adobe:
   {
@@ -2762,6 +2766,17 @@
 \AddChoicesCounter \circlednumber \__examzh_choices_circled_number:n {1}
 
 
+% 把致谢和附录的标题代码封装
+\NewDocumentCommand { \Appendix } { }
+  {
+    \chapter*{附录}
+    \addcontentsline{toc}{chapter}{\normalfont 附录}   % 根据旧模版样式，如果有写附录，则需要把附录放进目录
+  }
+\NewDocumentCommand { \Acknowledgements } { }
+  {
+    \chapter*{\centerline{致 \quad 谢}}
+    \addcontentsline{toc}{chapter}{\normalfont 致谢}   % 根据旧模版样式，如果有写致谢，则需要把致谢放进目录
+  }
 \ccnusetup
   {
     option / oneside ,
