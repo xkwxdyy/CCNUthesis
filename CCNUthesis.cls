@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-03-16}{v1.1.1}
+  {2022-03-18}{v1.1.2}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e }
 
@@ -284,6 +284,7 @@
     tikzpagenodes,
     tabularray,
     varwidth,
+    calc,    % 标题下划线需要
     ulem,
     adjustbox,
     etoolbox,
@@ -575,6 +576,7 @@
         BoldItalicFont = *-bolditalic,
         Ligatures      = CommonOff
       }
+    % TODO 考虑数学字体
     % \__ccnu_setmathfont:nn { \g__ccnu_font_name_xits_math_rm_tl .otf }
     %   { BoldFont = \g__ccnu_font_name_xits_math_bf_tl .otf }
     % \setmainfont{STIXTwoText}
@@ -1205,21 +1207,11 @@
 \newlength\titleLRExtraWd
 \newlength\titleSepWd
 
-\setlength\titleSingleLineMaxWd{0.6\textwidth}
-\setlength\titleMultiLineMaxWd{0.5\textwidth}
-\setlength\titleLRExtraWd{.5em}
+\setlength\titleSingleLineMaxWd{0.7\textwidth}
+\setlength\titleMultiLineMaxWd{0.7\textwidth}
+\setlength\titleLRExtraWd{.8em}
 \setlength\titleSepWd{.5em}
 
-% main macro, using a simple table
-% \newcommand{\multilingualTitles}[2]{%
-%   \par
-%   {\noindent\centering
-%   \begin{tabular}{r @{\hspace{\titleSepWd}} p{\titleSingleLineMaxWd}}
-%   	中文标题           & \titleBox{#1} \\
-%   	                 &               \\[-10pt]
-%   	Title in English & \titleBox{#2}
-%   \end{tabular}\par}%
-% }
 
 % draw a fixed-width underline
 \newcommand{\titleUnderline}{%
@@ -1267,8 +1259,13 @@
       \@titleBox{\centering #1}%
     \else
       % case 3: #1 is fit for one line
-      \rlap{\titleUnderline}%
-      \hspace{\titleLRExtraWd}%
+      \rlap{
+        \setlength\titleSingleLineMaxWd{0.6\textwidth}
+        \hspace{2\titleLRExtraWd}%
+        \titleUnderline
+      }%
+      % \titleUnderline
+      % \hspace{\titleLRExtraWd}%
       \@titleBox{\centering #1}%
     \fi
   \fi
@@ -1451,7 +1448,8 @@
           \__ccnu_spread_box:nn
             { \l__ccnu_cover_info_left_width_tl }
             { \l__ccnu_tmpa_tl }
-          \c__ccnu_fwid_colon_tl
+          % \c__ccnu_fwid_colon_tl
+          \hspace*{1em}
           \__ccnu_center_box:Vn \l__ccnu_tmpb_dim { \l__ccnu_tmpb_tl }
           \skip_vertical:n { 1 ex }
         }
@@ -2039,16 +2037,15 @@
           }
           { \l__ccnu_bib_style_tl }
       }
-    \tl_if_empty:NF \l__ccnu_cite_style_tlj
-      {
-        \clist_put_right:Nx \l__ccnu_biblatex_options_clist
-          { citestyle = \l__ccnu_cite_style_tl }
-      }
+    % \tl_if_empty:NF \l__ccnu_cite_style_tl
+    %   {
+    %     \clist_put_right:Nx \l__ccnu_biblatex_options_clist
+    %       { citestyle = \l__ccnu_cite_style_tl }
+    %   }
     \clist_put_right:Nn \l__ccnu_biblatex_options_clist
       {
         backend      = biber,
-        style        = CCNUthesis,
-        CCNUpunctcn  = false
+        style        = CCNUthesis
       }
     \exp_args:NV \PassOptionsToPackage \l__ccnu_biblatex_options_clist
       { biblatex }
@@ -2782,7 +2779,7 @@
     option / oneside ,
     style = 
       {
-        font = times*,
+        font = times,
         % 西文字体（包括数学字体）
         % 允许选项：
         %   font = garamond|libertinus|lm|palatino|times|times*|none

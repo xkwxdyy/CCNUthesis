@@ -4,7 +4,11 @@
   % 个人信息
   info = {
     % 论文的中文标题
-    title = {论文的中文标题},
+      % 如果有副标题，用 \\ 换行
+      % 如：这是一个很长很长很长标题\\——这是副标题
+    title = {
+      中文标题
+    },
     % 论文的英文标题
     title* = {
       Thesis Title
@@ -86,6 +90,7 @@
 
 % 目录
 \tableofcontents
+
 
 % 中文摘要
 \begin{abstract}
