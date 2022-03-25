@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-03-18}{v1.1.2}
+  {2022-03-25}{v1.1.3}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e }
 
@@ -31,6 +31,10 @@
           { \c_sys_engine_str }
       }
   }
+
+\NewDocumentCommand \ccnusetup { m }
+  { \keys_set:nn { ccnu } {#1} }
+
 \box_new:N   \l__ccnu_tmpa_box
 \clist_new:N \l__ccnu_tmpa_clist
 \clist_new:N \l__ccnu_tmpb_clist
@@ -1117,8 +1121,9 @@
       { \int_set_eq:NN \l__ccnu_info_degree_type_int \l_keys_choice_int },
     title       .tl_set:N    = \l__ccnu_info_title_tl,
     title*      .tl_set:N    = \l__ccnu_info_title_en_tl,
-    date        .tl_set:N    = \l__ccnu_info_date_tl,
-    level        .tl_set:N    = \l__ccnu_info_level_tl,
+    year        .int_set:N   = \l__ccnu_info_year_int,
+    month       .int_set:N   = \l__ccnu_info_month_int,
+    level       .tl_set:N    = \l__ccnu_info_level_tl,
     author      .tl_set:N    = \l__ccnu_info_author_tl,
     author*     .tl_set:N    = \l__ccnu_info_author_en_tl,
     supervisor  .tl_set:N    = \l__ccnu_info_supervisor_tl,
@@ -1367,6 +1372,31 @@
 \cs_set_eq:NN \ccnu_set_to_width:Nn \settowidth
 \dim_new:N \l__ccnu_date_zero_radius_dim
 % \ccnu_set_to_width:Nn \l__ccnu_date_zero_radius_dim {二}
+
+% 将输入的年份转化为封面底下的年份
+\int_new:N \l__ccnu_info_year_single_digit_int
+\int_new:N \l__ccnu_info_year_ten_digit_int
+
+\cs_new:Npn \__ccnu_info_year_set:
+  {
+    % 将数字减去2000
+    \int_set:Nn \l_tmpa_int { \l__ccnu_info_year_int - 2000}
+    % 取十位数
+    \int_set:Nn \l__ccnu_info_year_ten_digit_int
+      {
+        \int_div_truncate:nn { \l_tmpa_int } { 10 }
+      }
+    % 取个位数
+    \int_set:Nn \l__ccnu_info_year_single_digit_int
+      {
+        \l_tmpa_int - 10 * \l__ccnu_info_year_ten_digit_int
+      }
+    % 将两个数字转化为中文
+    \zhnumber { \int_use:N \l__ccnu_info_year_ten_digit_int }
+    \,
+    \zhnumber { \int_use:N \l__ccnu_info_year_single_digit_int }
+  }
+
 \cs_new_protected:Npn \__ccnu_cover_info:
   {
     \tl_set:Nx \l__ccnu_cover_info_left_width_tl
@@ -1404,7 +1434,10 @@
           %     \node[minimum~size = \dim_use:N \l__ccnu_date_zero_radius_dim, circle, draw] (titledate){};
           %   }
           〇
-          二二\,\,年\,\,\zhnumber{ \int_use:N \c_sys_month_int }\,\,月
+          \__ccnu_info_year_set:
+          \,年\,
+          \zhnumber{ \int_use:N \l__ccnu_info_month_int }\,
+          月
         };
       \node[] (type) at ([shift = {(0 , -0.35\paperheight)}]current~page.north) {\zihao{-1} \sffamily 本科毕业论文（设计）};
       % \node[] (titlecontent) at ([shift = {(0.05\paperheight, 0)}]current~page.center) {\zihao{-2} \bfseries \UnderlineCentered{8cm}{1.6mm}{\tl_use:N \l__ccnu_info_title_tl}};
@@ -2225,13 +2258,13 @@
     info    / degree          = academic,
     info    / secret-level    = none,
     info    / school-id       = { 10246 },
-    info    / date            = { \zhtoday },
+    info    / year            = { \int_use:N \c_sys_year_int },
+    info    / month           = { \int_use:N \c_sys_month_int },
     % theorem / header-font     = { \sffamily },
     % theorem / body-font       = { \ccnu@kai },
     % theorem / counter         = { chapter }
   }
-\NewDocumentCommand \ccnusetup { m }
-  { \keys_set:nn { ccnu } {#1} }
+
 % \newtheorem* { proof       } { \c__ccnu_name_proof_tl      }
 % \newtheorem  { axiom       } { \c__ccnu_name_axiom_tl      }
 % \newtheorem  { corollary   } { \c__ccnu_name_corollary_tl  }
