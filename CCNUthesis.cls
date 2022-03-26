@@ -1198,89 +1198,93 @@
     \kern\Mysavedprevdepth
   \end{adjustbox}%
 }%
-%%%%%%%%%%%%%% 慕子的下划线
-% \makeatletter   % 加
-\renewcommand{\arraystretch}{1.2}
 
-% inner temp length
-\newlength\@tempTitleHt
-\newlength\@tempTitleMaxWd
+% 慕子标题的下划线 LaTeX3 重写版本
+\dim_new:N \l__ccnu_title_tmp_height_dim
+\dim_new:N \l__ccnu_title_tmp_max_width_dim
 
-% length used as parameters， "Wd" is a shorthand for "Width"
-\newlength\titleSingleLineMaxWd
-\newlength\titleMultiLineMaxWd
-\newlength\titleLRExtraWd
-\newlength\titleSepWd
+\dim_new:N \l__ccnu_title_single_line_max_width_dim
+\dim_new:N \l__ccnu_title_multiline_max_width_dim
+\dim_new:N \l__ccnu_title_left_right_extra_width_dim
+\dim_new:N \l__ccnu_title_sep_width
 
-\setlength\titleSingleLineMaxWd{0.7\textwidth}
-\setlength\titleMultiLineMaxWd{0.7\textwidth}
-\setlength\titleLRExtraWd{.8em}
-\setlength\titleSepWd{.5em}
+\dim_set:Nn \l__ccnu_title_single_line_max_width_dim
+  { 0.6 \textwidth }
+\dim_set:Nn \l__ccnu_title_multiline_max_width_dim
+  { 0.6 \textwidth }
+\dim_set:Nn \l__ccnu_title_left_right_extra_width_dim
+  { .5em }
+\dim_set:Nn \l__ccnu_title_sep_width { .5em }
 
-
-% draw a fixed-width underline
-\newcommand{\titleUnderline}{%
-  \rule[-.3em]{\titleSingleLineMaxWd + 2\titleLRExtraWd}{1pt}}
-
-% title content typesetter
-\newcommand\titleBox[1]{%
-  \setlength\@tempTitleMaxWd\titleSingleLineMaxWd
-  % Measure the total height of #1 subject to \titleSingleLineMaxWd.
-  % Here \@titleBox is necessary when #1 contains "\\".
-  \settototalheight\@tempTitleHt{\@titleBox{#1}}%
-  \ifdim\@tempTitleHt=0pt%
-    % case 1: #1 causes empty output
-    \titleUnderline
-  \else
-    % Change to LR mode, for inserting a zero-width box right after.
-    \leavevmode
-    % note: Use \normalbaseineskip instead of \baselineskip, 
-    %       since the latter is set to 0pt inside tabular env.
-    \ifdim\@tempTitleHt>\normalbaselineskip
-      % case 2: #1 is fit for multilines, or contains `\\`, hence
-      %         \titleMultiLineMaxWd is used instead, and the total 
-      %         height of #1 subject to new max width is re-measured.
-      \setlength\@tempTitleMaxWd\titleMultiLineMaxWd
-      \settototalheight\@tempTitleHt{\@titleBox{#1}}%
-      % \rlap{\smash{...}} typesets content of its argument normally 
-      % but sets it into a zero sized box. Here \@titleBox set 
-      % (possiblly) multi-line text into a single box, since \smash 
-      % only takes in argument spreading one line.
-      %
-      % Every line of title content needs an underline, hense we do
-      % a loop to typeset one underline for every line the title 
-      % content actually spreads.
-      \rlap{\smash{\@titleBox{%
-        \@whiledim\@tempTitleHt>0pt%
-        \leavevmode
-        % 
-        \do{%
-          \rlap{\titleUnderline}\\%
-          \addtolength\@tempTitleHt{-\normalbaselineskip}%
-        }%
-      }}}%
-      % Insert h-offset to manually center the title content.
-      \hspace{\dimexpr\titleLRExtraWd + .5\titleSingleLineMaxWd - .5\titleMultiLineMaxWd\relax}%
-      \@titleBox{\centering #1}%
-    \else
-      % case 3: #1 is fit for one line
-      \rlap{
-        \setlength\titleSingleLineMaxWd{0.6\textwidth}
-        \hspace{2\titleLRExtraWd}%
-        \titleUnderline
-      }%
-      % \titleUnderline
-      % \hspace{\titleLRExtraWd}%
-      \@titleBox{\centering #1}%
-    \fi
-  \fi
-}
-
-% common operations on every title content
-\newcommand{\@titleBox}[1]{%
-  \parbox[t]{\@tempTitleMaxWd}{#1}}
-% \makeatother
-
+\cs_set_eq:NN \__ccnu_set_to_totalheight:Nn \settototalheight
+% 下划线
+\cs_new:Npn \__ccnu_title_underline:
+  {
+    \rule [ -.3em ]
+      {
+        \l__ccnu_title_single_line_max_width_dim
+        + 2 \l__ccnu_title_left_right_extra_width_dim
+      }
+      { 1pt }
+  }
+% 标题盒子
+\cs_new:Npn \__ccnu_title_box_aux:n #1
+  {
+    \parbox [t] { \l__ccnu_title_tmp_max_width_dim } {#1}
+  }
+\cs_new:Npn \__ccnu_title_box:n #1
+  {
+    \dim_set_eq:NN \l__ccnu_title_tmp_max_width_dim \l__ccnu_title_single_line_max_width_dim
+    % 储存标题盒子的高度
+    % \__ccnu_set_to_totalheight:Nn \l__ccnu_title_tmp_height_dim
+      % { \__ccnu_title_box_aux:n {#1} }
+    \__ccnu_set_to_totalheight:Nn \l__ccnu_title_tmp_height_dim { \__ccnu_title_box_aux:n {#1} }
+    % 根据高度判断下划线情况
+    \dim_compare:nNnTF
+      { \l__ccnu_title_tmp_height_dim } = { 0pt }
+      { \__ccnu_title_underline: }
+      {
+        \mode_leave_vertical:
+        \dim_compare:nNnTF 
+          { \l__ccnu_title_tmp_height_dim } > { \normalbaselineskip }
+          {
+            % 如果超过了 \normalbaselineskip 说明是多行
+            % 重新设置最长的宽度为开始设置的「多行的 max 宽度」
+            \dim_set_eq:NN \l__ccnu_title_tmp_max_width_dim \l__ccnu_title_multiline_max_width_dim
+            % 一行一行排版
+            \rlap
+              {
+                \smash
+                  {
+                    \__ccnu_title_box_aux:n
+                      {
+                        \dim_while_do:nNnn { \l__ccnu_title_tmp_height_dim } > { 0pt }
+                          {
+                            \mode_leave_vertical:
+                            \rlap { \__ccnu_title_underline: }\\
+                            \dim_sub:Nn \l__ccnu_title_tmp_height_dim { \normalbaselineskip }
+                            % 手动居中下划线
+                          }
+                      }
+                  }
+              }
+            \hspace
+              {
+                  \l__ccnu_title_left_right_extra_width_dim
+                + .5 \l__ccnu_title_single_line_max_width_dim
+                - .5 \l__ccnu_title_multiline_max_width_dim
+              }
+            % 排版文本
+            \__ccnu_title_box_aux:n { \centering #1 }
+          }
+          {
+            % 排版一行
+            \rlap { \__ccnu_title_underline: }
+            \hspace { \l__ccnu_title_left_right_extra_width_dim }
+            \__ccnu_title_box_aux:n { \centering #1 }
+          }
+      }
+  }
 %%%%%%%%%%%%%
 \cs_new:Npn \__ccnu_fixed_width_center_underline_box:nn #1#2
   % { \parbox {#1} { \centering \uline{#2} } }
@@ -1442,7 +1446,7 @@
       \node[] (type) at ([shift = {(0 , -0.35\paperheight)}]current~page.north) {\zihao{-1} \sffamily 本科毕业论文（设计）};
       % \node[] (titlecontent) at ([shift = {(0.05\paperheight, 0)}]current~page.center) {\zihao{-2} \bfseries \UnderlineCentered{8cm}{1.6mm}{\tl_use:N \l__ccnu_info_title_tl}};
       % \node[] (titlecontent) at ([shift = {(0.05\paperheight, 0)}]current~page.center) {\zihao{-2} \bfseries \titleBox{\tl_use:N \l__ccnu_info_title_tl}};
-      \node[] (titlecontent) at ([shift = {(0, 0)}]current~page.center) {\zihao{-2} \bfseries \titleBox{\tl_use:N \l__ccnu_info_title_tl}};
+      \node[] (titlecontent) at ([shift = {(0, 0)}]current~page.center) {\zihao{-2} \bfseries \__ccnu_title_box:n { \tl_use:N \l__ccnu_info_title_tl }};
       % \node[] (titlelabel) at ([shift = {(-0.15\paperheight, 0)}]current~page.center) { \zihao{-1} \textbf{题\,\,\,目}};
     \end{tikzpicture}
 
