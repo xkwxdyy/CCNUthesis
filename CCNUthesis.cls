@@ -1121,6 +1121,7 @@
       { \int_set_eq:NN \l__ccnu_info_degree_type_int \l_keys_choice_int },
     title       .tl_set:N    = \l__ccnu_info_title_tl,
     title*      .tl_set:N    = \l__ccnu_info_title_en_tl,
+    subtitle    .tl_set:N    = \l__ccnu_info_subtitle_tl,
     year        .int_set:N   = \l__ccnu_info_year_int,
     month       .int_set:N   = \l__ccnu_info_month_int,
     level       .tl_set:N    = \l__ccnu_info_level_tl,
@@ -1213,7 +1214,7 @@
 \dim_set:Nn \l__ccnu_title_single_line_max_width_dim
   { 0.8 \textwidth }
 \dim_set:Nn \l__ccnu_title_multiline_max_width_dim
-  { 0.8 \textwidth }
+  { 0.9 \textwidth }
 \dim_set:Nn \l__ccnu_title_left_right_extra_width_dim
   { .8em }
 \dim_set:Nn \l__ccnu_title_sep_width { 1.5em }
@@ -1248,7 +1249,11 @@
   {
     \dim_set_eq:NN \l__ccnu_title_tmp_max_width_dim \l__ccnu_title_single_line_max_width_dim
     % 储存标题盒子的高度
-    \__ccnu_set_to_totalheight:Nn \l__ccnu_title_tmp_height_dim { \__ccnu_title_box_aux:n {#1} }
+    \__ccnu_set_to_totalheight:Nn \l__ccnu_title_tmp_height_dim 
+      { \__ccnu_title_box_aux:n {#1} }
+      % {
+        % \parbox [t] { \l__ccnu_title_tmp_max_width_dim - 3em } { \centering #1 }
+      % }
     % 根据高度判断下划线情况
     \dim_compare:nNnTF
       { \l__ccnu_title_tmp_height_dim } = { 0pt }
@@ -1261,6 +1266,8 @@
             % 如果超过了 \normalbaselineskip 说明是多行
             % 重新设置最长的宽度为开始设置的「多行的 max 宽度」
             \dim_set_eq:NN \l__ccnu_title_tmp_max_width_dim \l__ccnu_title_multiline_max_width_dim
+            \__ccnu_set_to_totalheight:Nn \l__ccnu_title_tmp_height_dim 
+              { \__ccnu_title_box_aux:n {#1} }
             % 一行一行排版
             \rlap
               {
@@ -1280,12 +1287,12 @@
               }
             \hspace
               {
-                  4\l__ccnu_title_left_right_extra_width_dim
+                  \l__ccnu_title_left_right_extra_width_dim
                 % + .5 \l__ccnu_title_single_line_max_width_dim
                 % - .5 \l__ccnu_title_multiline_max_width_dim
               }
             % 排版文本
-            \parbox [t] { \l__ccnu_title_tmp_max_width_dim - 3em } { \centering #1 }
+            \parbox [t] { \l__ccnu_title_tmp_max_width_dim } { \centering #1 }
           }
           {
             % 排版一行
@@ -1320,6 +1327,34 @@
           }
       }
   }
+
+% 处理副标题
+\bool_new:N \l__ccnu_title_whether_subtitle_bool   % 是否开启副标题
+
+% 检测是否有副标题
+\cs_new:Npn \__ccnu_title_if_subtitle:
+  {
+    \tl_if_blank:VTF \l__ccnu_info_subtitle_tl
+      { \bool_set_false:N \l__ccnu_title_whether_subtitle_bool }
+      { \bool_set_true:N \l__ccnu_title_whether_subtitle_bool }
+  }
+\cs_new:Npn \__ccnu_type_title:
+  {
+    \bool_if:NTF \l__ccnu_title_whether_subtitle_bool
+      {
+        \begin{tblr}{
+          colspec = {c},
+          rows = {f, abovesep += 3pt},
+        }
+          \__ccnu_title_box:n { \tl_use:N \l__ccnu_info_title_tl }\\
+          \__ccnu_title_box:n { —— \tl_use:N \l__ccnu_info_subtitle_tl }
+        \end{tblr}
+      }
+      {
+        \__ccnu_title_box:n { \tl_use:N \l__ccnu_info_title_tl }
+      }
+  }
+
 %%%%%%%%%%%%%
 \cs_new:Npn \__ccnu_fixed_width_center_underline_box:nn #1#2
   % { \parbox {#1} { \centering \uline{#2} } }
@@ -1446,6 +1481,8 @@
             { 2 } { 9 em }
           }
       }
+    % 检测是否有副标题
+    \__ccnu_title_if_subtitle:
     \begin{tikzpicture}[remember~picture, overlay]
       \node[anchor = north] (upperinfo) at 
         ([shift={(0,0\paperheight)}]current~page~text~area.north) 
@@ -1484,7 +1521,8 @@
       \node[] (titlecontent) at ([shift = {(0, 0)}]current~page.center) 
         {
           \zihao{-2} \bfseries 
-          \__ccnu_title_box:n { \tl_use:N \l__ccnu_info_title_tl }
+          % \__ccnu_title_box:n { \tl_use:N \l__ccnu_info_title_tl }
+          \__ccnu_type_title:
         };
       % \node[] (titlelabel) at ([shift = {(-0.15\paperheight, 0)}]current~page.center) { \zihao{-1} \textbf{题\,\,\,目}};
     \end{tikzpicture}
