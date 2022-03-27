@@ -1216,7 +1216,7 @@
   { 0.8 \textwidth }
 \dim_set:Nn \l__ccnu_title_left_right_extra_width_dim
   { .8em }
-\dim_set:Nn \l__ccnu_title_sep_width { .5em }
+\dim_set:Nn \l__ccnu_title_sep_width { 1.5em }
 
 \cs_set_eq:NN \__ccnu_set_to_totalheight:Nn \settototalheight
 \cs_set_eq:NN \__ccnu_set_to_width:Nn \settowidth
@@ -1290,13 +1290,31 @@
           {
             % 排版一行
             \__ccnu_set_to_width:Nn \l__ccnu_title_tmp_width_dim {#1}
-            % \dim_add:Nn \l__ccnu_title_tmp_max_width_dim 
-              % { \l__ccnu_title_tmp_width_dim / 2 }
-            \rlap { \__ccnu_title_underline_single: }
-            \hspace
-              { 
-                % - \l__ccnu_title_tmp_width_dim / 4
-                + \l__ccnu_title_left_right_extra_width_dim 
+            \dim_compare:nNnTF { \l__ccnu_title_tmp_width_dim } < { 8em }
+              {
+                \rlap
+                  {
+                    \hspace { \l__ccnu_title_tmp_width_dim / 5 }
+                    \rule [ -.3em ]
+                      {
+                        15em
+                        + 4 \l__ccnu_title_left_right_extra_width_dim
+                      }
+                      { 1pt }
+                  }
+                \hspace
+                  { 
+                    - \l__ccnu_title_tmp_width_dim / 4
+                    + 3 \l__ccnu_title_left_right_extra_width_dim 
+                  }
+              }
+              {
+                \rlap { \__ccnu_title_underline_single: }
+                \hspace
+                  { 
+                    % - \l__ccnu_title_tmp_width_dim / 4
+                    + \l__ccnu_title_left_right_extra_width_dim 
+                  }
               }
             \__ccnu_title_box_aux:n { \centering #1 }
           }
