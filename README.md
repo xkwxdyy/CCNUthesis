@@ -30,9 +30,15 @@
 \documentclass{CCNUthesis}
 
 \ccnusetup{
+  % 个人信息
   info = {
-    % 论文的中文标题
-    title = {论文的中文标题},
+    % 主标题
+    title = {
+      中文主标题
+    },
+    % subtitle = {
+      % 这是一个副标题
+    % },
     % 论文的英文标题
     title* = {
       Thesis Title
@@ -49,23 +55,27 @@
     student-id = {学号},
     % 指导教师
     supervisor = {xxx \quad 教授},
-    % 论文中文关键词，用英文“,”隔开
+    % 论文中文关键词
     keywords = {
       关键词1,
       关键词2,
       关键词3
     },
-    % 论文英文关键词，用英文“,”隔开
+    % 论文英文关键词
     keywords* = {
       keyword1,
       keyword2,
       keyword3
-    } 
+    },
+    % 年份
+    % year    = {2022},
+    % 月份
+    % month = {4}
   },
   style = {
     % 中文字体
     cjk-font = fandol,
-    % 参考文献数据源
+    % 参考文献数据库
     bib-resource = {CCNUthesis-main.bib}
   }
 }
