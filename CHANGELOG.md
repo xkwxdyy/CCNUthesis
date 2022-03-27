@@ -1,5 +1,8 @@
 # 更新日志
 
+配套的 b 站讲解视频：<https://www.bilibili.com/video/bv1vS4y1D7hF>
+
+更多关于模版的内容和如何使用，请仔细阅读 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis)！
 ## [v1.1.4] - 2022-03-27
 
 ### Added
