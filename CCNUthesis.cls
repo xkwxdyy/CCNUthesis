@@ -1121,6 +1121,7 @@
       { \int_set_eq:NN \l__ccnu_info_degree_type_int \l_keys_choice_int },
     title       .tl_set:N    = \l__ccnu_info_title_tl,
     title*      .tl_set:N    = \l__ccnu_info_title_en_tl,
+    subtitle    .tl_set:N    = \l__ccnu_info_subtitle_tl,
     year        .int_set:N   = \l__ccnu_info_year_int,
     month       .int_set:N   = \l__ccnu_info_month_int,
     level       .tl_set:N    = \l__ccnu_info_level_tl,
@@ -1201,28 +1202,40 @@
 
 % 慕子标题的下划线 LaTeX3 重写版本
 \dim_new:N \l__ccnu_title_tmp_height_dim
+\dim_new:N \l__ccnu_title_tmp_width_dim      % 储存单行的宽度
 \dim_new:N \l__ccnu_title_tmp_max_width_dim
 
 \dim_new:N \l__ccnu_title_single_line_max_width_dim
 \dim_new:N \l__ccnu_title_multiline_max_width_dim
+% \dim_new:N \l__ccnu_title_underline_max_width_dim
 \dim_new:N \l__ccnu_title_left_right_extra_width_dim
 \dim_new:N \l__ccnu_title_sep_width
 
 \dim_set:Nn \l__ccnu_title_single_line_max_width_dim
-  { 0.6 \textwidth }
+  { 0.8 \textwidth }
 \dim_set:Nn \l__ccnu_title_multiline_max_width_dim
-  { 0.6 \textwidth }
+  { 0.9 \textwidth }
 \dim_set:Nn \l__ccnu_title_left_right_extra_width_dim
-  { .5em }
-\dim_set:Nn \l__ccnu_title_sep_width { .5em }
+  { .8em }
+\dim_set:Nn \l__ccnu_title_sep_width { 1.5em }
 
 \cs_set_eq:NN \__ccnu_set_to_totalheight:Nn \settototalheight
+\cs_set_eq:NN \__ccnu_set_to_width:Nn \settowidth
 % 下划线
-\cs_new:Npn \__ccnu_title_underline:
+\cs_new:Npn \__ccnu_title_underline_single:
   {
     \rule [ -.3em ]
       {
         \l__ccnu_title_single_line_max_width_dim
+        + 2 \l__ccnu_title_left_right_extra_width_dim
+      }
+      { 1pt }
+  }
+\cs_new:Npn \__ccnu_title_underline_multiline:
+  {
+    \rule [ -.3em ]
+      {
+        \l__ccnu_title_multiline_max_width_dim
         + 2 \l__ccnu_title_left_right_extra_width_dim
       }
       { 1pt }
@@ -1236,13 +1249,15 @@
   {
     \dim_set_eq:NN \l__ccnu_title_tmp_max_width_dim \l__ccnu_title_single_line_max_width_dim
     % 储存标题盒子的高度
-    % \__ccnu_set_to_totalheight:Nn \l__ccnu_title_tmp_height_dim
-      % { \__ccnu_title_box_aux:n {#1} }
-    \__ccnu_set_to_totalheight:Nn \l__ccnu_title_tmp_height_dim { \__ccnu_title_box_aux:n {#1} }
+    \__ccnu_set_to_totalheight:Nn \l__ccnu_title_tmp_height_dim 
+      { \__ccnu_title_box_aux:n {#1} }
+      % {
+        % \parbox [t] { \l__ccnu_title_tmp_max_width_dim - 3em } { \centering #1 }
+      % }
     % 根据高度判断下划线情况
     \dim_compare:nNnTF
       { \l__ccnu_title_tmp_height_dim } = { 0pt }
-      { \__ccnu_title_underline: }
+      { \__ccnu_title_underline_single: }
       {
         \mode_leave_vertical:
         \dim_compare:nNnTF 
@@ -1251,6 +1266,8 @@
             % 如果超过了 \normalbaselineskip 说明是多行
             % 重新设置最长的宽度为开始设置的「多行的 max 宽度」
             \dim_set_eq:NN \l__ccnu_title_tmp_max_width_dim \l__ccnu_title_multiline_max_width_dim
+            \__ccnu_set_to_totalheight:Nn \l__ccnu_title_tmp_height_dim 
+              { \__ccnu_title_box_aux:n {#1} }
             % 一行一行排版
             \rlap
               {
@@ -1261,7 +1278,7 @@
                         \dim_while_do:nNnn { \l__ccnu_title_tmp_height_dim } > { 0pt }
                           {
                             \mode_leave_vertical:
-                            \rlap { \__ccnu_title_underline: }\\
+                            \rlap { \__ccnu_title_underline_multiline: }\\
                             \dim_sub:Nn \l__ccnu_title_tmp_height_dim { \normalbaselineskip }
                             % 手动居中下划线
                           }
@@ -1271,20 +1288,73 @@
             \hspace
               {
                   \l__ccnu_title_left_right_extra_width_dim
-                + .5 \l__ccnu_title_single_line_max_width_dim
-                - .5 \l__ccnu_title_multiline_max_width_dim
+                % + .5 \l__ccnu_title_single_line_max_width_dim
+                % - .5 \l__ccnu_title_multiline_max_width_dim
               }
             % 排版文本
-            \__ccnu_title_box_aux:n { \centering #1 }
+            \parbox [t] { \l__ccnu_title_tmp_max_width_dim } { \centering #1 }
           }
           {
             % 排版一行
-            \rlap { \__ccnu_title_underline: }
-            \hspace { \l__ccnu_title_left_right_extra_width_dim }
+            \__ccnu_set_to_width:Nn \l__ccnu_title_tmp_width_dim {#1}
+            \dim_compare:nNnTF { \l__ccnu_title_tmp_width_dim } < { 8em }
+              {
+                \rlap
+                  {
+                    \hspace { \l__ccnu_title_tmp_width_dim / 5 }
+                    \rule [ -.3em ]
+                      {
+                        15em
+                        + 4 \l__ccnu_title_left_right_extra_width_dim
+                      }
+                      { 1pt }
+                  }
+                \hspace
+                  { 
+                    - \l__ccnu_title_tmp_width_dim / 4
+                    + 3 \l__ccnu_title_left_right_extra_width_dim 
+                  }
+              }
+              {
+                \rlap { \__ccnu_title_underline_single: }
+                \hspace
+                  { 
+                    % - \l__ccnu_title_tmp_width_dim / 4
+                    + \l__ccnu_title_left_right_extra_width_dim 
+                  }
+              }
             \__ccnu_title_box_aux:n { \centering #1 }
           }
       }
   }
+
+% 处理副标题
+\bool_new:N \l__ccnu_title_whether_subtitle_bool   % 是否开启副标题
+
+% 检测是否有副标题
+\cs_new:Npn \__ccnu_title_if_subtitle:
+  {
+    \tl_if_blank:VTF \l__ccnu_info_subtitle_tl
+      { \bool_set_false:N \l__ccnu_title_whether_subtitle_bool }
+      { \bool_set_true:N \l__ccnu_title_whether_subtitle_bool }
+  }
+\cs_new:Npn \__ccnu_type_title:
+  {
+    \bool_if:NTF \l__ccnu_title_whether_subtitle_bool
+      {
+        \begin{tblr}{
+          colspec = {c},
+          rows = {f, abovesep += 3pt},
+        }
+          \__ccnu_title_box:n { \tl_use:N \l__ccnu_info_title_tl }\\
+          \__ccnu_title_box:n { —— \tl_use:N \l__ccnu_info_subtitle_tl }
+        \end{tblr}
+      }
+      {
+        \__ccnu_title_box:n { \tl_use:N \l__ccnu_info_title_tl }
+      }
+  }
+
 %%%%%%%%%%%%%
 \cs_new:Npn \__ccnu_fixed_width_center_underline_box:nn #1#2
   % { \parbox {#1} { \centering \uline{#2} } }
@@ -1411,6 +1481,8 @@
             { 2 } { 9 em }
           }
       }
+    % 检测是否有副标题
+    \__ccnu_title_if_subtitle:
     \begin{tikzpicture}[remember~picture, overlay]
       \node[anchor = north] (upperinfo) at 
         ([shift={(0,0\paperheight)}]current~page~text~area.north) 
@@ -1446,7 +1518,12 @@
       \node[] (type) at ([shift = {(0 , -0.35\paperheight)}]current~page.north) {\zihao{-1} \sffamily 本科毕业论文（设计）};
       % \node[] (titlecontent) at ([shift = {(0.05\paperheight, 0)}]current~page.center) {\zihao{-2} \bfseries \UnderlineCentered{8cm}{1.6mm}{\tl_use:N \l__ccnu_info_title_tl}};
       % \node[] (titlecontent) at ([shift = {(0.05\paperheight, 0)}]current~page.center) {\zihao{-2} \bfseries \titleBox{\tl_use:N \l__ccnu_info_title_tl}};
-      \node[] (titlecontent) at ([shift = {(0, 0)}]current~page.center) {\zihao{-2} \bfseries \__ccnu_title_box:n { \tl_use:N \l__ccnu_info_title_tl }};
+      \node[] (titlecontent) at ([shift = {(0, 0)}]current~page.center) 
+        {
+          \zihao{-2} \bfseries 
+          % \__ccnu_title_box:n { \tl_use:N \l__ccnu_info_title_tl }
+          \__ccnu_type_title:
+        };
       % \node[] (titlelabel) at ([shift = {(-0.15\paperheight, 0)}]current~page.center) { \zihao{-1} \textbf{题\,\,\,目}};
     \end{tikzpicture}
 
