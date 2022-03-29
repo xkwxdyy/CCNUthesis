@@ -1503,13 +1503,12 @@
         {
           \zihao{3} \bfseries
           % \ccnu_set_to_width:Nn \l__ccnu_date_zero_radius_dim {二}
-          二
           % \tikz{\draw (0,0) circle [radius = \dim_use:N \l__ccnu_date_zero_radius_dim ];}
           % \tikz[baseline = (titledate.base)]
           %   {
           %     \node[minimum~size = \dim_use:N \l__ccnu_date_zero_radius_dim, circle, draw] (titledate){};
           %   }
-          〇
+          \zhdigits{2022}
           \__ccnu_info_year_set:
           \,年\,
           \zhnumber{ \int_use:N \l__ccnu_info_month_int }\,
