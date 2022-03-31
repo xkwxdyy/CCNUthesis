@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-03-27}{v1.1.4}
+  {2022-03-31}{v1.1.6}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e }
 
@@ -327,15 +327,19 @@
 \geometry
   {
     paper      = a4paper,
-    % vmargin    = 2.54 cm,
-    % hmargin    = 3.18 cm,
-    % headheight = 15 pt
+    twoside,
     left = 3cm,
     right = 2.5cm,
     top = 3cm,
     bottom = 2.5cm
   }
 \bool_if:NT \g__ccnu_draft_bool { \geometry { showframe } }
+\setenumerate[1]{
+  itemindent    = \parindent,
+  leftmargin    = 0pt,
+  widest        = 0,
+  listparindent = \parindent
+}
 \tl_new:N \g__ccnu_fontset_tl
 \tl_new:N \g__ccnu_cjk_fontset_tl
 \keys_define:nn { ccnu / style }
@@ -812,6 +816,7 @@
 \keys_set:nn { ctex }
   {
     tocdepth = 1 ,
+    secnumdepth = 3,
     chapter =
       {
         format      = \zihao{3} \normalfont \bfseries,
@@ -1516,10 +1521,10 @@
         (
           [shift = {(0 , -0.3\paperheight)}]current~page.north
         )
-        { \includegraphics[width = 0.4\textwidth]{logo/ccnulogo.png} };
+        { \includegraphics[height = 3.3em, width = 0.4\textwidth]{logo/ccnulogo.png} };
       \node (type) at 
         (
-          [shift = {(0 , -0.39\paperheight)}]current~page.north
+          [shift = {(0 , -0.3em-0.39\paperheight)}]current~page.north
         )
         { \zihao{-1} \sffamily 本科毕业论文（设计）};
       \node[] (titlecontent) at 

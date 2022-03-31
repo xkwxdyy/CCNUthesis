@@ -3,6 +3,24 @@
 配套的 b 站讲解视频：<https://www.bilibili.com/video/bv1vS4y1D7hF>
 
 更多关于模版的内容和如何使用，请仔细阅读 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis)！
+
+## [v1.1.6] - 2022-03-31
+
+### Fixed
+
+- 更新 `CCNUthesis.bbx`，修复 `book` 类 [M] 后有两个 `.` 的问题
+
+## [v1.1.5] - 2022-03-30
+
+### Added
+
+- `geometry` 设置中添加 `twoside`
+- 设置第一层级 `enumerate` 的一些参数
+### Changed
+
+- `secnumdepth` 改为 3
+
+
 ## [v1.1.4] - 2022-03-27
 
 ### Added
