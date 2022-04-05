@@ -4,6 +4,12 @@
 
 更多关于模版的内容和如何使用，请仔细阅读 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis)！
 
+## [v1.1.7] - 2022-04-05
+
+### Fixed
+
+- 解决 `tocloft` 和 `subfigure` 的冲突
+
 ## [v1.1.6] - 2022-03-31
 
 ### Fixed
