@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-04-05}{v1.1.7}
+  {2022-04-07}{v1.1.7}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e }
 
@@ -300,7 +300,7 @@
 % \RequirePackage{physics}
 % 修复\vu的上标偏移问题
 % \DeclareDocumentCommand\vectorunit{ s m }{\IfBooleanTF{#1}{\boldsymbol{\hat{#2}}}{\mathbf{\hat{#2}}}}
-\RequirePackage[titles, subfigure]{tocloft}
+\RequirePackage[titles]{tocloft}
 \graphicspath{{figures/}{logo/}}
 \cs_new_protected:Npn \__ccnu_check_package:nnn #1#2#3
   {
@@ -2011,7 +2011,7 @@
     %     \clist_use:Nn #2 {#3} \par
     %     \cs_gset:Npx \__ccnu_keywords_prevdepth: { \dim_use:N \tex_prevdepth:D }
     %   }
-    \parbox [t] { \dim_eval:n { \textwidth - \parindent - \l__ccnu_tmpa_dim }  }
+    \parbox [t] { \dim_eval:n { \textwidth - \l__ccnu_tmpa_dim }  }
       {
         \begin{varwidth}[t]{\hsize}
           \clist_use:Nn #2 {#3} \par
