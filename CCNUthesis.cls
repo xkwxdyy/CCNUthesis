@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-04-07}{v1.1.7}
+  {2022-04-09}{v1.1.7}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e }
 
@@ -1719,7 +1719,7 @@
       { \UseInstance { ccnu / cover } { cover-ii-default } }
   }
 % \NewDocumentCommand \makecoveriii { }
-  {
+  % {
     % \group_begin:
     % \cleardoublepage
     % \tl_if_empty:NTF \l__ccnu_declaration_page_tl
@@ -2171,7 +2171,8 @@
     \clist_put_right:Nn \l__ccnu_biblatex_options_clist
       {
         backend      = biber,
-        style        = CCNUthesis
+        style        = CCNUthesis,
+        CCNUpunctcn  = false
       }
     \exp_args:NV \PassOptionsToPackage \l__ccnu_biblatex_options_clist
       { biblatex }
@@ -2944,3 +2945,7 @@
         %
       }
   }
+
+
+\setlength{\lineskiplimit}{2.5pt}
+\setlength{\lineskip}{\baselineskip-1.1\ccwd}
