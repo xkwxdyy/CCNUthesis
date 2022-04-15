@@ -1106,6 +1106,9 @@
 \cs_set:Npn \thetable
   % { \thechapter - \__ccnu_arabic:n { table  } }
   { \__ccnu_arabic:n { table  } }
+% table 和 figure 连续编号
+\counterwithout{figure}{chapter}
+\counterwithout{table}{chapter}
 \clist_map_inline:nn
   {
     title, date, author, supervisor, department, major, student_id,
@@ -2049,6 +2052,7 @@
   }
   {
       \endlongtable
+      \setcounter{table}{0}
     \group_end:
   }
 \cs_new_protected:Npn \__ccnu_notation_begin:
