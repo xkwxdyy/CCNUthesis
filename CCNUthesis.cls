@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-03-27}{v1.1.4}
+  {2022-04-13}{v1.1.8}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e }
 
@@ -327,15 +327,19 @@
 \geometry
   {
     paper      = a4paper,
-    % vmargin    = 2.54 cm,
-    % hmargin    = 3.18 cm,
-    % headheight = 15 pt
+    twoside,
     left = 3cm,
     right = 2.5cm,
     top = 3cm,
     bottom = 2.5cm
   }
 \bool_if:NT \g__ccnu_draft_bool { \geometry { showframe } }
+\setenumerate[1]{
+  itemindent    = \parindent,
+  leftmargin    = 0pt,
+  widest        = 0,
+  listparindent = \parindent
+}
 \tl_new:N \g__ccnu_fontset_tl
 \tl_new:N \g__ccnu_cjk_fontset_tl
 \keys_define:nn { ccnu / style }
@@ -812,6 +816,7 @@
 \keys_set:nn { ctex }
   {
     tocdepth = 1 ,
+    secnumdepth = 3,
     chapter =
       {
         format      = \zihao{3} \normalfont \bfseries,
@@ -1278,7 +1283,7 @@
                         \dim_while_do:nNnn { \l__ccnu_title_tmp_height_dim } > { 0pt }
                           {
                             \mode_leave_vertical:
-                            \rlap { \__ccnu_title_underline_multiline: }\\
+                            \rlap { \__ccnu_title_underline_multiline: }\\[0.5em]
                             \dim_sub:Nn \l__ccnu_title_tmp_height_dim { \normalbaselineskip }
                             % 手动居中下划线
                           }
@@ -1292,16 +1297,18 @@
                 % - .5 \l__ccnu_title_multiline_max_width_dim
               }
             % 排版文本
-            \parbox [t] { \l__ccnu_title_tmp_max_width_dim } { \centering #1 }
+            \parbox [t] 
+              { \l__ccnu_title_tmp_max_width_dim }
+              { \linespread{1.8}\selectfont \centering #1 }
           }
           {
             % 排版一行
             \__ccnu_set_to_width:Nn \l__ccnu_title_tmp_width_dim {#1}
-            \dim_compare:nNnTF { \l__ccnu_title_tmp_width_dim } < { 8em }
+            \dim_compare:nNnTF { \l__ccnu_title_tmp_width_dim } < { 5em }
               {
                 \rlap
                   {
-                    \hspace { \l__ccnu_title_tmp_width_dim / 5 }
+                    \hspace { \l__ccnu_title_tmp_width_dim / 4 }
                     \rule [ -.3em ]
                       {
                         15em
@@ -1485,12 +1492,12 @@
     \__ccnu_title_if_subtitle:
     \begin{tikzpicture}[remember~picture, overlay]
       \node[anchor = north] (upperinfo) at 
-        ([shift={(0,0\paperheight)}]current~page~text~area.north) 
+        ([shift={(0, -3em)}]current~page~text~area.north) 
         {
           \begin{varwidth}{\hsize}
             \begin{tblr}
               {
-                % vlines, hlines,
+                row{2} = {abovesep += 1em},
                 column{1} = { 0.5\textwidth, l},
                 column{2} = { 0.5\textwidth, l},
               }
@@ -1502,25 +1509,31 @@
       \node[anchor = south] (date) at (current~page~text~area.south) 
         {
           \zihao{3} \bfseries
-          % \ccnu_set_to_width:Nn \l__ccnu_date_zero_radius_dim {二}
-          % \tikz{\draw (0,0) circle [radius = \dim_use:N \l__ccnu_date_zero_radius_dim ];}
-          % \tikz[baseline = (titledate.base)]
-          %   {
-          %     \node[minimum~size = \dim_use:N \l__ccnu_date_zero_radius_dim, circle, draw] (titledate){};
-          %   }
-          \zhdigits{2022}
-          \__ccnu_info_year_set:
-          \,年\,
-          \zhnumber{ \int_use:N \l__ccnu_info_month_int }\,
+          \zhdigits
+            { \int_use:N \l__ccnu_info_year_int}
+          \, 年 \,
+          \zhnumber
+            { \int_use:N \l__ccnu_info_month_int }
+          \,
           月
         };
-      \node[] (type) at ([shift = {(0 , -0.35\paperheight)}]current~page.north) {\zihao{-1} \sffamily 本科毕业论文（设计）};
-      % \node[] (titlecontent) at ([shift = {(0.05\paperheight, 0)}]current~page.center) {\zihao{-2} \bfseries \UnderlineCentered{8cm}{1.6mm}{\tl_use:N \l__ccnu_info_title_tl}};
-      % \node[] (titlecontent) at ([shift = {(0.05\paperheight, 0)}]current~page.center) {\zihao{-2} \bfseries \titleBox{\tl_use:N \l__ccnu_info_title_tl}};
-      \node[] (titlecontent) at ([shift = {(0, 0)}]current~page.center) 
+      \node (logo) at 
+        (
+          [shift = {(0 , -0.3\paperheight)}]current~page.north
+        )
+        { \includegraphics[height = 3.3em, width = 0.4\textwidth]{logo/ccnulogo.png} };
+      \node (type) at 
+        (
+          [shift = {(0 , -0.3em-0.39\paperheight)}]current~page.north
+        )
+        { \zihao{-1} \sffamily 本科毕业论文（设计）};
+      \node[] (titlecontent) at 
+        (
+          [shift = {(0, -1.5em)}]
+          current~page.center
+        ) 
         {
           \zihao{-2} \bfseries 
-          % \__ccnu_title_box:n { \tl_use:N \l__ccnu_info_title_tl }
           \__ccnu_type_title:
         };
       % \node[] (titlelabel) at ([shift = {(-0.15\paperheight, 0)}]current~page.center) { \zihao{-1} \textbf{题\,\,\,目}};
@@ -1706,7 +1719,7 @@
       { \UseInstance { ccnu / cover } { cover-ii-default } }
   }
 % \NewDocumentCommand \makecoveriii { }
-  {
+  % {
     % \group_begin:
     % \cleardoublepage
     % \tl_if_empty:NTF \l__ccnu_declaration_page_tl
@@ -1743,7 +1756,7 @@
   {
     bottom-skip            = 0 pt plus 1.5 fill,
     % id       / content     = \__ccnu_cover_id:,
-    logo     / content     = \__ccnu_cover_logo:,
+    % logo     / content     = \__ccnu_cover_logo:,
     % type     / content     = \__ccnu_cover_type:,
     degree   / content     = \__ccnu_cover_degree:,
     % title    / content     =
@@ -1942,6 +1955,7 @@
 \cs_new_protected:Npn \__ccnu_abstract_en_begin:
   { 
     \bigskip
+    \addcontentsline{toc}{chapter}{\normalfont  Title  }
     \textbf{ Title: } \c_space_tl \l__ccnu_info_title_en_tl \par
     \medskip
     \__ccnu_abstract_env:V \c__ccnu_name_abstract_en_tl 
@@ -1998,7 +2012,7 @@
     %     \clist_use:Nn #2 {#3} \par
     %     \cs_gset:Npx \__ccnu_keywords_prevdepth: { \dim_use:N \tex_prevdepth:D }
     %   }
-    \parbox [t] { \dim_eval:n { \textwidth - \parindent - \l__ccnu_tmpa_dim }  }
+    \parbox [t] { \dim_eval:n { \textwidth - \l__ccnu_tmpa_dim }  }
       {
         \begin{varwidth}[t]{\hsize}
           \clist_use:Nn #2 {#3} \par
@@ -2158,7 +2172,8 @@
     \clist_put_right:Nn \l__ccnu_biblatex_options_clist
       {
         backend      = biber,
-        style        = CCNUthesis
+        style        = CCNUthesis,
+        CCNUpunctcn  = false
       }
     \exp_args:NV \PassOptionsToPackage \l__ccnu_biblatex_options_clist
       { biblatex }
@@ -2340,9 +2355,6 @@
     info    / school-id       = { 10246 },
     info    / year            = { \int_use:N \c_sys_year_int },
     info    / month           = { \int_use:N \c_sys_month_int },
-    % theorem / header-font     = { \sffamily },
-    % theorem / body-font       = { \ccnu@kai },
-    % theorem / counter         = { chapter }
   }
 
 % \newtheorem* { proof       } { \c__ccnu_name_proof_tl      }
@@ -2934,3 +2946,11 @@
         %
       }
   }
+
+
+\setlength{\lineskiplimit}{2.5pt}
+\setlength{\lineskip}{\baselineskip-1.1\ccwd}
+
+% 取消 \nocite{} 的作用，防止用户自己使用
+
+\RenewDocumentCommand { \nocite } { m } {}
