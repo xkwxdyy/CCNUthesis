@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-04-13}{v1.1.8}
+  {2022-04-09}{v1.1.7}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e }
 
@@ -335,10 +335,10 @@
   }
 \bool_if:NT \g__ccnu_draft_bool { \geometry { showframe } }
 \setenumerate[1]{
-  labelindent  = \parindent,
-  leftmargin   = 0pt,
-  widest       = 0,
-  itemindent   = *
+  itemindent    = \parindent,
+  leftmargin    = 0pt,
+  widest        = 0,
+  listparindent = \parindent
 }
 \tl_new:N \g__ccnu_fontset_tl
 \tl_new:N \g__ccnu_cjk_fontset_tl
@@ -1955,7 +1955,6 @@
 \cs_new_protected:Npn \__ccnu_abstract_en_begin:
   { 
     \bigskip
-    \addcontentsline{toc}{chapter}{\normalfont  Title  }
     \textbf{ Title: } \c_space_tl \l__ccnu_info_title_en_tl \par
     \medskip
     \__ccnu_abstract_env:V \c__ccnu_name_abstract_en_tl 
@@ -2414,6 +2413,13 @@
     { 注, 注, theorem, remark },
   }\__xdyymath_declare_theorem_with_counter_sibling:n
 
+\declaretheorem
+  [
+    style = ccnustyle,
+    name =  分析,
+    refname = 分析,
+    numbered = no
+  ]{analysis}
 
 \RenewDocumentEnvironment { proof } { O{\proofname} +b }
   {
@@ -2950,7 +2956,3 @@
 
 \setlength{\lineskiplimit}{2.5pt}
 \setlength{\lineskip}{\baselineskip-1.1\ccwd}
-
-% 取消 \nocite{} 的作用，防止用户自己使用
-
-\RenewDocumentCommand { \nocite } { m } {}

@@ -1,0 +1,99 @@
+\chapter{伯努利不等式}
+
+伯努利不等式又可叫贝努利不等式，其一般形式为：
+$\forall n>0$ 且 $n \in N_{+}$, 和 $\forall x>-1$ 且 $x \in R$, 有 $(1+x)^{n} \geq 1+n x$ 成立。
+伯努利不等式在高中就有了一定的贯彻和应用，其针对幂函数到一次函数的放缩，丢掉了次数，大大简化了解题难度。
+
+
+\section{伯努利不等式的证明}
+
+伯努利不等式的证明可用二项式定理、求导等多种办法进行，这里跟随上文的脚步，继续用数学归纳法论证其证明。
+
+\begin{proof}
+  \begin{enumerate}
+    \item 当 $n=1$ 时结论成立；
+    \item 当 $n=2$ 时, 即证 $(1+x)^{2} \geq 1+2 x$, 即证 $x^{2} \geq 0$, 结论成立；
+    \item 不妨设 $n=k$ 时结论成立, 即 $(1+x)^{k} \geq 1+k x$。
+    当 $n=k+1$ 时, \[(1+x)^{k+1}=(1+x)^{k}(1+x) \geq(1+k x)(1+x)\]
+    展开得到: \[(1+x)^{k+1} \geq k x^{2}+1+(k+1) x \geq 1+(k+1) x,\] 原式得证. \qedhere
+  \end{enumerate}
+\end{proof}
+
+
+
+\section{伯努利不等式的推广}
+
+伯努利不等式可推广到实数幂的形式: 若 $r \leq 0$ 或 $r \geq 1$, 有 $(1+x)^{r} \geq 1+ r x;$ 若 $0 \leq r \leq 1$, 有 $(1+x)^{r} \leq 1+r x$ 。 同时, 伯努利不等式还可进一步推广为: \[\left(1+x_{1}\right)\left(1+x_{2}\right) \cdots\left(1+x_{n}\right) \geq 1+x_{1}+x_{2}+\cdots+x_{n},\] 对 $\forall 1 \leq i \leq n$ 都有 $x_{i}$ 同号且 $x_{i} \geq-1$.
+
+伯努利不等式是Jacobsthal’s inequality的基础：当 $\frac{a}{b} \geq-1$ 时, \[a^{n}+(n-1) b^{n} \geq n a b^{n-1}.\]
+该不等式常应用于神经网络稳定性的分析。
+
+
+\section{伯努利不等式例题分析}
+
+伯努利不等式中，从幂函数到一次函数放缩的思想值得大家推敲。在高中数学里，利用该思想， $e^{x} \geq 1+x$ 这个公式实现了从指数函数到一次函数的放缩，该公式也是高中导数解题应用中最常见且最重要的公式之一。除了其蕴含的转化放缩的数学思想外，伯努利不等式也经常用作解决实际问题的关键步骤，其一般形式及推广同样在高中数学中便也已经展露其锋芒，现给出实例进行论证。
+
+
+\begin{example}
+  已知数列 $\left\{a_{n}\right\}$ 满足: $a_{1}=\frac{3}{2}$, 且 $a_{n}=\frac{3 n a_{n-1}}{2 a_{n-1}+n-1}\left(n \geq 2, n \in N_{+}\right)$, 证明: 对于一切正整数 $n$, 
+  \[a_{1} a_{2} a_{3} \cdots a_{n}<2 n!\]
+\end{example}
+
+\begin{proof}
+  易得 $a_{n}=\frac{n}{1-3^{-n}}$，故即证 \[\left(1-\frac{1}{3}\right)\left(1-\frac{1}{3^{2}}\right)\left(1-\frac{1}{3^{3}}\right) \cdots\left(1-\frac{1}{3^{n}}\right)>\frac{1}{2}.\]
+  由伯努利不等式可知：
+  \begin{align*}
+    \left(1-\frac{1}{3^{2}}\right)\left(1-\frac{1}{3^{2}}\right)\left(1-\frac{1}{3^{3}}\right) \cdots\left(1-\frac{1}{3^{n}}\right)>&1-\frac{1}{3}-\frac{1}{3^{2}}-\cdots-\frac{1}{3^{n}} \\
+    =& \frac{1}{2}+\frac{1}{2 \times 3^{n}}>\frac{1}{2}
+  \end{align*}
+  故原命题得证。
+\end{proof}
+
+\begin{analysis}
+  该题目为06年江西高考理科数学题，运用伯努利不等式的推广形式便可快速解题。本题中该不等式的使用展现出其与众不同的将乘法运算转换为加减法运算的特质，这是其放缩特点的体现。
+\end{analysis}
+
+当然大学数学中伯努利不等式的应用也极为广泛，下面给出相应例题。
+
+
+\begin{example}
+  \parencite{华东师大数学分析} 证明 $\lim _{n \rightarrow \infty} \sqrt[n]{a}=1$, 其中 $a>0$. 
+\end{example}
+
+\begin{proof}
+  \begin{enumerate}
+    \item 当 $a=1$ 时，结论显然成立.
+    \item 现设 $a>1$. 记 $a_{n}=a^{\frac{1}{n}}-1$, 则 $a_{n}>0$. 由
+      \[
+        a=\left(1+a_{n}\right)^{n} \geq 1+n a_{n}=1+n\left(a^{\frac{1}{n}}-1\right)
+      \]
+      得 $a^{\frac{1}{n}}-1 \leq \frac{a-1}{n}$.对 $\forall \varepsilon>0$, 当 $n>\frac{a-1}{\varepsilon}$ 时, 有 $a^{\frac{1}{n}}-1<\varepsilon$, 即 $\left|a^{\frac{1}{n}}-1\right|<\varepsilon$. 所以有 $\lim _{n \rightarrow \infty} \sqrt[n]{a}=1$ 成立.
+      \item 现设 $0<a<1$, 则 $\frac{1}{a}>1$ 。由上可知, 当 $b>1$ 时，$\lim _{n \rightarrow \infty} \sqrt[n]{b}=1$, 故 $\lim _{n \rightarrow \infty} \sqrt[n]{\frac{1}{a}}=1$, 因此有 $\lim _{n \rightarrow \infty} \sqrt[n]{a}=1$ 成立.
+  \end{enumerate}
+
+  综上所述, $a>0$ 时, $\lim _{n \rightarrow \infty} \sqrt[n]{a}=1$, 原命题得证。
+\end{proof}
+
+
+\begin{analysis}
+  该例题为数分教材第二章《数列极限》中的题目，运用伯努利不等式的一般形式进行放缩，得出题目所求极限。该极限也为所有求极限类题目中最基础的极限形式。
+\end{analysis}
+
+
+\begin{example}
+  \parencite{华东师大数学分析} 求数列 $\{\sqrt{n}\}$ 的极限.
+\end{example}
+
+\begin{proof}
+  记 $a_{n}=\sqrt[n]{n}=1+h_{n}$, 其中 $h_{n}>0(n>1)$, 则有
+  \[n=\left(1+h_{n}\right)^{n}>\frac{n(n-1)}{2} h_{n}{ }^{2}.\]
+  由上式得 $0<h_{n}<\sqrt{\frac{2}{n-1}}(n>1)$, 从而有
+  \[
+    1 \leq a_{n}=1+h_{n} \leq 1+\sqrt{\frac{2}{n-1}}.
+  \]
+  因为数列 $\left\{1+\sqrt{\frac{2}{n-1}}\right\}$ 收敛于 1 , 所以 $\forall \varepsilon>0$, 取 $N=1+\frac{2}{\varepsilon^{2}}$, 当 $n>$ $N$ 时, $\left|1+\sqrt{\frac{2}{n-1}}-1\right|<\varepsilon$. 故由迫敛性可知, $\lim _{n \rightarrow \infty} \sqrt{n}=1$.
+\end{proof}
+
+\begin{analysis}
+  该例题也为数分教材《数列极限》中的题目，运用了伯努利不等式的变式形式，第一步的放缩为最亮眼的一笔。
+\end{analysis}

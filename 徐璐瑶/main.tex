@@ -1,0 +1,186 @@
+\documentclass{CCNUthesis}
+
+\ccnusetup{
+  % 个人信息
+  info = {
+    % 主标题，会自动换行
+      % 如果换行点不满意，可以用 \\ 手动换行
+    title = {
+      数分中几类重要的不等式
+    },
+    % 副标题，如果有的话取消下面三行代码的注释并且填写内容
+    % subtitle = {
+      % 这是一个副标题
+    % },
+    % 论文的英文标题
+    title* = {
+      Several important inequalities in Mathematical analysis
+    }, 
+    % 学院
+    department = {数学与统计学学院},
+    % 专业
+    major = {数学与应用数学（师范）},
+    % 年级
+    level = {2018级},
+    % 姓名
+    author = {徐璐瑶},
+    % 学号
+    student-id = {2018213776},
+    % 指导教师
+    supervisor = {罗鹏 \quad 副教授},
+    % 论文中文关键词，用英文“,”隔开
+    keywords = {
+      数学分析,
+      不等式,
+      均值不等式,
+      伯努利不等式,
+      柯西不等式
+    },
+    % 论文英文关键词，用英文“,”隔开
+    keywords* = {
+      Mathematical Analysis,
+      Inequality,
+      Mean inequality,
+      Bernoulli inequality,
+      Cauchy inequality
+    },
+    % 如有需要可以手动调整封面底的年和月，否则默认为「编译时」的年和月
+    % year    = {2022},
+    % month = {4}
+  },
+  style = {
+    cjk-font = mac,
+      % 中文字体
+      % 允许选项：
+      %   cjk-font = adobe|fandol|founder|mac|sinotype|sourcehan|windows|none
+      % 注意：
+      %   1. 中文字体设置高度依赖于系统。各系统建议方案：
+      %        windows：cjk-font = windows
+      %        mac：    cjk-font = mac
+      %        linux：  cjk-font = fandol（默认值）
+      %   2. 除 fandol 和 sourcehan 外，其余字体均为商用字体，请注意版权问题
+      %   3. 但 fandol 字体缺字比较严重，而 sourcehan 没有配备楷体和仿宋体
+    bib-resource = {CCNUthesis-main.bib}
+      % 参考文献数据源，需要加bib后缀
+  }
+}
+
+%%%%% 需要的宏包可以在此处自行调用 %%%%%
+
+
+
+% 需要的命令环境可以自行定义
+\newcommand{\upe}{\symrm{e}}        % 直立的e，用于表示常量，如自然常数      
+\newcommand{\upi}{\symrm{i}}        % 直立的i，用于表示常量，如虚数单位
+\newcommand{\hilbertH}{\symcal{H}}
+
+
+
+
+\begin{document}
+
+\ccnusetup{
+  style = {fullwidth-stop = catcode}
+    % 是否把全角实心句点 “．” 作为默认的句号形状，即正文中输入“。” 最终编译效果为“. ”
+    % 一般科技类文章需要替换，防止“. ”与“。”混淆
+    % 【放在此处是为了防止干扰版权页的句号设置】
+    % 允许选项：
+    %   fullwidth-stop = catcode|mapping|false
+    % 说明：
+    %   catcode   显式的 “。” 会被替换为 “．”（e.g. 不包括用宏定义保存的 “。”）
+    %   mapping   所有的 “。” 会被替换为 “．”（使用 LuaLaTeX 编译则无效）
+    %   false     不进行替换
+}
+
+
+
+% \frontmatter开启论文前置部分
+% 前置部分包含目录、中英文摘要以及符号表等
+\frontmatter
+
+
+% 目录
+\tableofcontents
+
+
+% 中文摘要
+\begin{abstract}
+  大概从人类开始有对于数量的认知时，不等式的概念就产生了。不等式自产生之日起便被用来解决日常工作中的问题。作为中学乃至大学代数中的一个重要内容，不等式有关理论为数学的发展带来了强大的推动力，同时也为其他学科的研究奠定了基础。本文从《数学分析第四版》华东师范大学数学系编上册出发，提取出书中所涉及的不等式中的三类：均值不等式、伯努利不等式、柯西不等式，并对此三类不等式进行探究。
+
+  本文将紧紧围绕《数学分析》（上）教材展开，将此三类不等式置于不同的板块，在研究其证明过程之后，引进其推广或变式，并在每一个板块的最后加入不等式对应例题进行解答，例题从高中数学跨越至大学数学，并加入分析找出每道题不等式的用途。整体而言，不等式的推广变式与例题引用会在教材中挖掘，紧扣本文主题，在体现此三类不等式在数分教材中的重要性的同时，提高数学自我思维能力，提升数学整体素养。
+\end{abstract}
+
+% 英文摘要
+\begin{abstract*}
+  The concept of inequality has been around since the beginning of man's knowledge of quantity. Inequality has been used to solve problems in daily work since its inception. As an important content in middle school and even college algebra, inequality theory has brought a strong impetus to the development of mathematics, but also laid a foundation for the study of other subjects. Based on the first volume of The fourth edition of Mathematical Analysis, this paper extracts three kinds of inequalities: mean inequality, Bernoulli inequality and Cauchy inequality, and explores these inequalities.
+
+  This article will focus on“mathematical analysis”（volume one）as the teaching material, put the three types of inequality in different sectors, introduce its promotion or variant after researching the process on the proof, after introducing its promotion or variant, and at the end of each sector to join corresponding sample answer and examples spanning from high school mathematics to mathematics in university and then join to analyze inequality purposes on each question. overall, the generalized variations and examples of inequalities will be mined in the teaching materials, closely related to the theme of this paper, while reflecting the importance of these three inequalities in the mathematical teaching materials, aiming to improve mathematical self- thinking ability and improve the overall quality of mathematics.
+\end{abstract*}
+
+
+% 符号表
+% 语法与 LaTeX 表格一致：列用 & 区分，行用 \\ 区分
+% 如需修改格式，可以使用可选参数：
+%   \begin{notation}[ll]
+%     $x$ & 坐标 \\
+%     $p$ & 动量
+%   \end{notation}
+% 可选参数与 LaTeX 标准表格的列格式说明语法一致
+% 这里的 “ll” 表示两列均为自动宽度，并且左对齐
+% 注：如果不需要符号表的话就把"\begin{notation}...\end{notation}"注释掉
+% \begin{notation}[ll]
+%   $x$                  & 坐标        \\
+%   $p$                  & 动量        \\
+%   $\psi(x)$            & 波函数      \\
+% \end{notation}
+
+
+
+
+% \mainmatter进入论文主体部分
+% 主体部分是论文的核心
+\mainmatter
+
+% 主体采用多文件编译的方式
+% 即把每一章放进一个单独的 tex 文件里，并在这里用 \include 导入
+% 例如 \include{./body/chapter1.tex}
+% 表示插入 main 所在目录中的 body 目录下的 chapter1.tex 文件
+
+
+% \include{./body/chapter0.tex}   % 常用命令环境示例，不需要时注释掉即可
+\include{./body/chapter1.tex}
+\include{./body/chapter2.tex}
+\include{./body/chapter3.tex}
+\include{./body/chapter4.tex}
+\include{./body/chapter5.tex}
+
+
+
+% \backmatter开启后置部分，包含参考文献、致谢、附录等
+\backmatter
+
+
+%%%% 参考文献 %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% 行内引用：\parencite{} or \parencite[]{}，下面两个情况要用行内引用
+%    - 去掉这个引用句子结构不完整，比如“定理证明可参看[1]”
+%    - 英文文献的引用
+%%% 上标引用：\cite{} or \cite[]{}，下面情况要用上标引用
+%    - 去掉这个引用，句子结构完整，比如“作者提到，‘CCNUthesis真是一个好模版’^[1]”
+%      其中“^[1]” 表示上标引用
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 打印参考文献列表
+\printbibliography
+
+
+
+%%%% 致谢 %%%%
+\include{./back/Acknowledgements.tex}
+
+
+
+%%%% 附录 %%%%
+% 没有附录内容的把下面的代码注释掉即可
+% \include{./back/Appendix.tex}
+
+\end{document}

@@ -295,7 +295,7 @@
     amsthm,
     thmtools
   }
-\RequirePackage[shortlabels]{enumitem}
+\RequirePackage[shortlabels,inline]{enumitem}
 \RequirePackage[physics]{physicx}
 % \RequirePackage{physics}
 % 修复\vu的上标偏移问题
@@ -335,10 +335,10 @@
   }
 \bool_if:NT \g__ccnu_draft_bool { \geometry { showframe } }
 \setenumerate[1]{
-  labelindent  = \parindent,
-  leftmargin   = 0pt,
-  widest       = 0,
-  itemindent   = *
+  itemindent    = \parindent,
+  leftmargin    = 0pt,
+  widest        = 0,
+  listparindent = \parindent
 }
 \tl_new:N \g__ccnu_fontset_tl
 \tl_new:N \g__ccnu_cjk_fontset_tl
@@ -822,14 +822,13 @@
         format      = \zihao{3} \normalfont \bfseries,
         % format      = \huge \normalfont \sffamily \centering,
         % beforeskip  = 50 pt,
-        beforeskip  = 10pt,
+        beforeskip  = 30pt,
         % afterskip   = 40 pt,
         afterskip   = 2.7  ex plus 0.5 ex,
         % afterskip   = 15pt,
         number      = \__ccnu_arabic:n { chapter },
         fixskip     = true,
-        name        = {},
-        % pagestyle   = empty,
+        name        = {}
       },
     section =
       {
@@ -1901,7 +1900,8 @@
         % \ccnu@kai
         \normalfont
         \CTEXnumberline {#1} #2
-      }
+      },
+    chapter / break = {}
   }
 \__ccnu_patch_cmd:Nnn \tableofcontents
   {
@@ -1937,7 +1937,7 @@
 \cs_generate_variant:Nn \__ccnu_abstract_env:n { V }
 \NewDocumentEnvironment { abstract  } { }
   { 
-    \__ccnu_abstract_begin: 
+    \__ccnu_abstract_begin:  
     \addcontentsline{toc}{chapter}{\normalfont  \c__ccnu_name_keywords_tl  }   
   } { \__ccnu_abstract_end:      }
 \NewDocumentEnvironment { abstract* } { }
@@ -2413,7 +2413,13 @@
     { 断言, 断言, theorem, claim },
     { 注, 注, theorem, remark },
   }\__xdyymath_declare_theorem_with_counter_sibling:n
-
+\declaretheorem
+  [
+    style = ccnustyle,
+    name = 设计意图,
+    refname = 设计意图,
+    numbered = no
+  ]{designgoal}
 
 \RenewDocumentEnvironment { proof } { O{\proofname} +b }
   {

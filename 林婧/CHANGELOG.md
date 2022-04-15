@@ -4,16 +4,6 @@
 
 更多关于模版的内容和如何使用，请仔细阅读 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis)！
 
-## [v1.1.8] - 2022-04-15
-
-### Added
-
-- 目录中添加 `title`
-
-### Changed
-
-- 重新修改 `enumerate` 的缩进参数
-
 ## [v1.1.8] - 2022-04-13
 
 ### Changed

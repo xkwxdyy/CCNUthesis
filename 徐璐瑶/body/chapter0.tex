@@ -1,0 +1,348 @@
+\chapter{常用命令环境示例}
+
+此章用于展示一些常用的命令环境的效果，用户在具体写论文过程中可以用来参考效果，如果不需要此章出现在正文中，只需要将主文件 \verb|main.tex| 文件中的 \verb|\include{./body/chapter0.tex}| 代码注释掉即可（不建议删除，因为随时可以取消注释查看效果）。
+
+
+\section{列表环境}
+
+
+如果要修改 \verb|enumerate| 环境的 label 样式的话：
+
+\begin{enumerate}
+  \item 第一项
+  \item 第二项
+  \item 第三项
+  \item 第四项
+\end{enumerate}
+
+\begin{enumerate}[1)]
+  \item 第一项
+  \item 第二项
+  \item 第三项
+  \item 第四项
+\end{enumerate}
+
+\begin{enumerate}[a.]
+  \item 第一项
+  \item 第二项
+  \item 第三项
+  \item 第四项
+\end{enumerate}
+
+\begin{enumerate}[(A)]
+  \item 第一项
+  \item 第二项
+  \item 第三项
+  \item 第四项
+\end{enumerate}
+
+test
+\begin{enumerate}[(i)]
+  \item 第一项
+  \item 第二项
+  \item 第三项
+  \item 第四项
+\end{enumerate}
+
+\begin{enumerate}[I]
+  \item 第一项
+  \item 第二项
+  \item 第三项
+  \item 第四项
+\end{enumerate}
+
+\begin{enumerate}[label = \textbf{断言} \Alph*]
+  \item 一般来说使用断言，推荐使用 claim 环境
+  \item 但是如果真要有一些断言的层级分化的话
+  \item 可以考虑用 enumerate 环境的 label 选项
+\end{enumerate}
+
+\begin{enumerate}[\textbf{断言} A]
+  \item 1
+  \item 2
+\end{enumerate}
+
+
+\section{已定义好的一些数学定理环境}
+
+定理环境内的括号，不管是中文还是西文括号，都不会出现倾斜，不需要像旧模版一样需要用手动用 \verb|\textit| 调整
+\begin{definition}[测度]
+  (参见文献xxx) 这是一段文字 $E = m c^2$  （中文括号）和 (西文括号)
+\end{definition}
+
+\begin{theorem}
+  这是一段文字 $E = m c^2$
+\end{theorem}
+
+
+\begin{proof}
+  这是一段文字 $E = m c^2$
+\end{proof}
+
+\begin{proof}[定理xx的证明]
+  这是一段文字 $E = m c^2$
+\end{proof}
+
+\begin{example}
+  这是一段文字 $E = m c^2$
+\end{example}
+
+\begin{property}
+  这是一段文字 $E = m c^2$
+\end{property}
+
+\begin{proposition}
+  这是一段文字 $E = m c^2$
+\end{proposition}
+
+\begin{corollary}
+  这是一段文字 $E = m c^2$
+\end{corollary}
+
+\begin{lemma}
+  这是一段文字 $E = m c^2$
+\end{lemma}
+
+\begin{axiom}
+  这是一段文字 $E = m c^2$
+\end{axiom}
+
+\begin{antiexample}
+  这是一段文字 $E = m c^2$
+\end{antiexample}
+
+\begin{conjecture}
+  这是一段文字 $E = m c^2$
+\end{conjecture}
+
+\begin{question}
+  这是一段文字 $E = m c^2$
+\end{question}
+
+\begin{claim}
+  这是一段文字 $E = m c^2$
+\end{claim}
+
+\begin{remark}
+  这是一段文字 $E = m c^2$
+\end{remark}
+
+\begin{theorem}[Cauchy]\label{thm:test}
+  这是一个定理
+  \begin{equation}\label{eq:test1}
+    \int_{0}^{1} x^2 \dd{x} \geq 0
+  \end{equation}
+
+  \begin{equation}\label{eq:test2}
+    \int_{0}^{1} x^2 \dd{x} \geq 0
+  \end{equation}
+\end{theorem}
+
+我想引用定理~\ref{thm:test} 和公式~\ref{eq:test2}
+
+
+定理括号测试：
+
+\begin{theorem}
+  测试
+  \begin{enumerate}
+    \item 中文（括号）没输入空格的效果
+    \item 中文 （括号） 输入空格的效果
+    \item 西文(括号)没输入空格的效果
+    \item 西文 (括号) 输入空格的效果
+  \end{enumerate}
+\end{theorem} 
+
+
+\begin{proof}
+  test
+  \[
+    \int_{0}^{1} x^2 \dd{x}
+  \]
+\end{proof}
+
+\begin{proof}
+  test
+  \[
+    \int_{0}^{1} x^2 \dd{x}  \qedhere
+  \]
+\end{proof}
+
+\section{浮动体使用}
+
+用 \verb|\label| 引用时，只需要将其放在 \verb|\caption| 的下一行即可。
+
+和定理类环境的引用相同，建议 label 的名称格式为 \verb|figure:xxx| 或 \verb|table:xxx| 其中 \verb|xxx| 可以写中文，尽可能言简意赅地写这个图或表的内容描述，也尽可能写出图表的“独一无二性”，方便自己记忆，也防止在图表一多的时候不知道引用哪一个。
+
+\verb|\figure| 的 \verb|\caption| 是放在 \verb|\includegraphics| 的下方，而 \verb|\table| 的 \verb|\caption| 是放在 \verb|tabular| 或 \verb|tblr| 环境的上方。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width = 5cm]{example-image-a}
+  \caption{测试}
+  \label{figure:test}
+\end{figure}
+
+\begin{table}[htbp]
+  \centering
+  \caption{测试}
+  \label{table:test}
+  \begin{tabular}{|c|c|}
+    11 & 22 \\
+    33 & 44 
+  \end{tabular}
+\end{table}
+
+图 \ref{figure:test} 和表 \ref{table:test} 用来测试两个浮动体和交叉引用
+
+
+
+\section{部分数学符号的输入}
+
+本节主要是一些数学符号的输入介绍
+
+
+\subsection{直体符号}
+
+科技类论文中，建议一些数学符号使用直体（“up”前缀表示直体）
+  \begin{itemize}
+    \item 直立的 pi ：\verb|\uppi| $\to \uppi$
+    \item 直立的 e ：\verb|\upe| $\to \upe$
+    \item 直立的 i ：\verb|\upi| $\to \upi$
+  \end{itemize}
+
+
+
+\subsection{physics 宏包的一些命令}
+
+\verb|CCNUthesis.cls| 已经默认加载了 \verb|physics| 宏包，提供了很多很方便的命令，本小节介绍部分，更多的命令请阅读宏包文档（命令行输入 \verb|texdoc physics|）
+
+\begin{itemize}
+  \item 向量 $\vb{a}, \vb*{a}, \va{a}, \va*{a}, \vu{a}, \vu*{a}$
+  \item 积分
+    \[
+      \int_{0}^{1} x \dd{x},
+      \dd[3]{x}, \dd(\cos\theta),
+    \]
+    \[
+      \int xyz \dd{x} \dd{y} \dd{z}
+    \]
+    \[
+      % \␣产生空格，使被积函数和dxdydz之前产生一个空格
+      % 注意\dd{x}的dx左右各有一个空格 \dd x则没有
+      % 对于重积分，自己根据规范使用
+      \int xyz \ \dd x \dd y \dd z    
+    \]
+  \item 微分
+    \[
+      \dv{x}, \dv{f}{x}, \dv[n]{f}{x}, \dv*{f}{x}
+    \]
+  \item 偏微分
+    \[
+      \pdv{x}, \pdv{f}{x}, \pdv[n]{f}{x}
+    \]
+  \item 绝对值 $\abs{x^3}, \abs{\frac{1}{2}}$
+  \item 范数 $\norm{f}, \norm{f_n}_{2}^{2}$
+\end{itemize}
+
+
+
+\subsection{physicx 宏包的一些命令}
+
+\verb|physicx| 宏包是对 \verb|physics| 宏包的优化（已默认载入）。介绍几个常用的：
+
+\begin{itemize}
+  \item 绝对值 $\abs{x^3}, \abs{\frac{1}{2}}$
+  \item 范数 $\norm{f}, \norm{f_n}_{2}^{2}$
+  \item \verb|\qxqty|: 统一可变长度括号类命令
+    \begin{itemize}
+      \item $\qxqty{\frac{1}{2}}$
+      \item $\qxqty[p]{\frac{1}{2}}$
+      \item $\qxqty[v]{\frac{1}{2}}$
+      \item $\qxqty[V]{\frac{1}{2}}$
+      \item $\qxqty[b]{\frac{1}{2}}$
+      \item $\qxqty[B]{\frac{1}{2}}$
+      \item $\qxqty[a]{\frac{1}{2}}$
+    \end{itemize}
+  \item \verb|\qxqty| 还可以用来排版一些简单矩阵：
+    \[
+      \qxqty[pm]{ ABC & dec \\ hij & HJK } \quad
+      \qxqty[bm]{ ABC & dec \\ hij & HJK } \quad
+      \qxqty[Bm]{ ABC & dec \\ hij & HJK } \quad 
+      \qxqty[vm]{ ABC & dec \\ hij & HJK } \quad
+      \qxqty[Vm]{ ABC & dec \\ hij & HJK }
+    \]
+\end{itemize}
+
+\verb|physicx| 宏包也可以排版一些更复杂的矩阵，功能非常强大，更多使用细节参看目录中的“physicx.pdf”手册进行查看（该宏包未收录于CTAN，所以无法使用 texdoc 查看文档）
+
+
+\section{参考文献引用}
+
+\subsection{数学类}
+
+行间\parencite[thm 3.1]{zurek2014quantum}
+
+行间\parencite{zurek2014quantum}
+
+
+
+\subsection{文科类}
+
+上标\cite[test]{zurek2014quantum}
+
+上标\cite{zurek2014quantum}
+
+
+
+\section{《附件4：关于修订毕业论文注释与参考文献著录格式的通知》中的参考文献效果}
+
+  text\parencite{李晓东rawtype}
+
+  text\parencite{Ahnrawtype}
+
+  text\parencite{Ahnrawtype}
+
+  text\parencite{丁文祥rawtype}
+
+  text\parencite{邱泽奇会议论文集rawtype}
+
+  text\parencite{雷光春rawtype}
+
+  text\parencite{zhangrawtype}
+
+  text\parencite{邱泽奇会议论文rawtype}
+
+  text\parencite{马克思rawtype}
+
+  text\parencite{昂温rawtype}
+
+  text\parencite{Fothrawtype}
+
+  text\parencite{杨国枢rawtype}
+
+  text\parencite{Morisonrawtype}
+
+  text\parencite{张志祥rawtype}
+
+  text\parencite{徐秀英rawtype}
+
+  text\parencite{Aldemitarawtype}
+
+  text\parencite{张凯军rawtype}
+
+  text\parencite{Kosekrawtype}
+
+  text\parencite{文献编写rawtype}
+
+  text\parencite{国防白皮rawtype}
+
+  text\parencite{federalrawtype}
+
+  text\parencite{healthrawtype}
+
+  text\parencite{江向东rawtype}
+
+  text\parencite{萧钮rawtype}
+
+  text\parencite{Dublinrawtype}

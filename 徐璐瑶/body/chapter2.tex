@@ -1,0 +1,186 @@
+\chapter{均值不等式}
+
+均值不等式，又称为平均值不等式、平均不等式，是数学中的一个重要公式。公式内容为 $H_{n} \leq G_{n} \leq A_{n} \leq Q_{n}$，其中 $H_{n} = \frac{n}{\sum_{i = 1}^{n} \frac{1}{x_{i}}} = \frac{n}{\frac{1}{x_{1}} + \frac{1}{x_{2}} + \cdots + \frac{1}{x_{n}}}$ ,被称为调和平均数； $G_{n} = \sqrt[n]{\prod_{i = 1}^{n} x_{i}} = \sqrt[n]{x_{1} x_{2} \cdots x_{n}}$ ,被称为几何平均数； $A_{n} = \frac{\sum_{i = 1}^{n} x_{i}}{n}=  \frac{x_{1}+ x_{2} + \cdots + x_{n}}{n}$,被称为算术平均数； $Q_{n} = \sqrt{\frac{\sum_{i = 1}^{n} x_{i}^{2}}{n}} = \sqrt{\frac{x_{1}^{2} + x_{2}^{2} + \cdots x_{n}^{2}}{n}}$ ,被称为平方平均数。即调和平均数不超过几何平均数，几何平均数不超过算术平均数，算术平均数不超过平方平均数。均值不等式的二维形式在高中就得以呈现，大学数学中对其进行了更深入的证明与推广。
+
+
+
+\section{均值不等式的证明}
+
+均值不等式的证明有多种，代数类、三角类、几何类、函数类方法都可进行证明\parencite{贾静2017关于均值不等式的教学探究及应用}，因篇幅限制，现只用数学归纳法对其进行证明。证明之前，我们需要一个辅助结论。
+
+\begin{lemma}
+  若 $A \geq 0, B \geq 0$, 则 $(A+B)^{n} \geq A^{n}+n A^{n-1} B$, 当且仅当 $B=0$ 时等号 成立。该引理可用二项式定理进行证明。
+\end{lemma}
+
+\begin{proof}[均值不等式的证明]
+  先证明 $G_{n} \leq A_{n}$, 该命题等价于 $\left(\frac{x_{1}+x_{2}+\cdots+x_{n}}{n}\right)^{n} \geq x_{1} x_{2} \cdots x_{n}$ 。下用数学归纳法进行证明。
+  \begin{enumerate}
+    \item 当 $n=1$ 时结论成立;
+    \item 当 $n=2$ 时, 即证 $\left(\frac{x_{1}+x_{2}}{2}\right)^{2} \geq x_{1} x_{2}$, 即证 $\left(x_{1}-x_{2}\right)^{2} \geq 0$, 结论成立;
+    \item 不妨设 $n=k$ 时结论成立, 即 $\left(\frac{x_{1}+x_{2}+\cdots+x_{k}}{k}\right)^{k} \geq x_{1} x_{2} \cdots x_{k}$, 当且仅当 $x_{1}=x_{2}=\cdots=x_{k}$ 时等号成立。
+    \item 当 $n=k+1$ 时, 不妨设 $x_{k+1}$ 为 $x_{1}, x_{2}, \cdots, x_{k}$ 中的最大者, 则有 $k x_{k+1} \geq x_{1}+x_{2}+\cdots+x_{k}$ 。 令 $S=x_{1}+x_{2}+\cdots+x_{k},$ 则 
+    \[
+      \left(\frac{x_{1}+x_{2}+\cdots+x_{k+1}}{k+1}\right)^{k+1}=\left(\frac{s}{k}+\right. \left.\frac{k x_{k+1}-S}{k(k+1)}\right)^{k+1},
+    \] 由引理可得 
+    \[
+      \left(\frac{S}{k}+\frac{k x_{k+1}-S}{k(k+1)}\right)^{k+1} \geq\left(\frac{S}{k}\right)^{k+1}+(k+1)\left(\frac{S}{k}\right)^{k} \frac{k x_{k+1}-S}{k(k+1)} = \left(\frac{S}{k}\right)^{k} x_{k+1} \geq x_{1} x_{2} \cdots x_{k} x_{k+1}, 
+    \]
+    当且仅当 $k x_{k+1}-S=0$ 且 $x_{1}=x_{2}=\cdots=x_{k}$ 时, 即 $x_{1}=x_{2}=\cdots=x_{k}=x_{k+1}$ 时等号成立, 所以 $G_{n} \leq A_{n}$ 得证。
+  \end{enumerate}
+
+  下证明 $H_{n} \leq G_{n}$, 即 \[\frac{n}{\frac{1}{x_{1}}+\frac{1}{x_{2}}+\cdots+\frac{1}{x_{n}}} \leq \sqrt{x_{1} x_{2} \cdots x_{n}},\] 该命题等价于 \[\frac{1}{\sqrt[n]{x_{1} x_{2} \cdots x_{n}}} \leq \frac{\frac{1}{x_{1}}+\frac{1}{x_{2}}+\cdots+\frac{1}{x_{n}}}{n},\] 等价于 \[\left(\frac{\frac{1}{x_{1}}+\frac{1}{x_{2}}+\cdots+\frac{1}{x_{n}}}{n}\right)^{n} \geq \frac{1}{x_{1}} \cdot \frac{1}{x_{2}} \cdots \cdots \frac{1}{x_{n}},\]根据上文即可得证。 
+  
+  下证明 $A_{n} \leq Q_{n}$, 即 \[\frac{x_{1}+x_{2}+\cdots+x_{n}}{n} \leq \sqrt{\frac{x_{1}^{2}+x_{2}^{2}+\cdots x_{n}^{2}}{n}},\] 该命题等价于 \[\left(x_{1}+x_{2}+\cdots+x_{n}\right)^{2} \leq n\left(x_{1}^{2}+x_{2}^{2}+\cdots x_{n}^{2}\right),\] 等价于 \[\sum_{1 \leq j<k \leq n} 2 x_{j} x_{k} \leq(n-1) \sum_{i=1}^{n} x_{i}^{2},\] 等价于 \[\sum_{1 \leq j<k \leq n}\left(x_{j}-x_{k}\right)^{2} \geq 0,\]显然成立。
+
+  综上所述, $H_{n} \leq G_{n} \leq A_{n} \leq Q_{n}$ 成立, 原命题得证。
+\end{proof}
+
+
+\section{均值不等式的推广}
+
+均值不等式因其强大的应用能力而得到了广泛的推广。数分教材第六章《微分中值定理及其应用》中，给出了其中一种推广——詹森（Jensen）不等式，其一般形式为：
+
+\begin{theorem}[詹森（Jensen）不等式]
+  \parencite{华东师大数学分析}
+  若 $f$ 为 $[a, b]$ 上凸函数, 则对任意 $x_{i} \in[a, b], \lambda_{i}>O(i=
+1,2, \cdots, n), \sum_{i=1}^{n} \lambda_{i}=1$ ，有 \[ f\left(\sum_{i=1}^{n} \lambda_{i} x_{i}\right) \leq \sum_{i=1}^{n} \lambda_{i} f\left(x_{i}\right)
+\]
+成立.
+\end{theorem}
+
+
+詹森不等式为关于凸性的不等式，用于积分中，它给出了积分的凸函数和凸函数的积分值之间的关系；用于概率论中，可以表示概率密度函数的关系。詹森不等式同样可以用数学归纳法进行证明，数学分析教材中给出了详细证明。该不等式在多个领域有重要作用，如统计物理学和信息论。
+
+
+
+\section{均值不等式例题分析}
+
+均值不等式例题常出现于高中和大学的各类数学题目中，在其他学科里也有解题妙用。现聚焦于高中数学竞赛和高考类题目，给出相应例题。
+
+\begin{example}
+  已知 $a, b, c \in \mathbb{R}_{+}$, 求证: \[\frac{a}{b+c}+\frac{b}{c+a}+\frac{c}{a+b} \geq \frac{3}{2}\]
+\end{example}
+
+\begin{proof}
+  \begin{align*}
+    & \frac{a}{b+c}+\frac{b}{c+a}+\frac{c}{a+b} \geq \frac{3}{2} \\
+    \Leftrightarrow  & (a+b+c)\left(\frac{1}{b+c}+\frac{1}{c+a}+\frac{1}{a+b}\right) \geq \frac{9}{2} \\
+    \Leftrightarrow  & [(a+b)+(b+c)+(c+a)]\left(\frac{1}{b+c}+\frac{1}{c+a}+\frac{1}{a+b}\right) \geq 9 
+  \end{align*}
+
+  由均值不等式得：
+  \begin{align*}
+    & [(a+b)+(b+c)+(c+a)]\left(\frac{1}{b+c}+\frac{1}{c+a}+\frac{1}{a+b}\right)\\
+    \geq & 3 \sqrt[3]{(a+b)(b+c)(c+a)} \times 3 \sqrt[3]{\frac{1}{b+c} \times \frac{1}{c+a} \times \frac{1}{a+b}} \\
+    \geq & 9
+  \end{align*}
+  所以原不等式成立，得证。
+\end{proof}
+
+\begin{analysis}
+  该例题是直接对均值不等式的等价变形，这是运用均值不等式时最基本的解题策略之一。
+\end{analysis}
+
+
+\begin{example}
+  \parencite{贾静2017关于均值不等式的教学探究及应用}已知 $a>0, b>0$ 且 $a+b=1$, 求证: \[\frac{a}{a^{2}+b^{3}}+\frac{b}{a^{3}+b^{2}} \leq \frac{8}{3}\]
+\end{example}
+
+\begin{proof}
+  由 $a, b>0$ 且 $a+b=1$ 可知
+  \[
+  a^{2}+\frac{1}{4} \geq a, \quad b^{3}+\frac{1}{8}+\frac{1}{8} \geq \frac{3}{4} b,
+  \]
+  两式相加，整理得：
+  \[
+    a^{2}+b^{3} \geq a+\frac{3}{4} b-\frac{1}{2}=\frac{a+1}{4},
+  \]
+  所以有
+  \[
+    \frac{a}{a^{2}+b^{3}} \leq \frac{4 a}{a+1}.
+  \]
+  同理，
+  \[
+    \frac{b}{a^{3}+b^{2}} \leq \frac{4 b}{b+1}.
+  \]
+  从而
+  \[
+    \frac{a}{a^{2}+b^{3}}+\frac{b}{a^{3}+b^{2}} \leq \frac{4 a}{a+1}+\frac{4 b}{b+1}=8-4\left(\frac{a}{a+1}+\frac{b}{b+1}\right)
+  \]
+  又由
+  \[
+    (a+1+b+1)\left(\frac{1}{a+1}+\frac{1}{b+1}\right) \geq 4
+  \]
+  我们可知
+  \[
+    \frac{1}{a+1}+\frac{1}{b+1} \geq \frac{4}{a+1+b+1}=\frac{4}{3},
+  \]
+  故
+  \[
+    \frac{a}{a^{2}+b^{3}}+\frac{b}{a^{3}+b^{2}} \leq 8-4\left(\frac{a}{a+1}+\frac{b}{b+1}\right) \leq 8-\frac{16}{3}=\frac{8}{3}.
+  \] 所以原不等式成立，得证。
+\end{proof}
+
+\begin{analysis}
+  该例题先是重新对整个式子进行构造，接着再利用均值不等式进行求解。构造法的使用需要注意均值不等式成立的条件。
+\end{analysis}
+
+
+\begin{example}
+  设 $a, b, c \in \mathbb{R}_{+}, a b c=1$, 求证 \[\frac{1}{a^{3}(b+c)}+\frac{1}{b^{3}(c+a)}+\frac{1}{c^{3}(a+b)} \geq \frac{3}{2}\]
+\end{example}
+
+\begin{proof}
+  因为
+  \[
+    \frac{1}{a^{3}(b+c)}=\frac{(a b c)^{2}}{a^{3}(b+c)}=\frac{b^{2} c^{2}}{a b+a c}
+  \]及
+  \[
+    \frac{b^{2} c^{2}}{a b+a c}+\frac{a b+a c}{4} \geq 2 \sqrt{\frac{b^{2} c^{2}}{4}}=b c,
+  \]故
+  \[
+    \frac{b^{2} c^{2}}{a b+a c} \geq b c-\frac{a b+a c}{4}
+  \]且
+  \begin{align*} 
+    & \frac{1}{a^{3}(b+c)}+\frac{1}{b^{3}(c+a)}+\frac{1}{c^{3}(a+b)} \\ 
+    \geq &\left(b c-\frac{a b+a c}{4}\right)+\left(a c-\frac{a b+b c}{4}\right)+\left(a b-\frac{b c+a c}{4}\right) \\ 
+    =& \frac{a b+b c+a c}{2} \geq \frac{3}{2} \sqrt[3]{a b \cdot b c \cdot a c}=\frac{3}{2} 
+  \end{align*}
+  即
+  \[
+    \frac{1}{a^{3}(b+c)}+\frac{1}{b^{3}(c+a)}+\frac{1}{c^{3}(a+b)} \geq \frac{3}{2},
+  \]
+  当且仅当 $a=b=c=1$ 时两次等号成立，故原命题得证。
+\end{proof}
+
+\begin{analysis}
+  该题目两次运用均值不等式进行求解，题目条件中的 $a b c=1$ 等式可以用于替换常数构造均值不等式成立的结构。本题也需注意等号成立的条件，等号成立需考虑两次运用均值不等式取等的条件。
+
+  当然，均值不等式在大学数学中也有着自己的一席之地，常见于用其解决数列方面的问题。现着眼于大学数学知识点，给出均值不等式的妙用。
+\end{analysis}
+
+
+\begin{example}
+  若 $a_{n}>0 (n=1,2 \cdots), \lim _{n \rightarrow \infty} a_{n}=a(a>0)$, 求证: $\lim _{n \rightarrow \infty} \sqrt{a_{1} a_{2} \cdots a_{n}}=a$
+\end{example}
+
+\begin{proof}
+  由 $\lim _{n \rightarrow \infty} a_{n}=a$ 可知, $\forall \varepsilon>0, \exists N_{1} \in \mathbb{N}_{+}$, 当 $n>N_{7}$ 时, 有 $\left|a_{n}-a\right|<\varepsilon$ 于是当 $n>N_{1}$ 时, 有
+  \begin{align*}
+    \left|\frac{a_{1+} a_{2+} \cdots+a_{n}}{n}-a\right| &=\left|\frac{1}{n}\left[\left(a_{1}-a\right)+\left(a_{2}-a\right)+\cdots+\left(a_{n}-a\right)\right]\right| \\
+    & \leq \frac{1}{n}\left(\left|a_{1}-a\right|+\left|a_{2}-a\right|+\cdots+\left|a_{n}-a\right|\right) \\
+    &<\frac{1}{n} N_{1} M+\frac{\left(n-N_{1}\right)}{n} \varepsilon<\frac{1}{n} N_{1} M+\varepsilon.
+  \end{align*}
+  其中 $M=\max \left\{\left|a_{1}-a\right|,\left|a_{2}-a\right|, \cdots,\left|a_{n}-a\right|\right\}$.
+  又因为 $\lim _{n \rightarrow \infty} \frac{N_{1} M}{n}=0$, 所以对上面的 $\varepsilon$, 存在正整数 $N_{2}$, 使得 $n>N_{2}$ 时, 有 $\abs{\frac{N_{1} M}{n}-0} <\varepsilon$, 取 $N=\max \left\{N_{1}, N_{2}\right\}$, 则当 $n>N$ 时, 有 $\left|\frac{a_{1+} a_{2}+\cdots+a_{n}}{n}-a\right|<\varepsilon+\varepsilon= 2 \varepsilon$, 故有 $\lim _{n \rightarrow \infty} \frac{a_{1+} a_{2+} \cdots+a_{n}}{n}=a$. 
+
+  根据均值不等式有, 
+  \[\frac{n}{\frac{1}{a_{1}}+\frac{1}{a_{2}}+\cdots+\frac{1}{a_{n}}} \leq \sqrt{a_{1} a_{2} \cdots a_{n}} \leq \frac{a_{1}+a_{2}+\cdots+a_{n}}{n}.\]
+  又有 $\lim \limits_{n \rightarrow \infty} \frac{a_{1+} a_{2+\cdots} \cdots+a_{n}}{n}=a$ 知\[\lim _{n \rightarrow \infty} \frac{n}{\frac{1}{a_{1}}+\frac{1}{a_{2}}+\cdots+\frac{1}{a_{n}}}=\lim _{n \rightarrow \infty} \frac{1}{\frac{1}{n}\left(\frac{1}{a_{1}}+\frac{1}{a_{2}}+\cdots+\frac{1}{a_{n}}\right)}=\frac{1}{\frac{1}{a}}=a\]
+  所以由迫敛性得 $\lim _{n \rightarrow \infty} \sqrt[n]{a_{1} a_{2} \cdots a_{n}}=a$. 
+  原命题成立，得证。
+\end{proof}
+
+\begin{analysis}
+  该题目为数分教材第二章《数列极限》习题中的一道，运用均值不等式内容中的 $H_{n} \leq G_{n} \leq A_{n}$ 这一不等式，通过夹逼法得出数列极限。由此可见，本题中利用均值不等式进行放缩的程度适当，以后的题目在运用放缩的方法时也需时刻注意放和缩的“度”。
+\end{analysis}
