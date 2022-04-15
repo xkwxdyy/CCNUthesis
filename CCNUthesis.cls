@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-04-09}{v1.1.7}
+  {2022-04-13}{v1.1.8}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e }
 
@@ -1955,6 +1955,7 @@
 \cs_new_protected:Npn \__ccnu_abstract_en_begin:
   { 
     \bigskip
+    \addcontentsline{toc}{chapter}{\normalfont  Title  }
     \textbf{ Title: } \c_space_tl \l__ccnu_info_title_en_tl \par
     \medskip
     \__ccnu_abstract_env:V \c__ccnu_name_abstract_en_tl 
@@ -2949,3 +2950,7 @@
 
 \setlength{\lineskiplimit}{2.5pt}
 \setlength{\lineskip}{\baselineskip-1.1\ccwd}
+
+% 取消 \nocite{} 的作用，防止用户自己使用
+
+\RenewDocumentCommand { \nocite } { m } {}

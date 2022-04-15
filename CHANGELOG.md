@@ -4,6 +4,18 @@
 
 更多关于模版的内容和如何使用，请仔细阅读 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis)！
 
+## [v1.1.8] - 2022-04-15
+
+### Added
+
+- 目录中添加 `title`
+
+
+## [v1.1.8] - 2022-04-13
+
+### Changed
+
+- 取消 `\nocite{}` 的作用
 
 ## [v1.1.7] - 2022-04-09
 
