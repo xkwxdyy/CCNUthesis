@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-04-13}{v1.1.8}
+  {2022-04-17}{v1.1.9}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e }
 
@@ -1089,15 +1089,19 @@
 % \cs_generate_variant:Nn \ccnu_thm_set_qed:n         { V }
 % \cs_generate_variant:Nn \ccnu_thm_set_header_font:n { V }
 % \cs_generate_variant:Nn \ccnu_thm_set_body_font:n   { V }
+\DeclareCaptionFont { ccnufigurecap }
+  { \normalfont \zihao { -5 } }
+\DeclareCaptionFont { ccnutablecap }
+  { \normalfont \zihao { -5 } }
 \captionsetup [ figure ]
   {
-    font     = small,
+    font     = ccnufigurecap,
     labelsep = colon
   }
 \captionsetup [ table  ]
   {
     % font     = { small, sf },
-    font     = small,
+    font     = ccnutablecap,
     labelsep = colon
   }
 \cs_set:Npn \thefigure

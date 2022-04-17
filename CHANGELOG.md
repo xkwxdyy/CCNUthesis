@@ -8,6 +8,10 @@ v1.1.8 -> v1.1.9: 只需要更新 `CCNUtheis.cls`
 
 ## [v1.1.9] - 2022-04-17
 
+### Changed
+
+- 图表的字号设置为小五号
+
 ### Fixed
 
 - 解决中文标点下的参考文献 `book` 类的译者会出现两个逗号 [#129](https://github.com/hushidong/biblatex-gb7714-2015/issues/129)
