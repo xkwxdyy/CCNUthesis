@@ -11,7 +11,7 @@
 %
 %   版本和时间信息
 %
-\def\versionofgbtstyle{2022/03/13 v1.1f}
+\def\versionofgbtstyle{2022/04/16 v1.1h}
 \def\versionofbiblatex{\abx@version}
 \ProvidesFile{gb7714-2015.bbx}[\versionofgbtstyle biblatex bibliography style]
 %\RequireBiber[3]%显式指定用biber后端，当用bibtex时会报错，但其实不会影响编译，只是采用bibtex后无法达成格式需求
@@ -2090,18 +2090,24 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 %=====================================================================
 %   参考文献表环境
 %=====================================================================
+\AtBeginBibliography{%
+\hyphenpenalty=100 %断词阈值，值越大越不容易出现断词
+\tolerance=8000 %丑度， 10000为最大无溢出盒子，参考the texbook 第6章
+\hbadness=5000 %如果丑度超过hbadness这一阀值，那么就会发出警告
+\interlinepenalty=100\relax%
+\widowpenalty=100\relax%
+\clubpenalty=100\relax%
+} %设置断行阈值，避免行溢出
 %
 %   列表格式
 %
 %   增加一个\bibitemindent尺寸用于控制list环境的itemindent
 %   v1.0l，20180615，hzz
 %   v1.0t,20200319,hzz,增加尺寸\biblabelextend使某些字体下标签宽度不足时可增加标签宽度
-\setlength{\bibhang}{\biblabelsep}%
 \newlength{\bibitemindent}
 \setlength{\bibitemindent}{0pt}
 \newlength{\biblabelextend}
 \setlength{\biblabelextend}{0pt}
-
 
 \defbibenvironment{bibliography}
   {\list
@@ -2109,10 +2115,11 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
         \printfield{labelprefix}%
         \printfield{labelnumber}}}
      {\addtolength{\labelnumberwidth}{\biblabelextend}%
-     \setlength{\labelwidth}{\labelnumberwidth}%
+      \setlength{\labelwidth}{\labelnumberwidth}%
       \setlength{\labelsep}{\biblabelsep}%
+      \setlength{\bibhang}{\biblabelsep}%
+      \addtolength{\bibhang}{\labelnumberwidth}%
       \setlength{\leftmargin}{\bibhang}%
-      \addtolength{\leftmargin}{\labelnumberwidth}%
       \setlength{\itemindent}{\bibitemindent}%
       \setlength{\itemsep}{\bibitemsep}%
       \setlength{\parsep}{\bibparsep}}%
@@ -2240,14 +2247,14 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 \iftoggle{bbx:gbmedium}%
 {\iftoggle{bbx:url}%
     {\iffieldundef{url}%当存在url时，增加一个OL标识符
-        {\nobreak\printtext{[}\nobreak#1\nobreak\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}}%
-        {\nobreak\printtext{[}\nobreak#1\nobreak\printtext{\texttt{/}OL]}}%
+        {\allowbreak\printtext{[}\nobreak#1\nobreak\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}}%
+        {\allowbreak\printtext{[}\nobreak#1\nobreak\printtext{\texttt{/}OL]}}%
     }%
     {\ifentrytype{online}%
-        {\nobreak\printtext{[}\nobreak#1\nobreak\printtext{\texttt{/}OL]}}%
-        {\nobreak\printtext{[}\nobreak#1\nobreak\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}}%
+        {\allowbreak\printtext{[}\nobreak#1\nobreak\printtext{\texttt{/}OL]}}%
+        {\allowbreak\printtext{[}\nobreak#1\nobreak\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}}%
     }}%
-    {\nobreak\printtext{[}\nobreak#1\nobreak\printtext{]}}%
+    {\allowbreak\printtext{[}\nobreak#1\nobreak\printtext{]}}%
 }
 
 %
@@ -2257,11 +2264,11 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 \iftoggle{bbx:gbmedium}%
 {\iftoggle{bbx:url}%
     {\iffieldundef{url}%当存在url时，增加一个OL标识符
-        {\nobreak\printtext{[}\nobreak N\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}\nobreak}%
-        {\nobreak\printtext{[}\nobreak N\printtext{\texttt{/}OL]}\nobreak}%
+        {\allowbreak\printtext{[}\nobreak N\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}\nobreak}%
+        {\allowbreak\printtext{[}\nobreak N\printtext{\texttt{/}OL]}\nobreak}%
     }%
-    {\nobreak\printtext{[}\nobreak N\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}\nobreak}%
-}{\nobreak\printtext{[}\nobreak N\printtext{]}\nobreak}%
+    {\allowbreak\printtext{[}\nobreak N\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}\nobreak}%
+}{\allowbreak\printtext{[}\nobreak N\printtext{]}\nobreak}%
 }
 
 %
@@ -2271,11 +2278,11 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 \iftoggle{bbx:gbmedium}%
 {\iftoggle{bbx:url}%
     {\iffieldundef{url}%当存在url时，增加一个OL标识符
-        {\nobreak\printtext{[}\nobreak S\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}\nobreak}%
-        {\nobreak\printtext{[}\nobreak S\printtext{\texttt{/}OL]}\nobreak}%
+        {\allowbreak\printtext{[}\nobreak S\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}\nobreak}%
+        {\allowbreak\printtext{[}\nobreak S\printtext{\texttt{/}OL]}\nobreak}%
     }%
-    {\nobreak\printtext{[}\nobreak S\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}\nobreak}%
-}{\nobreak\printtext{[}\nobreak S\printtext{]}\nobreak}%
+    {\allowbreak\printtext{[}\nobreak S\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}\nobreak}%
+}{\allowbreak\printtext{[}\nobreak S\printtext{]}\nobreak}%
 }
 
 %
@@ -2315,8 +2322,8 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 %   因为titlecase is applied to the contents of the field directly，title is not
 %\DeclareFieldFormat{titlecase}{\MakeCapital#1}%重设标题格式，将其修改为首字母大写
 \DeclareFieldFormat{titlecase}{\iftoggle{bbx:titlelink}{%
-\iffieldundef{url}{\MakeCapital#1}{%
-\href{\thefield{url}}{#1}}}{\MakeCapital#1}}%重设标题格式，将其修改为首字母大写
+\iffieldundef{url}{#1}{%
+\href{\thefield{url}}{#1}}}{#1}}%重设标题格式，将其修改为首字母大写
 \DeclareFieldFormat{pages}{#1}%去掉前面引导页码的pp.等字符，\mkpageprefix[bookpagination]{#1}
 \DefineBibliographyExtras{english}{\renewcommand*{\bibrangedash}{-}}%将页码间隔符替换会英文的短横线
 \DefineBibliographyExtras{russian}{\renewcommand*{\bibrangedash}{-}}%将页码间隔符替换会英文的短横线
@@ -2407,24 +2414,32 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 %   v1.0,20160701,hzz
 %   v1.0O,20190103,hzz,修改利用新定义的一个分隔符strandothersdelim
 %   v1.0w,20210401,hzz,针对其它语言的译者后的标点与中文不同做处理
+%   v1.1h,20220416,hzz,修正远古bug：在使用中文标点时会在译者中输出多个标点
 %   原理方法:判断作者或译者是否中文，若中文用字符等，否则用et al. 。
 %   \printnames由start-stop控制项数，默认是1和maxnames/minnames
+%说明：multinamedelim是各姓名之间的标点
+%      finalnamedelim是最后一个姓名前的取代multinamedelim的标点
+%      这两个标点是由printnames固定输出的。
+%      而且name:andothers在namefmtselected中是针对每个姓名都做的处理，所以其内容的输出要根据姓名列表的计数来做判断
+%     而finalandcomma 只是习惯用于最后一个and前输出的标点，但与前两个固定输出不同
+%      finalandcomma 只是在宏中判断并输出的，修改宏去掉它即可使其不输出
 \newcommand{\aftertransdelim}{\addcomma\addthinspace}
 \renewbibmacro*{name:andothers}{\bibauthorfont%
-  \ifboolexpr{
-    test {\ifnumequal{\value{listcount}}{\value{liststop}}}
-    and
-    test \ifmorenames
-  }{\ifnumgreater{\value{liststop}}{1}%注意这里试图去区分姓名总数大于1的情况，当姓名总数大于1时，最后一个姓名后面先加入一个\finalandcomma
-       {\finalandcomma}%目前国标没有这样的区分要求，如果有需要也是可以这么去做的。
-       {}%
-\printdelim{andothersdelim}\printdelim{strandothersdelim}%
-}{%当是译者的时候需要特殊处理：从7.2节看等，译前面加逗号，但从示例看等和译同时出现时，译前的逗号没有，比如：
-%袁训来, 陈哲, 肖书海, 等.
-%胡泳, 范海燕, 译.
-%潘惠霞, 魏婧, 杨艳, 等译.
-\ifcurrentname{translator}{\iffieldequalstr{usere}{chinese}{\aftertransdelim}{}}{}%为了实现上述第二个示例情况做的处理
-}}
+\ifboolexpr{test {\ifnumequal{\value{listcount}}{\value{liststop}}}
+            and test \ifmorenames}
+    {\ifnumgreater{\value{liststop}}{1}%注意这里试图去区分姓名总数大于1的情况，当姓名总数大于1时，最后一个姓名后面先加入一个\finalandcomma
+        {}%\finalandcomma，目前国标没有这样的区分要求，如果有需要也是可以这么去做的。
+        {}%
+    \printdelim{andothersdelim}\printdelim{strandothersdelim}%
+    }%
+    {%当是译者的时候需要特殊处理：从7.2节看等，译前面加逗号，但从示例看等和译同时出现时，译前的逗号没有，比如：
+    %袁训来, 陈哲, 肖书海, 等.
+    %胡泳, 范海燕, 译.
+    %潘惠霞, 魏婧, 杨艳, 等译.
+    \ifnumequal{\value{listcount}}{\value{liststop}}%
+        {\ifcurrentname{translator}{\iffieldequalstr{usere}{chinese}{\aftertransdelim}{}}{}}{}%为了实现上述第二个示例情况做的处理
+    }%
+}
 
 
 
@@ -2531,32 +2546,30 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 %   重设title的输出
 %
 %   20180425，v1.0k，为标题增加字体控制命令，Hu Zhenzhen
+%   20220416，v1.1g，增加book类卷的输出
 %   原理方法:将文献类型标识符输出出去，原输出来自biblatex.def文件
 %   利用toggle做标识符是否输出的判断
 \renewbibmacro*{title}{%
-  \ifboolexpr{%
+\ifboolexpr{%
     test{\iffieldundef{title}}%
     and
-    test{\iffieldundef{subtitle}}%
-  }%
+    test{\iffieldundef{subtitle}}}%
     {}%
     {\printtext[title]{\bibtitlefont%增加字体控制命令
        \printfield[titlecase]{title}%
-       \ifboolexpr{test {\iffieldundef{subtitle}}}%这里增加了对子标题的判断，解决不判断多一个点的问题
-       {}{\setunit{\subtitlepunct}%
-       \printfield[titlecase]{subtitle}}%
-       \iffieldundef{titleaddon}{}%判断一下titleaddon，否则直接加可能多一个空格
-        {\setunit{\subtitlepunct}\printfield{titleaddon}}%
-        \iftoggle{bbx:gbtype}{%
-         \iffieldundef{entrysubtype}{\printfield[gbtypeflag]{usera}}%在标题后直接给出文献标识字母，判断一下，是否是报纸和标准
-        {\iffieldequalstr{entrysubtype}{standard}{\printfield[gbtypeflags]{usera}}%判断是否为标准
-                                         {\iffieldequalstr{entrysubtype}{news}{\printfield[gbtypeflagn]{usera}}%判断是否为报纸
-                                                                      {\printfield[gbtypeflag]{usera}}}%其它
-        }}{}%
-     %\iffieldundef{booktitle}{\newunit}{}%当title是析出时，不要标点
-     %\newunit
-}%
-}}
+       \ifboolexpr{test {\iffieldundef{subtitle}}}%增加了对子标题的判断
+            {}{\setunit{\subtitlepunct}\printfield[titlecase]{subtitle}}%
+       \iffieldundef{titleaddon}{}{\setunit{\subtitlepunct}\printfield{titleaddon}}%判断一下titleaddon
+       \ifboolexpr{test{\ifentrytype{book}} and (not test{\iffieldundef{volume}})}%判断一下book类有没有volume
+            {\setunit{\subtitlepunct}\printfield{volume}}{}%
+       \iftoggle{bbx:gbtype}%
+            {\iffieldundef{entrysubtype}{\printfield[gbtypeflag]{usera}}%在标题后直接给出文献标识字母，判断一下，是否是报纸和标准
+            {\iffieldequalstr{entrysubtype}{standard}{\printfield[gbtypeflags]{usera}}%判断是否为标准
+                  {\iffieldequalstr{entrysubtype}{news}{\printfield[gbtypeflagn]{usera}}%判断是否为报纸
+                  {\printfield[gbtypeflag]{usera}}}}}{}%%其它
+       }%
+    }%
+}
 
 %
 %   作者信息的输出格式
@@ -2663,6 +2676,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 \DeclareNameAlias{default}{namefmtselected}%姓名的默认格式采用可选的模式
 \DeclareNameAlias{sortname}{default}% Used in the bibliography %family-given/given-family
 \DeclareNameAlias{citename}{default}% Default used by \citename
+\DeclareNameAlias{bytranslator}{default}
 
 \DeclareDelimFormat[bib,biblist]{andothersdelim}{\addcomma\addspace}
 %\DeclareDelimFormat[textcite]{andothersdelim}{\addspace}%

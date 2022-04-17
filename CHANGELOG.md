@@ -4,12 +4,23 @@
 
 更多关于模版的内容和如何使用，请仔细阅读 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis)！
 
+v1.1.8 -> v1.1.9: 只需要更新 `CCNUtheis.cls`
+
+## [v1.1.9] - 2022-04-17
+
+### Fixed
+
+- 解决中文标点下的参考文献 `book` 类的译者会出现两个逗号 [#129](https://github.com/hushidong/biblatex-gb7714-2015/issues/129)
 ## [v1.1.8] - 2022-04-15
 
 ### Added
 
 - 目录中添加 `title`
 
+### Changed
+
+- 重新修改 `enumerate` 的缩进参数
+- 修改 `table` 和 `figure` 的计数方式，变成连续编号
 
 ## [v1.1.8] - 2022-04-13
 
