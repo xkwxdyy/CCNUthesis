@@ -133,8 +133,8 @@
 \mainmatter
 
 % 主体采用多文件编译的方式
-% 即把每一章放进一个单独的 tex 文件里，并在这里用 \include 导入
-% 例如 \include{./body/chapter1.tex}
+% 即把每一章放进一个单独的 tex 文件里，并在这里用 \input 导入
+% 例如 \input{./body/chapter1.tex}
 % 表示插入 main 所在目录中的 body 目录下的 chapter1.tex 文件
 
 
@@ -163,10 +163,8 @@
 \printbibliography
 
 
-
 %%%% 致谢 %%%%
 \include{./back/Acknowledgements.tex}
-
 
 
 %%%% 附录 %%%%

@@ -2900,11 +2900,13 @@
 % 把致谢和附录的标题代码封装
 \NewDocumentCommand { \Appendix } { }
   {
+    \newpage
     \chapter*{附录}
     \addcontentsline{toc}{chapter}{\normalfont 附录}   % 根据旧模版样式，如果有写附录，则需要把附录放进目录
   }
 \NewDocumentCommand { \Acknowledgements } { }
   {
+    \newpage
     \chapter*{\centerline{致 \quad 谢}}
     \addcontentsline{toc}{chapter}{\normalfont 致谢}   % 根据旧模版样式，如果有写致谢，则需要把致谢放进目录
   }
