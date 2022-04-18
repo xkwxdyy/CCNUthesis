@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-04-17}{v1.1.9}
+  {2022-04-18}{v1.1.10}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e }
 
@@ -822,14 +822,14 @@
         format      = \zihao{3} \normalfont \bfseries,
         % format      = \huge \normalfont \sffamily \centering,
         % beforeskip  = 50 pt,
-        beforeskip  = 10pt,
+        beforeskip  = 5  ex plus 0.5 ex,
         % afterskip   = 40 pt,
         afterskip   = 2.7  ex plus 0.5 ex,
         % afterskip   = 15pt,
         number      = \__ccnu_arabic:n { chapter },
         fixskip     = true,
         name        = {},
-        % pagestyle   = empty,
+        break       = {}
       },
     section =
       {
@@ -2049,6 +2049,7 @@
               format = \zihao{-2} \normalfont \bfseries \centering
             }
       }
+    \newpage
     \__ccnu_notation_begin:
     \group_begin:
       \__ccnu_notation_long_table_setup:
@@ -2962,3 +2963,7 @@
 % 取消 \nocite{} 的作用，防止用户自己使用
 
 \RenewDocumentCommand { \nocite } { m } {}
+
+% 严格禁止孤行和寡行
+\int_set:Nn \clubpenalty { 10000 }
+\int_set:Nn \widowpenalty { 10000 }

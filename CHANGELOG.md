@@ -4,17 +4,21 @@
 
 更多关于模版的内容和如何使用，请仔细阅读 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis)！
 
-v1.1.8 -> v1.1.9: 只需要更新 `CCNUtheis.cls`
+v1.1.9 -> v1.1.10: 只需要更新 `CCNUtheis.cls`
 
-## [v1.1.9] - 2022-04-17
+## [v1.1.10] - 2022-04-18
 
 ### Changed
 
-- 图表的字号设置为小五号
+- 将章节之间的 `clearpage` 效果改为连续排版效果 
+
+## [v1.1.9] - 2022-04-17
 
 ### Fixed
 
 - 解决中文标点下的参考文献 `book` 类的译者会出现两个逗号 [#129](https://github.com/hushidong/biblatex-gb7714-2015/issues/129)
+
+
 ## [v1.1.8] - 2022-04-15
 
 ### Added
