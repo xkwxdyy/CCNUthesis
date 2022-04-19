@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-04-18}{v1.1.10}
+  {2022-04-19}{v1.1.11}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e }
 
@@ -829,7 +829,8 @@
         number      = \__ccnu_arabic:n { chapter },
         fixskip     = true,
         name        = {},
-        break       = {}
+        break       = {},
+        indent      = 2\ccwd
       },
     section =
       {
@@ -837,20 +838,27 @@
         % format      = \Large \normalfont \sffamily \raggedright,
         beforeskip  = 4.5 ex plus 1.0 ex minus 0.2 ex,
         afterskip   = 2.7 ex plus 0.5 ex,
-        fixskip     = true
+        fixskip     = true,
+        indent      = 2\ccwd
       },
     subsection =
       {
         format      = \zihao{4} \normalfont \bfseries \raggedright,
         % format      = \large \normalfont \sffamily \raggedright,
-        beforeskip  = 4.25 ex plus 1.0 ex minus 0.2 ex,
+        beforeskip  = 3.5 ex plus 1.0 ex minus 0.2 ex,
         afterskip   = 2.5  ex plus 0.3 ex,
-        fixskip     = true
+        fixskip     = true,
+        indent      = 2\ccwd
       },
-    % chapter =
-    %   {
-    %     format      = \zihao{-2}
-    %   }
+    subsubsection =
+      {
+        format      = \zihao{-4} \normalfont \bfseries \raggedright,
+        % format      = \large \normalfont \sffamily \raggedright,
+        beforeskip  = 2.25 ex plus 0.5 ex minus 0.2 ex,
+        afterskip   = 2.0 ex plus 0.3 ex minus 0.2ex,
+        fixskip     = true,
+        indent      = 2\ccwd
+      }
   }
 \cs_new_protected:Npn \__ccnu_chapter:n #1
   {

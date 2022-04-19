@@ -4,7 +4,12 @@
 
 更多关于模版的内容和如何使用，请仔细阅读 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis)！
 
-v1.1.9 -> v1.1.10: 只需要更新 `CCNUtheis.cls`
+v1.1.10 -> v1.1.11: 只需要更新 `CCNUtheis.cls`
+
+## [v1.1.11] - 2022-04-19
+
+- 重新修改章节标题的缩进
+
 
 ## [v1.1.10] - 2022-04-18
 
