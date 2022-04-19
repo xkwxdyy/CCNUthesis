@@ -338,7 +338,8 @@
   labelindent  = \parindent,
   leftmargin   = 0pt,
   widest       = 0,
-  itemindent   = *
+  itemindent   = *,
+  listparindent=\parindent,
 }
 \tl_new:N \g__ccnu_fontset_tl
 \tl_new:N \g__ccnu_cjk_fontset_tl
