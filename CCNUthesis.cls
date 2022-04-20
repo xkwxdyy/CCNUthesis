@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-04-19}{v1.1.11}
+  {2022-04-20}{v1.1.12}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e }
 
@@ -293,7 +293,8 @@
     adjustbox,
     etoolbox,
     amsthm,
-    thmtools
+    thmtools,
+    needspace
   }
 \RequirePackage[shortlabels]{enumitem}
 \RequirePackage[physics]{physicx}
@@ -830,7 +831,8 @@
         number      = \__ccnu_arabic:n { chapter },
         fixskip     = true,
         name        = {},
-        break       = {},
+        % break       = {},
+        break       = {\needspace{4em}},
         indent      = 2\ccwd
       },
     section =
@@ -2388,6 +2390,7 @@
   [
     headpunct = {},
     postheadspace = { 0.5em },
+    headindent = 2\ccwd
   ]{ccnustyle}
 \cs_new:Npn \__xdyymath_declare_theorem_with_counter_within:n #1
   {
@@ -2441,6 +2444,7 @@
     \trivlist
     \item \relax
     \group_begin:
+      \hspace*{2\ccwd}
       \bfseries #1\@addpunct{:}
     \group_end:
     \hspace \labelsep \ignorespaces

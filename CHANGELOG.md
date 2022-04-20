@@ -4,7 +4,17 @@
 
 更多关于模版的内容和如何使用，请仔细阅读 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis)！
 
-v1.1.10 -> v1.1.11: 只需要更新 `CCNUtheis.cls`
+v1.1.11 -> v1.1.12: 只需要更新 `CCNUtheis.cls`
+
+## [v1.1.12] - 2022-04-20
+
+### Changed
+
+- 定理环境增加缩进
+
+### Fixed
+
+- 尝试解决连续章节的孤行问题
 
 ## [v1.1.11] - 2022-04-19
 
