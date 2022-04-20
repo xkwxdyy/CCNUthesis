@@ -11,6 +11,7 @@ v1.1.11 -> v1.1.12: 只需要更新 `CCNUtheis.cls`
 ### Changed
 
 - 定理环境增加缩进
+- 修改数学字体为 `XITSMath`
 
 ### Fixed
 

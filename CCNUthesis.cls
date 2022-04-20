@@ -597,8 +597,11 @@
     %     ItalicFont     = *-Italic,
     %     BoldItalicFont = *-Bolditalic,
     %   ]
-    \setmathfont{STIXTwoMath-Regular.otf}
-    \setmathfont{STIXTwoMath-Regular.otf}[range={scr,bfscr},StylisticSet=01]
+    % \setmathfont{STIXTwoMath-Regular.otf}
+    % \setmathfont{STIXTwoMath-Regular.otf}[range={scr,bfscr},StylisticSet=01]
+    \setmathfont { XITSMath-Regular.otf }
+      [ BoldFont = XITSMath-Bold.otf ]
+    \setmathfont{ XITSMath-Regular.otf }[range={cal,bfcal},StylisticSet=01]
   }
 \cs_new_protected:cpn { __ccnu_load_font_ times* : }
   {
