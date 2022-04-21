@@ -2970,3 +2970,18 @@
 % 严格禁止孤行和寡行
 \int_set:Nn \clubpenalty { 10000 }
 \int_set:Nn \widowpenalty { 10000 }
+
+
+% 落款
+
+\NewDocumentEnvironment { signature } { +b }
+  {
+    \vfil
+    \begin{flushright}
+      \begin{tabular}{c}
+        #1
+      \end{tabular}
+    \end{flushright}
+    \vfil
+  }
+  {}

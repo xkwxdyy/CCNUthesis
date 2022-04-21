@@ -4,11 +4,26 @@
 
 更多关于模版的内容和如何使用，请仔细阅读 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis)！
 
-v1.1.12 -> v1.1.13: 只需要更新 `CCNUtheis.cls`
+v1.1.12 -> v1.1.13: 只需要更新 `CCNUtheis.cls`，如果致谢需要写落款的，在致谢中使用
 
-- 修改目录部分行距为 1 倍
+```latex
+\begin{signature}
+  夏康玮 \\
+  2022年4月21日于珞珈山
+\end{signature}
+```
 
 ## [v1.1.13] - 2022-04-21
+
+### Added
+
+- 增加落款签名环境
+
+### Changed
+
+- 修改目录部分行距
+
+### Fixed
 
 - 修复 `chapter` 缩进对参考文献和致谢、附录的影响
 
