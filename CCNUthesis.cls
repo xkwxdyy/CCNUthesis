@@ -2449,6 +2449,7 @@
                 format = \zihao{-2} \normalfont \bfseries \centering
               }
         }
+      \__ccnu_line_spread:n { 1 }
       \t@bleofcontents
       \thispagestyle{empty}
       \newpage
