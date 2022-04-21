@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-04-20}{v1.1.12}
+  {2022-04-21}{v1.1.13}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e }
 
@@ -2207,35 +2207,6 @@
     \__ccnu_biblatex_allow_url_break:
     \__ccnu_biblatex_use_en_dash:
     \defbibheading { bibliography } [ \bibname ] { \__ccnu_chapter:n {##1} }
-    % 修改\parencite，使得\parencite[foo]{label}的效果为 [x, foo]
-    % https://github.com/hushidong/biblatex-gb7714-2015/issues/120#issuecomment-1063764782
-    \DeclareCiteCommand{\parencite}
-      {
-        \mkbibleftborder\usebibmacro{cite:init}
-        \usebibmacro{prenote}
-      }
-      {
-        \usebibmacro{citeindex}
-        \usebibmacro{cite:comp}
-      }
-      {}
-      {
-        \usebibmacro{cite:dump}\setunit{\addcomma\addspace}\printfield{postnote}\mkbibrightborder
-      }
-    \DeclareCiteCommand{\cite}[\mkbibsuperscript]  % 利用mkbibsuperbracket添加方括号
-      {
-        \mkbibleftborder\usebibmacro{cite:init}
-        \usebibmacro{prenote}
-      }
-      {
-        \usebibmacro{citeindex}
-        \usebibmacro{cite:comp}
-      }
-      {}
-      {
-        \usebibmacro{cite:dump}\setunit{\addcomma\addspace}
-        \printfield{postnote}\mkbibrightborder
-      }
     % 修改 \printbibliography
     \cs_set_eq:NN \__ccnu_printbibliography_old \printbibliography
     \cs_new:Npn \__ccnu_printbibliography:n ##1 
@@ -2245,7 +2216,14 @@
     \RenewDocumentCommand { \printbibliography } { O{} } 
       {
         \group_begin:
-          \ctexset{ chapter / afterskip = 2.7em }
+          \ctexset
+            {
+              chapter = 
+                {
+                  afterskip = 2em,
+                  indent = 0pt
+                }
+            }
           \sloppy
           \__ccnu_printbibliography:n { ##1 }
         \group_end:
@@ -2917,14 +2895,20 @@
 \NewDocumentCommand { \Appendix } { }
   {
     \newpage
-    \chapter*{附录}
-    \addcontentsline{toc}{chapter}{\normalfont 附录}   % 根据旧模版样式，如果有写附录，则需要把附录放进目录
+    \group_begin:
+      \ctexset{chapter/indent=0pt}
+      \chapter*{附录}
+      \addcontentsline{toc}{chapter}{\normalfont 附录}   % 根据旧模版样式，如果有写附录，则需要把附录放进目录
+    \group_end:
   }
 \NewDocumentCommand { \Acknowledgements } { }
   {
     \newpage
-    \chapter*{\centerline{致 \quad 谢}}
-    \addcontentsline{toc}{chapter}{\normalfont 致谢}   % 根据旧模版样式，如果有写致谢，则需要把致谢放进目录
+    \group_begin:
+      \ctexset{chapter/indent=0pt}
+      \chapter*{\centerline{致 \quad 谢}}
+      \addcontentsline{toc}{chapter}{\normalfont 致谢}   % 根据旧模版样式，如果有写致谢，则需要把致谢放进目录
+    \group_end:
   }
 \ccnusetup
   {

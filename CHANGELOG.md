@@ -4,7 +4,12 @@
 
 更多关于模版的内容和如何使用，请仔细阅读 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis)！
 
-v1.1.11 -> v1.1.12: 只需要更新 `CCNUtheis.cls`
+v1.1.12 -> v1.1.13: 只需要更新 `CCNUtheis.cls`
+
+## [v1.1.13] - 2022-04-21
+
+- 修复 `chapter` 缩进对参考文献和致谢、附录的影响
+
 
 ## [v1.1.12] - 2022-04-20
 
