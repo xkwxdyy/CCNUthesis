@@ -6,11 +6,55 @@
 
 v1.1.13 -> v1.1.14: 只需要更新 `CCNUtheis.cls`
 
+如需要将参考文献格式改为国标的，在 `main.tex` 的
+```latex
+style = {
+    cjk-font = fandol,
+      % 中文字体
+      % 允许选项：
+      %   cjk-font = adobe|fandol|founder|mac|sinotype|sourcehan|windows|none
+      % 注意：
+      %   1. 中文字体设置高度依赖于系统。各系统建议方案：
+      %        windows：cjk-font = windows
+      %        mac：    cjk-font = mac
+      %        linux：  cjk-font = fandol（默认值）
+      %   2. 除 fandol 和 sourcehan 外，其余字体均为商用字体，请注意版权问题
+      %   3. 但 fandol 字体缺字比较严重，而 sourcehan 没有配备楷体和仿宋体
+    bib-resource = {CCNUthesis-main.bib}
+      % 参考文献数据源，需要加bib后缀
+  }
+```
+中加入 `bibstyle = {gb7714-2015}`
+
+```latex
+style = {
+    cjk-font = fandol,
+      % 中文字体
+      % 允许选项：
+      %   cjk-font = adobe|fandol|founder|mac|sinotype|sourcehan|windows|none
+      % 注意：
+      %   1. 中文字体设置高度依赖于系统。各系统建议方案：
+      %        windows：cjk-font = windows
+      %        mac：    cjk-font = mac
+      %        linux：  cjk-font = fandol（默认值）
+      %   2. 除 fandol 和 sourcehan 外，其余字体均为商用字体，请注意版权问题
+      %   3. 但 fandol 字体缺字比较严重，而 sourcehan 没有配备楷体和仿宋体
+    bibstyle = {gb7714-2015},
+      % bibstyle 表示参考文献的格式
+      % 允许的选项：
+      %   ccnu｜gb7714-2015
+      %   ccnu 表示按照学校给的标准
+      %   gb7714-2015表示按照国标
+    bib-resource = {CCNUthesis-main.bib}
+      % 参考文献数据源，需要加bib后缀
+  }
+```
+
 ## [v1.1.14] - 2022-04-22
 
 ### Changed
 
-- 将参考文献格式改为国标
+- 增加参考文献格式控制键值
 
 ## [v1.1.13] - 2022-04-21
 

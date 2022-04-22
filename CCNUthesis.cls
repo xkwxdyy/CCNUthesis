@@ -2085,6 +2085,7 @@
   }
 \bool_new:N \l__ccnu_bibtex_bool
 \tl_new:N \l__ccnu_bib_style_tl
+\tl_new:N \l__ccnu_biblatex_bibstyle_tl
 \tl_new:N \l__ccnu_bib_gb_style_tl
 \tl_new:N \l__ccnu_cite_style_tl
 \clist_new:N \l__ccnu_bib_resource_clist
@@ -2114,7 +2115,19 @@
         \tl_clear:N   \l__ccnu_bib_gb_style_tl
       },
     cite-style .tl_set:N = \l__ccnu_cite_style_tl,
-    bib-resource .clist_set:N = \l__ccnu_bib_resource_clist
+    bib-resource .clist_set:N = \l__ccnu_bib_resource_clist,
+    bibstyle .choice:,
+    bibstyle .value_required:n = true,
+    bibstyle / ccnu .code:n =
+      {
+        \tl_set:Nn \l__ccnu_biblatex_bibstyle_tl
+          { CCNUthesis }
+      },
+    bibstyle / gb7714-2015 .code:n =
+      {
+        \tl_set:Nn \l__ccnu_biblatex_bibstyle_tl
+          { gb7714-2015 }
+      },
   }
 \ctex_at_end_preamble:n
   {
@@ -2172,6 +2185,7 @@
     \NewDocumentCommand \addbibresource { m }
       { \clist_gput_right:Nn \l__ccnu_bib_resource_clist {#1} }
   }
+
 \cs_new_protected:Npn \__ccnu_biblatex_pre_setup:
   {
     \cs_undefine:N \addbibresource
@@ -2195,7 +2209,7 @@
     \clist_put_right:Nn \l__ccnu_biblatex_options_clist
       {
         backend      = biber,
-        bibstyle     = gb7714-2015,
+        bibstyle     = \tl_use:N \l__ccnu_biblatex_bibstyle_tl,
         citestyle    = CCNUthesis
         % CCNUpunctcn  = false
       }
@@ -2460,7 +2474,7 @@
 % 定义\ccnukaishu命令
 \setCJKfamilyfont{zhkai}{FandolKai-Regular.otf}[AutoFakeBold]
 \NewDocumentCommand \ccnukaishu   { } 
-  { \CJKfamily { zhkai   } }
+  { \CJKfamily { zhkai  } }
 % 重定义\emph命令
 \RenewDocumentCommand{ \emph }{ m  }
   {
