@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-04-21}{v1.1.13}
+  {2022-04-22}{v1.1.14}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e }
 
@@ -2195,8 +2195,9 @@
     \clist_put_right:Nn \l__ccnu_biblatex_options_clist
       {
         backend      = biber,
-        style        = CCNUthesis,
-        CCNUpunctcn  = false
+        bibstyle     = gb7714-2015,
+        citestyle    = CCNUthesis
+        % CCNUpunctcn  = false
       }
     \exp_args:NV \PassOptionsToPackage \l__ccnu_biblatex_options_clist
       { biblatex }

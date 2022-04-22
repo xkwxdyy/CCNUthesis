@@ -4,14 +4,13 @@
 
 更多关于模版的内容和如何使用，请仔细阅读 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis)！
 
-v1.1.12 -> v1.1.13: 只需要更新 `CCNUtheis.cls`，如果致谢需要写落款的，在致谢中使用
+v1.1.13 -> v1.1.14: 只需要更新 `CCNUtheis.cls`
 
-```latex
-\begin{signature}
-  夏康玮 \\
-  2022年4月21日于珞珈山
-\end{signature}
-```
+## [v1.1.14] - 2022-04-22
+
+### Changed
+
+- 将参考文献格式改为国标
 
 ## [v1.1.13] - 2022-04-21
 
