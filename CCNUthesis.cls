@@ -2965,6 +2965,7 @@
         %   author-year  著者—出版年制
         %   numerical    顺序编码制
         %   <其他样式>   使用其他 .bst（bibtex）或 .bbx（biblatex）格式文件
+        bibstyle = {ccnu},
         %
         % cite-style = {},
         % 引用样式
