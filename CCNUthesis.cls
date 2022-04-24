@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-04-22}{v1.1.14}
+  {2022-04-24}{v1.1.15}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e }
 
