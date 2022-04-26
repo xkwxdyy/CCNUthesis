@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-04-24}{v1.1.15}
+  {2022-04-26}{v1.1.16}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e }
 
@@ -2089,46 +2089,7 @@
 \tl_new:N \l__ccnu_bib_gb_style_tl
 \tl_new:N \l__ccnu_cite_style_tl
 \clist_new:N \l__ccnu_bib_resource_clist
-\keys_define:nn { ccnu / style }
-  {
-    bib-backend .choice:,
-    bib-backend .value_required:n = true,
-    bib-backend / bibtex   .code:n =
-      { \bool_set_true:N  \l__ccnu_bibtex_bool },
-    bib-backend / biblatex .code:n =
-      { \bool_set_false:N \l__ccnu_bibtex_bool },
-    bib-style .choice:,
-    bib-style .value_required:n = true,
-    bib-style / numerical    .code:n =
-      {
-        \tl_set:Nn  \l__ccnu_bib_gb_style_tl { numerical  }
-        \tl_clear:N \l__ccnu_bib_style_tl
-      },
-    bib-style / author-year .code:n =
-      {
-        \tl_set:Nn  \l__ccnu_bib_gb_style_tl { author-year }
-        \tl_clear:N \l__ccnu_bib_style_tl
-      },
-    bib-style / unknown     .code:n =
-      {
-        \tl_set_eq:NN \l__ccnu_bib_style_tl \l_keys_value_tl
-        \tl_clear:N   \l__ccnu_bib_gb_style_tl
-      },
-    cite-style .tl_set:N = \l__ccnu_cite_style_tl,
-    bib-resource .clist_set:N = \l__ccnu_bib_resource_clist,
-    bibstyle .choice:,
-    bibstyle .value_required:n = true,
-    bibstyle / ccnu .code:n =
-      {
-        \tl_set:Nn \l__ccnu_biblatex_bibstyle_tl
-          { CCNUthesis }
-      },
-    bibstyle / gb7714-2015 .code:n =
-      {
-        \tl_set:Nn \l__ccnu_biblatex_bibstyle_tl
-          { gb7714-2015 }
-      },
-  }
+
 \ctex_at_end_preamble:n
   {
     \bool_if:NT \l__ccnu_bibtex_bool
@@ -2189,7 +2150,10 @@
 \cs_new_protected:Npn \__ccnu_biblatex_pre_setup:
   {
     \cs_undefine:N \addbibresource
-    \clist_new:N \l__ccnu_biblatex_options_clist
+    \clist_if_exist:NF \l__ccnu_biblatex_options_clist
+      {
+        \clist_new:N \l__ccnu_biblatex_options_clist
+      }
     \clist_put_right:Nn \l__ccnu_biblatex_options_clist { hyperref = manual }
     \clist_put_right:Nx \l__ccnu_biblatex_options_clist
       {
@@ -2211,11 +2175,16 @@
         backend      = biber,
         bibstyle     = \tl_use:N \l__ccnu_biblatex_bibstyle_tl,
         citestyle    = CCNUthesis
-        % CCNUpunctcn  = false
+      }
+    \tl_if_eq:NnT \l__ccnu_biblatex_bibstyle_tl {CCNUthesis}
+      {
+        \clist_put_right:Nn \l__ccnu_biblatex_options_clist
+          { CCNUpunctcn  = false }
       }
     \exp_args:NV \PassOptionsToPackage \l__ccnu_biblatex_options_clist
       { biblatex }
   }
+
 \cs_new_protected:Npn \__ccnu_biblatex_post_setup:
   {
     \clist_map_function:NN \l__ccnu_bib_resource_clist \addbibresource
@@ -2243,6 +2212,46 @@
           \__ccnu_printbibliography:n { ##1 }
         \group_end:
       }
+  }
+\keys_define:nn { ccnu / style }
+  {
+    bib-backend .choice:,
+    bib-backend .value_required:n = true,
+    bib-backend / bibtex   .code:n =
+      { \bool_set_true:N  \l__ccnu_bibtex_bool },
+    bib-backend / biblatex .code:n =
+      { \bool_set_false:N \l__ccnu_bibtex_bool },
+    bib-style .choice:,
+    bib-style .value_required:n = true,
+    bib-style / numerical    .code:n =
+      {
+        \tl_set:Nn  \l__ccnu_bib_gb_style_tl { numerical  }
+        \tl_clear:N \l__ccnu_bib_style_tl
+      },
+    bib-style / author-year .code:n =
+      {
+        \tl_set:Nn  \l__ccnu_bib_gb_style_tl { author-year }
+        \tl_clear:N \l__ccnu_bib_style_tl
+      },
+    bib-style / unknown     .code:n =
+      {
+        \tl_set_eq:NN \l__ccnu_bib_style_tl \l_keys_value_tl
+        \tl_clear:N   \l__ccnu_bib_gb_style_tl
+      },
+    cite-style .tl_set:N = \l__ccnu_cite_style_tl,
+    bib-resource .clist_set:N = \l__ccnu_bib_resource_clist,
+    bibstyle .choice:,
+    bibstyle .value_required:n = true,
+    bibstyle / ccnu .code:n =
+      {
+        \tl_set:Nn \l__ccnu_biblatex_bibstyle_tl
+          { CCNUthesis }
+      },
+    bibstyle / gb7714-2015 .code:n =
+      {
+        \tl_set:Nn \l__ccnu_biblatex_bibstyle_tl
+          { gb7714-2015 }
+      },
   }
 \cs_new:Npn \__ccnu_biblatex_allow_url_break:
   {

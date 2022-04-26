@@ -4,7 +4,13 @@
 
 更多关于模版的内容和如何使用，请仔细阅读 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis)！
 
-v1.1.14 -> v1.1.15: 只需要更新 `CCNUtheis.bbx`
+v1.1.15 -> v1.1.16: 只需要更新 `CCNUtheis.bbx`
+
+## [v1.1.16] - 2022-04-26
+
+### Fixed
+
+- `bibstyle={ccnu}` 时增加 `CCNUpunctcn=false`
 
 ## [v1.1.15] - 2022-04-24
 
