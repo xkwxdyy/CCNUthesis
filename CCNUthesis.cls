@@ -1958,13 +1958,11 @@
 \cs_generate_variant:Nn \__ccnu_abstract_env:n { V }
 \NewDocumentEnvironment { abstract  } { }
   { 
-    \__ccnu_abstract_begin: 
-    \addcontentsline{toc}{chapter}{\normalfont  \c__ccnu_name_keywords_tl  }   
+    \__ccnu_abstract_begin:  
   } { \__ccnu_abstract_end:      }
 \NewDocumentEnvironment { abstract* } { }
   { 
     \__ccnu_abstract_en_begin: 
-    \addcontentsline{toc}{chapter}{\normalfont  \c__ccnu_name_keywords_en_tl  }
   } { \__ccnu_abstract_en_end:   }
 \cs_new_protected:Npn \__ccnu_abstract_begin:
   { 
@@ -1991,6 +1989,7 @@
       \l__ccnu_info_keywords_clist 
       % { \c__ccnu_fwid_semicolon_tl }
       { \qquad }
+    \addcontentsline{toc}{chapter}{\normalfont  \c__ccnu_name_keywords_tl  }  
     % \tl_if_empty:NF \l__ccnu_info_clc_tl
     %   {
     %     \__ccnu_clc_jel:nn
@@ -2006,20 +2005,21 @@
       \c_space_tl
       }
       \l__ccnu_info_keywords_en_clist { \qquad }
-    \tl_if_empty:NTF \l__ccnu_info_jel_tl
-      {
-        \tl_if_empty:NF \l__ccnu_info_clc_tl
-          {
-            \__ccnu_clc_jel:nn
-              { \bfseries \c__ccnu_name_clc_en_tl \__ccnu_quad: }
-              { \l__ccnu_info_clc_tl }
-          }
-      }
-      {
-        \__ccnu_clc_jel:nn
-          { \bfseries \c__ccnu_name_jel_en_tl \__ccnu_quad: }
-          { \l__ccnu_info_jel_tl }
-      }
+    \addcontentsline{toc}{chapter}{\normalfont  \c__ccnu_name_keywords_en_tl  }
+    % \tl_if_empty:NTF \l__ccnu_info_jel_tl
+    %   {
+    %     \tl_if_empty:NF \l__ccnu_info_clc_tl
+    %       {
+    %         \__ccnu_clc_jel:nn
+    %           { \bfseries \c__ccnu_name_clc_en_tl \__ccnu_quad: }
+    %           { \l__ccnu_info_clc_tl }
+    %       }
+    %   }
+    %   {
+    %     \__ccnu_clc_jel:nn
+    %       { \bfseries \c__ccnu_name_jel_en_tl \__ccnu_quad: }
+    %       { \l__ccnu_info_jel_tl }
+    %   }
   }
 \cs_new_protected:Npn \__ccnu_keywords:nNn #1#2#3
   {
