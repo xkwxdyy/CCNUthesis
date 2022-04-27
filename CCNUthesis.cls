@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-04-26}{v1.1.16}
+  {2022-04-28}{v1.1.17}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e }
 
@@ -2033,13 +2033,13 @@
     %     \clist_use:Nn #2 {#3} \par
     %     \cs_gset:Npx \__ccnu_keywords_prevdepth: { \dim_use:N \tex_prevdepth:D }
     %   }
-    \parbox [t] { \dim_eval:n { \textwidth - \l__ccnu_tmpa_dim }  }
-      {
-        \begin{varwidth}[t]{\hsize}
+    % \parbox [t] { \dim_eval:n { \textwidth - \l__ccnu_tmpa_dim }  }
+      % {
+        % \begin{varwidth}[t]{\hsize}
           \clist_use:Nn #2 {#3} \par
-          \cs_gset:Npx \__ccnu_keywords_prevdepth: { \dim_use:N \tex_prevdepth:D }
-        \end{varwidth}
-      }
+          % \cs_gset:Npx \__ccnu_keywords_prevdepth: { \dim_use:N \tex_prevdepth:D }
+        % \end{varwidth}
+      % }
     % \raisebox{-.5\baselineskip}
     %   {
     %     \begin{varwidth}

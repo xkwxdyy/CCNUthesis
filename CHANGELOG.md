@@ -4,7 +4,13 @@
 
 更多关于模版的内容和如何使用，请仔细阅读 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis)！
 
-v1.1.15 -> v1.1.16: 只需要更新 `CCNUtheis.bbx`
+v1.1.16 -> v1.1.17: 只需要更新 `CCNUtheis.cls`
+
+## [v1.1.17] - 2022-04-28
+
+### Changed
+
+- `关键词` 和 `keywords` 部分去掉 `parbox`
 
 ## [v1.1.16] - 2022-04-26
 
