@@ -11,7 +11,7 @@ v1.1.16 -> v1.1.17: 只需要更新 `CCNUtheis.cls`
 ### Changed
 
 - `关键词` 和 `keywords` 部分去掉 `parbox`
-
+- 更新 `physicx`
 
 ### Fixed
 
