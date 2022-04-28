@@ -12,6 +12,7 @@ v1.1.16 -> v1.1.17: 只需要更新 `CCNUtheis.cls`
 
 - `关键词` 和 `keywords` 部分去掉 `parbox`
 - 更新 `physicx`
+- 重新调整孤行寡行的抑制参数
 
 ### Fixed
 
