@@ -2999,9 +2999,9 @@
 
 \RenewDocumentCommand { \nocite } { m } {}
 
-% 严格禁止孤行和寡行
-\int_set:Nn \clubpenalty { 10000 }
-\int_set:Nn \widowpenalty { 10000 }
+% 处理孤行和寡行
+\int_set:Nn \clubpenalty { 300 }
+\int_set:Nn \widowpenalty { 300 }
 
 
 % 落款
