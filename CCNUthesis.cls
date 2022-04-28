@@ -1951,14 +1951,14 @@
     \group_begin:
       \ctexset { chapter / numbering = false }
       % \chapter {#1}
-      \addcontentsline{toc}{chapter}{ \normalfont #1}
       \__ccnu_chapter_header:n {#1}
+      \addcontentsline{toc}{chapter}{ \normalfont #1}
     \group_end:
   }
 \cs_generate_variant:Nn \__ccnu_abstract_env:n { V }
 \NewDocumentEnvironment { abstract  } { }
   { 
-    \__ccnu_abstract_begin:  
+    \__ccnu_abstract_begin:
   } { \__ccnu_abstract_end:      }
 \NewDocumentEnvironment { abstract* } { }
   { 
@@ -1967,21 +1967,28 @@
 \cs_new_protected:Npn \__ccnu_abstract_begin:
   { 
     \newpage
+    \phantomsection
     \setcounter{page}{1}
-    \__ccnu_abstract_env:V \c__ccnu_name_abstract_tl
+    % \__ccnu_abstract_env:V \c__ccnu_name_abstract_tl
+    \addcontentsline{toc}{chapter}{ \normalfont \tl_use:N \c__ccnu_name_abstract_tl}
     { \bfseries \c__ccnu_name_abstract_tl : } \c_space_tl  
   }
 \cs_new_protected:Npn \__ccnu_abstract_en_begin:
   { 
     \bigskip
+    \phantomsection
     \addcontentsline{toc}{chapter}{\normalfont  Title  }
     \textbf{ Title: } \c_space_tl \l__ccnu_info_title_en_tl \par
     \medskip
-    \__ccnu_abstract_env:V \c__ccnu_name_abstract_en_tl 
+    \phantomsection
+    % \__ccnu_abstract_env:V \c__ccnu_name_abstract_en_tl 
     { \bfseries \c__ccnu_name_abstract_en_tl : \c_space_tl} 
+    \addcontentsline{toc}{chapter}{ \normalfont \tl_use:N \c__ccnu_name_abstract_en_tl}
   }
 \cs_new_protected:Npn \__ccnu_abstract_end:
   {
+    \phantomsection
+    \addcontentsline{toc}{chapter}{\normalfont  \c__ccnu_name_keywords_tl  }  
     \__ccnu_keywords:nNn
       { \bfseries \c__ccnu_name_keywords_tl :
       \c_space_tl
@@ -1989,7 +1996,6 @@
       \l__ccnu_info_keywords_clist 
       % { \c__ccnu_fwid_semicolon_tl }
       { \qquad }
-    \addcontentsline{toc}{chapter}{\normalfont  \c__ccnu_name_keywords_tl  }  
     % \tl_if_empty:NF \l__ccnu_info_clc_tl
     %   {
     %     \__ccnu_clc_jel:nn
@@ -1999,13 +2005,14 @@
   }
 \cs_new_protected:Npn \__ccnu_abstract_en_end:
   {
+    \phantomsection
+    \addcontentsline{toc}{chapter}{\normalfont  \c__ccnu_name_keywords_en_tl  }
     \__ccnu_keywords:nNn
       { \bfseries \c__ccnu_name_keywords_en_tl :
       % \__ccnu_quad: 
       \c_space_tl
       }
       \l__ccnu_info_keywords_en_clist { \qquad }
-    \addcontentsline{toc}{chapter}{\normalfont  \c__ccnu_name_keywords_en_tl  }
     % \tl_if_empty:NTF \l__ccnu_info_jel_tl
     %   {
     %     \tl_if_empty:NF \l__ccnu_info_clc_tl
