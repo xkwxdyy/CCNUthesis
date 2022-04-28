@@ -276,7 +276,6 @@
     mathtools,    
     amssymb,
     extarrows,
-    unicode-math,
     geometry,
     fancyhdr,
     footmisc,
@@ -296,6 +295,8 @@
     thmtools,
     needspace
   }
+
+
 \RequirePackage[shortlabels]{enumitem}
 \RequirePackage[physics]{physicx}
 % \RequirePackage{physics}
@@ -347,8 +348,24 @@
 \keys_define:nn { ccnu / style }
   {
     font .choices:nn =
-      { garamond, libertinus, lm, palatino, times, times*, none }
-      { \tl_set_eq:NN \g__ccnu_fontset_tl \l_keys_choice_tl }
+      { newtx, times, stixtwo, xits, tg, none }
+      { 
+        \tl_set_eq:NN \g__ccnu_fontset_tl \l_keys_choice_tl 
+        \int_compare:nTF { 1 <= \l_keys_choice_int <= 2 }
+          {
+            \RequirePackage{newtxmath}
+          }
+          {
+            \RequirePackage{unicode-math}
+            \keys_set:nn { unicode-math }
+            {
+              math-style = ISO,
+              bold-style = ISO,
+            }
+            \__ccnu_set_font_helper:n { math }
+          }
+      },
+      font .initial:n = times,
   }
 \keys_define:nn { ccnu / style }
   {
@@ -402,172 +419,31 @@
           { \use:c { __ccnu_set #1 font:nn } {##2} { ##1, ##3 } }
       }
   }
-\clist_map_inline:nn { main, sans, mono, math    } { \__ccnu_set_font_helper:n {#1} }
+\clist_map_inline:nn { main, sans, mono } { \__ccnu_set_font_helper:n {#1} }
 \clist_map_inline:nn { CJKmain, CJKsans, CJKmono } { \__ccnu_set_font_helper:n {#1} }
-\tl_new:N \g__ccnu_font_family_libertinus_serif_tl
-\tl_new:N \g__ccnu_font_family_libertinus_sans_tl
-\tl_new:N \g__ccnu_font_style_libertinus_rm_tl
-\tl_new:N \g__ccnu_font_style_libertinus_bf_tl
-\tl_new:N \g__ccnu_font_style_libertinus_it_tl
-\tl_new:N \g__ccnu_font_style_libertinus_bfit_tl
+
 \tl_new:N \g__ccnu_font_style_libertinus_bfsl_tl
-\tl_new:N \g__ccnu_font_family_xits_tl
-\tl_new:N \g__ccnu_font_style_xits_rm_tl
-\tl_new:N \g__ccnu_font_style_xits_bf_tl
-\tl_new:N \g__ccnu_font_style_xits_it_tl
-\tl_new:N \g__ccnu_font_style_xits_bfit_tl
-\tl_new:N \g__ccnu_font_name_libertinus_serif_tl
-\tl_new:N \g__ccnu_font_name_libertinus_sans_tl
-\tl_new:N \g__ccnu_font_name_libertinus_math_tl
-\tl_new:N \g__ccnu_font_name_xits_tl
-\tl_new:N \g__ccnu_font_name_xits_math_rm_tl
-\tl_new:N \g__ccnu_font_name_xits_math_bf_tl
-\fontspec_font_if_exist:nTF { LibertinusSerif-Regular.otf }
+\fontspec_font_if_exist:nTF { LibertinusSans-BoldOblique.otf }
+  { \tl_set:Nn \g__ccnu_font_style_libertinus_bfsl_tl { BoldOblique } }
+  { \tl_set:Nn \g__ccnu_font_style_libertinus_bfsl_tl { Bold        } }
+
+% 目前的字体配置为: (TG = TeX Gyre, 默认值为 times)
+%   选项名  : serif,            sans,     mono,         math
+%   stixtwo : STIX Two Text,    TG Heros, TG Cursor,    STIX Two Math
+%   xits    : XITS,             TG Heros, TG Cursor,    XITS Math
+%   times   : Times New Roman,  Arial,    Courier New,  newtxmath
+%   newtx   : TG Termes,        TG Heros, TG Cursor,    newtxmath
+%   tg      : TG Termes,        TG Heros, TG Cursor,    TG Termes Math
+
+\cs_new_protected:Npn \__ccnu_load_font_stixtwo:
   {
-    \tl_set:Nn \g__ccnu_font_family_libertinus_serif_tl { LibertinusSerif }
-    \tl_set:Nn \g__ccnu_font_family_libertinus_sans_tl  { LibertinusSans  }
-    \tl_set:Nn \g__ccnu_font_family_libertinus_math_tl  { LibertinusMath  }
-    \tl_set:Nn \g__ccnu_font_style_libertinus_rm_tl     { Regular         }
-    \tl_set:Nn \g__ccnu_font_style_libertinus_bf_tl     { Bold            }
-    \tl_set:Nn \g__ccnu_font_style_libertinus_it_tl     { Italic          }
-    \tl_set:Nn \g__ccnu_font_style_libertinus_bfit_tl   { BoldItalic      }
-    \fontspec_font_if_exist:nTF { LibertinusSans-BoldOblique.otf }
-      { \tl_set:Nn \g__ccnu_font_style_libertinus_bfsl_tl { BoldOblique } }
-      { \tl_set:Nn \g__ccnu_font_style_libertinus_bfsl_tl { Bold        } }
-  }
-  {
-    \tl_set:Nn \g__ccnu_font_family_libertinus_serif_tl { libertinusserif }
-    \tl_set:Nn \g__ccnu_font_family_libertinus_sans_tl  { libertinussans  }
-    \tl_set:Nn \g__ccnu_font_family_libertinus_math_tl  { libertinusmath  }
-    \tl_set:Nn \g__ccnu_font_style_libertinus_rm_tl     { regular         }
-    \tl_set:Nn \g__ccnu_font_style_libertinus_bf_tl     { bold            }
-    \tl_set:Nn \g__ccnu_font_style_libertinus_it_tl     { italic          }
-    \tl_set:Nn \g__ccnu_font_style_libertinus_bfit_tl   { bolditalic      }
-    \tl_set:Nn \g__ccnu_font_style_libertinus_bfsl_tl   { bolditalic      }
-  }
-\fontspec_font_if_exist:nTF { XITS-Regular.otf }
-  {
-    \tl_set:Nn \g__ccnu_font_family_xits_tl        { XITS             }
-    \tl_set:Nn \g__ccnu_font_style_xits_rm_tl      { Regular          }
-    \tl_set:Nn \g__ccnu_font_style_xits_bf_tl      { Bold             }
-    \tl_set:Nn \g__ccnu_font_style_xits_it_tl      { Italic           }
-    \tl_set:Nn \g__ccnu_font_style_xits_bfit_tl    { BoldItalic       }
-    \tl_set:Nn \g__ccnu_font_name_xits_math_rm_tl  { XITSMath-Regular }
-    \tl_set:Nn \g__ccnu_font_name_xits_math_bf_tl  { XITSMath-Bold    }
-  }
-  {
-    \tl_set:Nn \g__ccnu_font_family_xits_tl        { xits          }
-    \tl_set:Nn \g__ccnu_font_style_xits_rm_tl      { regular       }
-    \tl_set:Nn \g__ccnu_font_style_xits_bf_tl      { bold          }
-    \tl_set:Nn \g__ccnu_font_style_xits_it_tl      { italic        }
-    \tl_set:Nn \g__ccnu_font_style_xits_bfit_tl    { bolditalic    }
-    \tl_set:Nn \g__ccnu_font_name_xits_math_rm_tl  { xits-math     }
-    \tl_set:Nn \g__ccnu_font_name_xits_math_bf_tl  { xits-mathbold }
-  }
-\tl_set:Nx \g__ccnu_font_name_libertinus_serif_tl
-  { \g__ccnu_font_family_libertinus_serif_tl - \g__ccnu_font_style_libertinus_rm_tl }
-\tl_set:Nx \g__ccnu_font_name_libertinus_sans_tl
-  { \g__ccnu_font_family_libertinus_sans_tl  - \g__ccnu_font_style_libertinus_rm_tl }
-\tl_set:Nx \g__ccnu_font_name_libertinus_math_tl
-  { \g__ccnu_font_family_libertinus_math_tl  - \g__ccnu_font_style_libertinus_rm_tl }
-\tl_set:Nx \g__ccnu_font_name_xits_tl
-  { \g__ccnu_font_family_xits_tl - \g__ccnu_font_style_xits_rm_tl }
-\cs_new_protected:Npn \__ccnu_load_font_garamond:
-  {
-    \__ccnu_setmainfont:nn { EBGaramond }
-      {
-        Extension      = .otf,
-        UprightFont    = *-Regular,
-        BoldFont       = *-Bold,
-        ItalicFont     = *-Italic,
-        BoldItalicFont = *-BoldItalic
-      }
-    \__ccnu_setsansfont:nn { \g__ccnu_font_family_libertinus_sans_tl }
-      {
-        Extension      = .otf,
-        UprightFont    = *-\g__ccnu_font_style_libertinus_rm_tl,
-        BoldFont       = *-\g__ccnu_font_style_libertinus_bf_tl,
-        ItalicFont     = *-\g__ccnu_font_style_libertinus_it_tl,
-        BoldItalicFont = *-\g__ccnu_font_style_libertinus_bfsl_tl
-      }
-    \__ccnu_setmonofont:nn { lmmonolt10 }
-      {
-        Extension      = .otf,
-        UprightFont    = *-regular,
-        BoldFont       = *-bold,
-        ItalicFont     = *-oblique,
-        BoldItalicFont = *-boldoblique
-      }
-    \__ccnu_setmathfont:nn { Garamond-Math.otf } { }
-  }
-\cs_new_protected:Npn \__ccnu_load_font_libertinus:
-  {
-    \__ccnu_setmainfont:nn { \g__ccnu_font_family_libertinus_serif_tl }
-      {
-        Extension      = .otf,
-        UprightFont    = *-\g__ccnu_font_style_libertinus_rm_tl,
-        BoldFont       = *-\g__ccnu_font_style_libertinus_bf_tl,
-        ItalicFont     = *-\g__ccnu_font_style_libertinus_it_tl,
-        BoldItalicFont = *-\g__ccnu_font_style_libertinus_bfit_tl
-      }
-    \__ccnu_setsansfont:nn { \g__ccnu_font_family_libertinus_sans_tl }
-      {
-        Extension      = .otf,
-        UprightFont    = *-\g__ccnu_font_style_libertinus_rm_tl,
-        BoldFont       = *-\g__ccnu_font_style_libertinus_bf_tl,
-        ItalicFont     = *-\g__ccnu_font_style_libertinus_it_tl,
-        BoldItalicFont = *-\g__ccnu_font_style_libertinus_bfsl_tl
-      }
-    \__ccnu_setmonofont:nn { lmmonolt10 }
-      {
-        Extension      = .otf,
-        UprightFont    = *-regular,
-        BoldFont       = *-bold,
-        ItalicFont     = *-oblique,
-        BoldItalicFont = *-boldoblique
-      }
-    \__ccnu_setmathfont:nn { \g__ccnu_font_name_libertinus_math_tl .otf } { }
-  }
-\cs_new_protected:Npn \__ccnu_load_font_lm:
-  { \__ccnu_setmathfont:nn { latinmodern-math.otf } { } }
-\cs_new_protected:Npn \__ccnu_load_font_palatino:
-  {
-    \__ccnu_setmainfont:nn { texgyrepagella }
-      {
-        Extension      = .otf,
-        UprightFont    = *-regular,
-        BoldFont       = *-bold,
-        ItalicFont     = *-italic,
-        BoldItalicFont = *-bolditalic
-      }
-    \__ccnu_setsansfont:nn { \g__ccnu_font_family_libertinus_sans_tl }
-      {
-        Extension      = .otf,
-        UprightFont    = *-\g__ccnu_font_style_libertinus_rm_tl,
-        BoldFont       = *-\g__ccnu_font_style_libertinus_bf_tl,
-        ItalicFont     = *-\g__ccnu_font_style_libertinus_it_tl,
-        BoldItalicFont = *-\g__ccnu_font_style_libertinus_bfsl_tl,
-        Scale          = MatchUppercase
-      }
-    \__ccnu_setmonofont:nn { lmmonolt10 }
-      {
-        Extension      = .otf,
-        UprightFont    = *-regular,
-        BoldFont       = *-bold,
-        ItalicFont     = *-oblique,
-        BoldItalicFont = *-boldoblique
-      }
-    \__ccnu_setmathfont:nn { texgyrepagella-math.otf } { }
-  }
-\cs_new_protected:Npn \__ccnu_load_font_times:
-  {
-    \__ccnu_setmainfont:nn { \g__ccnu_font_family_xits_tl }
+    \__ccnu_setmainfont:nn { STIXTwoText }
       {
         Extension          = .otf,
-        UprightFont        = *-\g__ccnu_font_style_xits_rm_tl,
-        BoldFont           = *-\g__ccnu_font_style_xits_bf_tl,
-        ItalicFont         = *-\g__ccnu_font_style_xits_it_tl,
-        BoldItalicFont     = *-\g__ccnu_font_style_xits_bfit_tl
+        UprightFont        = *-Regular,
+        BoldFont           = *-Bold,
+        ItalicFont         = *-Italic,
+        BoldItalicFont     = *-BoldItalic
       }
     \__ccnu_setsansfont:nn { texgyreheros }
       {
@@ -586,34 +462,102 @@
         BoldItalicFont = *-bolditalic,
         Ligatures      = CommonOff
       }
-    % TODO 考虑数学字体
-    % \__ccnu_setmathfont:nn { \g__ccnu_font_name_xits_math_rm_tl .otf }
-    %   { BoldFont = \g__ccnu_font_name_xits_math_bf_tl .otf }
-    % \setmainfont{STIXTwoText}
-    %   [
-    %     Extension      = .otf,
-    %     UprightFont    = *-Regular,
-    %     BoldFont       = *-Bold,
-    %     ItalicFont     = *-Italic,
-    %     BoldItalicFont = *-Bolditalic,
-    %   ]
-    % \setmathfont{STIXTwoMath-Regular.otf}
-    % \setmathfont{STIXTwoMath-Regular.otf}[range={scr,bfscr},StylisticSet=01]
-    \setmathfont { XITSMath-Regular.otf }
-      [ BoldFont = XITSMath-Bold.otf ]
-    \setmathfont{ XITSMath-Regular.otf }[range={cal,bfcal},StylisticSet=01]
+    \__ccnu_setmathfont:nn {STIXTwoMath-Regular.otf} { }
+    \__ccnu_setmathfont:nn {STIXTwoMath-Regular.otf} { range={scr,bfscr},StylisticSet=01 }
   }
-\cs_new_protected:cpn { __ccnu_load_font_ times* : }
+\cs_new_protected:Npn \__ccnu_load_font_xits:
+  {
+    \__ccnu_setmainfont:nn { XITS }
+      {
+        Extension          = .otf,
+        UprightFont        = *-Regular,
+        BoldFont           = *-Bold,
+        ItalicFont         = *-Italic,
+        BoldItalicFont     = *-BoldItalic
+      }
+    \__ccnu_setsansfont:nn { texgyreheros }
+      {
+        Extension      = .otf,
+        UprightFont    = *-regular,
+        BoldFont       = *-bold,
+        ItalicFont     = *-italic,
+        BoldItalicFont = *-bolditalic
+      }
+    \__ccnu_setmonofont:nn { texgyrecursor }
+      {
+        Extension      = .otf,
+        UprightFont    = *-regular,
+        BoldFont       = *-bold,
+        ItalicFont     = *-italic,
+        BoldItalicFont = *-bolditalic,
+        Ligatures      = CommonOff
+      }
+    \__ccnu_setmathfont:nn { XITSMath-Regular.otf } { BoldFont = XITSMath-Bold.otf }
+    \__ccnu_setmathfont:nn{ XITSMath-Regular.otf } {range={cal,bfcal},StylisticSet=01}
+  }
+\cs_new_protected:Npn \__ccnu_load_font_times:
   {
     \__ccnu_setmainfont:nn { Times~ New~ Roman    } { }
     \__ccnu_setsansfont:nn { Arial                } { }
     \__ccnu_setmonofont:nn { Courier~ New         } { }
-    % \__ccnu_setmathfont:nn { \g__ccnu_font_name_xits_math_rm_tl .otf }
-      % { BoldFont = \g__ccnu_font_name_xits_math_bf_tl .otf }
-    \__ccnu_setmathfont:nn { STIXTwoMath-Regular.otf }
-      { BoldFont = STIXTwoMath-Regular.otf }
-    % \setmathfont{STIXTwoMath-Regular.otf}
-    \setmathfont{STIXTwoMath-Regular.otf}[range={scr,bfscr},StylisticSet=01]
+  }
+\cs_new_protected:Npn \__ccnu_load_font_newtx:
+  {
+    \__ccnu_setmainfont:nn { texgyretermes }
+      {
+        Extension          = .otf,
+        UprightFont        = *-Regular,
+        BoldFont           = *-Bold,
+        ItalicFont         = *-Italic,
+        BoldItalicFont     = *-BoldItalic
+      }
+    \__ccnu_setsansfont:nn { texgyreheros }
+      {
+        Extension      = .otf,
+        UprightFont    = *-regular,
+        BoldFont       = *-bold,
+        ItalicFont     = *-italic,
+        BoldItalicFont = *-bolditalic
+      }
+    \__ccnu_setmonofont:nn { texgyrecursor }
+      {
+        Extension      = .otf,
+        UprightFont    = *-regular,
+        BoldFont       = *-bold,
+        ItalicFont     = *-italic,
+        BoldItalicFont = *-bolditalic,
+        Ligatures      = CommonOff
+      }
+      % \RequirePackage{newtxmath}
+  }
+  \cs_new_protected:Npn \__ccnu_load_font_tg:
+  {
+    \__ccnu_setmainfont:nn { texgyretermes }
+      {
+        Extension          = .otf,
+        UprightFont        = *-Regular,
+        BoldFont           = *-Bold,
+        ItalicFont         = *-Italic,
+        BoldItalicFont     = *-BoldItalic
+      }
+    \__ccnu_setsansfont:nn { texgyreheros }
+      {
+        Extension      = .otf,
+        UprightFont    = *-regular,
+        BoldFont       = *-bold,
+        ItalicFont     = *-italic,
+        BoldItalicFont = *-bolditalic
+      }
+    \__ccnu_setmonofont:nn { texgyrecursor }
+      {
+        Extension      = .otf,
+        UprightFont    = *-regular,
+        BoldFont       = *-bold,
+        ItalicFont     = *-italic,
+        BoldItalicFont = *-bolditalic,
+        Ligatures      = CommonOff
+      }
+      \__ccnu_setmathfont:nn { texgyretermes-math.otf } { }
   }
 \cs_new_protected:Npn \__ccnu_load_cjk_font_adobe:
   {
@@ -729,11 +673,7 @@
     \use:c { __ccnu_load_cjk_font_ \g__ccnu_cjk_fontset_tl : }
   }
 \ctex_at_end_preamble:n { \__ccnu_load_font: }
-\keys_set:nn { unicode-math }
-  {
-    math-style = ISO,
-    bold-style = ISO,
-  }
+
 \keys_define:nn { ccnu / style }
   {
     font-size .choice:,
@@ -968,17 +908,17 @@
           { \int_use:N #1 }
         \c__ccnu_fn_style_libertinus_tl
           {
-            \fontspec { \g__ccnu_font_name_libertinus_serif_tl .otf }
+            \fontspec { LibertinusSerif-Regular .otf }
             \__ccnu_fn_symbol_libertinus:n {#1}
           }
         \c__ccnu_fn_style_libertinus_neg_tl
           {
-            \fontspec { \g__ccnu_font_name_libertinus_serif_tl .otf }
+            \fontspec { LibertinusSerif-Regular .otf }
             \__ccnu_fn_symbol_libertinus_neg:n {#1}
           }
         \c__ccnu_fn_style_libertinus_sans_tl
           {
-            \fontspec { \g__ccnu_font_name_libertinus_sans_tl .otf }
+            \fontspec { LibertinusSans-Regular .otf }
             \__ccnu_fn_symbol_libertinus_sans:n {#1}
           }
         \c__ccnu_fn_style_pifont_tl
@@ -991,17 +931,17 @@
           { \__ccnu_fn_symbol_pifont_sans_neg:n {#1} }
         \c__ccnu_fn_style_xits_tl
           {
-            \fontspec { \g__ccnu_font_name_xits_tl .otf }
+            \fontspec { XITS-Regular .otf }
             \__ccnu_fn_symbol_xits:n {#1}
           }
         \c__ccnu_fn_style_xits_sans_tl
           {
-            \fontspec { \g__ccnu_font_name_xits_tl .otf }
+            \fontspec { XITS-Regular .otf }
             \__ccnu_fn_symbol_xits_sans:n {#1}
           }
         \c__ccnu_fn_style_xits_sans_neg_tl
           {
-            \fontspec { \g__ccnu_font_name_xits_tl .otf }
+            \fontspec { XITS-Regular .otf }
             \__ccnu_fn_symbol_xits_sans_neg:n {#1}
           }
       }
@@ -2372,7 +2312,7 @@
   }
 \keys_set:nn { ccnu }
   {
-    style   / font            = times,
+    % style   / font            = times,
     style   / cjk-font        = fandol,
     style   / font-size       = -4,
     style   / fullwidth-stop  = false,
@@ -2947,7 +2887,7 @@
     option / oneside ,
     style = 
       {
-        font = times,
+        % font = times,
         % 西文字体（包括数学字体）
         % 允许选项：
         %   font = garamond|libertinus|lm|palatino|times|times*|none
