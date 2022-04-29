@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-04-28}{v1.1.17}
+  {2022-04-29}{v1.1.18}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e }
 
@@ -365,7 +365,7 @@
             \__ccnu_set_font_helper:n { math }
           }
       },
-      font .initial:n = times,
+      % font .initial:n = times,
   }
 \keys_define:nn { ccnu / style }
   {
@@ -506,10 +506,14 @@
     \__ccnu_setmainfont:nn { texgyretermes }
       {
         Extension          = .otf,
-        UprightFont        = *-Regular,
-        BoldFont           = *-Bold,
-        ItalicFont         = *-Italic,
-        BoldItalicFont     = *-BoldItalic
+        % UprightFont        = *-Regular,
+        % BoldFont           = *-Bold,
+        % ItalicFont         = *-Italic,
+        % BoldItalicFont     = *-BoldItalic
+        UprightFont        = *-regular,
+        BoldFont           = *-bold,
+        ItalicFont         = *-italic,
+        BoldItalicFont     = *-bolditalic
       }
     \__ccnu_setsansfont:nn { texgyreheros }
       {
@@ -535,10 +539,14 @@
     \__ccnu_setmainfont:nn { texgyretermes }
       {
         Extension          = .otf,
-        UprightFont        = *-Regular,
-        BoldFont           = *-Bold,
-        ItalicFont         = *-Italic,
-        BoldItalicFont     = *-BoldItalic
+        % UprightFont        = *-Regular,
+        % BoldFont           = *-Bold,
+        % ItalicFont         = *-Italic,
+        % BoldItalicFont     = *-BoldItalic
+        UprightFont        = *-regular,
+        BoldFont           = *-bold,
+        ItalicFont         = *-italic,
+        BoldItalicFont     = *-bolditalic
       }
     \__ccnu_setsansfont:nn { texgyreheros }
       {
@@ -558,6 +566,7 @@
         Ligatures      = CommonOff
       }
       \__ccnu_setmathfont:nn { texgyretermes-math.otf } { }
+      \__ccnu_setmathfont:nn{ XITSMath-Regular.otf } {range={cal,bfcal}, StylisticSet=01}
   }
 \cs_new_protected:Npn \__ccnu_load_cjk_font_adobe:
   {
