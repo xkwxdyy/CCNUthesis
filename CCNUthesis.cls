@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-04-29}{v1.1.18}
+  {2022-05-02}{v1.1.19}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e }
 
@@ -1068,14 +1068,14 @@
     labelsep = colon
   }
 \cs_set:Npn \thefigure
-  { \__ccnu_arabic:n { figure } }
-  % { \thechapter - \__ccnu_arabic:n { figure } }
+  % { \__ccnu_arabic:n { figure } }
+  { \thechapter - \__ccnu_arabic:n { figure } }
 \cs_set:Npn \thetable
-  % { \thechapter - \__ccnu_arabic:n { table  } }
-  { \__ccnu_arabic:n { table  } }
-% table 和 figure 连续编号
-\counterwithout{figure}{chapter}
-\counterwithout{table}{chapter}
+  { \thechapter - \__ccnu_arabic:n { table  } }
+  % { \__ccnu_arabic:n { table  } }
+% % table 和 figure 随 chapter 编号
+% \counterwithin{figure}{chapter}
+% \counterwithin{table}{chapter}
 \clist_map_inline:nn
   {
     title, date, author, supervisor, department, major, student_id,

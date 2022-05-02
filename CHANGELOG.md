@@ -4,6 +4,13 @@
 
 更多关于模版的内容和如何使用，请仔细阅读 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis)！
 
+
+## [v1.1.19] - 2022-05-02
+
+### Changed
+
+- 修改图表编号为形如 `1-1` 的样式
+
 ## [v1.1.18] - 2022-04-29
 
 ### Added
