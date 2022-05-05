@@ -353,7 +353,19 @@
         \tl_set_eq:NN \g__ccnu_fontset_tl \l_keys_choice_tl 
         \int_compare:nTF { 1 <= \l_keys_choice_int <= 2 }
           {
+            \let\oldencodingdefault\encodingdefault
+            \let\oldrmdefault\rmdefault
+            \let\oldsfdefault\sfdefault
+            \let\oldttdefault\ttdefault
+            \usepackage[T1]{fontenc}
+            \renewcommand{\rmdefault}{ntxtlf}
+            \renewcommand{\sfdefault}{qhv}
+            \renewcommand{\ttdefault}{ntxtt}
             \RequirePackage{newtxmath}
+            \let\encodingdefault\oldencodingdefault
+            \let\rmdefault\oldrmdefault
+            \let\sfdefault\oldsfdefault
+            \let\ttdefault\oldttdefault
           }
           {
             \RequirePackage{unicode-math}
@@ -503,17 +515,17 @@
   }
 \cs_new_protected:Npn \__ccnu_load_font_newtx:
   {
-    \__ccnu_setmainfont:nn { texgyretermes }
+    \__ccnu_setmainfont:nn { TeXGyreTermesX }
       {
         Extension          = .otf,
-        % UprightFont        = *-Regular,
-        % BoldFont           = *-Bold,
-        % ItalicFont         = *-Italic,
-        % BoldItalicFont     = *-BoldItalic
-        UprightFont        = *-regular,
-        BoldFont           = *-bold,
-        ItalicFont         = *-italic,
-        BoldItalicFont     = *-bolditalic
+        UprightFont        = *-Regular,
+        BoldFont           = *-Bold,
+        ItalicFont         = *-Italic,
+        BoldItalicFont     = *-BoldItalic
+        % UprightFont        = *-regular,
+        % BoldFont           = *-bold,
+        % ItalicFont         = *-italic,
+        % BoldItalicFont     = *-bolditalic
       }
     \__ccnu_setsansfont:nn { texgyreheros }
       {
