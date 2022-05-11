@@ -17,6 +17,8 @@
 % 表格怎么写
 % 浮动体
 
+
+% 宏包报错信息
 \msg_new:nnn { ccnuthesis } { l3-too-old }
   {
     Package~ "#1"~ is~ too~ old. \\\\
@@ -24,17 +26,20 @@
     "l3kernel"~ and~ "l3packages"~ using~ your~ TeX~ package \\
     manager~ or~ from~ CTAN.
   }
+% 检测 xtemplate, l3keys2e 两个宏包的版本
 \clist_map_inline:nn { xtemplate, l3keys2e }
   {
     \@ifpackagelater {#1} { 2020/07/17 }
       { } { \msg_error:nnn { ccnuthesis } { l3-too-old } {#1} }
   }
+% 编译方式的报错信息
 \msg_new:nnn { ccnuthesis } { unsupported-engine }
   {
     The~ ccnuthesis~ class~ requires~ either~ XeTeX~ or~ LuaTeX. \\\\
     "#1"~ is~ not~ supported~ at~ present.~ You~ must~ change \\
     your~ typesetting~ engine~ to~ "xelatex"~ or~ "lualatex".
   }
+% 仅支持 xelatex 和 luatex 的编译方式
 \sys_if_engine_xetex:F
   {
     \sys_if_engine_luatex:F
@@ -45,61 +50,45 @@
   }
 
 
+% 用户设置命令
 \NewDocumentCommand \ccnusetup { m }
   { \keys_set:nn { ccnu } {#1} }
 
-\box_new:N   \l__ccnu_tmpa_box
-\clist_new:N \l__ccnu_tmpa_clist
-\clist_new:N \l__ccnu_tmpb_clist
-\dim_new:N   \l__ccnu_tmpa_dim
-\dim_new:N   \l__ccnu_tmpb_dim
-\skip_new:N  \l__ccnu_tmpa_skip
-\tl_new:N    \l__ccnu_tmpa_tl
-\tl_new:N    \l__ccnu_tmpb_tl
-\int_new:N \g__ccnu_thesis_type_int
-\clist_new:N \g__ccnu_to_ctexbook_clist
-\clist_new:N \g__ccnu_to_hyperref_clist
-\bool_new:N \g__ccnu_twoside_bool
-\bool_set_true:N \g__ccnu_twoside_bool
-\bool_new:N \g__ccnu_draft_bool
-\tl_new:N \g__ccnu_config_tl
+
+% 变量声明
+\box_new:N        \l__ccnu_tmpa_box
+\clist_new:N      \l__ccnu_tmpa_clist
+\clist_new:N      \l__ccnu_tmpb_clist
+\dim_new:N        \l__ccnu_tmpa_dim   % 用于 \__ccnu_vspace:n 函数的临时长度变量
+\dim_new:N        \l__ccnu_tmpb_dim
+\skip_new:N       \l__ccnu_tmpa_skip  % 用于 \__ccnu_vspace:n 函数的临时长度变量
+\tl_new:N         \l__ccnu_tmpa_tl
+\tl_new:N         \l__ccnu_tmpb_tl
+\int_new:N        \g__ccnu_thesis_type_int
+\clist_new:N      \g__ccnu_to_ctexbook_clist
+\clist_new:N      \g__ccnu_to_hyperref_clist
+\bool_new:N       \g__ccnu_twoside_bool
+\bool_set_true:N  \g__ccnu_twoside_bool
+\bool_new:N       \g__ccnu_draft_bool
+\tl_new:N         \g__ccnu_config_tl
+
+% 生成新变体
 \cs_generate_variant:Nn \file_input:n     { V  }
 \cs_generate_variant:Nn \int_to_arabic:n  { v  }
 \cs_generate_variant:Nn \keys_define:nn   { nx }
 \cs_generate_variant:Nn \tl_map_inline:nn { xn }
+% 生成新的判断语句
 \prg_generate_conditional_variant:Nnn \tl_if_eq:nn { Vn } { T, TF }
-\tl_new:N \l__coloruline_line_color_tl
-\tl_new:N \l__coloruline_text_color_tl
-\dim_new:N \l__coloruline_line_width_dim
 
-\keys_define:nn { coloruline }
-  {
-    textcolor .tl_set:N = \l__coloruline_text_color_tl,
-    textcolor .initial:n = black,
-    linecolor .tl_set:N = \l__coloruline_line_color_tl,
-    linecolor .initial:n = black,
-    line-width .dim_set:N = \l__coloruline_line_width_dim,
-    line-width .initial:n = 0.4pt,
-    thickness .dim_set:N = \l__coloruline_line_width_dim,
-    thickness .initial:n = 0.4pt,
-  }
-\NewDocumentCommand{ \coloruline } { O{} m }
-  {
-    \group_begin:
-      \keys_set:nn { coloruline } {#1}
-      \bgroup
-        \color{ \tl_use:N \l__coloruline_text_color_tl }
-        \markoverwith
-        {
-          \textcolor
-            { \tl_use:N \l__coloruline_line_color_tl }
-            { \rule[-0.5ex]{2pt}{ \l__coloruline_line_width_dim } }
-        }
-        \ULon{#2}
-    \group_end:
-  }
+
+
+% 间距命令
+
+% 水平 quad 和 qquad
 \cs_new:Npn \__ccnu_quad:  { \skip_horizontal:n { 1 em } }
 \cs_new:Npn \__ccnu_qquad: { \skip_horizontal:n { 2 em } }
+
+% 垂直间距 \vspace 的 LaTeX3 版本
 \cs_new_protected:Npn \__ccnu_vspace:N #1
   {
     \dim_set_eq:NN \l__ccnu_tmpa_dim \prevdepth
@@ -115,33 +104,59 @@
     \__ccnu_vspace:N \l__ccnu_tmpa_skip
   }
 \cs_generate_variant:Nn \__ccnu_vspace:N { c }
+
+% 符号
 \cs_new:Npn \__ccnu_symbol:n #1 { \tex_char:D #1 \scan_stop: }
+
+% 将计数器的值转化为数字 arabic
 \cs_new:Npn \__ccnu_arabic:n #1
   { \int_to_arabic:v { c@ #1 } }
+
+
+
+% hook 类型的函数
+
+% TODO
 \cs_new_protected:Npn \__ccnu_gadd_ltxhook:nn #1#2
   { \hook_gput_code:nnn {#1} { . } {#2} }
+% TODO
 \hook_gset_rule:nnnn { begindocument/before } { . } { < } { xeCJK }
+% ctex 的 patch
 \cs_new_protected:Npn \__ccnu_patch_cmd:Nnn #1#2#3
   {
     \ctex_patch_cmd_once:NnnnTF #1 { } {#2} {#3}
       { } { \ctex_patch_failure:N #1 }
   }
+% ctex 的 appto
 \cs_new_protected:Npn \__ccnu_appto_cmd:Nn #1#2
   {
     \ctex_appto_cmd:NnnTF #1 { } {#2}
       { } { \ctex_patch_failure:N #1 }
   }
+
+
+
+% tl 统一格式定义类函数
+
+% 定义字体风格
 \cs_new_protected:Npn \__ccnu_define_fn_style:nn #1#2
   { \tl_const:cn { c__ccnu_fn_style_ #1 _tl } {#2} }
+% 定义标点
 \cs_new_protected:Npn \__ccnu_define_punct:nn #1#2
   { \tl_const:cn { c__ccnu_ #1 _tl } {#2} }
+% 定义「仅有中文版本的」
 \cs_new_protected:Npn \__ccnu_define_name:nn #1#2
   { \tl_const:cn { c__ccnu_name_ #1 _tl } {#2} }
+% 定义「有中文和英文版本的」
 \cs_new_protected:Npn \__ccnu_define_name:nnn #1#2#3
   {
     \tl_const:cn { c__ccnu_name_ #1    _tl } {#2}
     \tl_const:cn { c__ccnu_name_ #1 _en_tl } {#3}
   }
+
+
+
+% 简化 msg 模块的函数
 \cs_new:Npn \__ccnu_msg_new:nn  { \msg_new:nnn      { ccnuthesis } }
 \cs_new:Npn \__ccnu_error:n     { \msg_error:nn     { ccnuthesis } }
 \cs_new:Npn \__ccnu_error:nn    { \msg_error:nnn    { ccnuthesis } }
@@ -152,6 +167,10 @@
 \cs_new:Npn \__ccnu_warning:nn  { \msg_warning:nnn  { ccnuthesis } }
 \cs_new:Npn \__ccnu_warning:nxx { \msg_warning:nnxx { ccnuthesis } }
 \cs_new:Npn \__ccnu_info:nx     { \msg_info:nnx     { ccnuthesis } }
+
+
+
+% 处理文类的选项
 \keys_define:nn { ccnu / option }
   {
     type .choice:,
@@ -172,16 +191,6 @@
         \clist_gput_right:Nn \g__ccnu_to_ctexbook_clist { twoside }
         \bool_set_true:N     \g__ccnu_twoside_bool
       },
-    draft .choice:,
-    draft / true  .code:n =
-      {
-        \bool_set_true:N     \g__ccnu_draft_bool
-        \clist_gput_right:Nn \g__ccnu_to_ctexbook_clist { draft }
-      },
-    draft / false .code:n =
-      { \bool_set_false:N    \g__ccnu_draft_bool },
-    draft .default:n = true,
-    draft .initial:n = false,
     config .tl_set:N = \g__ccnu_config_tl,
     unknown .code:n = { \__ccnu_error:n { unknown-option } }
   }
@@ -189,6 +198,9 @@
   { Class~ option~ "\l_keys_key_str"~ is~ unknown. }
 \ProcessKeysOptions { ccnu / option }
 % \file_input:n { CCNUthesis.def }
+
+
+
 \tl_const:Nn \c__ccnu_name_simp_tl { 华中师范大学         }
 \tl_const:Nn \c__ccnu_name_trad_tl { 華中師範大學         }
 \tl_const:Nn \c__ccnu_name_en_tl   { Central~ China~ Normal~ University }
@@ -280,10 +292,13 @@
   {
     { no-math           } { fontspec },
     { perpage           } { footmisc },
-    % { amsmath, thmmarks } { ntheorem }
   }
   { \PassOptionsToPackage #1 }
+% 加载 ctexbook 文类
 \LoadClass { ctexbook }
+
+
+% 加载宏包
 \RequirePackage
   {
     mathtools,    
@@ -313,8 +328,6 @@
 \RequirePackage[shortlabels]{enumitem}
 \RequirePackage[physics]{physicx}
 % \RequirePackage{physics}
-% 修复\vu的上标偏移问题
-% \DeclareDocumentCommand\vectorunit{ s m }{\IfBooleanTF{#1}{\boldsymbol{\hat{#2}}}{\mathbf{\hat{#2}}}}
 \RequirePackage[titles]{tocloft}
 \graphicspath{{figures/}{logo/}}
 \cs_new_protected:Npn \__ccnu_check_package:nnn #1#2#3
@@ -348,7 +361,6 @@
     top = 3cm,
     bottom = 2.5cm
   }
-\bool_if:NT \g__ccnu_draft_bool { \geometry { showframe } }
 \setenumerate[1]{
   labelindent  = \parindent,
   leftmargin   = 0pt,
@@ -356,6 +368,7 @@
   itemindent   = *,
   listparindent=\parindent,
 }
+% TODO 设置二级、itemize
 \tl_new:N \g__ccnu_fontset_tl
 \tl_new:N \g__ccnu_cjk_fontset_tl
 \keys_define:nn { ccnu / style }
@@ -370,7 +383,7 @@
             \let\oldrmdefault\rmdefault
             \let\oldsfdefault\sfdefault
             \let\oldttdefault\ttdefault
-            \usepackage[T1]{fontenc}
+            \RequirePackage[T1]{fontenc}
             \renewcommand{\rmdefault}{ntxtlf}
             \renewcommand{\sfdefault}{qhv}
             \renewcommand{\ttdefault}{ntxtt}
@@ -383,10 +396,10 @@
           {
             \RequirePackage{unicode-math}
             \keys_set:nn { unicode-math }
-            {
-              math-style = ISO,
-              bold-style = ISO,
-            }
+              {
+                math-style = ISO,
+                bold-style = ISO,
+              }
             \__ccnu_set_font_helper:n { math }
           }
       },
