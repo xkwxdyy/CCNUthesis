@@ -1,9 +1,21 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-05-02}{v1.1.19}
+  {2022-05-11}{v1.1.20}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e }
+
+% CCNUthesis 重构 TODO
+% 封面、目录、章节标题
+% 图表
+% enumerate 设置
+% 参考文献：两种方式
+% 致谢、附录
+
+% 手册
+% 什么是MWE
+% 表格怎么写
+% 浮动体
 
 \msg_new:nnn { ccnuthesis } { l3-too-old }
   {
@@ -31,6 +43,7 @@
           { \c_sys_engine_str }
       }
   }
+
 
 \NewDocumentCommand \ccnusetup { m }
   { \keys_set:nn { ccnu } {#1} }
@@ -716,13 +729,19 @@
     fullwidth-stop .choice:,
     fullwidth-stop .value_required:n = true,
     fullwidth-stop / catcode .code:n =
-      { \__ccnu_set_fullwidth_stop_catcode: },
+      { 
+        \__ccnu_set_fullwidth_stop_catcode: 
+        \keys_set:nn { ctex }
+          { punct = kaiming }
+      },
     fullwidth-stop / mapping .code:n =
       {
         \sys_if_engine_xetex:TF
           {
             \clist_gset:Nn \g__xeCJK_default_features_clist
               { Mapping = fullwidth-stop }
+            \keys_set:nn { ctex }
+              { punct = kaiming }
           }
           {
             \sys_if_engine_luatex:T
@@ -2172,8 +2191,7 @@
             {
               chapter = 
                 {
-                  afterskip = 2em,
-                  indent = 0pt
+                  afterskip = 2em
                 }
             }
           \sloppy
@@ -2898,10 +2916,18 @@
   {
     \newpage
     \group_begin:
-      \ctexset{chapter/indent=0pt}
+      \keys_set:nn { ctex }
+        {
+          chapter / indent = 0pt
+        }
       \chapter*{\centerline{致 \quad 谢}}
       \addcontentsline{toc}{chapter}{\normalfont 致谢}   % 根据旧模版样式，如果有写致谢，则需要把致谢放进目录
     \group_end:
+    % 致谢采用全角标点
+    \keys_set:nn { ctex }
+      {
+        punct = quanjiao,
+      }
   }
 \ccnusetup
   {
