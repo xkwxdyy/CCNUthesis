@@ -5,6 +5,14 @@
 更多关于模版的内容和如何使用，请仔细阅读 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis)！
 
 
+## [v1.1.21] - 2022-05-13
+
+### Fixed
+
+- 修复 `oneside` 失效问题
+
+
+
 ## [v1.1.20] - 2022-05-11
 
 ### Added

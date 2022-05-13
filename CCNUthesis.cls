@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-05-11}{v1.1.20}
+  {2022-05-13}{v1.1.21}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e }
 
@@ -201,6 +201,81 @@
 
 
 
+\PassOptionsToClass
+  {
+    UTF8,
+    heading    = true,
+    fontset    = none,
+    zihao      = -4,
+    linespread = \c__ccnu_line_spread_fp,
+    \g__ccnu_to_ctexbook_clist
+  }
+  { ctexbook }
+\clist_map_inline:nn
+  {
+    { no-math           } { fontspec },
+    { perpage           } { footmisc },
+  }
+  { \PassOptionsToPackage #1 }
+% 加载 ctexbook 文类
+\LoadClass { ctexbook }
+
+
+% 加载宏包
+\RequirePackage
+  {
+    mathtools,    
+    amssymb,
+    extarrows,
+    geometry,
+    fancyhdr,
+    footmisc,
+    graphicx,
+    longtable,
+    caption,
+    xcolor,
+    tikz,
+    tikzpagenodes,
+    tabularray,
+    varwidth,
+    calc,    % 标题下划线需要
+    ulem,
+    adjustbox,
+    etoolbox,
+    amsthm,
+    thmtools,
+    needspace
+  }
+
+
+\RequirePackage[shortlabels]{enumitem}
+\RequirePackage[physics]{physicx}
+% \RequirePackage{physics}
+\RequirePackage[titles]{tocloft}
+\graphicspath{{figures/}{logo/}}
+\cs_new_protected:Npn \__ccnu_check_package:nnn #1#2#3
+  {
+    \@ifpackagelater {#1} {#2}
+      { } { \__ccnu_error:nnnn { package-too-old } { Package } {#1} {#3} }
+  }
+\cs_new_protected:Npn \__ccnu_check_class:nnn #1#2#3
+  {
+    \@ifclasslater {#1} {#2}
+      { } { \__ccnu_error:nnnn { package-too-old } { Class } {#1} {#3} }
+  }
+\__ccnu_msg_new:nn { package-too-old }
+  {
+    #1~ "#2"~ is~ too~ old. \\
+    The~ ccnuthesis~ class~ only~ supports~ "#2" \\
+    with~ a~ version~ higher~ than~ v#3. \\\\
+    Please~ update~ an~ up-to-date~ version~ of~ it \\
+    using~ your~ TeX~ package~ manager~ or~ from~ CTAN.
+  }
+\__ccnu_check_class:nnn { ctexbook } { 2021/03/14 } { 2.5.6 }
+\__ccnu_check_package:nnn { expl3 } { 2021/08/27 } { }
+\sys_if_engine_xetex:T
+  { \__ccnu_check_package:nnn { xeCJK } { 2020/05/01 } { 3.8.3 } }
+
 \tl_const:Nn \c__ccnu_name_simp_tl { 华中师范大学         }
 \tl_const:Nn \c__ccnu_name_trad_tl { 華中師範大學         }
 \tl_const:Nn \c__ccnu_name_en_tl   { Central~ China~ Normal~ University }
@@ -277,89 +352,13 @@
   }
 \__ccnu_msg_new:nn { load-config-file }
   { You~ are~ loading~ config~ file~ '#1'. }
-\PassOptionsToClass
-  {
-    UTF8,
-    heading    = true,
-    fontset    = none,
-    zihao      = -4,
-    linespread = \c__ccnu_line_spread_fp,
-    oneside,
-    \g__ccnu_to_ctexbook_clist
-  }
-  { ctexbook }
-\clist_map_inline:nn
-  {
-    { no-math           } { fontspec },
-    { perpage           } { footmisc },
-  }
-  { \PassOptionsToPackage #1 }
-% 加载 ctexbook 文类
-\LoadClass { ctexbook }
-
-
-% 加载宏包
-\RequirePackage
-  {
-    mathtools,    
-    amssymb,
-    extarrows,
-    geometry,
-    fancyhdr,
-    footmisc,
-    graphicx,
-    longtable,
-    caption,
-    xcolor,
-    tikz,
-    tikzpagenodes,
-    tabularray,
-    varwidth,
-    calc,    % 标题下划线需要
-    ulem,
-    adjustbox,
-    etoolbox,
-    amsthm,
-    thmtools,
-    needspace
-  }
-
-
-\RequirePackage[shortlabels]{enumitem}
-\RequirePackage[physics]{physicx}
-% \RequirePackage{physics}
-\RequirePackage[titles]{tocloft}
-\graphicspath{{figures/}{logo/}}
-\cs_new_protected:Npn \__ccnu_check_package:nnn #1#2#3
-  {
-    \@ifpackagelater {#1} {#2}
-      { } { \__ccnu_error:nnnn { package-too-old } { Package } {#1} {#3} }
-  }
-\cs_new_protected:Npn \__ccnu_check_class:nnn #1#2#3
-  {
-    \@ifclasslater {#1} {#2}
-      { } { \__ccnu_error:nnnn { package-too-old } { Class } {#1} {#3} }
-  }
-\__ccnu_msg_new:nn { package-too-old }
-  {
-    #1~ "#2"~ is~ too~ old. \\
-    The~ ccnuthesis~ class~ only~ supports~ "#2" \\
-    with~ a~ version~ higher~ than~ v#3. \\\\
-    Please~ update~ an~ up-to-date~ version~ of~ it \\
-    using~ your~ TeX~ package~ manager~ or~ from~ CTAN.
-  }
-\__ccnu_check_class:nnn { ctexbook } { 2021/03/14 } { 2.5.6 }
-\__ccnu_check_package:nnn { expl3 } { 2021/08/27 } { }
-\sys_if_engine_xetex:T
-  { \__ccnu_check_package:nnn { xeCJK } { 2020/05/01 } { 3.8.3 } }
 \geometry
   {
-    paper      = a4paper,
-    twoside,
-    left = 3cm,
-    right = 2.5cm,
-    top = 3cm,
-    bottom = 2.5cm
+    paper    = a4paper,
+    left     = 3cm,
+    right    = 2.5cm,
+    top      = 3cm,
+    bottom   = 2.5cm
   }
 \setenumerate[1]{
   labelindent  = \parindent,
