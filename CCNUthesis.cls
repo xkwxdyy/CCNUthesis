@@ -3012,8 +3012,8 @@
 \RenewDocumentCommand { \nocite } { m } {}
 
 % 处理孤行和寡行
-\int_set:Nn \clubpenalty { 300 }
-\int_set:Nn \widowpenalty { 300 }
+\int_set:Nn \clubpenalty { 350 }
+\int_set:Nn \widowpenalty { 350 }
 
 
 % 落款
