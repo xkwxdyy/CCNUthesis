@@ -1,5 +1,6 @@
 \documentclass[oneside]{CCNUthesis}
 
+
 \ccnusetup{
   % 个人信息
   info = {
@@ -60,6 +61,13 @@
       %        linux：  cjk-font = fandol（默认值）
       %   2. 除 fandol 和 sourcehan 外，其余字体均为商用字体，请注意版权问题
       %   3. 但 fandol 字体缺字比较严重，而 sourcehan 没有配备楷体和仿宋体
+    caption-style = arabic,
+      % 图表的标题计数样式
+      % 允许选项：
+      %    arabic|hyphen
+      %    arabic：样式为图1，图2，表1，表2...，并且跨 chapter 连续编号，即 上一个 chapter 的图编号若为4，下一个 chapter 的第一个图编号为 5
+      %    hyphen：样式为图1-1，图2-1，表1-1...
+      %      x-y 的 x 为 chapter 值，y 为图表的计数器值，新的 chapter 中 y 会清零从新计数
     bibstyle = {ccnu},
       % bibstyle 表示参考文献的格式
       % 允许的选项：
@@ -68,7 +76,7 @@
       %   gb7714-2015表示按照国标
     bib-resource = {CCNUthesis-main.bib}
       % 参考文献数据源，需要加bib后缀
-  }
+  },
 }
 
 
