@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-05-14}{v1.1.22}
+  {2022-05-17}{v1.2.1}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e }
 
@@ -1095,25 +1095,53 @@
 % \cs_generate_variant:Nn \ccnu_thm_set_qed:n         { V }
 % \cs_generate_variant:Nn \ccnu_thm_set_header_font:n { V }
 % \cs_generate_variant:Nn \ccnu_thm_set_body_font:n   { V }
+
+
+
+% 处理图表标题样式
+
+\tl_new:N \l__ccnu_caption_label_seperator_tl
+
+\keys_define:nn { ccnu /style }
+  {
+    caption-labelseperator .choice:,
+    caption-labelseperator / space .code:n =
+      {
+        \tl_set:Nn \l__ccnu_caption_label_seperator_tl
+          { ccnuspace }
+      },
+    caption-labelseperator / colon .code:n =
+      {
+        \tl_set:Nn \l__ccnu_caption_label_seperator_tl
+          { colon }
+      },
+    caption-labelseperator .initial:n = colon
+  }
+
+% 图表 caption 字体
 \DeclareCaptionFont { ccnufigurecap }
   { \normalfont \zihao { -5 } }
 \DeclareCaptionFont { ccnutablecap }
   { \normalfont \zihao { -5 } }
+
+% 图表 label 和标题之间的分割符
+\DeclareCaptionLabelSeparator
+  { ccnuspace } { \space \space }
 \captionsetup [ figure ]
   {
     font     = ccnufigurecap,
-    labelsep = colon
+    labelsep = \tl_use:N \l__ccnu_caption_label_seperator_tl
   }
 \captionsetup [ table  ]
   {
     % font     = { small, sf },
     font     = ccnutablecap,
-    labelsep = colon
+    labelsep = \tl_use:N \l__ccnu_caption_label_seperator_tl
   }
 \keys_define:nn { ccnu / style }
   {
-    caption-style .choice:,
-    caption-style / arabic .code:n = 
+    caption-labelstyle .choice:,
+    caption-labelstyle / arabic .code:n = 
       {
         \cs_set:Npn \thefigure
           { \__ccnu_arabic:n { figure } }
@@ -1122,14 +1150,14 @@
         \counterwithout{figure}{chapter}
         \counterwithout{table}{chapter}
       },
-    caption-style / hyphen .code:n = 
+    caption-labelstyle / hyphen .code:n = 
       {
         \cs_set:Npn \thefigure
           { \thechapter - \__ccnu_arabic:n { figure } }
         \cs_set:Npn \thetable
           { \thechapter - \__ccnu_arabic:n { table  } }
       },
-    caption-style .initial:n = hyphen
+    caption-labelstyle .initial:n = hyphen,
   }
 
 \clist_map_inline:nn

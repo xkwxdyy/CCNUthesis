@@ -6,6 +6,14 @@
 
 `v1.1.21` -> `v1.1.22` 需要更新：`CCNUthesis.cls`
 
+## [v1.2.1] - 2022-05-17
+
+### Added
+
+- 增加 `caption-labelseperator` 控制图表 `label` 和内容的分隔符
+
+
+
 ## [v1.1.22] - 2022-05-14
 
 ### Added
