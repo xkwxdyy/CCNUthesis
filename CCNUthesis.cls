@@ -105,6 +105,10 @@
   }
 \cs_generate_variant:Nn \__ccnu_vspace:N { c }
 
+% 行距
+\fp_const:Nn \c__ccnu_line_spread_fp
+  { \dim_ratio:nn { 20 pt } { 12 bp } / 1.2 }
+
 % 符号
 \cs_new:Npn \__ccnu_symbol:n #1 { \tex_char:D #1 \scan_stop: }
 
@@ -173,12 +177,12 @@
 % 处理文类的选项
 \keys_define:nn { ccnu / option }
   {
-    type .choice:,
-    type .value_required:n = true,
-    type .choices:nn =
-      { doctor, master, bachelor }
-      { \int_set_eq:NN \g__ccnu_thesis_type_int \l_keys_choice_int },
-    type .initial:n = bachelor,
+    % type .choice:,
+    % type .value_required:n = true,
+    % type .choices:nn =
+    %   { doctor, master, bachelor }
+    %   { \int_set_eq:NN \g__ccnu_thesis_type_int \l_keys_choice_int },
+    % type .initial:n = bachelor,
     oneside .value_forbidden:n = true,
     twoside .value_forbidden:n = true,
     oneside .code:n =
@@ -191,16 +195,97 @@
         \clist_gput_right:Nn \g__ccnu_to_ctexbook_clist { twoside }
         \bool_set_true:N     \g__ccnu_twoside_bool
       },
-    config .tl_set:N = \g__ccnu_config_tl,
     unknown .code:n = { \__ccnu_error:n { unknown-option } }
   }
 \__ccnu_msg_new:nn { unknown-option }
   { Class~ option~ "\l_keys_key_str"~ is~ unknown. }
 \ProcessKeysOptions { ccnu / option }
-% \file_input:n { CCNUthesis.def }
 
 
 
+% ctexbook 选项处理
+\PassOptionsToClass
+  {
+    UTF8,
+    heading    = true,
+    fontset    = none,
+    zihao      = -4,
+    linespread = \c__ccnu_line_spread_fp,
+    oneside,
+    \g__ccnu_to_ctexbook_clist
+  }
+  { ctexbook }
+\clist_map_inline:nn
+  {
+    { no-math           } { fontspec },
+    { perpage           } { footmisc },
+  }
+  { \PassOptionsToPackage #1 }
+% 加载 ctexbook 文类
+\LoadClass { ctexbook }
+
+
+% 加载宏包
+% TODO：宏包最小化
+\RequirePackage
+  {
+    mathtools,
+    amssymb,
+    geometry,          % 页面设置
+    fancyhdr,          % 页眉页脚
+    footmisc,          % 脚注
+    graphicx,          % 插图
+    longtable,
+    caption,           % 图表标题
+    tikz,
+    tikzpagenodes,
+    tabularray,
+    varwidth,
+    calc,              % TODO：标题下划线需要，看看能不能去掉
+    ulem,              % 下划线
+    adjustbox,
+    etoolbox,
+    amsthm,            % 定理类环境
+    thmtools,          % 定理类环境
+    needspace
+  }
+\RequirePackage[shortlabels]{enumitem}
+% TODO：将 physicx 的效果弄进 wiki
+\RequirePackage[physics]{physicx}
+% TODO：可能不需要 tocloft
+\RequirePackage[titles]{tocloft}
+
+
+
+% 宏包版本检测
+\cs_new_protected:Npn \__ccnu_check_package:nnn #1#2#3
+  {
+    \@ifpackagelater {#1} {#2}
+      { } { \__ccnu_error:nnnn { package-too-old } { Package } {#1} {#3} }
+  }
+% 文类版本检测
+\cs_new_protected:Npn \__ccnu_check_class:nnn #1#2#3
+  {
+    \@ifclasslater {#1} {#2}
+      { } { \__ccnu_error:nnnn { package-too-old } { Class } {#1} {#3} }
+  }
+\__ccnu_msg_new:nn { package-too-old }
+  {
+    #1~ "#2"~ is~ too~ old. \\
+    The~ ccnuthesis~ class~ only~ supports~ "#2" \\
+    with~ a~ version~ higher~ than~ v#3. \\\\
+    Please~ update~ an~ up-to-date~ version~ of~ it \\
+    using~ your~ TeX~ package~ manager~ or~ from~ CTAN.
+  }
+\__ccnu_check_class:nnn { ctexbook } { 2021/03/14 } { 2.5.6 }
+\__ccnu_check_package:nnn { expl3 } { 2021/08/27 } { }
+% 编译方式检测
+\sys_if_engine_xetex:T
+  { \__ccnu_check_package:nnn { xeCJK } { 2020/05/01 } { 3.8.3 } }
+
+
+
+% 定义一些常量
 \tl_const:Nn \c__ccnu_name_simp_tl { 华中师范大学         }
 \tl_const:Nn \c__ccnu_name_trad_tl { 華中師範大學         }
 \tl_const:Nn \c__ccnu_name_en_tl   { Central~ China~ Normal~ University }
@@ -216,8 +301,6 @@
     { fwid_right_paren } { ^^^^ff09 }
   }
   { \__ccnu_define_punct:nn #1 }
-\fp_const:Nn \c__ccnu_line_spread_fp
-  { \dim_ratio:nn { 20 pt } { 12 bp } / 1.2 }
 \tl_const:Nn \c__ccnu_orig_decl_text_tl
   {
     本人郑重声明：所呈交的学位论文是本人在导师指导下独立进行研究工作所取得的研究成果。除了文中特别加以标注引用的内容外，本论文不包含任何其他个人或集体已经发表或撰写的成果作品。本人完全意识到本声明的法律后果由本人承担。
@@ -226,15 +309,6 @@
   {
     本学位论文作者完全了解学校有关保障、使用学位论文的规定，同意学校保留并向有关学位论文管理部门或机构送交论文的复印件和电子版，允许论文被查阅和借阅。本人授权省级优秀学士学位论文评选机构将本学位论文的全部或部分内容编入有关数据库进行检索，可以采用影印、缩印或扫描等复制手段保存和汇编本学位论文。
   }
-\clist_const:Nn \c__ccnu_orig_decl_sign_clist
-  { 作者签名, 日期 }
-\clist_const:Nn \c__ccnu_auth_decl_sign_clist
-  { 作者签名, 导师签名, 日期 }
-\clist_const:Nn \c__ccnu_thesis_type_clist
-  { 博士学位论文, 硕士学位论文, {本科毕业论文（设计）} }
-\clist_const:Nn \c__ccnu_degree_type_clist
-  { 学术学位, 专业学位 }
-\clist_const:Nn \c__ccnu_secret_clist { 秘密, 机密, 绝密 }
 \clist_map_inline:nn
   {
     { secret_level       } { 密 \qquad 级                  },
@@ -270,106 +344,68 @@
     { notation } { 符号表      } { List~ of~ Symbols }
   }
   { \__ccnu_define_name:nnn #1 }
-\tl_if_empty:NF \g__ccnu_config_tl
-  {
-    \file_input:V \g__ccnu_config_tl
-    \__ccnu_info:nx { load-config-file } { \g__ccnu_config_tl }
-  }
-\__ccnu_msg_new:nn { load-config-file }
-  { You~ are~ loading~ config~ file~ '#1'. }
-\PassOptionsToClass
-  {
-    UTF8,
-    heading    = true,
-    fontset    = none,
-    zihao      = -4,
-    linespread = \c__ccnu_line_spread_fp,
-    oneside,
-    \g__ccnu_to_ctexbook_clist
-  }
-  { ctexbook }
-\clist_map_inline:nn
-  {
-    { no-math           } { fontspec },
-    { perpage           } { footmisc },
-  }
-  { \PassOptionsToPackage #1 }
-% 加载 ctexbook 文类
-\LoadClass { ctexbook }
 
-
-% 加载宏包
-\RequirePackage
-  {
-    mathtools,    
-    amssymb,
-    extarrows,
-    geometry,
-    fancyhdr,
-    footmisc,
-    graphicx,
-    longtable,
-    caption,
-    xcolor,
-    tikz,
-    tikzpagenodes,
-    tabularray,
-    varwidth,
-    calc,    % 标题下划线需要
-    ulem,
-    adjustbox,
-    etoolbox,
-    amsthm,
-    thmtools,
-    needspace
-  }
-
-
-\RequirePackage[shortlabels]{enumitem}
-\RequirePackage[physics]{physicx}
-% \RequirePackage{physics}
-\RequirePackage[titles]{tocloft}
-\graphicspath{{figures/}{logo/}}
-\cs_new_protected:Npn \__ccnu_check_package:nnn #1#2#3
-  {
-    \@ifpackagelater {#1} {#2}
-      { } { \__ccnu_error:nnnn { package-too-old } { Package } {#1} {#3} }
-  }
-\cs_new_protected:Npn \__ccnu_check_class:nnn #1#2#3
-  {
-    \@ifclasslater {#1} {#2}
-      { } { \__ccnu_error:nnnn { package-too-old } { Class } {#1} {#3} }
-  }
-\__ccnu_msg_new:nn { package-too-old }
-  {
-    #1~ "#2"~ is~ too~ old. \\
-    The~ ccnuthesis~ class~ only~ supports~ "#2" \\
-    with~ a~ version~ higher~ than~ v#3. \\\\
-    Please~ update~ an~ up-to-date~ version~ of~ it \\
-    using~ your~ TeX~ package~ manager~ or~ from~ CTAN.
-  }
-\__ccnu_check_class:nnn { ctexbook } { 2021/03/14 } { 2.5.6 }
-\__ccnu_check_package:nnn { expl3 } { 2021/08/27 } { }
-\sys_if_engine_xetex:T
-  { \__ccnu_check_package:nnn { xeCJK } { 2020/05/01 } { 3.8.3 } }
+% 页面设置
 \geometry
   {
-    paper      = a4paper,
-    left = 3cm,
-    right = 2.5cm,
-    top = 3cm,
-    bottom = 2.5cm
+    paper    = a4paper,
+    left     = 3cm,
+    right    = 2.5cm,
+    top      = 3cm,
+    bottom   = 2.5cm
   }
-\setenumerate[1]{
-  labelindent  = \parindent,
-  leftmargin   = 0pt,
-  widest       = 0,
-  itemindent   = *,
-  listparindent=\parindent,
-}
-% TODO 设置二级、itemize
+
+
+% 图片路径
+\graphicspath{{figures/}{logo/}}
+
+
+% 列表环境设置
+\setlist{nosep}
+
+
+% enumerate
+\setenumerate[1]
+  {
+    labelindent    = \parindent,
+    leftmargin     = 0pt,
+    widest         = 0,
+    itemindent     = *,
+    listparindent  = \parindent,
+  }
+\setenumerate[2]
+  {
+    labelindent    = \parindent,
+    leftmargin     = 0em,
+    widest         = 0,
+    itemindent     = *,
+    listparindent  = \parindent,
+  }
+
+% itemize
+\setitemize[1]
+  {
+    leftmargin     = 0pt,
+    widest         = 0,
+    itemindent     = \parindent,
+    listparindent  = \parindent,
+  }
+\setitemize[2]
+  {
+    labelindent    = \parindent,
+    leftmargin     = 0em,
+    widest         = 0,
+    itemindent     = *,
+    listparindent  = \parindent,
+  }
+
+
+
+% 字体设置
 \tl_new:N \g__ccnu_fontset_tl
 \tl_new:N \g__ccnu_cjk_fontset_tl
+
+% 西文字体
 \keys_define:nn { ccnu / style }
   {
     font .choices:nn =
@@ -378,22 +414,22 @@
         \tl_set_eq:NN \g__ccnu_fontset_tl \l_keys_choice_tl 
         \int_compare:nTF { 1 <= \l_keys_choice_int <= 2 }
           {
-            \let\oldencodingdefault\encodingdefault
-            \let\oldrmdefault\rmdefault
-            \let\oldsfdefault\sfdefault
-            \let\oldttdefault\ttdefault
-            \RequirePackage[T1]{fontenc}
-            \renewcommand{\rmdefault}{ntxtlf}
-            \renewcommand{\sfdefault}{qhv}
-            \renewcommand{\ttdefault}{ntxtt}
-            \RequirePackage{newtxmath}
-            \let\encodingdefault\oldencodingdefault
-            \let\rmdefault\oldrmdefault
-            \let\sfdefault\oldsfdefault
-            \let\ttdefault\oldttdefault
+            \cs_set_eq:NN \oldencodingdefault \encodingdefault
+            \cs_set_eq:NN \oldrmdefault \rmdefault
+            \cs_set_eq:NN \oldsfdefault \sfdefault
+            \cs_set_eq:NN \oldttdefault \ttdefault
+            \RequirePackage [T1] { fontenc }
+            \RenewDocumentCommand { \rmdefault } { } { ntxtlf }
+            \RenewDocumentCommand { \sfdefault } { } { qhv }
+            \RenewDocumentCommand { \ttdefault } { } { ntxtt }
+            \RequirePackage { newtxmath }
+            \cs_set_eq:NN \encodingdefault \oldencodingdefault
+            \cs_set_eq:NN \rmdefault \oldrmdefault
+            \cs_set_eq:NN \sfdefault \oldsfdefault
+            \cs_set_eq:NN \ttdefault \oldttdefault
           }
           {
-            \RequirePackage{unicode-math}
+            \RequirePackage { unicode-math }
             \keys_set:nn { unicode-math }
               {
                 math-style = ISO,
@@ -402,8 +438,9 @@
             \__ccnu_set_font_helper:n { math }
           }
       },
-      % font .initial:n = times,
   }
+
+% 中文字体
 \keys_define:nn { ccnu / style }
   {
     cjk-font .choices:nn =
@@ -430,12 +467,12 @@
   { \__ccnu_switch_family:n { ccnu@kai } }
 \tl_const:Nn \__ccnu_cjk_font_options:
   { UprightFont = *, ItalicFont = *, AutoFakeBold = true }
-\cs_new_protected:Npx \__ccnu_setCJKmainfont:n   #1
-  { \__ccnu_setCJKmainfont:nn   {#1} { \__ccnu_cjk_font_options: } }
-\cs_new_protected:Npx \__ccnu_setCJKsansfont:n   #1
-  { \__ccnu_setCJKsansfont:nn   {#1} { \__ccnu_cjk_font_options: } }
-\cs_new_protected:Npx \__ccnu_setCJKmonofont:n   #1
-  { \__ccnu_setCJKmonofont:nn   {#1} { \__ccnu_cjk_font_options: } }
+\cs_new_protected:Npx \__ccnu_setCJKmainfont:n #1
+  { \__ccnu_setCJKmainfont:nn {#1} { \__ccnu_cjk_font_options: } }
+\cs_new_protected:Npx \__ccnu_setCJKsansfont:n #1
+  { \__ccnu_setCJKsansfont:nn {#1} { \__ccnu_cjk_font_options: } }
+\cs_new_protected:Npx \__ccnu_setCJKmonofont:n #1
+  { \__ccnu_setCJKmonofont:nn {#1} { \__ccnu_cjk_font_options: } }
 \cs_new_protected:Npx \__ccnu_set_cjk_font_kai:n #1
   { \__ccnu_set_cjk_font_kai:nn {#1} { \__ccnu_cjk_font_options: } }
 \sys_if_engine_xetex:TF
@@ -459,10 +496,12 @@
 \clist_map_inline:nn { main, sans, mono } { \__ccnu_set_font_helper:n {#1} }
 \clist_map_inline:nn { CJKmain, CJKsans, CJKmono } { \__ccnu_set_font_helper:n {#1} }
 
+
 \tl_new:N \g__ccnu_font_style_libertinus_bfsl_tl
 \fontspec_font_if_exist:nTF { LibertinusSans-BoldOblique.otf }
   { \tl_set:Nn \g__ccnu_font_style_libertinus_bfsl_tl { BoldOblique } }
   { \tl_set:Nn \g__ccnu_font_style_libertinus_bfsl_tl { Bold        } }
+
 
 % 目前的字体配置为: (TG = TeX Gyre, 默认值为 times)
 %   选项名  : serif,            sans,     mono,         math
@@ -500,7 +539,8 @@
         Ligatures      = CommonOff
       }
     \__ccnu_setmathfont:nn {STIXTwoMath-Regular.otf} { }
-    \__ccnu_setmathfont:nn {STIXTwoMath-Regular.otf} { range={scr,bfscr},StylisticSet=01 }
+    \__ccnu_setmathfont:nn {STIXTwoMath-Regular.otf} 
+      { range = {scr, bfscr}, StylisticSet = 01 }
   }
 \cs_new_protected:Npn \__ccnu_load_font_xits:
   {
@@ -529,8 +569,10 @@
         BoldItalicFont = *-bolditalic,
         Ligatures      = CommonOff
       }
-    \__ccnu_setmathfont:nn { XITSMath-Regular.otf } { BoldFont = XITSMath-Bold.otf }
-    \__ccnu_setmathfont:nn{ XITSMath-Regular.otf } {range={cal,bfcal},StylisticSet=01}
+    \__ccnu_setmathfont:nn { XITSMath-Regular.otf } 
+      { BoldFont = XITSMath-Bold.otf }
+    \__ccnu_setmathfont:nn{ XITSMath-Regular.otf } 
+      { range = {cal, bfcal}, StylisticSet = 01 }
   }
 \cs_new_protected:Npn \__ccnu_load_font_times:
   {
@@ -547,10 +589,6 @@
         BoldFont           = *-Bold,
         ItalicFont         = *-Italic,
         BoldItalicFont     = *-BoldItalic
-        % UprightFont        = *-regular,
-        % BoldFont           = *-bold,
-        % ItalicFont         = *-italic,
-        % BoldItalicFont     = *-bolditalic
       }
     \__ccnu_setsansfont:nn { texgyreheros }
       {
@@ -569,17 +607,12 @@
         BoldItalicFont = *-bolditalic,
         Ligatures      = CommonOff
       }
-      % \RequirePackage{newtxmath}
   }
   \cs_new_protected:Npn \__ccnu_load_font_tg:
   {
     \__ccnu_setmainfont:nn { texgyretermes }
       {
         Extension          = .otf,
-        % UprightFont        = *-Regular,
-        % BoldFont           = *-Bold,
-        % ItalicFont         = *-Italic,
-        % BoldItalicFont     = *-BoldItalic
         UprightFont        = *-regular,
         BoldFont           = *-bold,
         ItalicFont         = *-italic,
@@ -603,7 +636,8 @@
         Ligatures      = CommonOff
       }
       \__ccnu_setmathfont:nn { texgyretermes-math.otf } { }
-      \__ccnu_setmathfont:nn{ XITSMath-Regular.otf } {range={cal,bfcal}, StylisticSet=01}
+      \__ccnu_setmathfont:nn{ XITSMath-Regular.otf } 
+        { range = {cal, bfcal}, StylisticSet = 01 }
   }
 \cs_new_protected:Npn \__ccnu_load_cjk_font_adobe:
   {
@@ -720,55 +754,26 @@
   }
 \ctex_at_end_preamble:n { \__ccnu_load_font: }
 
+
+
+% 标点处理
 \keys_define:nn { ccnu / style }
   {
-    font-size .choice:,
-    font-size .value_required:n = true,
-    font-size / -4 .code:n = { },
-    font-size /  5 .code:n =
-      {
-        \RenewDocumentCommand \tiny         { } { \zihao {  7 } }
-        \RenewDocumentCommand \scriptsize   { } { \zihao { -6 } }
-        \RenewDocumentCommand \footnotesize { } { \zihao {  6 } }
-        \RenewDocumentCommand \small        { } { \zihao { -5 } }
-        \RenewDocumentCommand \normalsize   { } { \zihao {  5 } }
-        \RenewDocumentCommand \large        { } { \zihao { -4 } }
-        \RenewDocumentCommand \Large        { } { \zihao { -3 } }
-        \RenewDocumentCommand \LARGE        { } { \zihao { -2 } }
-        \RenewDocumentCommand \huge         { } { \zihao {  2 } }
-        \RenewDocumentCommand \Huge         { } { \zihao {  1 } }
-      },
     fullwidth-stop .choice:,
     fullwidth-stop .value_required:n = true,
     fullwidth-stop / catcode .code:n =
       { 
-        \__ccnu_set_fullwidth_stop_catcode: 
-        \keys_set:nn { ctex }
-          { punct = kaiming }
+        \__ccnu_set_fullwidth_stop_catcode:
+        % 设置标点为 kaiming 式
+        \keys_set:nn { ctex } { punct = kaiming }
       },
     fullwidth-stop / mapping .code:n =
       {
-        \sys_if_engine_xetex:TF
-          {
-            \clist_gset:Nn \g__xeCJK_default_features_clist
-              { Mapping = fullwidth-stop }
-            \keys_set:nn { ctex }
-              { punct = kaiming }
-          }
-          {
-            \sys_if_engine_luatex:T
-              {
-                \__ccnu_warning:n { mapping-not-available }
-                \__ccnu_set_fullwidth_stop_catcode:
-              }
-          }
+        \clist_gset:Nn \g__xeCJK_default_features_clist
+          { Mapping = fullwidth-stop }
+        \keys_set:nn { ctex } { punct = kaiming }
       },
     fullwidth-stop / false .code:n = { }
-  }
-\__ccnu_msg_new:nn { mapping-not-available }
-  {
-    Option~ "fullwidth-stop = mapping"~ is~ not~ available~ in~ LuaTeX. \\
-    "fullwidth-stop = catcode"~ will~ be~ set~ instead.
   }
 \cs_new:Npn \__ccnu_set_fullwidth_stop_catcode:
   {
@@ -778,37 +783,12 @@
       { \c__ccnu_orig_decl_text_tl, \c__ccnu_auth_decl_text_tl }
       { \tl_set_rescan:Nno ##1 { } {##1} }
   }
-\DeclareEmphSequence
-  {
-    \itshape \ccnu@kai,
-    \upshape \CJKfamily { \CJKfamilydefault },
-  }
+
+
+
 \fancyhf { }
-\renewcommand{\headrulewidth}{0pt}
-% \cs_new_protected:Npn \__ccnu_fancy_head:nn #1#2
-%   {
-%     \fancyhead [#1]
-%       { \small \ccnu@kai \nouppercase {#2} }
-%   }
-% \bool_if:NTF \g__ccnu_twoside_bool
-%   {
-%     \__ccnu_fancy_head:nn { L } { \leftmark  }
-%     \__ccnu_fancy_head:nn { R } { \rightmark }
-%   }
-%   {
-%     \__ccnu_fancy_head:nn { L  } { \leftmark  }
-%     \__ccnu_fancy_head:nn { R  } { \rightmark }
-%   }
+\RenewDocumentCommand { \headrulewidth } { } { 0pt }
 \fancyfoot [ C ] { \small \thepage }
-\RenewDocumentCommand \cleardoublepage { }
-  {
-    \clearpage
-    \bool_if:NT \g__ccnu_twoside_bool
-      {
-        \int_if_odd:nF \c@page
-          { \hbox:n { } \thispagestyle { empty } \newpage }
-      }
-  }
 \pagestyle { fancy }
 \keys_set:nn { ctex }
   {
@@ -1493,16 +1473,6 @@
       }
     \__ccnu_spread_box:nn { 0.45 \textwidth } { \l__ccnu_tmpa_tl }
   }
-\cs_new_protected:Npn \__ccnu_cover_degree:
-  {
-    \int_compare:nT { \g__ccnu_thesis_type_int != 3 }
-      {
-        \c__ccnu_fwid_left_paren_tl
-        \clist_item:Nn \c__ccnu_degree_type_clist
-          { \l__ccnu_info_degree_type_int }
-        \c__ccnu_fwid_right_paren_tl
-      }
-  }
 % 复制settowidth命令
 \cs_set_eq:NN \ccnu_set_to_width:Nn \settowidth
 \dim_new:N \l__ccnu_date_zero_radius_dim
@@ -1534,14 +1504,6 @@
 
 \cs_new_protected:Npn \__ccnu_cover_info:
   {
-    \tl_set:Nx \l__ccnu_cover_info_left_width_tl
-      {
-        \int_case:nn { \l__ccnu_info_degree_type_int }
-          {
-            { 1 } { 4 em }
-            { 2 } { 9 em }
-          }
-      }
     % 检测是否有副标题
     \__ccnu_title_if_subtitle:
     \begin{tikzpicture}[remember~picture, overlay]
@@ -1591,49 +1553,48 @@
           \__ccnu_type_title:
         };
       % \node[] (titlelabel) at ([shift = {(-0.15\paperheight, 0)}]current~page.center) { \zihao{-1} \textbf{题\,\,\,目}};
+      \node[] (information) at
+        (
+          [shift = {(0, -0.3\textheight)}]
+          current~page.center
+        )
+        {
+          \begin{minipage} [ c ] { \textwidth }
+            \centering \zihao { -3 }  \bfseries
+            \clist_set:Nx \l__ccnu_tmpa_clist
+              {
+                \c__ccnu_name_department_tl,
+                \c__ccnu_name_level_tl,
+                \c__ccnu_name_author_tl,
+                \c__ccnu_name_student_id_tl,
+                \c__ccnu_name_supervisor_tl,
+              }
+            \clist_set:Nx \l__ccnu_tmpb_clist
+              {
+                { \l__ccnu_info_department_tl },
+                { \l__ccnu_info_major_tl      },
+                { \l__ccnu_info_level_tl      },
+                { \l__ccnu_info_author_tl     },
+                { \l__ccnu_info_student_id_tl },
+                { \l__ccnu_info_supervisor_tl },
+              }
+            \__ccnu_get_max_text_width:NN 
+              \l__ccnu_tmpb_dim \l__ccnu_tmpb_clist
+            \bool_until_do:nn
+              { \clist_if_empty_p:N \l__ccnu_tmpa_clist }
+              {
+                \clist_pop:NN \l__ccnu_tmpa_clist \l__ccnu_tmpa_tl
+                \clist_pop:NN \l__ccnu_tmpb_clist \l__ccnu_tmpb_tl
+                \__ccnu_spread_box:nn
+                  { 4em }
+                  { \l__ccnu_tmpa_tl }
+                \hspace*{1em}
+                \__ccnu_center_box:Vn \l__ccnu_tmpb_dim { \l__ccnu_tmpb_tl }
+                \skip_vertical:n { 1 ex }
+              }
+          \end{minipage}
+        };
     \end{tikzpicture}
-
-    \begin{minipage} [ c ] { \textwidth }
-      \centering \zihao { -3 }  \bfseries
-      \clist_set:Nx \l__ccnu_tmpa_clist
-        {
-          \c__ccnu_name_department_tl,
-          \int_case:nn { \l__ccnu_info_degree_type_int }
-            {
-              { 1 } { \c__ccnu_name_major_tl              }
-              { 2 } { \c__ccnu_name_major_professional_tl }
-            },
-          \c__ccnu_name_level_tl,
-          \c__ccnu_name_author_tl,
-          \c__ccnu_name_student_id_tl,
-          \c__ccnu_name_supervisor_tl,
-          % \c__ccnu_name_date_tl,
-        }
-      \clist_set:Nx \l__ccnu_tmpb_clist
-        {
-          { \l__ccnu_info_department_tl },
-          { \l__ccnu_info_major_tl      },
-          { \l__ccnu_info_level_tl      },
-          { \l__ccnu_info_author_tl     },
-          { \l__ccnu_info_student_id_tl },
-          { \l__ccnu_info_supervisor_tl },
-          % { \l__ccnu_info_date_tl       }
-        }
-      \__ccnu_get_max_text_width:NN \l__ccnu_tmpb_dim \l__ccnu_tmpb_clist
-      \bool_until_do:nn
-        { \clist_if_empty_p:N \l__ccnu_tmpa_clist }
-        {
-          \clist_pop:NN \l__ccnu_tmpa_clist \l__ccnu_tmpa_tl
-          \clist_pop:NN \l__ccnu_tmpb_clist \l__ccnu_tmpb_tl
-          \__ccnu_spread_box:nn
-            { \l__ccnu_cover_info_left_width_tl }
-            { \l__ccnu_tmpa_tl }
-          % \c__ccnu_fwid_colon_tl
-          \hspace*{1em}
-          \__ccnu_center_box:Vn \l__ccnu_tmpb_dim { \l__ccnu_tmpb_tl }
-          \skip_vertical:n { 1 ex }
-        }
-    \end{minipage}
   }
 \tl_new:N \l__ccnu_cover_info_left_width_tl
 \cs_new_protected:Npn \__ccnu_cover_signature:N #1
@@ -1812,7 +1773,7 @@
     % id       / content     = \__ccnu_cover_id:,
     % logo     / content     = \__ccnu_cover_logo:,
     % type     / content     = \__ccnu_cover_type:,
-    degree   / content     = \__ccnu_cover_degree:,
+    % degree   / content     = \__ccnu_cover_degree:,
     % title    / content     =
       % \__ccnu_fixed_width_center_box:nn
       % \__ccnu_fixed_width_center_underline_box:nn
@@ -1820,7 +1781,7 @@
     % title-en / content     =
       % \__ccnu_fixed_width_center_box:nn
         % { 0.9 \textwidth } { \l__ccnu_info_title_en_tl },
-    info     / content     = \__ccnu_cover_info:,
+    % info     / content     = \__ccnu_cover_info:,
     % id       / format      = \zihao { -5 },
     % type     / format      = \zihao {  -1 }\sffamily ,
     degree   / format      = \zihao {  4 },
@@ -1914,26 +1875,20 @@
   }
 \ctex_after_end_preamble:n
   {
-    \bool_if:NT \l__ccnu_auto_make_cover_bool
-      {
-        \begin{titlepage}
-          \makecoveri
-          \newpage 
-          % \makecoveriii
-          \pagestyle { empty }
-          \begin{tikzpicture}[remember~picture, overlay]
-            \node at (current~page.center) 
-              {
-                \includegraphics
-                  [ width = \Gm@layoutwidth, height = \Gm@layoutheight ]
-                    { figures / Originality_Copyright.pdf }
-              };
-          \end{tikzpicture}
-        \end{titlepage}
-      }
+    \begin{titlepage}
+      \__ccnu_cover_info:
+      \newpage
+      \pagestyle { empty }
+      \begin{tikzpicture}[remember~picture, overlay]
+        \node at (current~page.center) 
+          {
+            \includegraphics
+              [ width = \Gm@layoutwidth, height = \Gm@layoutheight ]
+                { figures / Originality_Copyright.pdf }
+          };
+      \end{tikzpicture}
+    \end{titlepage}
   }
-% \__ccnu_gadd_ltxhook:nn { enddocument }
-%   { \bool_if:NT \l__ccnu_auto_make_cover_bool { \makecoveriii } }
 \keys_set:nn { ctex }
   {
     contentsname   = \c__ccnu_name_toc_tl,
@@ -2406,7 +2361,7 @@
   {
     % style   / font            = times,
     style   / cjk-font        = fandol,
-    style   / font-size       = -4,
+    % style   / font-size       = -4,
     style   / fullwidth-stop  = false,
     style   / auto-make-cover = true,
     style   / logo            = { ccnulogo.png },
@@ -3035,9 +2990,19 @@
 \setlength{\lineskiplimit}{2.5pt}
 \setlength{\lineskip}{\baselineskip-1.1\ccwd}
 
-% 取消 \nocite{} 的作用，防止用户自己使用
 
+% 命令环境的补丁和重定义
+
+% \emph 的样式
+\DeclareEmphSequence
+  {
+    \itshape \ccnu@kai,
+    \upshape \CJKfamily { \CJKfamilydefault },
+  }
+
+% 取消 \nocite{} 的作用，防止用户自己使用
 \RenewDocumentCommand { \nocite } { m } {}
+
 
 % 处理孤行和寡行
 \int_set:Nn \clubpenalty { 350 }
