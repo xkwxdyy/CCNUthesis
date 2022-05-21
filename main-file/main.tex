@@ -1,0 +1,180 @@
+% 交终稿的时候需要单面打印，设置 oneside，奇偶页页面设置相同
+\documentclass[oneside]{CCNUthesis}
+
+% 答辩打印可以可以双面打印，设置 twoside，奇偶页页面设置不同
+% \documentclass[twoside, draft]{CCNUthesis}
+
+
+\ccnusetup{
+  % 个人信息
+  info = {
+    % 主标题，会自动换行
+    % 如果换行点不满意，可以用 \\ 手动换行
+    title = {
+      中文主标题中文主标题中文主标题中文主标题中文主标题中文主标题中文主标题中文主标题
+    },
+    % 副标题，如果有的话取消下面三行代码的注释并且填写内容
+    subtitle = {
+      这是一个副标题
+    },
+    % 论文的英文标题
+    title* = {
+      Thesis Title
+    }, 
+    % 学院
+    department = {数学与统计学学院},
+    % department = {数学},
+    % 专业
+    major = {数学与应用数学（试验）},
+    % major = {数学},
+    % 年级
+    level = {2018级},
+    % 姓名
+    author = {你的姓名},
+    % 学号
+    student-id = {学号},
+    % 指导教师
+    supervisor = {xxx \quad 教授},
+    % 论文中文关键词，用英文“,”隔开
+    keywords = {
+      关键词1,
+      关键词2,
+      关键词3
+    },
+    % 论文英文关键词，用英文“,”隔开
+    keywords* = {
+      keyword1,
+      keyword2,
+      keyword3
+    },
+    % 如有需要可以手动调整封面底的年和月，否则默认为「编译时」的年和月
+    % year    = {2022},
+    % month = {4}
+  },
+  style = {
+    font = times,
+      % 西文字体
+      % 允许选项
+      % font = newtx|times|stixtwo|xits|tg|none
+    cjk-font = fandol,
+      % 中文字体
+      % 允许选项：
+      %   cjk-font = adobe|fandol|founder|mac|sinotype|sourcehan|windows|none
+      % 注意：
+      %   1. 中文字体设置高度依赖于系统。各系统建议方案：
+      %        windows：cjk-font = windows
+      %        mac：    cjk-font = mac
+      %        linux：  cjk-font = fandol（默认值）
+      %   2. 除 fandol 和 sourcehan 外，其余字体均为商用字体，请注意版权问题
+      %   3. 但 fandol 字体缺字比较严重，而 sourcehan 没有配备楷体和仿宋体
+    caption-labelstyle = arabic,
+      % 图表的标题 label 计数样式
+      % 允许选项：
+      %    arabic|hyphen
+      %      arabic：样式为图1，图2，表1，表2...，并且跨 chapter 连续编号，即 上一个 chapter 的图编号若为4，下一个 chapter 的第一个图编号为 5
+      %      hyphen：样式为图1-1，图2-1，表1-1...
+      %      x-y 的 x 为 chapter 值，y 为图表的计数器值，新的 chapter 中 y 会清零从新计数
+    caption-labelseperator = {colon},
+      % 图表标题 label 和 标题内容 之内的分隔符
+      % 允许选项：
+      %    colon|space
+      %      colon 表示 「:␣」，即一个西文冒号加一个空格
+      %      space 表示 「␣␣」，即两个空格
+    bibstyle = {ccnu-author-year},
+      % bibstyle 表示参考文献的格式
+      % 允许的选项：
+      %   ccnu｜gb7714-2015
+      %   ccnu 表示按照学校给的标准
+      %   gb7714-2015表示按照国标
+    bib-resource = {CCNUthesis-main.bib},
+      % 参考文献数据源，需要加bib后缀
+    fullwidth-stop = catcode,
+      % 是否把全角实心句点 “．” 作为默认的句号形状
+      % 即正文中输入“。” 最终编译效果为“. ”
+      % 一般科技类文章需要替换，防止“. ”与“。”混淆
+      % 允许选项：
+      %   fullwidth-stop = catcode|mapping|false
+      % 说明：
+      %   catcode   显式的 “。” 会被替换为 “．”（e.g. 不包括用宏定义保存的 “。”）
+      %   mapping   所有的 “。” 会被替换为 “．”（使用 LuaLaTeX 编译则无效）
+      %   false     不进行替换
+  },
+}
+
+
+
+%%%%% 需要的宏包可以在此处自行调用 %%%%%
+
+
+
+% 需要的命令环境可以自行定义
+\newcommand{\upe}{\mathrm{e}}        % 直立的e，用于表示常量，如自然常数      
+\newcommand{\upi}{\mathrm{i}}        % 直立的i，用于表示常量，如虚数单位
+\newcommand{\hilbertH}{\mathcal{H}}
+
+
+
+\begin{document}
+
+
+% \frontmatter 开启论文前置部分
+% 前置部分包含目录、中英文摘要以及符号表等
+\frontmatter
+
+% 目录
+\tableofcontents
+
+
+% 摘要
+\input{./front/abstract.tex}
+
+
+% 符号表，不需要的话将下面的代码注释掉即可
+\input{./front/notation.tex}
+
+
+
+% \mainmatter 进入论文主体部分
+% 主体部分是论文的核心
+\mainmatter
+
+% 主体采用多文件编译的方式
+% 即把每一章放进一个单独的 tex 文件里，并在这里用 \input 导入
+% 例如 \input{./body/chapter1.tex}
+% 表示插入 main 所在目录中的 body 目录下的 chapter1.tex 文件
+
+
+\input{./body/chapter0.tex}   % 常用命令环境示例，不需要时注释掉即可
+\input{./body/chapter1.tex}
+\input{./body/chapter2.tex}
+\input{./body/chapter3.tex}
+\input{./body/chapter4.tex}
+
+
+
+% \backmatter开启后置部分，包含参考文献、致谢、附录等
+% \backmatter
+
+
+%%%% 参考文献 %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% 行内引用：\parencite{} or \parencite[]{}，下面两个情况要用行内引用
+%    - 去掉这个引用句子结构不完整，比如“定理证明可参看[1]”
+%    - 英文文献的引用
+%%% 上标引用：\cite{} or \cite[]{}，下面情况要用上标引用
+%    - 去掉这个引用，句子结构完整，比如“作者提到，‘CCNUthesis真是一个好模版’^[1]”
+%      其中“^[1]” 表示上标引用
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 打印参考文献列表
+\printbibliography
+
+
+%%%% 致谢 %%%%
+\include{./back/Acknowledgements.tex}
+
+
+%%%% 附录 %%%%
+% 没有附录内容的把下面的代码注释掉即可
+\include{./back/Appendix.tex}
+
+\end{document}
