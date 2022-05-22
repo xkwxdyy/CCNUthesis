@@ -1811,24 +1811,24 @@
 
 \keys_define:nn { ccnu / style }
   {
-    bibstyle .choice:,
-    bibstyle .value_required:n = true,
-    bibstyle / ccnu-numerical .code:n =
+    bib-style .choice:,
+    bib-style .value_required:n = true,
+    bib-style / ccnu-numerical .code:n =
       {
         \tl_set:Nn \l__ccnu_biblatex_bibstyle_tl
           { gb7714-CCNU }
       },
-    bibstyle / ccnu-author-year .code:n =
+    bib-style / ccnu-author-year .code:n =
       {
         \tl_set:Nn \l__ccnu_biblatex_bibstyle_tl
           { gb7714-CCNUay }
       },
-    bibstyle / gb7714-2015 .code:n =
+    bib-style / gb7714-2015 .code:n =
       {
         \tl_set:Nn \l__ccnu_biblatex_bibstyle_tl
           { gb7714-2015 }
       },
-    bibstyle / unknown     .code:n =
+    bib-style / unknown     .code:n =
       {
         \tl_set_eq:NN \l__ccnu_biblatex_bibstyle_tl \l_keys_value_tl
       },
@@ -2414,7 +2414,7 @@
         %   2. 除 fandol 和 sourcehan 外，其余字体均为商用字体，请注意版权问题
         %   3. 但 fandol 字体缺字比较严重，而 sourcehan 没有配备楷体和仿宋体
         %
-      caption-labelstyle = arabic,
+      caption-labelstyle = hyphen,
         % 图表的标题 label 计数样式
         % 允许选项：
         %    arabic|hyphen
@@ -2422,7 +2422,7 @@
         %      hyphen：样式为图1-1，图2-1，表1-1...
         %      x-y 的 x 为 chapter 值，y 为图表的计数器值，新的 chapter 中 y 会清零从新计数
         %
-      caption-labelseperator = {colon},
+      caption-labelseperator = colon,
         % 图表标题 label 和 标题内容 之内的分隔符
         % 允许选项：
         %    colon|space
@@ -2439,8 +2439,8 @@
         % 允许选项：
         %   hyperlink-color = default|classic|material|graylevel|prl
         %
-      bibstyle = {ccnu-author-year},
-        % bibstyle 表示参考文献的格式
+      bib-style = {ccnu-author-year},
+        % bib-style 表示参考文献的格式
         % 允许的选项：
         %   ccnu｜gb7714-2015
         %   ccnu 表示按照学校给的标准
