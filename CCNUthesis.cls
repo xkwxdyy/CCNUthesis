@@ -247,19 +247,17 @@
     footmisc,          % 脚注
     graphicx,          % 插图
     caption,           % 图表标题
-    tikzpagenodes,
-    tabularray,
+    tikzpagenodes,     % tikz 定位
+    tabularray,        % 表格
     calc,              % settototalheight 等命令
-    etoolbox,
+    etoolbox,          % 补丁
     amsthm,            % 定理类环境
     thmtools,          % 定理类环境
     needspace,
-    xeCJKfntef
+    xeCJKfntef         % 下划线
   }
-\RequirePackage[shortlabels]{enumitem}
-% TODO：将 physicx 的效果弄进 wiki
-\RequirePackage[physics]{physicx}
-\RequirePackage[titles]{tocloft}
+\RequirePackage[shortlabels]{enumitem}   % 列表环境
+\RequirePackage[titles]{tocloft}         % 目录修改
 
 
 
@@ -871,7 +869,8 @@
 % itemize
 \setitemize[1]
   {
-    leftmargin     = 0pt,
+    labelindent    = \parindent,
+    leftmargin     = 2em,
     widest         = 0,
     itemindent     = \parindent,
     listparindent  = \parindent,

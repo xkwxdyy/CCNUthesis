@@ -1,38 +1,30 @@
 % !TeX root = ../main.tex
 
-\chapter{预备知识}
+\chapter{引用与链接}
+
+\section{脚注}
+
+华中师范大学《附件4：关于修订毕业论文注释与参考文献著录格式的通知》提到
+
+\begin{itemize}
+  \item 文科术科的论文注释使用脚注
+  \item 理工科的论文注释不使用脚注
+\end{itemize}
 
 
 
-\section{基础公设}
+\section{引用文中小节}\label{sec:ref}
 
-整个量子力学的数学理论可以建立于五个基础公设。这些公设不能被严格推导出来的，而是从实验结果仔细分析归纳总结而得到的。从这五个公设，可以推导出整个量子力学。假若量子力学的理论结果不符合实验结果，则必须将这些基础公设加以修改，直到没有任何不符合之处。至今为止，量子力学已被实验核对至极高准确度，还没有找到任何与理论不符合的实验结果，虽然有些理论很难直觉地用经典物理的概念来理解， 例如，波粒二象性、量子纠缠等等 \parencite{zurek2014quantum,cohen2013claude,zettili2003quantum}。
-
-\begin{enumerate}
-  \item 量子态公设：量子系统在任意时刻的状态（量子态）可以由希尔伯特空间 $\hilbertH$ 中的态矢量
-    $\ket{\psi}$ 来设定，这态矢量完备地给出了这量子系统的所有信息。这公设意味着量子系统遵守%
-    \emph{态叠加原理}，假若 $\ket*{\psi_1}$、$\ket*{\psi_2}$ 属于希尔伯特空间 $\hilbertH$，则
-    $c_1\ket*{\psi_1} + c_2\ket*{\psi_2}$ 也属于希尔伯特空间 $\hilbertH$。
-  \item 时间演化公设： 态矢量为 $\ket{\psi(t)}$ 的量子系统，其动力学演化可以用薛定谔方程表示：
-    \begin{equation}
-      \upi\hbar \pdv{t} \ket{\psi(t)} = \hat{H} \ket{\psi(t)}.
-    \end{equation}
-    其中，哈密顿算符 $\hat{H}$ 对应于量子系统的总能量，$\hbar$ 是约化普朗克常数。根据薛定谔方程，
-    假设时间从 $t_0$ 变化到 $t$，则态矢量从 $\ket*{\psi(t_0)}$ 演化到 $\ket{\psi(t)}$，该过程以
-    方程表示为
-    \begin{equation}
-      \ket{\psi(t)} = \hat{U}(t,\,t_0) \ket*{\psi(t_0)}.
-    \end{equation}
-    其中 $\hat{U}(t,\,t_0) = \upe^{-\upi\hat{H}(t-t_0) / \hbar}$ 是时间演化算符。
-  \item 可观察量公设：每个可观察量 $A$ 都有其对应的厄米算符 $\hat{A}$，而算符 $\hat{A}$ 的所有
-    本征矢量共同组成一个完备基底。
-  \item 坍缩公设：对于量子系统测量某个可观察量 $A$ 的过程，可以数学表示为将对应的厄米算符
-    $\hat{A}$ 作用于量子系统的态矢量 $\ket{\psi}$，测量值只能为厄米算符 $\hat{A}$ 的本征值。
-    在测量后，假设测量值为 $a_i$，则量子系统的量子态立刻会坍缩为对应于本征值 $a_i$ 的本征态
-    $\ket*{e_i}$。
-  \item 波恩公设：对于这测量，获得本征值 $a_i$ 的概率为量子态 $\ket{\psi}$ 处于本征态 $\ket*{e_i}$
-    的概率幅的绝对值平方。
-\end{enumerate}
+如引用小节~\ref{sec:ref}
 
 
 
+\section{引用参考文献}
+
+这是一个参考文献引用的范例：“\parencite{邱泽奇建构与分化}提出……”。还可以引用多个文献：“\parencite{丁文祥rawtype,李晓东rawtype}提出……”。
+
+
+\section{链接相关}
+
+
+模板使用了 hyperref 包处理相关链接，使用 \verb|\href| 可以生成超链接，默认不显示链接颜色。如果需要输出网址，可以使用 \verb|\url| 命令，示例：\url{https://github.com}。

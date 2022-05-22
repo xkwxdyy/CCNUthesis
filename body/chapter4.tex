@@ -1,17 +1,23 @@
 % !TeX root = ../main.tex
 
-\chapter{总结与展望}
+\chapter{公式}
 
 
 
-\section{}
+\section{公式引用}
 
-\begin{equation}
+\begin{equation}\label{equation:test1}
   K \leq 
-  \left\{ 
-    \begin{array}{cl}
-      2 \lfloor \frac{d}{2d - n} \rfloor    , & K \text{为偶数} ; \\
-      2 \lfloor \frac{d}{2d - n} \rfloor - 1, & K \text{为奇数}. \\
-    \end{array}
-  \right. 
+  \begin{dcases}
+    2 \lfloor \frac{d}{2d - n} \rfloor    , & K \text{为偶数} ; \\
+    2 \lfloor \frac{d}{2d - n} \rfloor - 1, & K \text{为奇数}. \\
+  \end{dcases}
+  % \left\{ 
+  %   \begin{array}{cl}
+  %     2 \lfloor \frac{d}{2d - n} \rfloor    , & K \text{为偶数} ; \\
+  %     2 \lfloor \frac{d}{2d - n} \rfloor - 1, & K \text{为奇数}. \\
+  %   \end{array}
+  % \right. 
 \end{equation}
+
+公式~\eqref{equation:test1} 的引用
