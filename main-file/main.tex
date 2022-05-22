@@ -1,21 +1,36 @@
+% !TeX encoding = UTF-8
+% !TeX program = xelatex
+% !TeX spellcheck = en_US
+
+%*********************************************************************
+% CCNUthesis: 华中师范大学论文模板
+% 2022/05/22 v1.2.1
+%
+% 重要提示：
+%   1. 请确保使用 UTF-8 编码保存
+%   2. 请使用 XeLaTeX 编译
+%   3. 请仔细阅读用户文档
+%   4. 修改、使用、发布本文档请务必遵循 LaTeX Project Public License
+%   5. 不需要的注释可以尽情删除
+%*********************************************************************
+
+
+
 % 交终稿的时候需要单面打印，设置 oneside，奇偶页页面设置相同
 \documentclass[oneside]{CCNUthesis}
 
-% 答辩打印可以可以双面打印，设置 twoside，奇偶页页面设置不同
-% \documentclass[twoside, draft]{CCNUthesis}
+% 答辩打印可以双面打印，设置 twoside，奇偶页页面设置不同
+% \documentclass[twoside]{CCNUthesis}
 
 
 \ccnusetup{
   % 个人信息
   info = {
-    % 主标题，会自动换行
+    % 中文标题，会自动换行
     % 如果换行点不满意，可以用 \\ 手动换行
     title = {
-      中文主标题中文主标题中文主标题中文主标题中文主标题中文主标题中文主标题中文主标题
-    },
-    % 副标题，如果有的话取消下面三行代码的注释并且填写内容
-    subtitle = {
-      这是一个副标题
+      如何使用 \LaTeX{} 制作一个学位论文模版 \\ 
+      ——以华中师范大学为例
     },
     % 论文的英文标题
     title* = {
@@ -48,7 +63,7 @@
       keyword3
     },
     % 如有需要可以手动调整封面底的年和月，否则默认为「编译时」的年和月
-    % year    = {2022},
+    % year  = {2022},
     % month = {4}
   },
   style = {
@@ -67,20 +82,20 @@
       %        linux：  cjk-font = fandol（默认值）
       %   2. 除 fandol 和 sourcehan 外，其余字体均为商用字体，请注意版权问题
       %   3. 但 fandol 字体缺字比较严重，而 sourcehan 没有配备楷体和仿宋体
-    caption-labelstyle = arabic,
+    caption-labelstyle = hyphen,
       % 图表的标题 label 计数样式
       % 允许选项：
       %    arabic|hyphen
       %      arabic：样式为图1，图2，表1，表2...，并且跨 chapter 连续编号，即 上一个 chapter 的图编号若为4，下一个 chapter 的第一个图编号为 5
       %      hyphen：样式为图1-1，图2-1，表1-1...
       %      x-y 的 x 为 chapter 值，y 为图表的计数器值，新的 chapter 中 y 会清零从新计数
-    caption-labelseperator = {colon},
+    caption-labelseperator = colon,
       % 图表标题 label 和 标题内容 之内的分隔符
       % 允许选项：
       %    colon|space
       %      colon 表示 「:␣」，即一个西文冒号加一个空格
       %      space 表示 「␣␣」，即两个空格
-    bibstyle = {ccnu-numerical},
+    bibstyle = ccnu-author-year,
       % bibstyle 表示参考文献的格式
       % 允许的选项：
       %   ccnu-numerical|ccnu-author-year|gb7714-2015
@@ -153,9 +168,8 @@
 
 
 
-% \backmatter开启后置部分，包含参考文献、致谢、附录等
-% \backmatter
-
+% 论文后文部分，参考文献、致谢、附录等
+\backmatter
 
 %%%% 参考文献 %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -163,7 +177,7 @@
 %    - 去掉这个引用句子结构不完整，比如“定理证明可参看[1]”
 %    - 英文文献的引用
 %%% 上标引用：\cite{} or \cite[]{}，下面情况要用上标引用
-%    - 去掉这个引用，句子结构完整，比如“作者提到，‘CCNUthesis真是一个好模版’^[1]”
+%    - 去掉这个引用，句子结构完整，比如“作者提到，‘CCNUthesis 真是一个好模版。’^[1]”
 %      其中“^[1]” 表示上标引用
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 % 打印参考文献列表
@@ -175,7 +189,8 @@
 
 
 %%%% 附录 %%%%
-% 没有附录内容的把下面的代码注释掉即可
 \include{./back/Appendix.tex}
+
+
 
 \end{document}

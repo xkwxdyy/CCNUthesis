@@ -5,13 +5,6 @@
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e, xparse }
 
-% CCNUthesis 重构 TODO
-% 参考文献：两种方式
-% 手册
-% 什么是MWE
-% 表格怎么写
-% 浮动体
-
 
 % 宏包报错信息
 \msg_new:nnn { ccnuthesis } { l3-too-old }
@@ -246,32 +239,26 @@
 
 
 % 加载宏包
-% TODO：宏包最小化
+
 \RequirePackage
   {
-    mathtools,
-    amssymb,
     geometry,          % 页面设置
     fancyhdr,          % 页眉页脚
     footmisc,          % 脚注
     graphicx,          % 插图
-    longtable,
     caption,           % 图表标题
-    tikz,
     tikzpagenodes,
     tabularray,
-    calc,              % TODO：标题下划线需要，看看能不能去掉
-    ulem,              % 下划线
-    adjustbox,
+    calc,              % settototalheight 等命令
     etoolbox,
     amsthm,            % 定理类环境
     thmtools,          % 定理类环境
-    needspace
+    needspace,
+    xeCJKfntef
   }
 \RequirePackage[shortlabels]{enumitem}
 % TODO：将 physicx 的效果弄进 wiki
 \RequirePackage[physics]{physicx}
-% TODO：可能不需要 tocloft
 \RequirePackage[titles]{tocloft}
 
 
@@ -1072,6 +1059,7 @@
     \addtocontents { toc } { \protect \value{tocdepth} = 0 } 
   }
 
+\RenewDocumentCommand { \backmatter } { } {}
 
 % 重新设置 frontmatter 的计数器的样式
 \patchcmd { \frontmatter }
@@ -1234,7 +1222,6 @@
   {
     title       .tl_set:N    = \l__ccnu_info_title_tl,
     title*      .tl_set:N    = \l__ccnu_info_title_en_tl,
-    subtitle    .tl_set:N    = \l__ccnu_info_subtitle_tl,
     year        .int_set:N   = \l__ccnu_info_year_int,
     month       .int_set:N   = \l__ccnu_info_month_int,
     level       .tl_set:N    = \l__ccnu_info_level_tl,
@@ -1251,44 +1238,6 @@
 
 % 处理封面
 
-
-% TODO：下划线
-% 信息的下划线简化？
-% 标题下划线的简化
-
-\cs_new_protected:Npn \__ccnu_spread_box:nn #1#2
-  {
-    \mode_leave_vertical:
-    \hbox_to_wd:nn {#1}
-      { \tl_map_inline:xn {#2} { ##1 \hfil } \unskip }
-  }
-\cs_new_protected:Npn \__ccnu_center_box:nn #1#2
-  {
-    \mode_leave_vertical:
-    % \hbox_to_wd:nn {#1} { \hfil #2 \hfil }
-    \hbox_to_wd:nn {#1} { \hfil \UnderlineCentered{6cm}{2mm}{#2} \hfil }
-  }
-\cs_generate_variant:Nn \__ccnu_center_box:nn  { Vn }
-\cs_new:Npn \__ccnu_fixed_width_box:nn #1#2
-  { \parbox {#1} {#2} }
-\cs_new:Npn \__ccnu_fixed_width_center_box:nn #1#2
-  { \parbox {#1} { \centering #2 } }
-% 制作标题的下划线命令
-% https://syvshc.github.io/2021-08-04-thesis-title/
-\newlength\myheight
-\newcommand\Mysavedprevdepth{}%
-\newcommand\UnderlineCentered[3]{%
-  \begin{adjustbox}{minipage=[t]{\dimexpr#1\relax},gstore~totalheight=\myheight, margin=0pt}%
-    \centering\leavevmode#3\par\xdef\Mysavedprevdepth{\the\prevdepth}%
-  \end{adjustbox}%
-  \hspace*{-\dimexpr#1\relax}%
-  \begin{adjustbox}{minipage=[t][\myheight]{\dimexpr#1\relax},margin=0pt}%
-    \vphantom{Eg}\lower\dimexpr#2\relax\hbox to\hsize{\leaders\hrule height1pt\hfill\kern0pt}\par
-    \kern-\dimexpr#2\relax
-    \xleaders\vbox to\baselineskip {\vfill\hbox{\lower\dimexpr#2\relax\hbox to\hsize{\leaders\hrule height1pt\hfill\kern0pt}}\kern-\dimexpr#2\relax}\vfill
-    \kern\Mysavedprevdepth
-  \end{adjustbox}%
-}%
 
 % 慕子标题的下划线 LaTeX3 重写版本
 \dim_new:N \l__ccnu_title_tmp_height_dim
@@ -1341,9 +1290,6 @@
     % 储存标题盒子的高度
     \__ccnu_set_to_totalheight:Nn \l__ccnu_title_tmp_height_dim 
       { \__ccnu_title_box_aux:n {#1} }
-      % {
-        % \parbox [t] { \l__ccnu_title_tmp_max_width_dim - 3em } { \centering #1 }
-      % }
     % 根据高度判断下划线情况
     \dim_compare:nNnTF
       { \l__ccnu_title_tmp_height_dim } = { 0pt }
@@ -1421,9 +1367,6 @@
   }
 
 
-
-
-
 \cs_new:Npn \__ccnu_get_text_width:Nn #1#2
   {
     \hbox_set:Nn \l__ccnu_tmpa_box {#2}
@@ -1442,8 +1385,6 @@
         }
     \group_end:
   }
-\cs_new:Npn \__ccnu_blank_underline:n #1
-  { \rule [ -0.5 ex ] {#1} { 0.4 pt } }
 
 
 
@@ -1515,44 +1456,16 @@
 % 标题
 \cs_new:Npn \__ccnu_cover_title:
   {
-    % 检测是否有副标题
-    \__ccnu_title_if_subtitle:
     \node[] ( titlecontent ) at 
       (
         [ shift = { ( 0, -1.5em ) } ] current~page.center
       ) 
       {
         \zihao{-2} \bfseries
-        % 判断是否有副标题
-        \bool_if:NTF \l__ccnu_title_whether_subtitle_bool
-          {
-            \begin{tblr}
-              {
-                colspec = {c},
-                rows    = {f, abovesep += 7pt},
-              }
-              \__ccnu_title_box:n 
-                { \tl_use:N \l__ccnu_info_title_tl }\\
-              \__ccnu_title_box:n 
-                { —— \tl_use:N \l__ccnu_info_subtitle_tl }
-            \end{tblr}
-          }
-          {
-            \__ccnu_title_box:n { \tl_use:N \l__ccnu_info_title_tl }
-          }
+        \__ccnu_title_box:n { \tl_use:N \l__ccnu_info_title_tl }
       };
   }
 
-% 处理副标题
-\bool_new:N \l__ccnu_title_whether_subtitle_bool   % 是否开启副标题
-
-% 检测是否有副标题
-\cs_new:Npn \__ccnu_title_if_subtitle:
-  {
-    \tl_if_blank:VTF \l__ccnu_info_subtitle_tl
-      { \bool_set_false:N \l__ccnu_title_whether_subtitle_bool }
-      { \bool_set_true:N \l__ccnu_title_whether_subtitle_bool }
-  }
 
 % 个人信息
 \cs_new:Npn \__ccnu_cover_infomation:
@@ -1568,6 +1481,7 @@
             \clist_set:Nx \l__ccnu_tmpa_clist
               {
                 \c__ccnu_name_department_tl,
+                \c__ccnu_name_major_tl,
                 \c__ccnu_name_level_tl,
                 \c__ccnu_name_author_tl,
                 \c__ccnu_name_student_id_tl,
@@ -1575,13 +1489,14 @@
               }
             \clist_set:Nx \l__ccnu_tmpb_clist
               {
-                { \l__ccnu_info_department_tl },
-                { \l__ccnu_info_major_tl      },
-                { \l__ccnu_info_level_tl      },
-                { \l__ccnu_info_author_tl     },
-                { \l__ccnu_info_student_id_tl },
-                { \l__ccnu_info_supervisor_tl },
+                \l__ccnu_info_department_tl ,
+                \l__ccnu_info_major_tl      ,
+                \l__ccnu_info_level_tl      ,
+                \l__ccnu_info_author_tl     ,
+                \l__ccnu_info_student_id_tl ,
+                \l__ccnu_info_supervisor_tl ,
               }
+            % 获得个人信息的内容最大宽度
             \__ccnu_get_max_text_width:NN 
               \l__ccnu_tmpb_dim \l__ccnu_tmpb_clist
             \bool_until_do:nn
@@ -1589,16 +1504,44 @@
               {
                 \clist_pop:NN \l__ccnu_tmpa_clist \l__ccnu_tmpa_tl
                 \clist_pop:NN \l__ccnu_tmpb_clist \l__ccnu_tmpb_tl
-                \__ccnu_spread_box:nn
+                \__ccnu_cover_infomation_spread_box:nn
                   { 4em }
                   { \l__ccnu_tmpa_tl }
                 \hspace*{1em}
-                \__ccnu_center_box:Vn \l__ccnu_tmpb_dim { \l__ccnu_tmpb_tl }
+                \__ccnu_cover_infomation_center_underline_box:Vn 
+                  \l__ccnu_tmpb_dim 
+                  { \l__ccnu_tmpb_tl }
                 \skip_vertical:n { 1 ex }
               }
           \end{minipage}
         };
   }
+
+
+\cs_new_protected:Npn \__ccnu_cover_infomation_spread_box:nn #1#2
+  {
+    \mode_leave_vertical:
+    \hbox_to_wd:nn {#1}
+      { \tl_map_inline:xn {#2} { ##1 \hfil } \unskip }
+  }
+\cs_new_protected:Npn \__ccnu_cover_infomation_center_underline_box:nn #1#2
+  {
+    \mode_leave_vertical:
+    \CJKunderline*
+      [
+        thickness = 1pt
+      ]
+      {
+        \hbox_to_wd:nn { #1 + 5mm } 
+          { 
+            \hfil 
+              #2
+            \hfil
+          }
+      }
+  }
+\cs_generate_variant:Nn \__ccnu_cover_infomation_center_underline_box:nn  { Vn }
+
 
 % 时间
 \cs_new:Npn \__ccnu_cover_time:
@@ -1763,16 +1706,23 @@
 
 
 % 符号表
-\NewDocumentEnvironment { notation } { O { l p { 7.5 cm } } }
+\NewDocumentEnvironment { notation } 
+  {
+    O 
+    {
+      width = 0.3\textwidth,
+      colspec = {X[1,c]X[1,c]}
+    } 
+  }
   {
     \newpage
     \__ccnu_notation_begin:
     \group_begin:
-      \__ccnu_notation_long_table_setup:
-      \longtable {#1}
+      \SetTblrTemplate { head, foot } { empty }
+      \longtblr {#1}
   }
   {
-      \endlongtable
+      \endlongtblr
       \setcounter{table}{0}
     \group_end:
   }
@@ -1790,12 +1740,6 @@
       \__ccnu_chapter:V \c__ccnu_name_notation_tl
     \group_end:
   }
-\cs_new_protected:Npn \__ccnu_notation_long_table_setup:
-  {
-    \dim_set_eq:NN \LTpre  \c_zero_dim
-    \dim_set_eq:NN \LTpost \c_zero_dim
-  }
-
 
 
 % 参考文献
@@ -2411,8 +2355,6 @@
         % 主标题，会自动换行
         % 如果换行点不满意，可以用 \\ 手动换行
         title = { 中文主标题 },
-        % 副标题，如果有的话取消下面三行代码的注释并且填写内容
-        subtitle = { 这是一个副标题 },
         % 论文的英文标题
         title* = { Thesis Title }, 
         % 学院
