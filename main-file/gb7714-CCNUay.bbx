@@ -37,7 +37,8 @@
   gbnamefmt    = lowercase,
   sorting      = multipinyin,   % 排序
   gblanorder   = chineseahead,
-  sortlocale   = zh__pinyin
+  sortlocale   = zh__pinyin,
+  mergedate    = none           % 年份不放在作者之后
 }
 
 % 根据《通知》调整间距和缩进
@@ -220,6 +221,34 @@
 %调整部分域的输出格式
 %==================================================
 
+\def\bbx@opt@mergedate@none{%
+  \renewbibmacro*{date+extradate}{%
+    \iffieldundef{labelyear}
+      {}
+      {}}%[parens]\printtext{\printlabeldateextra}
+\renewbibmacro*{bbx:ifmergeddate}{\@secondoftwo}%这一句用于3.12版本
+\renewbibmacro*{date}{\printdate}%这一句用于biblatex3.11以下版本
+\renewbibmacro*{issue+date}{%去掉括号
+\setunit{\iffieldequalstr{userd}{chinese}{\gbpunctcomma}{\gbpunctcommalanen}}%
+  \printtext{%去掉了[parens]
+    \iffieldundef{issue}
+      {%\usebibmacro{date}
+        \iffieldundef{entrysubtype}{\usebibmacro{date}}%判断一下，是否是报纸
+        {\iffieldequalstr{entrysubtype}{news}{\usebibmacro{newsdate}}%判断是否为报纸
+                                     {\usebibmacro{date}}%
+      }}%
+      {\iftoggle{bbx:gbstrict}{}{\printfield{issue}%
+       \setunit*{\addspace}}%
+       %\usebibmacro{date}
+         \iffieldundef{entrysubtype}{\usebibmacro{date}}%判断一下，是否是报纸
+        {\iffieldequalstr{entrysubtype}{news}{\usebibmacro{newsdate}}%判断是否为报纸
+                                     {\usebibmacro{date}}%
+        }}}%
+  %\newunit
+  }%
+  }
+
+
 %
 %   调整期刊名的格式
 %
@@ -227,14 +256,14 @@
 \renewbibmacro*{journal+issuetitle}{\bibpubfont%源来自standard.bbx
   \usebibmacro{journal}%
   \setunit*{\iffieldequalstr{userd}{chinese}{\gbpunctcomma}{\gbpunctcommalanen}}%修改为增加一个逗号
-  \iffieldundef{series}
+    \iffieldundef{series}
     {}
     {\newunit
      \printfield{series}%
      \setunit{\addspace}}%
   \usebibmacro{issue+date}%
   %\setunit{\addcolon\space}%
-  \iffieldundef{volume}{}{\iffieldequalstr{userd}{chinese}{\gbpunctcomma}{\gbpunctcommalanen}}%
+  \iffieldundef{volume}{}{\iffieldequalstr{userd}{chinese}{\setunit{\gbpunctcomma}}{\setunit{\gbpunctcommalanen}}}%
   %换成逗号和空格
   \usebibmacro{issue}%
   \usebibmacro{volume+number+eid}%把卷期放到年份后面

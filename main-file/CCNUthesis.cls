@@ -1829,10 +1829,10 @@
         bibstyle     = \tl_use:N \l__ccnu_biblatex_bibstyle_tl,
         citestyle    = gb7714-CCNU
       }
-    \tl_if_eq:NnT \l__ccnu_biblatex_bibstyle_tl { gb7714-CCNU }
+    \tl_if_in:NnT \l__ccnu_biblatex_bibstyle_tl { gb7714-CCNU }
       {
         \clist_put_right:Nn \l__ccnu_biblatex_options_clist
-          { CCNUpunctcn  = false }
+          {  CCNUpunctcn  = false }
       }
     \exp_args:NV \PassOptionsToPackage \l__ccnu_biblatex_options_clist
       { biblatex }
@@ -1857,6 +1857,8 @@
         \newpage
         \group_begin:
           \sloppy
+          \keys_set:nn { ctex }
+            { punct = plain }
           \__ccnu_printbibliography:n { ##1 }
         \group_end:
       }

@@ -80,12 +80,13 @@
       %    colon|space
       %      colon 表示 「:␣」，即一个西文冒号加一个空格
       %      space 表示 「␣␣」，即两个空格
-    bibstyle = {ccnu-author-year},
+    bibstyle = {ccnu-numerical},
       % bibstyle 表示参考文献的格式
       % 允许的选项：
-      %   ccnu｜gb7714-2015
-      %   ccnu 表示按照学校给的标准
-      %   gb7714-2015表示按照国标
+      %   ccnu-numerical|ccnu-author-year|gb7714-2015
+      %   ccnu-numerical：学校标准、按照引用顺序排
+      %   ccnu-author-year：学校标准、按照作者名、年份排
+      %   gb7714-2015：国标
     bib-resource = {CCNUthesis-main.bib},
       % 参考文献数据源，需要加bib后缀
     fullwidth-stop = catcode,
