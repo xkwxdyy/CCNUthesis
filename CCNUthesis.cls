@@ -61,10 +61,23 @@
 \int_new:N        \g__ccnu_thesis_type_int
 \clist_new:N      \g__ccnu_to_ctexbook_clist
 \clist_new:N      \g__ccnu_to_hyperref_clist
+\bool_new:N       \g__ccnu_cover_word_version_bool   % word 版本
 \bool_new:N       \g__ccnu_twoside_bool
 \bool_set_true:N  \g__ccnu_twoside_bool
 \bool_new:N       \g__ccnu_draft_bool
 \tl_new:N         \g__ccnu_config_tl
+
+% 下划线
+\dim_new:N \l__ccnu_title_tmp_height_dim
+\dim_new:N \l__ccnu_title_tmp_width_dim        % 储存单行的宽度
+\dim_new:N \l__ccnu_title_tmp_max_width_dim
+
+\dim_new:N \g__ccnu_title_single_line_max_width_dim
+\dim_new:N \g__ccnu_title_multiline_max_width_dim
+
+\dim_new:N \l__ccnu_title_left_right_extra_width_dim
+\dim_new:N \l__ccnu_title_sep_width
+
 
 % 生成新变体
 \cs_generate_variant:Nn \file_input:n     { V  }
@@ -1219,6 +1232,23 @@
 % 信息接口
 \keys_define:nn { ccnu / info }
   {
+    cover-type  .choice:,
+    cover-type / word .code:n = 
+      {
+        \bool_gset_true:N \g__ccnu_cover_word_version_bool
+        \dim_gset:Nn \g__ccnu_title_single_line_max_width_dim
+          { 0.6 \textwidth }
+        \dim_gset:Nn \g__ccnu_title_multiline_max_width_dim
+          { 0.6 \textwidth }
+      },
+    cover-type / math .code:n = 
+      {
+        \bool_gset_false:N \g__ccnu_cover_word_version_bool
+        \dim_set:Nn \g__ccnu_title_single_line_max_width_dim
+          { 0.8 \textwidth }
+        \dim_set:Nn \g__ccnu_title_multiline_max_width_dim
+          { 0.9 \textwidth }
+      },
     title       .tl_set:N    = \l__ccnu_info_title_tl,
     title*      .tl_set:N    = \l__ccnu_info_title_en_tl,
     year        .int_set:N   = \l__ccnu_info_year_int,
@@ -1239,20 +1269,8 @@
 
 
 % 慕子标题的下划线 LaTeX3 重写版本
-\dim_new:N \l__ccnu_title_tmp_height_dim
-\dim_new:N \l__ccnu_title_tmp_width_dim        % 储存单行的宽度
-\dim_new:N \l__ccnu_title_tmp_max_width_dim
 
-\dim_new:N \l__ccnu_title_single_line_max_width_dim
-\dim_new:N \l__ccnu_title_multiline_max_width_dim
-% \dim_new:N \l__ccnu_title_underline_max_width_dim
-\dim_new:N \l__ccnu_title_left_right_extra_width_dim
-\dim_new:N \l__ccnu_title_sep_width
 
-\dim_set:Nn \l__ccnu_title_single_line_max_width_dim
-  { 0.8 \textwidth }
-\dim_set:Nn \l__ccnu_title_multiline_max_width_dim
-  { 0.9 \textwidth }
 \dim_set:Nn \l__ccnu_title_left_right_extra_width_dim
   { .8em }
 \dim_set:Nn \l__ccnu_title_sep_width { 1.5em }
@@ -1264,7 +1282,7 @@
   {
     \rule [ -.3em ]
       {
-        \l__ccnu_title_single_line_max_width_dim
+        \g__ccnu_title_single_line_max_width_dim
         + 2 \l__ccnu_title_left_right_extra_width_dim
       }
       { 1pt }
@@ -1273,7 +1291,7 @@
   {
     \rule [ -.3em ]
       {
-        \l__ccnu_title_multiline_max_width_dim
+        \g__ccnu_title_multiline_max_width_dim
         + 2 \l__ccnu_title_left_right_extra_width_dim
       }
       { 1pt }
@@ -1285,7 +1303,7 @@
   }
 \cs_new:Npn \__ccnu_title_box:n #1
   {
-    \dim_set_eq:NN \l__ccnu_title_tmp_max_width_dim \l__ccnu_title_single_line_max_width_dim
+    \dim_set_eq:NN \l__ccnu_title_tmp_max_width_dim \g__ccnu_title_single_line_max_width_dim
     % 储存标题盒子的高度
     \__ccnu_set_to_totalheight:Nn \l__ccnu_title_tmp_height_dim 
       { \__ccnu_title_box_aux:n {#1} }
@@ -1300,7 +1318,7 @@
           {
             % 如果超过了 \normalbaselineskip 说明是多行
             % 重新设置最长的宽度为开始设置的「多行的 max 宽度」
-            \dim_set_eq:NN \l__ccnu_title_tmp_max_width_dim \l__ccnu_title_multiline_max_width_dim
+            \dim_set_eq:NN \l__ccnu_title_tmp_max_width_dim \g__ccnu_title_multiline_max_width_dim
             \__ccnu_set_to_totalheight:Nn \l__ccnu_title_tmp_height_dim 
               { \__ccnu_title_box_aux:n {#1} }
             % 一行一行排版
@@ -1323,8 +1341,8 @@
             \hspace
               {
                   \l__ccnu_title_left_right_extra_width_dim
-                % + .5 \l__ccnu_title_single_line_max_width_dim
-                % - .5 \l__ccnu_title_multiline_max_width_dim
+                % + .5 \g__ccnu_title_single_line_max_width_dim
+                % - .5 \g__ccnu_title_multiline_max_width_dim
               }
             % 排版文本
             \parbox [t] 
@@ -1429,9 +1447,16 @@
 % logo
 \cs_new:Npn \__ccnu_cover_logo:
   {
+    \bool_if:NTF \g__ccnu_cover_word_version_bool
+      {
+        \dim_set:Nn \l__ccnu_tmpa_dim { -0.25\paperheight }
+      }
+      {
+        \dim_set:Nn \l__ccnu_tmpa_dim { -0.29\paperheight }
+      }
     \node ( logo ) at 
       (
-        [ shift = { (0em , -0.29\paperheight) } ]
+        [ shift = { ( 0em , \l__ccnu_tmpa_dim ) } ]
           current~page.north
       )
       {
@@ -1444,25 +1469,59 @@
 % 论文类型
 \cs_new:Npn \__ccnu_cover_degree_type:
   {
-    \node ( type ) at 
-      (
-        [ shift = { (0em , - 0.39\paperheight) } ] 
-          current~page.north
-      )
-      { \zihao{-1} \sffamily 本科毕业论文（设计）};
+    \bool_if:NTF \g__ccnu_cover_word_version_bool
+      {
+        \node ( type ) at 
+          (
+            [ shift = { (0em , - 0.35\paperheight) } ] 
+              current~page.north
+          )
+          { \zihao{-0} \sffamily 本科毕业论文（设计）};
+      }
+      {
+        \node ( type ) at 
+          (
+            [ shift = { (0em , - 0.39\paperheight) } ] 
+              current~page.north
+          )
+          { \zihao{-1} \sffamily 本科毕业论文（设计）};
+      }
   }
+
+
 
 % 标题
 \cs_new:Npn \__ccnu_cover_title:
   {
-    \node[] ( titlecontent ) at 
-      (
-        [ shift = { ( 0, -1.5em ) } ] current~page.center
-      ) 
+    \bool_if:NTF \g__ccnu_cover_word_version_bool
       {
-        \zihao{-2} \bfseries
-        \__ccnu_title_box:n { \tl_use:N \l__ccnu_info_title_tl }
-      };
+        \node[] ( titlelabel ) at
+          (
+            [ shift = { ( -4.5cm, -1.5em ) } ] current~page.center
+          ) 
+          {
+            \zihao{-1} \bfseries
+            题 \hspace*{0.6em} 目
+          };
+        \node[] ( titlecontent ) at 
+          (
+            [ shift = { ( 2.5cm, -1.5em ) } ] current~page.center
+          ) 
+          {
+            \zihao{-2} \bfseries
+            \__ccnu_title_box:n { \tl_use:N \l__ccnu_info_title_tl }
+          };
+      }
+      {
+        \node[] ( titlecontent ) at 
+          (
+            [ shift = { ( 0, -1.5em ) } ] current~page.center
+          ) 
+          {
+            \zihao{-2} \bfseries
+            \__ccnu_title_box:n { \tl_use:N \l__ccnu_info_title_tl }
+          };
+      }
   }
 
 
@@ -1476,7 +1535,7 @@
         )
         {
           \begin{minipage} [ c ] { \textwidth }
-            \centering \zihao { -3 }  \bfseries
+            \centering \zihao {-3}  \bfseries
             \clist_set:Nx \l__ccnu_tmpa_clist
               {
                 \c__ccnu_name_department_tl,
@@ -2351,6 +2410,7 @@
   {
     info = 
       {
+        cover-type = math,
         % 主标题，会自动换行
         % 如果换行点不满意，可以用 \\ 手动换行
         title = { 中文主标题 },

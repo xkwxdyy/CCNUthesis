@@ -5,6 +5,11 @@
 更多关于模版的内容和如何使用，请仔细阅读 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis)！
 
 
+## [v1.2.2] - 2022-05-24
+
+### Added
+
+- 增加本科生的封面的 `word` 和 `math` 风格切换控制
 
 
 ## [v1.2.1] - 2022-05-22
