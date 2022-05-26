@@ -4,6 +4,11 @@
 
 更多关于模版的内容和如何使用，请仔细阅读 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis)！
 
+## [v1.2.2] - 2022-05-24
+
+### Added
+
+- 基本完成硕博的整体框架
 
 ## [v1.2.2] - 2022-05-24
 

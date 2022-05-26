@@ -1,8 +1,9 @@
 \documentclass{ccnudoc}
-\usepackage{multirow,xeCJKfntef,xpinyin}
+\usepackage{multirow, xeCJKfntef, xpinyin}
 \hypersetup{
   pdftitle  = {CCNUthesis: 华中师范大学学位论文模版},
-  pdfauthor = {夏康玮}}
+  pdfauthor = {夏康玮}
+}
 % 全角标点放在引号中，需要改成半角式，否则间距过大，不好看
 \def\FSID{“{\xeCJKsetup{PunctStyle=banjiao}。}”} % U+3002
 \def\FSFW{“{\xeCJKsetup{PunctStyle=banjiao}．}”} % U+FF0E
@@ -66,37 +67,24 @@
   \item 学习其它论文模版的处理
     \begin{itemize}
       \item thuthesis
-      \item sjuthesis
+      \item sjtuthesis
+      \item ucasthesis
+      \item ustcthesis
+      \item cquthesis
       \item njuthesis
       \item hithesis
     \end{itemize}
   \item 处理硕士模版
 \end{itemize}
 
+
+
 \section{介绍}
 
-目前，在网上可以找到的复旦大学 \LaTeX{} 论文模板主要有以下这些：
-\begin{itemize}
-  \item 数学科学学院 2001 级的何力同学和李湛同学在 2005 年根据
-    学校要求所设计的 \cls{毕业论文格式 tex04 版}，以及 2008 年
-    张越同学修改之后的 \cls{毕业论文格式 tex08 版}，这是专为
-    数院本科生撰写毕业论文而设计的
-    \cite{数院毕业论文格式,数院毕业论文格式更新}；
-  \item Pandoxie 编写的 \cls{FDU-Thesis-Latex}
-    \cite{pandoxie2014fduthesislatex}，基本满足了博士（硕士）
-    毕业论文格式要求，使用人数较多；
-  \item richarddzh 编写的硕士论文模板 \cls{fudan-thesis}
-    \cite{richard2016fudanthesis}。
-\end{itemize}
-以上这些模板大都没有经过系统的设计，也鲜有后续维护。相比之下，
-清华大学 \cite{thuthesis}、重庆大学 \cite{cquthesis}、
-中国科学技术大学 \cite{ustcthesis}、中国科学院大学 \cite{ucasthesis}
-以及友校上海交通大学 \cite{sjtuthesis}等，都有成熟、
-稳定的解决方案，值得参考。
+目前，在网上可以找到的华中师范大学 \LaTeX{} 论文模板主要是由华中师范大学数学与统计学学院邓国泰老师编写的模版。但这个模板基于 CTeX 套装，除了本身的 bug 外，\cmd{pdflatex} 编译方式对中英文空格的处理并不友好。关于旧模版的更多问题，可以参看\href{https://gitee.com/xkwxdyy/CCNUthesis/wikis/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/%E6%97%A7%E6%A8%A1%E7%89%88%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F%E6%9C%89%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%EF%BC%9F%E6%96%B0%E6%A8%A1%E7%89%88%E7%9A%84%E4%BD%BF%E7%94%A8%E6%98%AF%E5%A6%82%E4%BD%95%E5%AE%8C%E5%96%84%E7%9A%84%EF%BC%9F}{《旧模版的使用方式有什么问题？新模版的使用是如何完善的？》}。相比之下，复旦大学 \cls{fduthesis}、清华大学 \cls{thuthesis}、中国科学技术大学 \cls{ustcthesis}、中国科学院大学 \cls{ucasthesis} 以及上海交通大学 \cls{sjtuthesis}等，都有成熟、稳定的解决方案，值得参考。
 
-本模板将借鉴前辈经验，重新设计，并使用 \LaTeX3
-\cite{source3} 编写，以适应 \TeX{} 技术发展潮流；
-同时还将构建一套简洁的接口，方便用户使用。
+本模板将借鉴前辈经验，重新设计，并使用 \LaTeX3 编写，以适应 \TeX{} 技术发展潮流；同时还将构建一套简洁的接口，方便用户使用。
+
 
 \subsection*{\LaTeX{} 入门}
 

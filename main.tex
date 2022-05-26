@@ -16,7 +16,10 @@
 
 
 % 交终稿的时候需要单面打印，设置 oneside，奇偶页页面设置相同
-\documentclass[oneside]{CCNUthesis}
+% \documentclass[type = bachelor]{CCNUthesis}
+% \documentclass[type = master, draft]{CCNUthesis}
+% \documentclass[type = master]{CCNUthesis}
+\documentclass[type = doctor]{CCNUthesis}
 
 % 答辩打印可以双面打印，设置 twoside，奇偶页页面设置不同
 % \documentclass[twoside]{CCNUthesis}
@@ -29,6 +32,7 @@
     %   可选选项：word|math
     %   word：教务处的 word 封面格式
     %   math：数学与统计学学院的封面格式
+    % cover-type = word,
     cover-type = math,
     % 中文标题，会自动换行
     % 如果换行点不满意，可以用 \\ 手动换行
@@ -39,19 +43,32 @@
     % 论文的英文标题
     title* = {
       Thesis Title
+      School of Mathematics and Statistics
+      School of Mathematics and Statistics
     }, 
     % 学院
     department = {数学与统计学学院},
+    department* = {School of Mathematics and Statistics},
     % 专业
-    major = {数学与应用数学（试验）},
+    % major = {数学与应用数学（试验）},
+    major = {应用统计},
+    major* = {Mathematics},
+    %   Mathematics|Applied Statistics
+    research-area = {教育大数据},
+    research-area* = {Education big data},
+    author-type = {应用统计硕士},
+    author-type* = {M.S.},
     % 年级
     level = {2018级},
     % 姓名
     author = {你的姓名},
+    author* = {Xing Ming},
     % 学号
     student-id = {学号},
     % 指导教师
     supervisor = {教师姓名 \quad 职称},
+    supervisor*-name = {Jiao shi},
+    supervisor*-academic-title = {Professor},
     % 论文中文关键词，用英文“,”隔开
     keywords = {
       关键词1,
@@ -64,16 +81,16 @@
       keyword2,
       keyword3
     },
-    % 如有需要可以手动调整封面底的年和月，否则默认为「编译时」的年和月
+    % 如有需要可以手动调整论文的年和月，否则默认为「编译时」的年和月
     % year  = {2022},
-    % month = {4}
+    % month = {4},
   },
   style = {
     font = times,
       % 西文字体
       % 允许选项
       % font = newtx|times|stixtwo|xits|tg|none
-    cjk-font = fandol,
+    cjk-font = mac,
       % 中文字体
       % 允许选项：
       %   cjk-font = adobe|fandol|founder|mac|sinotype|sourcehan|windows|none
@@ -84,13 +101,15 @@
       %        linux：  cjk-font = fandol（默认值）
       %   2. 除 fandol 和 sourcehan 外，其余字体均为商用字体，请注意版权问题
       %   3. 但 fandol 字体缺字比较严重，而 sourcehan 没有配备楷体和仿宋体
-    caption-labelstyle = hyphen,
+    caption-labelstyle = dot,
       % 图表的标题 label 计数样式
       % 允许选项：
-      %    arabic|hyphen
+      %    arabic|hyphen|dot
       %      arabic：样式为图1，图2，表1，表2...，并且跨 chapter 连续编号，即 上一个 chapter 的图编号若为4，下一个 chapter 的第一个图编号为 5
       %      hyphen：样式为图1-1，图2-1，表1-1...
-      %      x-y 的 x 为 chapter 值，y 为图表的计数器值，新的 chapter 中 y 会清零从新计数
+      %        x-y 的 x 为 chapter 值，y 为图表的计数器值，新的 chapter 中 y 会清零从新计数
+      %      dot：样式为图1.1，图2.1，表1.1...
+      %        x.y 的 x 为 chapter 值，y 为图表的计数器值，新的 chapter 中 y 会清零从新计数
     caption-labelseperator = colon,
       % 图表标题 label 和 标题内容 之内的分隔符
       % 允许选项：
@@ -123,6 +142,7 @@
 
 %%%%% 需要的宏包可以在此处自行调用 %%%%%
 \usepackage{mathtools}
+\usepackage{zhlipsum}
 
 
 % 需要的命令环境可以自行定义
@@ -138,9 +158,6 @@
 % \frontmatter 开启论文前置部分
 % 前置部分包含目录、中英文摘要以及符号表等
 \frontmatter
-
-% 目录
-\tableofcontents
 
 
 % 摘要
@@ -185,11 +202,18 @@
 \printbibliography
 
 
+
+% 附录
+% 硕博附录在致谢前
+% \include{./back/Appendix.tex}
+
+
 %%%% 致谢 %%%%
 \include{./back/Acknowledgements.tex}
 
 
-%%%% 附录 %%%%
+% 附录
+% 本科附录在致谢后
 \include{./back/Appendix.tex}
 
 
