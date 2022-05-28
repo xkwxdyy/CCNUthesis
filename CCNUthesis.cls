@@ -5,11 +5,6 @@
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e, xparse }
 
-% TODO
-% 封面字体
-% 附录的处理
-% 教务处 word 处理
-
 
 % 宏包报错信息
 \msg_new:nnn { ccnuthesis } { l3-too-old }
@@ -270,6 +265,7 @@
   {
     geometry,          % 页面设置
     fancyhdr,          % 页眉页脚
+    fontspec,          % 字体
     footmisc,          % 脚注
     graphicx,          % 插图
     caption,           % 图表标题
@@ -696,6 +692,26 @@
   }
 \ctex_at_end_preamble:n { \__ccnu_load_font: }
 
+% \sys_if_platform_windows:TF
+%   {
+%     \newCJKfontfamily \ccnuhuawenxinwei {STXinwei}
+%   }
+%   {
+%     \ctex_if_platform_macos:TF
+%       {
+%         \file_if_exist:nTF { /System/Library/Fonts/STXinwei.ttc }
+%           {
+%             \newCJKfontfamily \ccnuhuawenxinwei { STXinwei }
+%           }
+%           {
+%             \newCJKfontfamily \ccnuhuawenxinwei { STHeitiSC }
+%           }
+%       }
+%       {
+%         % Linux 用黑体
+%         \newCJKfontfamily \ccnuhuawenxinwei { STHeitiSC }
+%       }
+%   }
 
 
 % 标点处理
@@ -1126,7 +1142,8 @@
               format = \zihao{3} \sffamily \bfseries \centering
             }
         }
-      \chapter{致 \quad 谢}
+      \chapter*{致 \quad 谢}
+      \addcontentsline{toc}{chapter}{\zihao{5} \bfseries 致谢}
     \group_end:
     % 致谢采用全角标点
     \keys_set:nn { ctex }
@@ -1151,19 +1168,61 @@
   {}
 
 % 附录
-\__ccnu_appto_cmd:Nn \appendix
+\int_new:N \g__ccnu_appendix_index_int
+\int_gzero_new:N \g__ccnu_appendix_index_aux_int
+
+\cs_gset_protected:Npn \appendix
   {
     \newpage
-    \keys_set:nn { ctex }
+    \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {3}
       {
-        punct = quanjiao,
-        chapter / indent = 0pt,
-        section / indent = 0pt,
-        subsection / indent = 0pt
+        \keys_set:nn { ctex }
+          {
+            punct = quanjiao,
+            chapter / indent = 0pt,
+            section / indent = 0pt,
+            subsection / indent = 0pt
+          }
       }
+      {
+        \keys_set:nn { ctex }
+          {
+            punct = quanjiao,
+            chapter / indent = 0pt
+          }
+      }
+    \CTEX@save@appendix
+    \gdef \CTEX@prechapter { \CTEX@preappendix }
+    \int_compare:nNnTF { \g__ccnu_appendix_index_int } = {1}
+      {
+        \gdef \CTEX@thechapter { \@gobble \CTEX@appendix@number }
+      }
+      {
+        \gdef \CTEX@thechapter { \CTEX@appendix@number }
+      }
+    \gdef \CTEX@postchapter { \CTEX@postappendix }
+    \gdef \CTEX@chapter@numbering { \CTEX@appendix@numbering }
     % 调整附录的目录层级为 1 层
-    \addtocontents { toc } { \protect \value{tocdepth} = 0 } 
+    \addtocontents { toc } { \protect \value{tocdepth} = 0 }
+    % TODO 攻读学位期间发表的学术论文 这个的 chapter 要用 *
+    \__ccnu_preto_cmd:Nn \chapter
+      {
+        \int_gincr:N \g__ccnu_appendix_index_aux_int
+      }
   }
+
+\AtEndDocument
+  {
+    \iow_now:cx { @auxout }
+      {
+      \token_to_str:N \ExplSyntaxOn %要加一个token_to_str
+      ^^J
+      \int_gset:Nn \exp_not:N \g__ccnu_appendix_index_int { \int_use:N \g__ccnu_appendix_index_aux_int }
+      ^^J
+      \token_to_str:N \ExplSyntaxOff %要加一个token_to_str
+      }
+  }
+
 
 \RenewDocumentCommand { \backmatter } { } {}
 
@@ -1824,7 +1883,7 @@
       )
       {
         \includegraphics
-          [ height = 3.3em, width = 0.4\textwidth ]
+          [ height = 3.5em, width = 0.4\textwidth ]
           { logo / ccnulogo.png } 
       };
   }
@@ -2006,7 +2065,7 @@
       )
       {
         \includegraphics
-          [ height = 3.3em, width = 0.4\textwidth ]
+          [ height = 3.5em, width = 0.4\textwidth ]
           { logo / ccnulogo.png } 
       };
   }
@@ -2077,6 +2136,8 @@
             \__ccnu_title_box_master_doctor:n 
               { 
                 % \fontsize{30bp}{28pt} \selectfont
+                % \ccnuhuawenxinwei
+                \sffamily
                 题目：\tl_use:N \l__ccnu_info_title_tl 
               }
           };
@@ -2088,7 +2149,8 @@
           ) 
           {
             \zihao{1} \bfseries
-            \__ccnu_title_box_master_doctor:n { \tl_use:N \l__ccnu_info_title_tl }
+            \__ccnu_title_box_master_doctor:n 
+              { \sffamily \tl_use:N \l__ccnu_info_title_tl }
           };
       }
     \group_end:
@@ -2136,7 +2198,7 @@
                   {
                     \__ccnu_cover_infomation_center_underline_box:Vn 
                       \l__ccnu_tmpb_dim 
-                      { \zihao{2} \l__ccnu_tmpb_tl }
+                      { \zihao{2} \sffamily \l__ccnu_tmpb_tl }
                   }
                   {
                     \__ccnu_cover_infomation_center_underline_box:Vn 
@@ -2507,7 +2569,7 @@
         thickness = 0pt
       ]
       {
-        \hbox_to_wd:nn { #1 + 5mm } 
+        \hbox_to_wd:nn { #1 } 
           { 
               #2
             \hfil
@@ -2790,7 +2852,10 @@
     \int_set:Nn \c@page {0}
     \pagenumbering{ Roman }
     \newpage
-    \__ccnu_chapter_master_doctor:n {摘 \quad 要}
+    % \__ccnu_chapter_master_doctor:n {摘 \quad 要}
+    \chapter*{摘 \quad 要}
+    \addcontentsline { toc } { chapter }
+      { \bfseries \zihao{5} 摘要 }
     \group_begin:
       \keys_set:nn { ctex }
         { punct = quanjiao }

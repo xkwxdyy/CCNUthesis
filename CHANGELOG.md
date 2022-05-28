@@ -4,6 +4,15 @@
 
 更多关于模版的内容和如何使用，请仔细阅读 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis)！
 
+
+## [v1.2.2] - 2022-05-24
+
+### Changed
+
+- 改变硕博 `word` 版本标题字体为黑体
+- 改变硕博 `word` 版本个人信息字体为黑体
+
+
 ## [v1.2.2] - 2022-05-24
 
 ### Added
