@@ -692,26 +692,28 @@
   }
 \ctex_at_end_preamble:n { \__ccnu_load_font: }
 
-% \sys_if_platform_windows:TF
-%   {
-%     \newCJKfontfamily \ccnuhuawenxinwei {STXinwei}
-%   }
-%   {
-%     \ctex_if_platform_macos:TF
-%       {
-%         \file_if_exist:nTF { /System/Library/Fonts/STXinwei.ttc }
-%           {
-%             \newCJKfontfamily \ccnuhuawenxinwei { STXinwei }
-%           }
-%           {
-%             \newCJKfontfamily \ccnuhuawenxinwei { STHeitiSC }
-%           }
-%       }
-%       {
-%         % Linux 用黑体
-%         \newCJKfontfamily \ccnuhuawenxinwei { STHeitiSC }
-%       }
-%   }
+\sys_if_platform_windows:TF
+  {
+    \newCJKfontfamily \ccnuhuawenxinwei { STXinwei }
+  }
+  {
+    \ctex_if_platform_macos:TF
+      {
+        % 检测 mac 的字体册中是否有华文新魏字体
+        \fontspec_font_if_exist:nTF { STXinwei }
+          {
+            \newCJKfontfamily \ccnuhuawenxinwei { STXinwei }
+          }
+          {
+            % 没有华文新魏的话就用黑体
+            \newCJKfontfamily \ccnuhuawenxinwei { Heiti~SC~Light }
+          }
+      }
+      {
+        % Linux 用黑体
+        \newCJKfontfamily \ccnuhuawenxinwei { FandolHei-Regular }
+      }
+  }
 
 
 % 标点处理
@@ -2137,7 +2139,7 @@
               { 
                 % \fontsize{30bp}{28pt} \selectfont
                 % \ccnuhuawenxinwei
-                \sffamily
+                \ccnuhuawenxinwei
                 题目：\tl_use:N \l__ccnu_info_title_tl 
               }
           };
@@ -2198,7 +2200,7 @@
                   {
                     \__ccnu_cover_infomation_center_underline_box:Vn 
                       \l__ccnu_tmpb_dim 
-                      { \zihao{2} \sffamily \l__ccnu_tmpb_tl }
+                      { \zihao{2} \ccnuhuawenxinwei \l__ccnu_tmpb_tl }
                   }
                   {
                     \__ccnu_cover_infomation_center_underline_box:Vn 
@@ -2447,7 +2449,7 @@
       {
         \node []  at
           (
-            [ shift = { (-7em, 10em) } ]
+            [ shift = { (-7em, 8em) } ]
             current~page~text~area.south
           )
           {
@@ -2467,7 +2469,7 @@
       {
         \node []  at
           (
-            [ shift = { (-8em, 8em) } ]
+            [ shift = { (-8em, 6em) } ]
             current~page~text~area.south~east
           )
           {
@@ -2486,7 +2488,7 @@
       {
         \node []  at
           (
-            [ shift = { (-5.3em, 4em) } ]
+            [ shift = { (-5.3em, 2em) } ]
             current~page~text~area.south~east
           )
           {
