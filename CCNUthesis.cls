@@ -692,26 +692,36 @@
   }
 \ctex_at_end_preamble:n { \__ccnu_load_font: }
 
+
+% 华文新魏字体处理
 \sys_if_platform_windows:TF
   {
-    \newCJKfontfamily \ccnuhuawenxinwei { STXinwei }
+    % Windows
+    \newCJKfontfamily \ccnutitlefont { STXinwei }
   }
   {
     \ctex_if_platform_macos:TF
       {
-        % 检测 mac 的字体册中是否有华文新魏字体
+        % Mac
         \fontspec_font_if_exist:nTF { STXinwei }
           {
-            \newCJKfontfamily \ccnuhuawenxinwei { STXinwei }
+            \newCJKfontfamily \ccnutitlefont { STXinwei }
           }
           {
             % 没有华文新魏的话就用黑体
-            \newCJKfontfamily \ccnuhuawenxinwei { Heiti~SC~Light }
+            \newCJKfontfamily \ccnutitlefont { Heiti~SC~Light }
           }
       }
       {
-        % Linux 用黑体
-        \newCJKfontfamily \ccnuhuawenxinwei { FandolHei-Regular }
+        % Linux
+        \fontspec_font_if_exist:nTF { STXinwei }
+          {
+            \newCJKfontfamily \ccnutitlefont { STXinwei }
+          }
+          {
+            \newCJKfontfamily \ccnutitlefont { FandolHei-Regular }
+          }
+
       }
   }
 
@@ -2138,8 +2148,8 @@
             \__ccnu_title_box_master_doctor:n 
               { 
                 % \fontsize{30bp}{28pt} \selectfont
-                % \ccnuhuawenxinwei
-                \ccnuhuawenxinwei
+                % \ccnutitlefont
+                \ccnutitlefont
                 题目：\tl_use:N \l__ccnu_info_title_tl 
               }
           };
@@ -2200,7 +2210,7 @@
                   {
                     \__ccnu_cover_infomation_center_underline_box:Vn 
                       \l__ccnu_tmpb_dim 
-                      { \zihao{2} \ccnuhuawenxinwei \l__ccnu_tmpb_tl }
+                      { \zihao{2} \ccnutitlefont \l__ccnu_tmpb_tl }
                   }
                   {
                     \__ccnu_cover_infomation_center_underline_box:Vn 
@@ -2571,10 +2581,13 @@
         thickness = 0pt
       ]
       {
-        \hbox_to_wd:nn { #1 } 
-          { 
-              #2
-            \hfil
+        \box_move_up:nn { 1pt }
+          {
+            \hbox_to_wd:nn { #1 }
+              { 
+                  #2
+                \hfil
+              }
           }
       }
   }
