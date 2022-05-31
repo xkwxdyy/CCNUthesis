@@ -3049,15 +3049,25 @@
   {
     bib-style .choice:,
     bib-style .value_required:n = true,
-    bib-style / ccnu-numerical .code:n =
+    bib-style / ccnu-bachelor-numerical .code:n =
       {
         \tl_set:Nn \l__ccnu_biblatex_bibstyle_tl
           { gb7714-CCNU }
       },
-    bib-style / ccnu-author-year .code:n =
+    bib-style / ccnu-bachelor-author-year .code:n =
       {
         \tl_set:Nn \l__ccnu_biblatex_bibstyle_tl
           { gb7714-CCNUay }
+      },
+    bib-style / ccnu-master .code:n =
+      {
+        \tl_set:Nn \l__ccnu_biblatex_bibstyle_tl
+          { gb7714-2015 }
+      },
+    bib-style / ccnu-doctor .code:n =
+      {
+        \tl_set:Nn \l__ccnu_biblatex_bibstyle_tl
+          { gb7714-2015 }
       },
     bib-style / gb7714-2015 .code:n =
       {

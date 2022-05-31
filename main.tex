@@ -15,97 +15,149 @@
 
 
 
-% 交终稿的时候需要单面打印，设置 oneside，奇偶页页面设置相同
+% 学术类型
+%   可选选项：type = bachelor|master|doctor
+%   默认：bachelor
+
 % \documentclass[type = bachelor]{CCNUthesis}
-% \documentclass[type = master, draft]{CCNUthesis}
 \documentclass[type = master]{CCNUthesis}
 % \documentclass[type = doctor]{CCNUthesis}
 
+
+% 交终稿的时候需要单面打印，设置 oneside，奇偶页页面设置相同
 % 答辩打印可以双面打印，设置 twoside，奇偶页页面设置不同
 % \documentclass[twoside]{CCNUthesis}
 
 
 \ccnusetup{
   % 个人信息
+  %   注意：\ccnusetup 中不能出现空行
   info = {
-    cover-type = word,
-    % cover-type = math,
+    % cover-type = word,
+    cover-type = math,
       % 封面的类型
+      %   适用学位类型：【本｜硕｜博】
       %   可选选项：word|math
-      %   word：教务处的 word 封面格式
-      %   math：数学与统计学学院的封面格式
+      %     word：教务处的 word 封面格式
+      %     math：数学与统计学学院的封面格式
+      %   默认：math
     title = {
       如何使用 \LaTeX{} 制作一个学位论文模版 \\
       ——以华中师范大学为例
     },
-      % 中文标题，能概括整个学位论文的中心内容，简明、扼要
+      % 中文-标题
+      %   适用学位类型：【本｜硕｜博】
       %   会自动换行，如果换行点不满意，可以用 \\ 手动换行
-      %   论文题目一般不超过25个字，必要时可加副标题（在题目下一行以“——”打头，居中）
-    % 论文的英文标题
+      %   能概括整个学位论文的中心内容，简明、扼要
+      %   论文题目一般不超过25个字，必要时可加副标题（在题目下一行以“——”打头）
     title* = {
       Thesis Title
-      School of Mathematics and Statistics
-      School of Mathematics and Statistics
     }, 
-    % 学院
+      % 英文-标题
+      %   适用学位类型：【本｜硕｜博】
     department = {数学与统计学学院},
+      % 中文-学院名称
+      %   适用学位类型：【本｜硕｜博】
     department* = {School of Mathematics and Statistics},
-    % 专业
-    % major = {数学与应用数学（试验）},
+      % 英文-学院名称
+      %   适用学位类型：【硕｜博】
     major = {应用统计},
+      % 中文-专业
+      %   适用学位类型：【本｜硕｜博】
+      %   选项参考：
+      %     本：数学与应用数学（试验）｜数学与应用数学（师范）｜统计学
+      %     硕：应用统计
     major* = {Mathematics},
-    %   Mathematics|Applied Statistics
+      % 英文-专业
+      %   适用学位类型：【硕｜博】
+      %   选项参考：
+      %     硕：Mathematics|Applied Statistics
     research-area = {教育大数据},
+      % 中文-研究方向
+      %   适用学位类型：【硕｜博】
+      %   选项参考：
+      %     硕：教育大数据
     research-area* = {Education big data},
+      % 英文-研究方向
+      %   适用学位类型：【硕｜博】
+      %   选项参考：
+      %     硕：Mathematics|Applied Statistics
     author-type = {应用统计硕士},
+      % 中文-申请学位学生类别
+      %   适用学位类型：【硕｜博】
+      %   选项参考：
+      %     硕：应用统计硕士
     author-type* = {M.S.},
-    % 年级
+      % 英文-申请学位学生类别
+      %   适用学位类型：【硕｜博】
+      %   选项参考：
+      %     硕：M.S.
     level = {2018级},
-    % 姓名
+      % 年级
+      %   适用学位类型：【本】
     author = {你的姓名},
+      % 中文-作者姓名
+      %   适用学位类型：【本｜硕｜博】
     author* = {Xing Ming},
-    % 学号
+      % 拼音-作者姓名
+      %   适用学位类型：【硕｜博】
     student-id = {学号},
-    % 指导教师
+      % 学号
+      %   适用学位类型：【本】
     supervisor = {教师姓名 \quad 职称},
+      % 中文-指导老师姓名+职称
+      %   适用学位类型：【本｜硕｜博】
     supervisor*-name = {Jiao shi},
+      % 拼音-指导老师姓名
+      %   适用学位类型：【硕｜博】
     supervisor*-academic-title = {Professor},
-    % 论文中文关键词，用英文“,”隔开
+      % 英文-指导老师职称
+      %   适用学位类型：【硕｜博】
     keywords = {
       关键词1,
       关键词2,
       关键词3
     },
-    % 论文英文关键词，用英文“,”隔开
+      % 中文-论文关键词
+      %   适用学位类型：【本｜硕｜博】
+      %   关键词之间用西文逗号 “,” 隔开
     keywords* = {
       keyword1,
       keyword2,
       keyword3
     },
-    % 如有需要可以手动调整论文的年和月，否则默认为「编译时」的年和月
+      % 英文-论文关键词
+      %   适用学位类型：【本｜硕｜博】
+      %   关键词之间用西文逗号 “,” 隔开
     % year  = {2022},
+      % 年份
+      %   适用学位类型：【本｜硕｜博】
+      %   如果不手动调整，则默认是「编译时」的年份
     % month = {4},
+      % 月份
+      %   适用学位类型：【本｜硕｜博】
+      %   如果不手动调整，则默认是「编译时」的月份
   },
   style = {
     font = times,
       % 西文字体
-      % 允许选项
-      % font = newtx|times|stixtwo|xits|tg|none
+      %   适用学位类型：【本｜硕｜博】
+      %   可选选项：newtx|times|stixtwo|xits|tg|none
     cjk-font = mac,
       % 中文字体
-      % 允许选项：
-      %   cjk-font = adobe|fandol|founder|mac|sinotype|sourcehan|windows|none
-      % 注意：
-      %   1. 中文字体设置高度依赖于系统。各系统建议方案：
-      %        windows：cjk-font = windows
-      %        mac：    cjk-font = mac
-      %        linux：  cjk-font = fandol（默认值）
-      %   2. 除 fandol 和 sourcehan 外，其余字体均为商用字体，请注意版权问题
-      %   3. 但 fandol 字体缺字比较严重，而 sourcehan 没有配备楷体和仿宋体
+      %   适用学位类型：【本｜硕｜博】
+      %   可选选项：adobe|fandol|founder|mac|sinotype|sourcehan|windows|none
+      %   注意：
+      %     1. 中文字体设置高度依赖于系统。各系统建议方案：
+      %          windows：cjk-font = windows
+      %          mac：    cjk-font = mac
+      %          linux：  cjk-font = fandol（默认值）
+      %     2. 除 fandol 和 sourcehan 外，其余字体均为商用字体，请注意版权问题
+      %     3. 但 fandol 字体缺字比较严重，而 sourcehan 没有配备楷体和仿宋体
     caption-labelstyle = dot,
-      % 图表的标题 label 计数样式
-      % 允许选项：
-      %    arabic|hyphen|dot
+      % 图表标题 label 计数样式
+      %   适用学位类型：【本｜硕｜博】
+      %   可选选项：arabic|hyphen|dot
       %      arabic：样式为图1，图2，表1，表2...，并且跨 chapter 连续编号，即 上一个 chapter 的图编号若为4，下一个 chapter 的第一个图编号为 5
       %      hyphen：样式为图1-1，图2-1，表1-1...
       %        x-y 的 x 为 chapter 值，y 为图表的计数器值，新的 chapter 中 y 会清零从新计数
@@ -113,43 +165,48 @@
       %        x.y 的 x 为 chapter 值，y 为图表的计数器值，新的 chapter 中 y 会清零从新计数
     caption-labelseperator = colon,
       % 图表标题 label 和 标题内容 之内的分隔符
-      % 允许选项：
-      %    colon|space
+      %   适用学位类型：【本｜硕｜博】
+      %   可选选项：colon|space
       %      colon 表示 「:␣」，即一个西文冒号加一个空格
       %      space 表示 「␣␣」，即两个空格
-    bib-style = ccnu-author-year,
+    bib-style = ccnu-bachelor-numerical,
       % bib-style 表示参考文献的格式
-      % 允许的选项：
-      %   ccnu-numerical|ccnu-author-year|gb7714-2015
-      %   ccnu-numerical：学校标准、按照引用顺序排
-      %   ccnu-author-year：学校标准、按照作者名、年份排
-      %   gb7714-2015：国标
+      %   适用学位类型：【本｜硕｜博】
+      %   可选选项：
+      %     ccnu-bachelor-numerical|ccnu-bachelor-author-year
+      %     ccnu-master|ccnu-doctor|gb7714-2015
+      %       ccnu-bachelor-numerical：【本】学校标准，按照引用顺序排
+      %       ccnu-bachelor-author-year：【本】学校标准，按照作者名、年份排
+      %       ccnu-master：【硕】国标，按照引用顺序排
+      %       ccnu-doctor：【博】国标，按照引用顺序排
+      %       gb7714-2015：国标，按照引用顺序排
     bib-resource = {CCNUthesis-main.bib},
-      % 参考文献数据源，需要加bib后缀
+      % 参考文献数据源
+      %   适用学位类型：【本｜硕｜博】
+      %   注意：需要加 bib 后缀
     fullwidth-stop = catcode,
-      % 是否把全角实心句点 “．” 作为默认的句号形状
-      % 即正文中输入“。” 最终编译效果为“. ”
-      % 一般科技类文章需要替换，防止“. ”与“。”混淆
-      % 允许选项：
-      %   fullwidth-stop = catcode|mapping|false
-      % 说明：
-      %   catcode   显式的 “。” 会被替换为 “．”（e.g. 不包括用宏定义保存的 “。”）
-      %   mapping   所有的 “。” 会被替换为 “．”（使用 LuaLaTeX 编译则无效）
-      %   false     不进行替换
+      % 标点的自动替换
+      %   适用学位类型：【本｜硕｜博】
+      %   可选选项：catcode|mapping|false
+      %     catcode   显式的 “。” 会被替换为 “．”（e.g. 不包括用宏定义保存的 “。”）
+      %     mapping   所有的 “。” 会被替换为 “．”（使用 LuaLaTeX 编译则无效）
+      %     false     不进行替换
+      %   作用：是否把全角实心句点 “．” 作为默认的句号形状，即正文中输入“。” 最终编译效果为“. ”
+      %   说明：一般科技类文章需要替换，防止“. ”与“。”混淆
   }
 }
 
 
 
-%%%%% 需要的宏包可以在此处自行调用 %%%%%
+% 需要的宏包可以在此处自行调用
 \usepackage{mathtools}
 \usepackage{zhlipsum}
+
 
 
 % 需要的命令环境可以自行定义
 \newcommand{\upe}{\mathrm{e}}        % 直立的e，用于表示常量，如自然常数      
 \newcommand{\upi}{\mathrm{i}}        % 直立的i，用于表示常量，如虚数单位
-\newcommand{\hilbertH}{\mathcal{H}}
 
 
 
@@ -165,14 +222,14 @@
 \input{./front/abstract.tex}
 
 
-% 符号表，不需要的话将下面的代码注释掉即可
+% 符号表
 \input{./front/notation.tex}
 
 
 
 % \mainmatter 进入论文主体部分
-% 主体部分是论文的核心
 \mainmatter
+
 
 % 主体采用多文件编译的方式
 % 即把每一章放进一个单独的 tex 文件里，并在这里用 \input 导入
@@ -190,22 +247,23 @@
 % 论文后文部分，参考文献、致谢、附录等
 \backmatter
 
-%%%% 参考文献 %%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% 行内引用：\parencite{} or \parencite[]{}，下面两个情况要用行内引用
+
+% 参考文献
+%********************************************
+% 行内引用：\parencite{} or \parencite[]{}，下面两个情况要用行内引用
 %    - 去掉这个引用句子结构不完整，比如“定理证明可参看[1]”
 %    - 英文文献的引用
-%%% 上标引用：\cite{} or \cite[]{}，下面情况要用上标引用
+% 上标引用：\cite{} or \cite[]{}，下面情况要用上标引用
 %    - 去掉这个引用，句子结构完整，比如“作者提到，‘CCNUthesis 真是一个好模版。’^[1]”
 %      其中“^[1]” 表示上标引用
-%%%%%%%%%%%%%%%%%%%%%%%%%%
-% 打印参考文献列表
+%********************************************
+
+% 输出参考文献
 \printbibliography
 
 
-
 % 附录
-% 硕博附录在致谢前
+% 【硕博】附录在致谢前
 % \include{./back/Appendix.tex}
 
 
@@ -214,9 +272,8 @@
 
 
 % 附录
-% 本科附录在致谢后
+% 【本科】附录在致谢后
 \include{./back/Appendix.tex}
-
 
 
 \end{document}
