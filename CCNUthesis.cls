@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-05-26}{v1.2.2}
+  {2022-06-02}{v1.2.3}
   {Thesis template for Central China Normal University}
 \RequirePackage { xtemplate, l3keys2e, xparse }
 
@@ -67,7 +67,9 @@
 \bool_new:N       \g__ccnu_showheadlogo_bool    % 页眉 logo
 \str_new:N        \g__ccnu_headline_str         % 页眉 阴阳线
 \str_new:N        \g__ccnu_type_version_str     % 打印、电子版本控制
-\tl_new:N         \g__ccnu_config_tl
+\fp_new:N         \g__ccnu_doctor_linespread_ration_fp
+\fp_set:Nn \g__ccnu_doctor_linespread_ration_fp
+  { 25 / 24}
 
 % 下划线
 \dim_new:N \l__ccnu_title_tmp_height_dim
@@ -264,7 +266,7 @@
       { \PassOptionsToClass { linespread = \c__ccnu_line_spread_fp } { ctexbook } }
     % 硕士行距 1.25 倍
     {2} 
-      { \PassOptionsToClass { linespread = 1.04\c__ccnu_line_spread_fp } { ctexbook } }
+      { \PassOptionsToClass { linespread = \g__ccnu_doctor_linespread_ration_fp\c__ccnu_line_spread_fp } { ctexbook } }
     % 博士行距 19 磅
     {1} 
       { \fontsize{10.5pt}{19bp} \selectfont }

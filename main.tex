@@ -15,10 +15,8 @@
 
 
 % \documentclass[type = bachelor]{CCNUthesis}
-% \documentclass[type = master, version = print-master-twoside]{CCNUthesis}
-% \documentclass[type = master, draft]{CCNUthesis}
-\documentclass[type = doctor]{CCNUthesis}
-% \documentclass[type = doctor, draft]{CCNUthesis}
+\documentclass[type = master, version = print-master-twoside]{CCNUthesis}
+% \documentclass[type = doctor]{CCNUthesis}
 
 
 % type
@@ -64,9 +62,7 @@
       %   能概括整个学位论文的中心内容，简明、扼要
       %   论文题目一般不超过25个字，必要时可加副标题（在题目下一行以“——”打头）
     title* = {
-      % Thesis Title
-      The influence of family education on the Chinese learning habits of primary school students in lower grades and its countermeasures
-      % The influence of family education on the Chinese learning habits
+      Thesis Title
     }, 
       % 英文-标题
       %   适用学位类型：【本｜硕｜博】
@@ -172,7 +168,7 @@
       %     newtx   : TG Termes,        TG Heros, TG Cursor,    newtxmath
       %     tg      : TG Termes,        TG Heros, TG Cursor,    TG Termes Math
       %     *******************************************************************
-    cjk-font = mac,
+    cjk-font = fandol,
       % 中文字体
       %   适用学位类型：【本｜硕｜博】
       %   可选选项：adobe|fandol|founder|mac|sinotype|sourcehan|windows|none
@@ -314,7 +310,7 @@
 %   用户要想正确输出参考文献：
 %     1. 在 bib 文件中输入正确的参考文献条目信息
 %     2. 在正文中正确地使用 \parencite 或 \cite 引用
-%     3. 使用 biber 编译链或 latexmk 方式编译 main.tex 文件
+%     3. 使用 xelatex-biber-xelatex*2 编译链或 latexmk 方式编译 main.tex 文件
 \printbibliography
 
 
@@ -323,7 +319,7 @@
 \include{./back/Appendix.tex}
 
 % 攻读学位期间取得的研究成果（博）
-\include{./back/Publications.tex}
+% \include{./back/Publications.tex}
 
 
 % 致谢
