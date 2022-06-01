@@ -64,8 +64,8 @@
 \bool_new:N       \g__ccnu_cover_word_version_bool   % word 版本
 \bool_new:N       \g__ccnu_twoside_bool
 \bool_new:N       \g__ccnu_draft_bool
-\bool_new:N       \g__ccnu_showheadlogo_bool    % 显示页眉 logo
-\bool_new:N       \g__ccnu_showheadline_bool    % 显示页眉 阴阳线
+\bool_new:N       \g__ccnu_showheadlogo_bool    % 页眉 logo
+\str_new:N        \g__ccnu_headline_str        % 页眉 阴阳线
 \tl_new:N         \g__ccnu_config_tl
 
 % 下划线
@@ -990,6 +990,54 @@
 
 
 % 页眉页脚设置
+\cs_new:Npn \__ccnu_headline:
+  {
+    \str_case:VnTF \g__ccnu_headline_str
+      {
+        {single}
+          {
+            \fancyhead [ C ]
+              {
+                \rule [ -4pt ] { \textwidth } { 0.6pt }
+              }
+          }
+        {double}
+          {
+            \fancyhead [ C ]
+              {
+                \makebox [ 0pt ] [ l ]
+                  {
+                    \rule [ -4pt ] { \textwidth } { 0.6pt }
+                  }
+                \rule [ -6.5pt ] { \textwidth } { 0.6pt }
+              }
+          }
+        {thin-thick}
+          {
+            \fancyhead [ C ]
+              {
+                \makebox [ 0pt ] [ l ]
+                  {
+                    \rule [ -4pt ] { \textwidth } { 0.6pt }
+                  }
+                \rule [ -7pt ] { \textwidth } { 1.5pt }
+              }
+          }
+        {thick-thin}
+          {
+            \fancyhead [ C ]
+              {
+                \makebox [ 0pt ] [ l ]
+                  {
+                    \rule [ -4pt ] { \textwidth } { 1.5pt }
+                  }
+                \rule [ -6.5pt ] { \textwidth } { 0.6pt }
+              }
+          }
+        {none}{}
+      }
+      {}{}
+  }
 \int_case:nn { \g__ccnu_thesis_type_int }
   {
     {3} 
@@ -1015,17 +1063,8 @@
               \fancyhead [ L ] 
                 { \includegraphics[width = 5cm]{./logo/masterlogo.png}}
             }
-          \bool_if:NT \g__ccnu_showheadline_bool
-            {
-              \fancyhead [ C ]
-                {
-                  \makebox [ 0pt ] [ l ]
-                    {
-                      \rule [ -4pt ] { \textwidth } { 1.5pt }
-                    }
-                  \rule [ -6.5pt ] { \textwidth } { 0.6pt }
-                }
-            }
+          % 页眉线
+          \__ccnu_headline:
           \fancyfoot [ C ] { \zihao{5} \thepage }
         }
       \pagestyle { plain }
@@ -1041,17 +1080,8 @@
               \fancyhead [ L ] 
                 { \includegraphics[width = 7cm]{./logo/doctorlogo.png}}
             }
-          \bool_if:NT \g__ccnu_showheadline_bool
-            {
-              \fancyhead [ C ]
-                {
-                  \makebox [ 0pt ] [ l ]
-                    {
-                      \rule [ -4pt ] { \textwidth } { 1.5pt }
-                    }
-                  \rule [ -6.5pt ] { \textwidth } { 0.6pt }
-                }
-            }
+          % 页眉线
+          \__ccnu_headline:
           \RenewDocumentCommand { \headrulewidth } { } { 0pt }
           \fancyfoot [ OR, EL ] { \zihao{5} \thepage }
         }
@@ -1070,9 +1100,9 @@
     show-headlogo .bool_gset:N = \g__ccnu_showheadlogo_bool,
     show-headlogo .default:n = true,
     show-headlogo .initial:n = false,
-    show-headline .bool_gset:N = \g__ccnu_showheadline_bool,
-    show-headline .default:n = true,
-    show-headline .initial:n = false,
+    headline .str_gset:N = \g__ccnu_headline_str,
+    headline .value_required:n = true,
+    headline .initial:n = false,
   }
 
 % 定理类环境
@@ -2472,7 +2502,7 @@
       }
       {
         \node [anchor = north] 
-          at ([shift = {(0em, -4em)}]title.south)
+          at ([shift = {(0em, -5em)}]title.south)
           {
             \parbox { \textwidth }
               {
