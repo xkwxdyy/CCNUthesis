@@ -63,8 +63,9 @@
 \clist_new:N      \g__ccnu_to_hyperref_clist
 \bool_new:N       \g__ccnu_cover_word_version_bool   % word 版本
 \bool_new:N       \g__ccnu_twoside_bool
-\bool_set_true:N  \g__ccnu_twoside_bool
 \bool_new:N       \g__ccnu_draft_bool
+\bool_new:N       \g__ccnu_showheadlogo_bool    % 显示页眉 logo
+\bool_new:N       \g__ccnu_showheadline_bool    % 显示页眉 阴阳线
 \tl_new:N         \g__ccnu_config_tl
 
 % 下划线
@@ -230,25 +231,24 @@
 
 
 % ctexbook 选项处理
+
+% 正文字号
+\int_compare:nNnTF { \g__ccnu_thesis_type_int } = {1}
+  {
+    \PassOptionsToClass { zihao  = 5, twoside } { ctexbook }
+  }
+  {
+    \PassOptionsToClass { zihao  = -4, oneside } { ctexbook }
+  }
 \PassOptionsToClass
   {
     UTF8,
     heading    = true,
     fontset    = none,
     linespread = \c__ccnu_line_spread_fp,
-    oneside,
     \g__ccnu_to_ctexbook_clist
   }
   { ctexbook }
-% 正文字号
-\int_case:nnF { \g__ccnu_thesis_type_int }
-  {
-    {1} { \PassOptionsToClass { zihao  = 5 } { ctexbook } }
-  }
-  {
-    \PassOptionsToClass { zihao  = -4 } { ctexbook }
-  }
-
 \clist_map_inline:nn
   {
     { no-math           } { fontspec },
@@ -356,7 +356,9 @@
             \cs_set_eq:NN \oldrmdefault \rmdefault
             \cs_set_eq:NN \oldsfdefault \sfdefault
             \cs_set_eq:NN \oldttdefault \ttdefault
-            \RequirePackage [T1] { fontenc }
+            % \RequirePackage [T1] { fontenc }
+            \cs_set:Nn \defaultencoding: { T1 }
+            \cs_set_eq:NN \defaultencoding \defaultencoding:
             \RenewDocumentCommand { \rmdefault } { } { ntxtlf }
             \RenewDocumentCommand { \sfdefault } { } { qhv }
             \RenewDocumentCommand { \ttdefault } { } { ntxtt }
@@ -907,6 +909,8 @@
           left       = 2.8cm,
           right      = 3cm,
           top        = 3.9cm,
+          headheight = 2.0cm,
+          headsep    = 4mm,
           bottom     = 3.5cm,
           footskip   = 0.8cm
         }
@@ -920,6 +924,8 @@
           left       = 2.9cm,
           right      = 2.9cm,
           top        = 3.9cm,
+          headheight = 2.1cm,
+          headsep    = 3mm,
           bottom     = 3.5cm,
           footskip   = 0.8cm
         }
@@ -984,27 +990,90 @@
 
 
 % 页眉页脚设置
-\int_compare:nNnTF { \g__ccnu_thesis_type_int } = {3}
+\int_case:nn { \g__ccnu_thesis_type_int }
   {
-    \fancypagestyle { plain }
-      {
-        \fancyhf { }
-        \RenewDocumentCommand { \headrulewidth } { } { 0pt }
-        \fancyfoot [ C ] { \small \thepage }
-      }
-    \pagestyle { plain }
-  }
-  {
-    \fancypagestyle { plain }
-      {
-        \fancyhf { }
-        \RenewDocumentCommand { \headrulewidth } { } { 0pt }
-        \fancyfoot [ C ] { \zihao{5} \thepage }
-      }
-    \pagestyle { plain }
+    {3} 
+    {
+      % 本科
+      \fancypagestyle { plain }
+        {
+          \fancyhf { }
+          \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+          \fancyfoot [ C ] { \small \thepage }
+        }
+      \pagestyle { plain }
+    }
+    {2} 
+    {
+      % 硕士
+      \fancypagestyle { plain }
+        {
+          \fancyhf { }
+          \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+          \bool_if:NT \g__ccnu_showheadlogo_bool
+            {
+              \fancyhead [ L ] 
+                { \includegraphics[width = 5cm]{./logo/masterlogo.png}}
+            }
+          \bool_if:NT \g__ccnu_showheadline_bool
+            {
+              \fancyhead [ C ]
+                {
+                  \makebox [ 0pt ] [ l ]
+                    {
+                      \rule [ -4pt ] { \textwidth } { 1.5pt }
+                    }
+                  \rule [ -6.5pt ] { \textwidth } { 0.6pt }
+                }
+            }
+          \fancyfoot [ C ] { \zihao{5} \thepage }
+        }
+      \pagestyle { plain }
+    }
+    {1}
+    {
+      % 博士
+      \fancypagestyle { plain }
+        {
+          \fancyhf { }
+          \bool_if:NT \g__ccnu_showheadlogo_bool
+            {
+              \fancyhead [ L ] 
+                { \includegraphics[width = 7cm]{./logo/doctorlogo.png}}
+            }
+          \bool_if:NT \g__ccnu_showheadline_bool
+            {
+              \fancyhead [ C ]
+                {
+                  \makebox [ 0pt ] [ l ]
+                    {
+                      \rule [ -4pt ] { \textwidth } { 1.5pt }
+                    }
+                  \rule [ -6.5pt ] { \textwidth } { 0.6pt }
+                }
+            }
+          \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+          \fancyfoot [ OR, EL ] { \zihao{5} \thepage }
+        }
+      \pagestyle { plain }
+    }
   }
 
+\patchcmd { \chapter }
+  { \thispagestyle{\CTEX@chapter@pagestyle} }
+  { \pagestyle{plain} }
+  {}
+  {\fail}
 
+\keys_define:nn { ccnu / style }
+  {
+    show-headlogo .bool_gset:N = \g__ccnu_showheadlogo_bool,
+    show-headlogo .default:n = true,
+    show-headlogo .initial:n = false,
+    show-headline .bool_gset:N = \g__ccnu_showheadline_bool,
+    show-headline .default:n = true,
+    show-headline .initial:n = false,
+  }
 
 % 定理类环境
 
@@ -1238,25 +1307,19 @@
 
 \RenewDocumentCommand { \backmatter } { } {}
 
-% 重新设置 frontmatter 的计数器的样式
-\patchcmd { \frontmatter }
-  { \pagenumbering { roman } }
-  { \pagenumbering { arabic } }
-  {}{ \fail }
-
 
 \int_compare:nNnT { \g__ccnu_thesis_type_int } = {3}
   {
+    % 重新设置 frontmatter 的计数器的样式
+    \patchcmd { \frontmatter }
+    { \pagenumbering { roman } }
+    { \pagenumbering { arabic } }
+    {}{ \fail }
     % 重新设置 mainmatter 的计数器，使得页码接着前面的(本科)
     \patchcmd { \mainmatter }
       { \pagenumbering { arabic } }
       { \renewcommand { \thepage }{ \arabic{ page } } }
       {}{ \fail }
-    % \apptocmd { \mainmatter }
-    %   {
-    %     \pagestyle { plain }
-    %   }
-    %   {}{\fail}
   }
 
 
@@ -2328,7 +2391,7 @@
   {
     \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
       {
-        \node [anchor = north]  at
+        \node [anchor = north] (title) at
           (
             [ shift = { (0em, 0em) } ]
             current~page~text~area.north
@@ -2337,13 +2400,13 @@
             \parbox { \textwidth }
               {
                 \bfseries \centering
-                \fontsize{30bp}{28pt}\selectfont
+                \fontsize{30bp}{35pt}\selectfont
                 \l__ccnu_info_title_en_tl
               }
           };
       }
       {
-        \node [anchor = north]  at
+        \node [anchor = north] (title) at
           (
             [ shift = { (0em, 0em) } ]
             current~page~text~area.north
@@ -2352,7 +2415,7 @@
             \bfseries \zihao{-0}
             Dissertation
           };
-        \node [anchor = north]  at
+        \node [anchor = north] (title) at
           (
             [ shift = { (0em, -0.1\paperheight) } ]
             current~page~text~area.north
@@ -2361,7 +2424,7 @@
             \parbox { \textwidth }
               {
                 \bfseries \centering
-                \fontsize{30bp}{28pt}\selectfont
+                \fontsize{30bp}{35pt}\selectfont
                 \l__ccnu_info_title_en_tl
               }
           };
@@ -2372,11 +2435,8 @@
   {
     \int_compare:nNnT { \g__ccnu_thesis_type_int } = {2}
       {
-        \node []  at
-          (
-            [ shift = { (0em, 0.1\paperheight) } ]
-            current~page~text~area.center
-          )
+        \node [anchor = north] (application)
+          at ([shift = {(0em, -4em)}]title.south)
           {
             \parbox { \textwidth }
               {
@@ -2396,11 +2456,8 @@
   {
     \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
       {
-        \node []  at
-          (
-            [ shift = { (0em, -0.07\paperheight) } ]
-            current~page~text~area.center
-          )
+        \node [anchor = north] (author_infomation)  
+          at ([shift = {(0em, -4em)}]application.south)
           {
             \parbox { \textwidth }
               {
@@ -2414,11 +2471,8 @@
           };
       }
       {
-        \node []  at
-          (
-            [ shift = { (0em, -0.1\paperheight) } ]
-            current~page~text~area.center
-          )
+        \node [anchor = north] 
+          at ([shift = {(0em, -4em)}]title.south)
           {
             \parbox { \textwidth }
               {
@@ -2439,7 +2493,7 @@
       {
         \node [anchor = south]  at
           (
-            [ shift = { (0em, 0.05\paperheight) } ]
+            [ shift = { (0em, 0.1\paperheight) } ]
             current~page~text~area.south
           )
           {
@@ -2457,11 +2511,8 @@
   {
     \int_compare:nNnT { \g__ccnu_thesis_type_int } = {2}
       {
-        \node []  at
-          (
-            [ shift = { (-7em, 8em) } ]
-            current~page~text~area.south
-          )
+        \node [anchor = north~east] (supervisor_infomation)  
+          at ([shift = {(2em, -4em)}]author_infomation.south)
           {
             \parbox { 0.5\textwidth }
               {
@@ -2477,16 +2528,13 @@
   {
     \int_compare:nNnT { \g__ccnu_thesis_type_int } = {2}
       {
-        \node []  at
-          (
-            [ shift = { (-8em, 6em) } ]
-            current~page~text~area.south~east
-          )
+        \node [ anchor = north~west ] (signature)  
+          at ([shift = {(3em, 4.5ex)}]supervisor_infomation.south~east)
           {
             \zihao{4}
             \begin{tabular}{r}
               Signature \underline{\hspace*{5em}} \\[1.5ex]
-              Approved
+              Approved 
             \end{tabular}
           };
       }
@@ -2496,11 +2544,8 @@
   {
     \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
       {
-        \node []  at
-          (
-            [ shift = { (-5.3em, 2em) } ]
-            current~page~text~area.south~east
-          )
+        \node [anchor = north~east] (time)  
+          at ([shift = {(-0.4em, -1ex)}]signature.south~east)
           {
             \zihao{4}
             \__ccnu_month_cover_to_english_version:V \l__ccnu_info_month_int
@@ -2511,7 +2556,7 @@
       {
         \node [anchor = south]  at
           (
-            [ shift = { (0em, 0.02\paperheight) } ]
+            [ shift = { (0em, 0.073\paperheight) } ]
             current~page~text~area.south
           )
           {
