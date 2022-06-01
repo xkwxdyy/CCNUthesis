@@ -61,11 +61,12 @@
 \int_new:N        \g__ccnu_thesis_type_int           % 学位论文类型
 \clist_new:N      \g__ccnu_to_ctexbook_clist
 \clist_new:N      \g__ccnu_to_hyperref_clist
-\bool_new:N       \g__ccnu_cover_word_version_bool   % word 版本
+\bool_new:N       \g__ccnu_cover_word_version_bool   % word 版本控制
 \bool_new:N       \g__ccnu_twoside_bool
 \bool_new:N       \g__ccnu_draft_bool
 \bool_new:N       \g__ccnu_showheadlogo_bool    % 页眉 logo
-\str_new:N        \g__ccnu_headline_str        % 页眉 阴阳线
+\str_new:N        \g__ccnu_headline_str         % 页眉 阴阳线
+\str_new:N        \g__ccnu_type_version_str     % 打印、电子版本控制
 \tl_new:N         \g__ccnu_config_tl
 
 % 下划线
@@ -222,6 +223,9 @@
       { \bool_set_false:N    \g__ccnu_draft_bool },
     draft .default:n = true,
     draft .initial:n = false,
+    version .str_gset:N = \g__ccnu_type_version_str,
+    version .value_required:n = true,
+    version .initial:n = electronic,
     unknown .code:n = { \__ccnu_error:n { unknown-option } }
   }
 \__ccnu_msg_new:nn { unknown-option }
@@ -240,15 +244,31 @@
   {
     \PassOptionsToClass { zihao  = -4, oneside } { ctexbook }
   }
+\str_if_eq:nVT { print-bachelor-twoside } \g__ccnu_type_version_str
+  {
+    \PassOptionsToClass { twoside } { ctexbook }
+  }
 \PassOptionsToClass
   {
     UTF8,
     heading    = true,
     fontset    = none,
-    linespread = \c__ccnu_line_spread_fp,
     \g__ccnu_to_ctexbook_clist
   }
   { ctexbook }
+% 行距
+\int_case:nn { \g__ccnu_thesis_type_int }
+  {
+    % 本科
+    {3}
+      { \PassOptionsToClass { linespread = \c__ccnu_line_spread_fp } { ctexbook } }
+    % 硕士行距 1.25 倍
+    {2} 
+      { \PassOptionsToClass { linespread = 1.04\c__ccnu_line_spread_fp } { ctexbook } }
+    % 博士行距 19 磅
+    {1} 
+      { \fontsize{10.5pt}{19bp} \selectfont }
+  }
 \clist_map_inline:nn
   {
     { no-math           } { fontspec },
@@ -979,6 +999,44 @@
   }
 
 
+% 攻读学位期间取得的研究成果（博士）
+\NewDocumentCommand { \publication } { }
+  {
+    \newpage
+    \group_begin:
+      \keys_set:nn { ctex }
+        {
+          chapter = 
+            {
+              numbering = false,
+              indent = 0em,
+              format = \zihao{3} \sffamily \bfseries \centering
+            }
+        }
+      \chapter*{攻读学位期间发表的学术论文}
+      \addcontentsline{toc}{chapter}{\zihao{5} \bfseries 攻读学位期间发表的学术论文}
+    \group_end:
+    \keys_set:nn { ctex }
+      {
+        punct = banjiao,
+      }
+  }
+\newlist{publications}{enumerate}{1}
+\setlist[publications]
+  {
+    label      = [\arabic*],
+    align      = right,
+    leftmargin = 10mm,
+    topsep     = 6bp,
+    parsep     = 0bp,
+    partopsep  = 0bp,
+    itemsep    = 6bp,
+    labelsep   = !,
+    resume     = publications,
+  }
+
+
+
 % 设置公式最小垂直间距
 \dim_set:Nn \lineskiplimit { 2.5pt }
 \dim_set:Nn \lineskip { \baselineskip-1.1\ccwd }
@@ -1575,11 +1633,11 @@
 % 信息变量
 \clist_map_inline:nn
   {
-    title, date, author, supervisor, department, major, student_id, author_type, research_area
+    title, date, author, supervisor, department, major, student_id, degree_type, research_area
   }
   { \tl_new:c { l__ccnu_info_ #1 _tl } }
 \clist_map_inline:nn
-  { title, department, major, author_type, author, supervisor_name, supervisor_academic_title, date, research_area}
+  { title, department, major, degree_type, author, supervisor_name, supervisor_academic_title, date, research_area}
   { \tl_new:c { l__ccnu_info_ #1 _en_tl } }
 
 % 关键词
@@ -1629,8 +1687,8 @@
     department*  .tl_set:N    = \l__ccnu_info_department_en_tl,
     major       .tl_set:N    = \l__ccnu_info_major_tl,
     major*       .tl_set:N    = \l__ccnu_info_major_en_tl,
-    author-type    .tl_set:N    = \l__ccnu_info_author_type_tl,
-    author-type*    .tl_set:N    = \l__ccnu_info_author_type_en_tl,
+    degree-type    .tl_set:N    = \l__ccnu_info_degree_type_tl,
+    degree-type*    .tl_set:N    = \l__ccnu_info_degree_type_en_tl,
     research-area    .tl_set:N    = \l__ccnu_info_research_area_tl,
     research-area*    .tl_set:N    = \l__ccnu_info_research_area_en_tl,
     student-id  .tl_set:N    = \l__ccnu_info_student_id_tl,
@@ -2283,7 +2341,7 @@
             \clist_set:Nx \l__ccnu_tmpb_clist
               {
                 \l__ccnu_info_author_tl     ,
-                \l__ccnu_info_author_type_tl ,
+                \l__ccnu_info_degree_type_tl ,
                 \l__ccnu_info_major_tl      ,
                 \l__ccnu_info_supervisor_tl      ,
               }
@@ -2476,7 +2534,7 @@
                   \normalfont
                   Submitted~in~Partial~Fulfillment~of~the~Requirement \\
                 \group_end:
-                For~the~\l__ccnu_info_author_type_en_tl \c_space_tl Degree~in~\l__ccnu_info_major_en_tl
+                For~the~\l__ccnu_info_degree_type_en_tl \c_space_tl Degree~in~\l__ccnu_info_major_en_tl
               }
           };
       }
@@ -2704,7 +2762,13 @@
         {
           \pagestyle { empty }
           \__ccnu_cover_i_master_doctor:
-          \newpage
+          \str_case:VnTF \g__ccnu_type_version_str
+            {
+              { print-master-twoside } {}
+              { print-doctor-twoside } {}
+            }
+            { \__ccnu_new_blank_page: }
+            { \newpage }
           \__ccnu_cover_ii_master_doctor:
           \newpage
           \__ccnu_cover_iii_master_doctor:
@@ -2718,13 +2782,25 @@
                     { figures / Originality_Copyright_master_doctor.pdf }
               };
           \end{tikzpicture}
+          \str_case:VnTF \g__ccnu_type_version_str
+            {
+              { print-master-twoside } {}
+              { print-doctor-twoside } {}
+            }
+            { \__ccnu_new_blank_page: }
+            { \newpage }
         }
     \end{titlepage}
   }
 
+\cs_new:Npn \__ccnu_new_blank_page:
+  {
+    \newpage \null \thispagestyle{empty} \newpage
+  }
 
 % 目录处理
-\int_compare:nNnTF { \g__ccnu_thesis_type_int } = {3}
+
+\cs_new:Npn \__ccnu_tocline_bachelor:
   {
     \keys_set:nn { ctex }
       {
@@ -2735,15 +2811,41 @@
         chapter / tocline =
           {
             \normalfont 
-            \CTEXnumberline {#1} #2
+            \CTEXnumberline {##1} ##2
           },
         section / tocline =
           {
             \normalfont
-            \CTEXnumberline {#1} #2
+            \CTEXnumberline {##1} ##2
           }
       }
   }
+\cs_new:Npn \__ccnu_tocline_master:
+  {
+    \keys_set:nn { ctex }
+      {
+        % 目录深度：到 section
+        tocdepth = 2 ,
+        % 目录标题
+        contentsname   = \c__ccnu_name_toc_tl,
+        chapter / tocline =
+          {
+            \normalfont \bfseries \texorpdfstring{ \zihao{-4} }{ zihao -4 }
+            \CTEXnumberline {##1} ##2
+          },
+        section / tocline =
+          {
+            \normalfont \texorpdfstring{ \zihao{-4} }{ zihao -4 }
+            \CTEXnumberline {##1} ##2
+          },
+        subsection / tocline =
+          {
+            \normalfont \texorpdfstring{ \zihao{-4} }{ zihao -4 }
+            \CTEXnumberline {##1} ##2
+          }
+      }
+  }
+\cs_new:Npn \__ccnu_tocline_doctor:
   {
     \keys_set:nn { ctex }
       {
@@ -2754,20 +2856,27 @@
         chapter / tocline =
           {
             \normalfont \bfseries \texorpdfstring{ \zihao{5} }{ zihao 5 }
-            \CTEXnumberline {#1} #2
+            \CTEXnumberline {##1} ##2
           },
         section / tocline =
           {
             \normalfont \texorpdfstring{ \zihao{5} }{ zihao 5 }
-            \CTEXnumberline {#1} #2
+            \CTEXnumberline {##1} ##2
           },
         subsection / tocline =
           {
             \normalfont \texorpdfstring{ \zihao{5} }{ zihao 5 }
-            \CTEXnumberline {#1} #2
+            \CTEXnumberline {##1} ##2
           }
       }
   }
+\int_case:nn { \g__ccnu_thesis_type_int }
+  {
+    {3}{ \__ccnu_tocline_bachelor: }
+    {2} { \__ccnu_tocline_master: }
+    {1} { \__ccnu_tocline_doctor: }
+  }
+
 
 
 % 去掉目录的页码
@@ -2818,7 +2927,8 @@
 % 设置章目录的引导线（默认是没有的）
 \RenewDocumentCommand { \cftchapdotsep } { } { \cftdotsep }   
 
-\int_compare:nNnTF { \g__ccnu_thesis_type_int } = {3}
+
+\cs_new:Npn \__ccnu_tableofcontents_format_bachelor:
   {
     % chapter前的额外垂直间距
     \dim_set:Nn \cftbeforechapskip { 0.5\baselineskip }
@@ -2831,11 +2941,12 @@
     \dim_set:Nn \cftsecnumwidth { 2em }
     \dim_set:Nn \cftsubsecnumwidth { 2em }
   }
+\cs_new:Npn \__ccnu_tableofcontents_format_master:
   {
     % chapter前的额外垂直间距
     \dim_set:Nn \cftbeforechapskip { 0.4\baselineskip }
     % section前的额外垂直间距
-    \dim_set:Nn \cftbeforesecskip { 0.2\baselineskip }
+    \dim_set:Nn \cftbeforesecskip { 0.3\baselineskip }
     % subsection前的额外垂直间距
     \dim_set:Nn \cftbeforesubsecskip { 0.2\baselineskip }
     % 缩进
@@ -2855,6 +2966,38 @@
       { \zihao{5} \normalfont }
     % 页码宽度
     \cftsetpnumwidth { 1.1em }
+  }
+\cs_new:Npn \__ccnu_tableofcontents_format_doctor:
+  {
+    % chapter前的额外垂直间距
+    \dim_set:Nn \cftbeforechapskip { 0.4\baselineskip }
+    % section前的额外垂直间距
+    \dim_set:Nn \cftbeforesecskip { 0.4\baselineskip }
+    % subsection前的额外垂直间距
+    \dim_set:Nn \cftbeforesubsecskip { 0.3\baselineskip }
+    % 缩进
+    \dim_set:Nn \cftchapindent { 0em }
+    \dim_set:Nn \cftsecindent  { 1em }
+    \dim_set:Nn \cftsubsecindent { 2em }
+    % 计数器宽度
+    \dim_set:Nn \cftchapnumwidth { 1em }
+    \dim_set:Nn \cftsecnumwidth { 1em }
+    \dim_set:Nn \cftsubsecnumwidth { 1em }
+    % 页码字体
+    \RenewDocumentCommand { \cftchappagefont } { }
+      { \zihao{5} \normalfont }
+    \RenewDocumentCommand { \cftsecpagefont } { }
+      { \zihao{5} \normalfont }
+    \RenewDocumentCommand { \cftsubsecpagefont } { }
+      { \zihao{5} \normalfont }
+    % 页码宽度
+    \cftsetpnumwidth { 1.1em }
+  }
+\int_case:nn { \g__ccnu_thesis_type_int }
+  {
+    {3}{ \__ccnu_tableofcontents_format_bachelor: }
+    {2} { \__ccnu_tableofcontents_format_master: }
+    {1} { \__ccnu_tableofcontents_format_doctor: }
   }
 
 

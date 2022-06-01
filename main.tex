@@ -14,21 +14,32 @@
 %********************************************
 
 
-
-% 学术类型
-%   可选选项：type = bachelor|master|doctor
-%     默认：bachelor
-
 % \documentclass[type = bachelor]{CCNUthesis}
-\documentclass[type = master]{CCNUthesis}
+% \documentclass[type = master, version = print-master-twoside]{CCNUthesis}
 % \documentclass[type = master, draft]{CCNUthesis}
-% \documentclass[type = doctor]{CCNUthesis}
+\documentclass[type = doctor]{CCNUthesis}
 % \documentclass[type = doctor, draft]{CCNUthesis}
 
 
-% 交终稿的时候需要单面打印，设置 oneside，奇偶页页面设置相同
-% 答辩打印可以双面打印，设置 twoside，奇偶页页面设置不同
-% \documentclass[twoside]{CCNUthesis}
+% type
+% 学术类型
+%   可选选项：bachelor|master|doctor
+%     默认：bachelor
+
+% version
+% 文档版本
+%   可选选项：electronic|print-bachelor-oneside|print-bachelor-twoside
+%           print-master-oneside|print-master-twoside|
+%           print-doctor-twoside
+%     默认：electronic
+%     electronic：电子版，无空白页
+%     print-bachelor-oneside：打印版，本科，单面打印
+%       数学与统计学学院「本科」终稿要求「单面」打印
+%     print-bachelor-twoside：打印版，本科，双面打印
+%       答辩打印可以双面打印（因为只是给答辩老师看，并不上交）
+%     print-master-oneside：打印版，硕士，无空白页，单面打印
+%     print-master-twoside：打印版，硕士，有空白页，双面打印
+%     print-doctor-twoside：打印版，博士，有空白页，双面打印
 
 
 \ccnusetup{
@@ -71,6 +82,7 @@
       %   选项参考：
       %     本：数学与应用数学（试验）｜数学与应用数学（师范）｜统计学
       %     硕：应用统计
+      %   【硕博】「学术型学位学科专业」填写《授予博士、硕士学位和培养研究生的学科、专业目录》中的二级学科或我校自主设置专业；「专业型学位学科专业」填写「专业学位领域」，无领域学科不填
     major* = {Mathematics},
       % 英文-专业
       %   适用学位类型：【硕｜博】
@@ -86,12 +98,14 @@
       %   适用学位类型：【硕｜博】
       %   选项参考：
       %     硕：Mathematics|Applied Statistics
-    author-type = {应用统计硕士},
+    degree-type = {应用统计硕士},
       % 中文-申请学位学生类别
       %   适用学位类型：【硕｜博】
       %   选项参考：
-      %     硕：应用统计硕士
-    author-type* = {M.S.},
+      %     硕：教育硕士｜应用统计硕士｜全日制硕士｜同等学力人员｜
+      %        高校教师在职攻读硕士学位人员｜专业学位人员
+      %     博：博士
+    degree-type* = {M.S.},
       % 英文-申请学位学生类别
       %   适用学位类型：【硕｜博】
       %   选项参考：
@@ -111,6 +125,7 @@
     supervisor = {教师姓名 \quad 职称},
       % 中文-指导老师姓名+职称
       %   适用学位类型：【本｜硕｜博】
+      %   职称：讲师｜副教授｜教授｜副研究员｜研究员
     supervisor*-name = {Jiao shi},
       % 拼音-指导老师姓名
       %   适用学位类型：【硕｜博】
@@ -171,6 +186,7 @@
     caption-labelstyle = hyphen,
       % 图表标题 label 计数样式
       %   适用学位类型：【本｜硕｜博】
+      %     【硕｜博】应选择 dot （根据研究生学位论文规范）
       %   可选选项：arabic|hyphen|dot
       %      arabic：样式为图1，图2，表1，表2...，并且跨 chapter 连续编号，即 上一个 chapter 的图编号若为4，下一个 chapter 的第一个图编号为 5
       %      hyphen：样式为图1-1，图2-1，表1-1...
@@ -214,11 +230,11 @@
       %   可选选项：
       %     ccnu-bachelor-numerical|ccnu-bachelor-author-year
       %     ccnu-master|ccnu-doctor|gb7714-2015
-      %       ccnu-bachelor-numerical：【本】学校标准，按照引用顺序排
-      %       ccnu-bachelor-author-year：【本】学校标准，按照作者名、年份排
-      %       ccnu-master：【硕】国标，按照引用顺序排
-      %       ccnu-doctor：【博】国标，按照引用顺序排
-      %       gb7714-2015：国标，按照引用顺序排
+      %       ccnu-bachelor-numerical：【本】学校标准，顺序编码制
+      %       ccnu-bachelor-author-year：【本】学校标准，作者-年制
+      %       ccnu-master：【硕】国标，顺序编码制
+      %       ccnu-doctor：【博】国标，顺序编码制
+      %       gb7714-2015：国标，顺序编码制
     bib-resource = {CCNUthesis-main.bib},
       % 参考文献数据源
       %   适用学位类型：【本｜硕｜博】
@@ -304,7 +320,10 @@
 
 % 附录
 % 【硕博】附录在致谢前
-% \include{./back/Appendix.tex}
+\include{./back/Appendix.tex}
+
+% 攻读学位期间取得的研究成果（博）
+\include{./back/Publications.tex}
 
 
 % 致谢
@@ -313,7 +332,7 @@
 
 % 附录
 % 【本科】附录在致谢后
-\include{./back/Appendix.tex}
+% \include{./back/Appendix.tex}
 
 
 \end{document}
