@@ -1,5 +1,9 @@
 \documentclass{ccnudoc}
 \usepackage{multirow, xeCJKfntef, xpinyin}
+\usepackage{graphicx}
+\usepackage{tabularray}
+\graphicspath{{figures}}
+
 \hypersetup{
   pdftitle  = {CCNUthesis: 华中师范大学学位论文模版},
   pdfauthor = {夏康玮}
@@ -14,30 +18,53 @@
 \title{\textcolor{MaterialIndigo800}{%
   \textbf{CCNUthesis: 华中师范大学学位论文\xpinyin[font=\sffamily,format=\color{MaterialIndigo800}]{模}{mu2}板}}}
 \author{夏康玮}
-\date{2022/05/22\quad v1.2.1%
-  \thanks{\url{https://github.com/xkwxdyy/CCNUthesis}.}}
+\date{2022/06/02\quad v1.2.3%
+  \thanks{%
+    \parbox{0.5\textwidth}{
+      \url{https://github.com/xkwxdyy/CCNUthesis} \\
+      \url{https://gitee.com/xkwxdyy/CCNUthesis}
+    }
+  }
+}
 
 
 \begin{document}
 \newgeometry{
-  left   = 1.25 in,
+  left   = 2.2 in,
   right  = 1.25 in,
   top    = 1.25 in,
   bottom = 1.00 in
 }
 
 \maketitle
-\vfill
+
+\begin{abstract}
+华中师范大学学位论文 \LaTeX{} 模板 \cls{CCNUthesis} 基于本科生院的论文撰写规范制作，同时参考研究生院提供的《研究生学位论文规范》，用于生成符合华中师范大学学位论文排版要求和相应的国家规范、行业标准的学位论文，旨在为同学提供毕业论文书写的方便。
+\end{abstract}
+
+\def\abstractname{Abstract}
+\begin{abstract}
+The \cls{CCNUthesis} class is intended for typesetting Central China Normal University dissertations with \LaTeX{}, providing support for bachelor, master, and doctoral thesis.
+\end{abstract}
+
+\vspace{2cm}
+\def\abstractname{特别声明}
+\begin{abstract}
+在使用本模板时，我们默认您同意以下内容：
+\begin{enumerate}
+  \item 本模板通过 LPPL 1.3c 协议开放源代码，您可以随意使用编译出的 PDF 文件。
+  \item 本模板与学校官方部门并不存在合作关系，作者不对使用本模板产生的格式审查问题负责。
+  \item 遇到本文档没有覆盖的问题属于正常情况，欢迎提交反馈意见。
+\end{enumerate}
+\end{abstract}
+
 \begin{tikzpicture}[remember picture, overlay]
-  \node[opacity = 0.2] at ([shift={(0.1\textwidth, -0.45\textheight)}]current page text area.north west){
+  \node[opacity = 0.1] at ([shift={(0.1\textwidth, -0.45\textheight)}]current page text area.north west){
     \includegraphics[width=26cm]{ccnu-logo.png}
   };
 \end{tikzpicture}
-\vfill
 \thispagestyle{plain}
 \clearpage
-
-\tableofcontents
 
 
 % 用户手册的页边距
@@ -49,58 +76,44 @@
   bottom = 1.00 in
 }
 
-
-\section{还有什么没写：TODO}
-
-\begin{itemize}
-  \item 减少宏包依赖
-  \item 如果是 author-year 的时候，对于多音字怎么办？——加 key
-  \item 完整例子、physicx、tabularray示例和用户使用的分开
-  \item 重写 Readme
-  \item 重写 wiki
-  \item 把 manual 中有用的部分写进 wiki
-  \item 写用户手册
-    \begin{itemize}
-      \item 如何提问
-    \end{itemize}
-  \item 看 AlphaZTX 的知乎
-  \item 学习其它论文模版的处理
-    \begin{itemize}
-      \item thuthesis
-      \item sjtuthesis
-      \item ucasthesis
-      \item ustcthesis
-      \item cquthesis
-      \item njuthesis
-      \item hithesis
-    \end{itemize}
-  \item 处理硕士模版
-  \item 单面双面打印，空白页，cleardoublepage？（看 thuthesis 的处理
-\end{itemize}
+\tableofcontents
 
 
 
 \section{介绍}
 
-目前，在网上可以找到的华中师范大学 \LaTeX{} 论文模板主要是由华中师范大学数学与统计学学院邓国泰老师编写的模版。但这个模板基于 CTeX 套装，除了本身的 bug 外，\cmd{pdflatex} 编译方式对中英文空格的处理并不友好。关于旧模版的更多问题，可以参看\href{https://gitee.com/xkwxdyy/CCNUthesis/wikis/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/%E6%97%A7%E6%A8%A1%E7%89%88%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F%E6%9C%89%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%EF%BC%9F%E6%96%B0%E6%A8%A1%E7%89%88%E7%9A%84%E4%BD%BF%E7%94%A8%E6%98%AF%E5%A6%82%E4%BD%95%E5%AE%8C%E5%96%84%E7%9A%84%EF%BC%9F}{《旧模版的使用方式有什么问题？新模版的使用是如何完善的？》}。相比之下，复旦大学 \cls{fduthesis}、清华大学 \cls{thuthesis}、中国科学技术大学 \cls{ustcthesis}、中国科学院大学 \cls{ucasthesis} 以及上海交通大学 \cls{sjtuthesis}等，都有成熟、稳定的解决方案，值得参考。
+目前，在网上可以找到的华中师范大学 \LaTeX{} 论文模板主要是
+
+\begin{itemize}
+  \item 由华中师范大学数学与统计学学院邓国泰老师编写的本科毕业论文模版
+  \item 华中师范大学数学与统计学学院基础数学方向“流传”下来的硕士模版
+\end{itemize}
+
+但这些模板基于 \CTeX 套装编写， \CTeX 套装已经近十年未更新，已不能适应当前 \TeX{} 中文技术的发展，引用 \CTeX 套装的开发之一刘海洋的话：\emph{\CTeX 已经完成了它的历史使命。} 更多关于不推荐使用 \CTeX 套装的原因参看 \href{https://gitee.com/xkwxdyy/CCNUthesis/wikis/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E6%8E%A8%E8%8D%90%E5%AE%89%E8%A3%85\CTeX%E5%A5%97%E8%A3%85%E4%BA%86}{《为什么不推荐安装 \CTeX 套装了》}。
+
+抛开旧模版是基于 \CTeX 套装编写的这一点，关于旧模版本身也有众多使用问题，比如格式相关代码不能完全剥离，导致用户，尤其是 \LaTeX{} 初学者，使用起来体验不佳。笔者整理过邓国泰老师编写的本科毕业论文模版中出现的问题，并对照着阐述了新模版的优化处理，感兴趣的用户可以参看 \href{https://gitee.com/xkwxdyy/CCNUthesis/wikis/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/%E6%97%A7%E6%A8%A1%E7%89%88%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F%E6%9C%89%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%EF%BC%9F%E6%96%B0%E6%A8%A1%E7%89%88%E7%9A%84%E4%BD%BF%E7%94%A8%E6%98%AF%E5%A6%82%E4%BD%95%E5%AE%8C%E5%96%84%E7%9A%84%EF%BC%9F}{《旧模版的使用方式有什么问题？新模版的使用是如何完善的？》}。
+
+相比之下，复旦大学 \cls{fduthesis}、清华大学 \cls{thuthesis}、中国科学技术大学 \cls{ustcthesis}、中国科学院大学 \cls{ucasthesis} 以及上海交通大学 \cls{sjtuthesis} 等学位论文 \LaTeX{} 模版成熟稳定，值得参考。
 
 本模板将借鉴前辈经验，重新设计，并使用 \LaTeX3 编写，以适应 \TeX{} 技术发展潮流；同时还将构建一套简洁的接口，方便用户使用。
 
 
+\subsection*{TeXLive 安装}
+
+要想使用 \LaTeX{} 及此模板，必须安装 \TeX Live 发行版，安装介绍只推荐啸行编写的 \href{https://ctan.math.illinois.edu/info/install-latex-guide-zh-cn/install-latex-guide-zh-cn.pdf}{install-latex-guide-zh-cn}，关于此文档的一些补充，参看 \href{https://gitee.com/xkwxdyy/CCNUthesis/wikis/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/%E5%A6%82%E4%BD%95%E5%AE%89%E8%A3%85TeXLive}{《如何安装 TeXLive ？》}。
+
+
 \subsection*{\LaTeX{} 入门}
 
-本文档并非是一份 \LaTeX{} 零基础教程。如果您是完完全全的新手，
-建议先阅读相关入门文档，如刘海洋编著的《\LaTeX{} 入门》
-\cite{刘海洋2013latex入门} 第一章，或大名鼎鼎的“\pkg{lshort}”
-\cite{lshort} 及其中文翻译版 \cite{lshort-zh-cn}。当然，
-网络上的入门教程多如牛毛，您可以自行选取。
+本文档并非是一份 \LaTeX{} 零基础教程。如果您是完完全全的新手，建议先阅读相关入门文档，虽然网络上的入门教程多如牛毛，但是强烈建议阅读 \href{https://ctan.math.illinois.edu/info/lshort/chinese/lshort-zh-cn.pdf}{lshort-zh-cn}，并且用好 \cmd{texdoc} 命令（lshort-zh-cn 中有介绍）查看相关宏包手册进行更全面的学习。
+
 
 \subsection*{关于本文档}
 
 本文采用不同字体表示不同内容。无衬线字体表示宏包名称，如
-\pkg{xeCJK} 宏包、\cls{fduthesis} 文档类等；等宽字体表示代码或
-文件名，如 \cs{fdusetup} 命令、\env{abstract} 环境、\TeX{} 文档
-\file{thesis.tex} 等；带有尖括号的楷体（或西文斜体）表示命令参数，
+\pkg{xeCJK} 宏包、\cls{CCNUthesis} 文档类等；等宽字体表示代码或
+文件名，如 \cs{ccnusetup} 命令、\env{abstract} 环境、\TeX{} 文档
+\file{main.tex} 等；带有尖括号的楷体（或西文斜体）表示命令参数，
 如 \meta{模板选项}、\meta{English title} 等。在使用时，参数两侧
 的尖括号不必输入。示例代码进行了语法高亮处理，以方便阅读。
 
@@ -108,117 +121,185 @@
 的则为命令行代码，请注意区分。模板提供的选项、命令、环境等，
 均用横线框起，同时给出使用语法和相关说明。
 
-本模板中的选项、命令或环境可以分为以下三类：
-\begin{itemize}
-  \item 名字后面带有 \rexptarget\rexpstar{} 的，表示只能
-    在\emph{中文模板}中使用；
-  \item 名字后面带有 \exptarget\expstar{} 的，表示只能
-    在\emph{英文模板}中使用；
-  \item 名字后面不带有特殊符号的，表示既可以在中文模板中使用，
-    也可以在英文模板中使用。
-\end{itemize}
+% 本模板中的选项、命令或环境可以分为以下三类：
+% \begin{itemize}
+%   \item 名字后面带有 \rexptarget\rexpstar{} 的，表示只能
+%     在\emph{中文模板}中使用；
+%   \item 名字后面带有 \exptarget\expstar{} 的，表示只能
+%     在\emph{英文模板}中使用；
+%   \item 名字后面不带有特殊符号的，表示既可以在中文模板中使用，
+%     也可以在英文模板中使用。
+% \end{itemize}
 
-代码实现主要面向对 \LaTeX{} 宏包开发感兴趣的用户。如果您有任何改进
-意见或者功能需求，欢迎前往 GitHub 仓库
-\href{https://github.com/stone-zeng/fduthesis/issues}{提交 issue}。
+如果您有任何改进意见或者功能需求，欢迎前往 \href{https://github.com/xkwxdyy/CCNUthesis/issues}{GitHub 仓库} 或 \href{https://gitee.com/xkwxdyy/CCNUthesis/issues}{Gitee 仓库} 提交 issue。
 
-文档的最后还提供了版本历史和代码索引，以供查阅。
+
 
 \section{安装}
 
-\subsection{获取 \cls{fduthesis}}
+\subsection{获取 \cls{CCNUthesis}}
 
-\subsubsection{标准安装}
+目前模块还处于刚开发完的阶段，决定暂时用户以「下载发行版」的方式获取最新版本的 \cls{CCNUthesis}：
 
-如果没有特殊理由，始终建议您使用宏包管理器安装 \cls{fduthesis}。
-例如在 \TeXLive{} 中，执行（可能需要管理员权限）
-\begin{shellexample}[morekeywords={tlmgr,install}]
-  tlmgr install fduthesis
-\end{shellexample}
-即可完成安装。
+\begin{enumerate}
+  \item 进入项目主页（\href{https://github.com/xkwxdyy/CCNUthesis}{github 项目主页} （界面见图~\ref{figure:github项目主页} ）或 \href{https://gitee.com/xkwxdyy/CCNUthesis}{gitee 项目主页} （界面见图~\ref{figure:gitee项目主页} ））
+  \item 在右侧一列有“发行版”（gitee）或“Releases”（github），并且有一个标签图标并有“vx.x.x - 20xx-xx-xx”字样，表示最新的发行版版本和发布时间，点击即可查看相关信息（如果想查看历史所有发行版信息，可以点击“Releases”（github）或“发行版”右侧的“全部”（gitee））。
+  
+    发行版中一般由以下信息构成（\href{https://github.com/xkwxdyy/CCNUthesis/releases}{github 发行版} 界面见图~\ref{figure:github发行版}，\href{https://gitee.com/xkwxdyy/CCNUthesis/releases}{gitee 发行版} 界面见图~\ref{figure:gitee发行版}）
+      \begin{itemize}
+        \item 更新文件的特别说明。如果没有，则表明此次更新只需要更新 \file{CCNUthesis.cls} 文件至最新\footnote{“更新 \meta{文件} 至最新”目前表示在发行版中下载最新版本的模板，并用其中所需要更新的 \meta{文件} 去替换本地的旧 \meta{文件}} 即可
+        \item 更新日志。主要为此次发行版与上次发行版的不同，比如“Added”、“Changed”、“Fixed”等等信息
+        \item 模版及用户手册下载链接。github 的为“Assets”部分，gitee 的为“下载”部分。一般用户只需要点击 \file{CCNUthesis-vx.x.x.zip} 进行模版下载即可，而下面的 \file{Source code} 为项目的整个源码，包括手册的源码，测试文件等，如果感兴趣的用户可以下载进行查看（当然，如果会使用 \cmd{git} 的用户也可以将整个 \cls{CCNUthesis} 项目 \cmd{clone} 下来查看）
+      \end{itemize}
+  \item 点击 \file{CCNUthesis-vx.x.x.zip} 进行下载，在本地解压即可
+\end{enumerate}
 
-在 \TeXLive{} 和 \MiKTeX{} 中，您还可以通过图形界面进行安装，
-此处不再赘述。
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width = \textwidth]{github项目主页.png}
+  \caption{github 项目主页}
+  \label{figure:github项目主页}
+\end{figure}
 
-\subsubsection{手动安装}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width = \textwidth]{gitee项目主页.png}
+  \caption{gitee 项目主页}
+  \label{figure:gitee项目主页}
+\end{figure}
 
-如果您需要从 CTAN 上自行下载并手动安装，较好的方法是使用 TDS
-安装包：
-\begin{itemize}
-  \item 从 CTAN 上下载 \cls{fduthesis} 的
-    \href{http://mirror.ctan.org/install/macros/latex/contrib/fduthesis.tds.zip}{TDS 安装包}；
-  \item 按目录结构将 \file{fduthesis.tds.zip} 中的文件复制到 \TeX{}
-    发行版的本地 TDS 根目录；
-  \item 执行 \bashcmd{mktexlsr} 刷新文件名数据库以完成安装。
-\end{itemize}
-%
-您也可以从源代码直接生成模板（不推荐）：
-\begin{itemize}
-  \item 打开 \href{https://github.com/stone-zeng/fduthesis}{项目主页}，
-    点击“Code”按钮，并选择“Download ZIP”，下载 \file{fduthesis-main.zip}；
-    如果您的电脑中安装有 git 程序，也可通过以下命令直接克隆代码仓库：
-    \begin{shellexample}[gobble=7,alsoletter={.},morekeywords={git,clone}]
-      git clone https://github.com/stone-zeng/fduthesis.git
-    \end{shellexample}
-  \item 解压并进入到 \file{source} 文件夹，执行以下命令以生成
-    模板的各组件：
-    \begin{shellexample}[gobble=7,morekeywords={xetex}]
-      xetex fduthesis.dtx
-    \end{shellexample}
-  \item 将生成的文档类（\file{.cls}）、宏包（\file{.sty}）以及
-    参数配置文件（\file{.def}）复制到 \TeX{} 发行版本地 TDS 树
-    的 \path{texmf-local/tex/latex/fduthesis/} 目录下，并执行
-    \bashcmd{mktexlsr} 刷新文件名数据库，方可完成安装。
-  \item 使用 \cls{fduthesis} 撰写论文时，您还需要从代码仓库下的
-    \file{testfiles/support} 目录中复制 \file{fudan-name.pdf}
-    文件至工作目录，以确保封面中的校名图片可以正确显示。
-\end{itemize}
 
-\subsubsection{扁平化安装}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width = \textwidth]{github发行版.png}
+  \caption{github 发行版}
+  \label{figure:github发行版}
+\end{figure}
 
-如果您不希望安装本模板，但需要立刻使用，也可以使用模板提供的安装脚本。
-从 GitHub 上获取代码仓库后，执行 \file{install-win.bat}（Windows 系统）
-或 \file{install-linux.sh}（Linux 系统），所有需要的文件便会在
-\file{thesis} 文件夹中生成。
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width = \textwidth]{gitee发行版.png}
+  \caption{gitee 发行版}
+  \label{figure:gitee发行版}
+\end{figure}
+
+% \subsubsection{标准安装}
+
+% 如果没有特殊理由，始终建议您使用宏包管理器安装 \cls{fduthesis}。
+% 例如在 \TeXLive{} 中，执行（可能需要管理员权限）
+% \begin{shellexample}[morekeywords={tlmgr,install}]
+%   tlmgr install fduthesis
+% \end{shellexample}
+% 即可完成安装。
+
+% 在 \TeXLive{} 和 \MiKTeX{} 中，您还可以通过图形界面进行安装，
+% 此处不再赘述。
+
+% \subsubsection{手动安装}
+
+% 如果您需要从 CTAN 上自行下载并手动安装，较好的方法是使用 TDS
+% 安装包：
+% \begin{itemize}
+%   \item 从 CTAN 上下载 \cls{fduthesis} 的
+%     \href{http://mirror.ctan.org/install/macros/latex/contrib/fduthesis.tds.zip}{TDS 安装包}；
+%   \item 按目录结构将 \file{fduthesis.tds.zip} 中的文件复制到 \TeX{}
+%     发行版的本地 TDS 根目录；
+%   \item 执行 \bashcmd{mktexlsr} 刷新文件名数据库以完成安装。
+% \end{itemize}
+% %
+% 您也可以从源代码直接生成模板（不推荐）：
+% \begin{itemize}
+%   \item 打开 \href{https://github.com/stone-zeng/fduthesis}{项目主页}，
+%     点击“Code”按钮，并选择“Download ZIP”，下载 \file{fduthesis-main.zip}；
+%     如果您的电脑中安装有 git 程序，也可通过以下命令直接克隆代码仓库：
+%     \begin{shellexample}[gobble=6,alsoletter={.},morekeywords={git,clone}]
+%       git clone https://github.com/stone-zeng/fduthesis.git
+%     \end{shellexample}
+%   \item 解压并进入到 \file{source} 文件夹，执行以下命令以生成
+%     模板的各组件：
+%     \begin{shellexample}[gobble=6,morekeywords={xetex}]
+%       xetex fduthesis.dtx
+%     \end{shellexample}
+%   \item 将生成的文档类（\file{.cls}）、宏包（\file{.sty}）以及
+%     参数配置文件（\file{.def}）复制到 \TeX{} 发行版本地 TDS 树
+%     的 \path{texmf-local/tex/latex/fduthesis/} 目录下，并执行
+%     \bashcmd{mktexlsr} 刷新文件名数据库，方可完成安装。
+%   \item 使用 \cls{fduthesis} 撰写论文时，您还需要从代码仓库下的
+%     \file{testfiles/support} 目录中复制 \file{fudan-name.pdf}
+%     文件至工作目录，以确保封面中的校名图片可以正确显示。
+% \end{itemize}
+
+% \subsubsection{扁平化安装}
+
+% 如果您不希望安装本模板，但需要立刻使用，也可以使用模板提供的安装脚本。
+% 从 GitHub 上获取代码仓库后，执行 \file{install-win.bat}（Windows 系统）
+% 或 \file{install-linux.sh}（Linux 系统），所有需要的文件便会在
+% \file{thesis} 文件夹中生成。
+
 
 \subsection{模板组成}
 
-本模板主要包含核心文档类、配置文件、附属宏包以及用户文档等几个部分，
-其具体组成见表~\ref{tab:fduthesis-components}。
+本模板主要包含核心文档类、参考文献格式文件以及用户文档等几个部分，
+其具体组成见表~\ref{tab:ccnuthesis-main-components}，模版子目录中的文件组成见表~\ref{tab:ccnuthesis-sub-components}。
 
 \begin{table}[ht]
-  \caption{\cls{fduthesis} 的主要组成部分}
-  \label{tab:fduthesis-components}
+  \caption{\cls{CCNUthesis} 的主要组成部分}
+  \label{tab:ccnuthesis-main-components}
   \centering
   \small
-  \begin{tabular}{ll}
-    \toprule
-      \textbf{文件} & \textbf{功能说明} \\
-    \midrule
-      \file{fduthesis.cls}          & 中文模板文档类 \\
-      \file{fduthesis-en.cls}       & 英文模板文档类 \\
-      \file{fduthesis.def}          & 参数配置文件，用于设定
-        \cls{fduthesis} 的初始参数，不建议您自行改动 \\
-      \file{fdudoc.cls}             & 用户手册文档类 \\
-      \file{fdulogo.sty}            & 复旦大学视觉识别系统 \\
-      \file{fudan-emblem.pdf}       & 校徽 \\
-      \file{fudan-emblem-new.pdf}   & 校徽（重修版） \\
-      \file{fudan-name.pdf}         & 校名图片 \\
-      \file{README.md}              & 简要自述 \\
-      \ifdefined\FDUCODEDOC
-        \file{fduthesis.pdf}        & 中文用户手册 \\
-        \file{fduthesis-en.pdf}     & 英文用户手册 \\
-        \file{fduthesis-code.pdf}   & 模板实现代码（本文档） \\
-      \else
-        \file{fduthesis.pdf}        & 中文用户手册（本文档） \\
-        \file{fduthesis-en.pdf}     & 英文用户手册 \\
-        \file{fduthesis-code.pdf}   & 模板实现代码 \\
-      \fi
-      \file{fduthesis-template.tex} & 空白模板，可据此为基础完成论文
-        撰写 \\
-    \bottomrule
-  \end{tabular}
+  \begin{tblr}{
+    hline{1, 2, Z} = {1pt},
+    width = \textwidth,
+    colspec = {X[2,l]X[5,l]},
+    rows = {m}
+  }
+    \textbf{文件} & \textbf{功能说明} \\
+    \file{CCNUthesis.pdf}         & 用户手册（本文档） \\
+    \file{main.tex}               & 模板的主文件，可据此为基础完成论文撰写 \\
+    \file{CCNUthesis.cls}         & 模板文档类 \\
+    \file{CCNUthesis-main.bib}    & 参考文献数据库文件，里面的条目均为示例，可删除后输入用户自己的参考文献条目并在正文中进行引用 \\
+    {\file{gb7714-CCNU.bbx} \\ \file{gb7714-CCNUay.bbx}} & 参考文献的条目格式文件 \\
+    \file{gb7714-CCNU.cbx}        & 参考文献的引用格式文件 \\
+    \file{latexmkrc}              & \cmd{latexmk} 编译命令的配置文件 \\
+    \file{README.md}              & 简要自述 \\
+    \file{CHANGELOG.md}           & 模板更新日志 \\
+    \file{LICENSE}                & 模版发布许可证
+  \end{tblr}
 \end{table}
+
+\begin{table}[ht]
+  \caption{\cls{CCNUthesis} 各目录的组成部分}
+  \label{tab:ccnuthesis-sub-components}
+  \centering
+  \small
+  \begin{tblr}{
+    hline{4,5,8,11,13} = {solid},
+    hline{1, 2, Z} = {1pt},
+    width = \textwidth,
+    colspec = {X[1,l]X[3,l]X[3,l]},
+    rows = {m},
+    cell{2}{1} = {r=2}{m},
+    cell{5}{1} = {r=3}{m},
+    cell{8}{1} = {r=3}{m},
+    cell{11}{1} = {r=2}{m},
+  }
+    \textbf{子目录} & \textbf{子目录中的文件} & \textbf{功能说明} \\
+    front & \file{abstract.tex}            & 中英文摘要 \\
+    front & \file{notation.tex}            & 符号表 \\
+    body  & \file{chapter<number>.tex}     & 正文的分文件 \\
+    back  & \file{acknowledgements.tex}    & 致谢 \\
+    back  & \file{appendix.tex}            & 附录 \\
+    back  & \file{publications.tex}        & 攻读学位期间取得的研究成果（博士）\\
+    logo  & \file{ccnulogo.png}            & “华中师范大学”字样 logo \\
+    logo  & \file{masterlogo.png}          & 硕士学位论文页眉 logo \\
+    logo  & \file{doctorlogo.png}          & 博士学位论文页眉 logo \\
+    copyright  & \file{Originality_Copyright.pdf}  & 本科学位论文原创性声明和使用授权说明 \\
+    copyright  & \file{Originality_Copyright_master_doctor.pdf}  & 硕博学位论文原创性声明和使用授权说明\\
+    figures & & 用户放置图片的目录\\
+  \end{tblr}
+\end{table}
+
+
 
 \section{使用说明}
 
@@ -242,22 +323,22 @@
 按照 \ref{subsec:编译方式}~小节中的方式编译该文档，您应当得到
 一篇 5 页的文章。当然，这篇文章的绝大部分都是空白的。
 
-英文模板可以用类似的方式使用：
+% 英文模板可以用类似的方式使用：
 
-\begin{latexexample}[deletetexcs={\documentclass},
-    moretexcs={\chapter},morekeywords={\documentclass},
-    emph={[2]document}]
-  % thesis-en.tex
-  \documentclass{fduthesis-en}
-  \begin{document}
-    \chapter{Welcome}
-    \section{Welcome to fduthesis!}
-    Hello, \LaTeX{}!
-  \end{document}
-\end{latexexample}
+% \begin{latexexample}[deletetexcs={\documentclass},
+%     moretexcs={\chapter},morekeywords={\documentclass},
+%     emph={[2]document}]
+%   % thesis-en.tex
+%   \documentclass{fduthesis-en}
+%   \begin{document}
+%     \chapter{Welcome}
+%     \section{Welcome to fduthesis!}
+%     Hello, \LaTeX{}!
+%   \end{document}
+% \end{latexexample}
 
-英文模板只对正文部分进行了改动，封面、指导小组成员以及声明页仍将
-显示为中文。
+% 英文模板只对正文部分进行了改动，封面、指导小组成员以及声明页仍将
+% 显示为中文。
 
 \subsection{编译方式} \label{subsec:编译方式}
 
@@ -1145,7 +1226,7 @@
     \begin{itemize}
       \item \pkg{xtemplate} 和 \pkg{l3keys2e}，用于扩展 \LaTeX3 编程环境。
         它们属于 \pkg{l3packages} 宏集。
-      \item \cls{ctexbook}，提供中文排版的通用框架。属于 \CTeX{}
+      \item \cls{CTeXbook}，提供中文排版的通用框架。属于 \CTeX{}
         宏集 \cite{CTeX}。
       \item \pkg{amsmath}，对 \LaTeX{} 的数学排版功能进行了
         全面扩展。属于 \AmSLaTeX{} 套件。
@@ -1174,6 +1255,37 @@
 
 这里只列出了本模板直接调用的宏包。这些宏包自身的调用情况，
 此处不再具体展开。如有需要，请参阅相关文档。
+
+
+\section{TODO}
+
+\begin{itemize}
+  \item 减少宏包依赖
+  \item 如果是 author-year 的时候，对于多音字怎么办？——加 key
+  \item 完整例子、physicx、tabularray示例和用户使用的分开
+  \item 重写 Readme
+  \item 重写 wiki
+  \item 把 manual 中有用的部分写进 wiki
+  \item 写用户手册
+    \begin{itemize}
+      \item 如何提问
+    \end{itemize}
+  \item 看 AlphaZTX 的知乎
+  \item 学习其它论文模版的处理
+    \begin{itemize}
+      \item thuthesis
+      \item sjtuthesis
+      \item ucasthesis
+      \item ustcthesis
+      \item cquthesis
+      \item njuthesis
+      \item hithesis
+    \end{itemize}
+  \item 处理硕士模版
+  \item 单面双面打印，空白，cleardoublepage？看 thuthesis 的处理
+  \item 录制新的讲解视频
+\end{itemize}
+
 
 \begin{thebibliography}{99}
 
@@ -1249,16 +1361,16 @@ W3C.
 \urlprefix\url{https://ctan.org/pkg/latex}
 \urlprefix\CTANurl[源代码：]{macros/latex/base/source2e.pdf}
 
-\bibitem[()]{CTeX}
-\textsc{CTEX.ORG}.
-\newblock \textit{\CTeX{} 宏集手册} [EB/OL].
+\bibitem[()]{\CTeX}
+\textsc{\CTeX.ORG}.
+\newblock \textit{\\CTeX{} 宏集手册} [EB/OL].
 \newblock version 2.5.4,
 \newblock (2020-08-23)
-\urlprefix\url{https://ctan.org/pkg/ctex}
-\urlprefix\CTANurl[文档及源代码：]{language/chinese/ctex/ctex.pdf}
+\urlprefix\url{https://ctan.org/pkg/\CTeX}
+\urlprefix\CTANurl[文档及源代码：]{language/chinese/\CTeX/\CTeX.pdf}
 
 \bibitem[()]{xeCJK}
-\textsc{CTEX.ORG}.
+\textsc{\CTeX.ORG}.
 \newblock \textit{\pkg{xeCJK} 宏包} [EB/OL].
 \newblock version 3.8.5,
 \newblock (2020-08-23)
@@ -1299,7 +1411,7 @@ W3C.
 \bibitem[()]{lshort-zh-cn}
 \textsc{Oetiker T}, \textsc{Partl H}, \textsc{Hyna I}, et al.
 \newblock \textit{一份（不太）简短的 \LaTeXe{} 介绍: 或 112 分钟了解 \LaTeXe{}} [EB/OL].
-\newblock \CTeX{} 开发小组, 译.
+\newblock \\CTeX{} 开发小组, 译.
 \newblock 原版版本 version 6.2, 中文版本 version 6.02,
 \newblock (2020-08-03)
 \urlprefix\url{https://ctan.org/pkg/lshort-zh-cn}
