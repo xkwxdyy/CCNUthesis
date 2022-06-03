@@ -957,7 +957,7 @@
 \bool_if:NT \g__ccnu_draft_bool { \geometry { showframe } }
 
 % 图片路径
-\graphicspath{{figures/}{logo/}}
+\graphicspath{{figures/}{logo/}{copyright/}}
 
 
 % 列表环境设置
@@ -1121,7 +1121,7 @@
           \bool_if:NT \g__ccnu_showheadlogo_bool
             {
               \fancyhead [ L ] 
-                { \includegraphics[width = 5cm]{./logo/masterlogo.png}}
+                { \includegraphics[width = 5cm]{ masterlogo.png}}
             }
           % 页眉线
           \__ccnu_headline:
@@ -1138,7 +1138,7 @@
           \bool_if:NT \g__ccnu_showheadlogo_bool
             {
               \fancyhead [ L ] 
-                { \includegraphics[width = 7cm]{./logo/doctorlogo.png}}
+                { \includegraphics[width = 7cm]{ doctorlogo.png}}
             }
           % 页眉线
           \__ccnu_headline:
@@ -2049,7 +2049,7 @@
       {
         \includegraphics
           [ height = 3.5em, width = 0.4\textwidth ]
-          { logo / ccnulogo.png } 
+          { ccnulogo.png } 
       };
   }
 
@@ -2757,7 +2757,7 @@
               {
                 \includegraphics
                   [ width = \Gm@layoutwidth, height = \Gm@layoutheight ]
-                    { copyright / Originality_Copyright.pdf }
+                    { Originality_Copyright.pdf }
               };
           \end{tikzpicture}
         }
@@ -2781,7 +2781,7 @@
               {
                 \includegraphics
                   [ width = \Gm@layoutwidth, height = \Gm@layoutheight ]
-                    { copyright / Originality_Copyright_master_doctor.pdf }
+                    { Originality_Copyright_master_doctor.pdf }
               };
           \end{tikzpicture}
           \str_case:VnTF \g__ccnu_type_version_str
@@ -3928,13 +3928,6 @@
         %   如果不手动调整，则默认是「编译时」的月份
     },
     style = {
-      footnote-style = xits,
-        % 脚注编号样式
-        %   可选选项：plain|libertinus|libertinus*|libertinus-sans|
-        %           pifont|pifont*|pifont-sans|pifont-sans*|
-        %           xits|xits-sans|xits-sans*
-        %   默认与西文字体保持一致
-        %
       font = times,
         % 西文字体
         %   适用学位类型：【本｜硕｜博】
@@ -3949,6 +3942,13 @@
         %     newtx   : TG Termes,        TG Heros, TG Cursor,    newtxmath
         %     tg      : TG Termes,        TG Heros, TG Cursor,    TG Termes Math
         %     *******************************************************************
+      footnote-style = xits,
+        % 脚注编号样式
+        %   可选选项：plain|libertinus|libertinus*|libertinus-sans|
+        %           pifont|pifont*|pifont-sans|pifont-sans*|
+        %           xits|xits-sans|xits-sans*
+        %   默认与西文字体保持一致
+        %
       cjk-font = fandol,
         % 中文字体
         %   适用学位类型：【本｜硕｜博】
