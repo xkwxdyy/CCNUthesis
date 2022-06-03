@@ -4,6 +4,13 @@
 
 更多关于模版的内容和如何使用，请仔细阅读 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis)！
 
+## [v1.2.3] - 2022-06-03
+
+### Changed
+
+- 设置模版的默认值
+
+
 ## [v1.2.3] - 2022-06-01
 
 ### Added
@@ -15,6 +22,7 @@
 
 - 扉页的个人信息的位置改为相对位置
 - 增加硕博页眉 logo 和 line 的控制
+- 更改版权页至 copyright 目录
 
 
 
