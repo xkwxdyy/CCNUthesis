@@ -30,8 +30,21 @@
 
 这是一个参考文献引用的范例：“\parencite{邱泽奇建构与分化}提出……”。还可以引用多个文献：“\parencite{丁文祥rawtype,李晓东rawtype}提出……”。
 
-英文文献 \parencite{feynman2011feynman}
+英文文献 \parencite{feynman2011}
 
+英文文献 \parencite[12]{feynman2011}
+
+英文文献 \parencite[Thm1]{feynman2011}
+
+英文文献 \parencite[12][Thm1]{feynman2011}
+
+英文文献 \cite{feynman2011}
+
+英文文献 \cite[12]{feynman2011}
+
+英文文献 \cite[Thm1]{feynman2011}
+
+英文文献 \cite[12][Thm1]{feynman2011}
 
 \section{链接相关}
 
@@ -39,6 +52,13 @@
 模板使用了 hyperref 包处理相关链接，使用 \verb|\href| 可以生成超链接，默认不显示链接颜色。如果需要输出网址，可以使用 \verb|\url| 命令，示例：\url{https://github.com}。
 
 
-\begin{equation}
-  x^2
-\end{equation}
+\begin{proof}
+  \[
+    x^2
+  \]
+\end{proof}
+\begin{proof}
+  \[
+    x^2  \qedhere
+  \]
+\end{proof}

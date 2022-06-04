@@ -2,6 +2,11 @@
 \usepackage{multirow, xeCJKfntef, xpinyin}
 \usepackage{graphicx}
 \usepackage{tabularray}
+\usepackage[
+  backend = biber,
+  style = gb7714-2015
+]{biblatex}
+\addbibresource{CCNUthesis.bib}
 \graphicspath{{figures}}
 
 \hypersetup{
@@ -80,7 +85,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
 
 
 
-\section{介绍}
+\section{介绍} 
 
 目前，在网上可以找到的华中师范大学 \LaTeX{} 论文模板主要是
 
@@ -93,22 +98,22 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
 
 抛开旧模版是基于 \CTeX 套装编写的这一点，关于旧模版本身也有众多使用问题，比如格式相关代码不能完全剥离，导致用户，尤其是 \LaTeX{} 初学者，使用起来体验不佳。笔者整理过邓国泰老师编写的本科毕业论文模版中出现的问题，并对照着阐述了新模版的优化处理，感兴趣的用户可以参看 \href{https://gitee.com/xkwxdyy/CCNUthesis/wikis/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/%E6%97%A7%E6%A8%A1%E7%89%88%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F%E6%9C%89%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%EF%BC%9F%E6%96%B0%E6%A8%A1%E7%89%88%E7%9A%84%E4%BD%BF%E7%94%A8%E6%98%AF%E5%A6%82%E4%BD%95%E5%AE%8C%E5%96%84%E7%9A%84%EF%BC%9F}{《旧模版的使用方式有什么问题？新模版的使用是如何完善的？》}。
 
-相比之下，复旦大学 \cls{fduthesis}、清华大学 \cls{thuthesis}、中国科学技术大学 \cls{ustcthesis}、中国科学院大学 \cls{ucasthesis} 以及上海交通大学 \cls{sjtuthesis} 等学位论文 \LaTeX{} 模版成熟稳定，值得参考。
+相比之下，复旦大学 \cls{CCNUthesis}、清华大学 \cls{thuthesis}、中国科学技术大学 \cls{ustcthesis}、中国科学院大学 \cls{ucasthesis} 以及上海交通大学 \cls{sjtuthesis} 等学位论文 \LaTeX{} 模版成熟稳定，值得参考。
 
 本模板将借鉴前辈经验，重新设计，并使用 \LaTeX3 编写，以适应 \TeX{} 技术发展潮流；同时还将构建一套简洁的接口，方便用户使用。
 
 
-\subsection*{TeXLive 安装}
+\subsection{\TeXLive 安装}
 
-要想使用 \LaTeX{} 及此模板，必须安装 \TeX Live 发行版，安装介绍只推荐啸行编写的 \href{https://ctan.math.illinois.edu/info/install-latex-guide-zh-cn/install-latex-guide-zh-cn.pdf}{install-latex-guide-zh-cn}，关于此文档的一些补充，参看 \href{https://gitee.com/xkwxdyy/CCNUthesis/wikis/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/%E5%A6%82%E4%BD%95%E5%AE%89%E8%A3%85TeXLive}{《如何安装 TeXLive ？》}。
+要想使用 \LaTeX{} 及此模板，必须安装 \TeXLive 发行版，安装介绍只推荐啸行编写的 \href{https://ctan.math.illinois.edu/info/install-latex-guide-zh-cn/install-latex-guide-zh-cn.pdf}{install-latex-guide-zh-cn}，关于此文档的一些补充，参看 \href{https://gitee.com/xkwxdyy/CCNUthesis/wikis/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/%E5%A6%82%E4%BD%95%E5%AE%89%E8%A3%85TeXLive}{《如何安装 TeXLive ？》}。
 
 
-\subsection*{\LaTeX{} 入门}
+\subsection{\LaTeX{} 入门}
 
 本文档并非是一份 \LaTeX{} 零基础教程。如果您是完完全全的新手，建议先阅读相关入门文档，虽然网络上的入门教程多如牛毛，但是强烈建议阅读 \href{https://ctan.math.illinois.edu/info/lshort/chinese/lshort-zh-cn.pdf}{lshort-zh-cn}，并且用好 \cmd{texdoc} 命令（lshort-zh-cn 中有介绍）查看相关宏包手册进行更全面的学习。
 
 
-\subsection*{关于本文档}
+\subsection{关于本文档} \label{subsec:提issues}
 
 本文采用不同字体表示不同内容。无衬线字体表示宏包名称，如
 \pkg{xeCJK} 宏包、\cls{CCNUthesis} 文档类等；等宽字体表示代码或
@@ -131,7 +136,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
 %     也可以在英文模板中使用。
 % \end{itemize}
 
-如果您有任何改进意见或者功能需求，欢迎前往 \href{https://github.com/xkwxdyy/CCNUthesis/issues}{GitHub 仓库} 或 \href{https://gitee.com/xkwxdyy/CCNUthesis/issues}{Gitee 仓库} 提交 issue。
+如果您有任何改进意见或者功能需求，欢迎前往 \href{https://github.com/xkwxdyy/CCNUthesis/issues}{gitHub 仓库 issues} 或 \href{https://gitee.com/xkwxdyy/CCNUthesis/issues}{gitee 仓库 issues} 提交 issue。
 
 
 
@@ -185,10 +190,10 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
 
 % \subsubsection{标准安装}
 
-% 如果没有特殊理由，始终建议您使用宏包管理器安装 \cls{fduthesis}。
+% 如果没有特殊理由，始终建议您使用宏包管理器安装 \cls{CCNUthesis}。
 % 例如在 \TeXLive{} 中，执行（可能需要管理员权限）
 % \begin{shellexample}[morekeywords={tlmgr,install}]
-%   tlmgr install fduthesis
+%   tlmgr install CCNUthesis
 % \end{shellexample}
 % 即可完成安装。
 
@@ -200,31 +205,31 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
 % 如果您需要从 CTAN 上自行下载并手动安装，较好的方法是使用 TDS
 % 安装包：
 % \begin{itemize}
-%   \item 从 CTAN 上下载 \cls{fduthesis} 的
-%     \href{http://mirror.ctan.org/install/macros/latex/contrib/fduthesis.tds.zip}{TDS 安装包}；
-%   \item 按目录结构将 \file{fduthesis.tds.zip} 中的文件复制到 \TeX{}
+%   \item 从 CTAN 上下载 \cls{CCNUthesis} 的
+%     \href{http://mirror.ctan.org/install/macros/latex/contrib/CCNUthesis.tds.zip}{TDS 安装包}；
+%   \item 按目录结构将 \file{CCNUthesis.tds.zip} 中的文件复制到 \TeX{}
 %     发行版的本地 TDS 根目录；
 %   \item 执行 \bashcmd{mktexlsr} 刷新文件名数据库以完成安装。
 % \end{itemize}
 % %
 % 您也可以从源代码直接生成模板（不推荐）：
 % \begin{itemize}
-%   \item 打开 \href{https://github.com/stone-zeng/fduthesis}{项目主页}，
-%     点击“Code”按钮，并选择“Download ZIP”，下载 \file{fduthesis-main.zip}；
+%   \item 打开 \href{https://github.com/stone-zeng/CCNUthesis}{项目主页}，
+%     点击“Code”按钮，并选择“Download ZIP”，下载 \file{CCNUthesis-main.zip}；
 %     如果您的电脑中安装有 git 程序，也可通过以下命令直接克隆代码仓库：
 %     \begin{shellexample}[gobble=6,alsoletter={.},morekeywords={git,clone}]
-%       git clone https://github.com/stone-zeng/fduthesis.git
+%       git clone https://github.com/stone-zeng/CCNUthesis.git
 %     \end{shellexample}
 %   \item 解压并进入到 \file{source} 文件夹，执行以下命令以生成
 %     模板的各组件：
 %     \begin{shellexample}[gobble=6,morekeywords={xetex}]
-%       xetex fduthesis.dtx
+%       xetex CCNUthesis.dtx
 %     \end{shellexample}
 %   \item 将生成的文档类（\file{.cls}）、宏包（\file{.sty}）以及
 %     参数配置文件（\file{.def}）复制到 \TeX{} 发行版本地 TDS 树
-%     的 \path{texmf-local/tex/latex/fduthesis/} 目录下，并执行
+%     的 \path{texmf-local/tex/latex/CCNUthesis/} 目录下，并执行
 %     \bashcmd{mktexlsr} 刷新文件名数据库，方可完成安装。
-%   \item 使用 \cls{fduthesis} 撰写论文时，您还需要从代码仓库下的
+%   \item 使用 \cls{CCNUthesis} 撰写论文时，您还需要从代码仓库下的
 %     \file{testfiles/support} 目录中复制 \file{fudan-name.pdf}
 %     文件至工作目录，以确保封面中的校名图片可以正确显示。
 % \end{itemize}
@@ -242,7 +247,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
 本模板主要包含核心文档类、参考文献格式文件以及用户文档等几个部分，
 其具体组成见表~\ref{tab:ccnuthesis-main-components}，模版子目录中的文件组成见表~\ref{tab:ccnuthesis-sub-components}。
 
-\begin{table}[ht]
+\begin{table}[htbp]
   \caption{\cls{CCNUthesis} 的主要组成部分}
   \label{tab:ccnuthesis-main-components}
   \centering
@@ -260,14 +265,14 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
     \file{CCNUthesis-main.bib}    & 参考文献数据库文件，里面的条目均为示例，可删除后输入用户自己的参考文献条目并在正文中进行引用 \\
     {\file{gb7714-CCNU.bbx} \\ \file{gb7714-CCNUay.bbx}} & 参考文献的条目格式文件 \\
     \file{gb7714-CCNU.cbx}        & 参考文献的引用格式文件 \\
-    \file{latexmkrc}              & \cmd{latexmk} 编译命令的配置文件 \\
+    \file{latexmkrc}              & \pkg{latexmk} 编译命令的配置文件 \\
     \file{README.md}              & 简要自述 \\
     \file{CHANGELOG.md}           & 模板更新日志 \\
     \file{LICENSE}                & 模版发布许可证
   \end{tblr}
 \end{table}
 
-\begin{table}[ht]
+\begin{table}[htbp]
   \caption{\cls{CCNUthesis} 各目录的组成部分}
   \label{tab:ccnuthesis-sub-components}
   \centering
@@ -305,23 +310,22 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
 
 \subsection{基本用法}
 
-以下是一份简单的 \TeX{} 文档，它演示了 \cls{fduthesis} 的最基本用法：
+以下是一份简单的 \TeX{} 文档，它演示了 \cls{CCNUthesis} 的最基本用法：
 
 \begin{latexexample}[deletetexcs={\documentclass},
     moretexcs={\chapter},morekeywords={\documentclass},
     emph={[2]document}]
-  % thesis.tex
-  \documentclass{fduthesis}
+  % main.tex
+  \documentclass{CCNUthesis}
   \begin{document}
     \chapter{欢迎}
-    \section{Welcome to fduthesis!}
+    \section{Welcome to CCNUthesis!}
     你好，\LaTeX{}！
   \end{document}
 \end{latexexample}
 
 
-按照 \ref{subsec:编译方式}~小节中的方式编译该文档，您应当得到
-一篇 5 页的文章。当然，这篇文章的绝大部分都是空白的。
+按照~\ref{subsec:编译方式} 小节中的方式编译该文档，您应当得到一篇 3 页的文章。
 
 % 英文模板可以用类似的方式使用：
 
@@ -329,10 +333,10 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
 %     moretexcs={\chapter},morekeywords={\documentclass},
 %     emph={[2]document}]
 %   % thesis-en.tex
-%   \documentclass{fduthesis-en}
+%   \documentclass{CCNUthesis-en}
 %   \begin{document}
 %     \chapter{Welcome}
-%     \section{Welcome to fduthesis!}
+%     \section{Welcome to CCNUthesis!}
 %     Hello, \LaTeX{}!
 %   \end{document}
 % \end{latexexample}
@@ -342,35 +346,24 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
 
 \subsection{编译方式} \label{subsec:编译方式}
 
-本模板不支持 \pdfTeX{} 引擎，请使用 \XeLaTeX{} 或 \LuaLaTeX{}
-编译。推荐使用 \XeLaTeX{}。为了生成正确的目录、脚注以及交叉引用，
-您至少需要连续编译两次。
+本模板不支持 \pdfTeX{} 引擎，仅支持使用 \XeLaTeX{} 。为了生成正确的目录、脚注以及交叉引用，您至少需要连续编译两次。
 
-以下代码中，假设您的 \TeX{} 源文件名为 \file{thesis.tex}。
-使用 \XeLaTeX{} 编译论文，请在命令行中执行
+以下代码中，假设您的 \TeX{} 源文件名为 \file{main.tex}。请在命令行中执行
 \begin{shellexample}[morekeywords={xelatex}]
-  xelatex thesis
+  xelatex main
 \end{shellexample}
 或使用 \pkg{latexmk}：
 \begin{shellexample}[morekeywords={latexmk},emph={-xelatex}]
   latexmk -xelatex thesis
 \end{shellexample}
 
-使用 \LuaLaTeX{} 编译论文，请在命令行中执行
-\begin{shellexample}[morekeywords={lualatex}]
-  lualatex thesis
-\end{shellexample}
-或者
-\begin{shellexample}[morekeywords={latexmk},emph={-lualatex}]
-  latexmk -lualatex thesis
-\end{shellexample}
 
 \subsection{模板选项}
 
 所谓“模板选项”，指需要在引入文档类的时候指定的选项：
 \begin{latexexample}[deletetexcs={\documentclass},
     morekeywords={\documentclass}]
-  \documentclass(*\oarg{模板选项}*){fduthesis}
+  \documentclass(*\oarg{模板选项}*){CCNUthesis}
 \end{latexexample}
 
 有些模板选项为布尔型，它们只能在 \opt{true} 和 \opt{false}
@@ -378,35 +371,35 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
 可以省略。
 
 
-\begin{function}[added=2018-02-01]{type}
-  \begin{fdusyntax}[emph={[1]type}]
+\begin{function}{type}
+  \begin{ccnusyntax}[emph={[1]type}]
     type = (*<doctor|master|(bachelor)>*)
-  \end{fdusyntax}
+  \end{ccnusyntax}
 
   选择论文类型。三种选项分别代表博士学位论文、硕士学位论文和本科
   毕业论文。
 \end{function}
 
-\begin{function}{oneside,twoside}
-  指明论文的单双面模式，默认为 \opt{twoside}。该选项会影响每章
-  的开始位置，还会影响页眉样式。
-\end{function}
+% \begin{function}{oneside,twoside}
+%   指明论文的单双面模式，默认为 \opt{twoside}。该选项会影响每章
+%   的开始位置，还会影响页眉样式。
+% \end{function}
 
-在双面模式（\opt{twoside}）下，按照通常的排版惯例，每章应只从
-奇数页（在右）开始；而在单页模式（\opt{oneside}）下，则可以从
-任意页面开始。本模板中，目录、摘要、符号表等均视作章，也按相同
-方式排版。
+% 在双面模式（\opt{twoside}）下，按照通常的排版惯例，每章应只从
+% 奇数页（在右）开始；而在单页模式（\opt{oneside}）下，则可以从
+% 任意页面开始。本模板中，目录、摘要、符号表等均视作章，也按相同
+% 方式排版。
 
-双面模式下，正文部分偶数页（在左）的左页眉显示章标题，奇数页
-（在右）的右页眉显示节标题；前置部分的页眉按同样格式显示，但文字
-均为对应标题（如“目录”、“摘要”等）。
-而在单面模式下，正文部分则页面不分奇偶，均同时显示左、右页眉，
-文字分别为章标题和节标题；前置部分只有中间页眉，显示对应标题。
+% 双面模式下，正文部分偶数页（在左）的左页眉显示章标题，奇数页
+% （在右）的右页眉显示节标题；前置部分的页眉按同样格式显示，但文字
+% 均为对应标题（如“目录”、“摘要”等）。
+% 而在单面模式下，正文部分则页面不分奇偶，均同时显示左、右页眉，
+% 文字分别为章标题和节标题；前置部分只有中间页眉，显示对应标题。
 
 \begin{function}{draft}
-  \begin{fdusyntax}[emph={[1]draft}]
+  \begin{ccnusyntax}[emph={[1]draft}]
     draft = (*<\TFF>*)
-  \end{fdusyntax}
+  \end{ccnusyntax}
   选择是否开启草稿模式，默认关闭。
 \end{function}
 
@@ -419,31 +412,32 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
   \item 显示页面边框。
 \end{itemize}
 
-\begin{function}[added=2018-01-31]{config}
-  \begin{fdusyntax}[emph={[1]config}]
-    config = (*\marg{文件}*)
-  \end{fdusyntax}
-  用户配置文件的文件名。默认为空，即不载入用户配置文件。
-\end{function}
+% \begin{function}[added=2018-01-31]{config}
+%   \begin{ccnusyntax}[emph={[1]config}]
+%     config = (*\marg{文件}*)
+%   \end{ccnusyntax}
+%   用户配置文件的文件名。默认为空，即不载入用户配置文件。
+% \end{function}
+
 
 \subsection{参数设置}
 
-\begin{function}{\fdusetup}
-  \begin{fdusyntax}[morekeywords={\fdusetup}]
-    \fdusetup(*\marg{键值列表}*)
-  \end{fdusyntax}
+\begin{function}{\ccnusetup}
+  \begin{ccnusyntax}[morekeywords={\ccnusetup}]
+    \ccnusetup(*\marg{键值列表}*)
+  \end{ccnusyntax}
   本模板提供了一系列选项，可由您自行配置。载入文档类之后，以下
-  所有选项均可通过统一的命令 \cs{fdusetup} 来设置。
+  所有选项均可通过统一的命令 \cs{ccnusetup} 来设置。
 \end{function}
 
-\cs{fdusetup} 的参数是一组由（英文）逗号隔开的选项列表，列表中的
+\cs{ccnusetup} 的参数是一组由（英文）逗号隔开的选项列表，列表中的
 选项通常是 \kvopt{\meta{key}}{\meta{value}} 的形式。部分选项的
 \meta{value} 可以省略。对于同一项，后面的设置将会覆盖前面的设置。
 在下文的说明中，将用\textbf{粗体}表示默认值。
 
-\cs{fdusetup} 采用 \LaTeX3 风格的键值设置，支持不同类型以及多种
+\cs{ccnusetup} 采用 \LaTeX3 风格的键值设置，支持不同类型以及多种
 层次的选项设定。键值列表中，“|=|”左右的空格不影响设置；但需注意，
-参数列表中不可以出现空行。
+参数列表中\emph{不可以出现空行}。
 
 与模板选项相同，布尔型的参数可以省略 \kvopt{\meta{选项}}{true}
 中的“\kvopt{}{true}”。
@@ -451,10 +445,10 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
 另有一些选项包含子选项，如 \opt{style} 和 \opt{info} 等。它们可以
 按如下两种等价方式来设定：
 
-\begin{latexexample}[morekeywords={\fdusetup},
-    emph={[1]style,cjk-font,font-size,info,title,title*,author,author*,department}]
-  \fdusetup{
-    style = {cjk-font = adobe, font-size = -4},
+\begin{latexexample}[morekeywords={\ccnusetup},
+    emph={[1]style,cjk-font,info,title,title*,author,author*,department}]
+  \ccnusetup{
+    style = {cjk-font = mac},
     info  = {
       title      = {论动体的电动力学},
       title*     = {On the Electrodynamics of Moving Bodies},
@@ -467,11 +461,10 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
 
 或者
 
-\begin{latexexample}[morekeywords={\fdusetup},
-    emph={[1]style,cjk-font,font-size,info,title,title*,author,author*,department}]
-  \fdusetup{
-    style/cjk-font  = adobe,
-    style/font-size = -4,
+\begin{latexexample}[morekeywords={\ccnusetup},
+    emph={[1]style,cjk-font,info,title,title*,author,author*,department}]
+  \ccnusetup{
+    style/cjk-font  = mac,
     info/title      = {论动体的电动力学},
     info/title*     = {On the Electrodynamics of Moving Bodies},
     info/author     = {阿尔伯特·爱因斯坦},
@@ -483,62 +476,88 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
 
 注意 “|/|” 的前后均不可以出现空白字符。
 
+
 \subsubsection{论文格式} \label{subsubsec:论文格式}
 
 \begin{function}{style}
-  \begin{fdusyntax}[emph={[1]style}]
+  \begin{ccnusyntax}[emph={[1]style}]
     style = (*\marg{键值列表}*)
     style/(*\meta{key}*) = (*\meta{value}*)
-  \end{fdusyntax}
+  \end{ccnusyntax}
   该选项包含许多子项目，用于设置论文格式。具体内容见下。
 \end{function}
 
 
-\begin{function}[updated=2019-03-05]{style/font}
-  \begin{fdusyntax}[emph={[1]font}]
-    font = (*<garamond|libertinus|lm|palatino|(times)|times*|none>*)
-  \end{fdusyntax}
+\begin{function}{style/font}
+  \begin{ccnusyntax}[emph={[1]font}]
+    font = (*<newtx|(times)|stixtwo|xits|tg|none>*)
+  \end{ccnusyntax}
 
   设置西文字体（包括数学字体）。具体配置见表~\ref{tab:font}。
 \end{function}
 
-\begin{table}[ht]
-\centering
-\begin{threeparttable}
-  \caption{西文字体配置}
-  \label{tab:font}
-  \small
-  \begin{tabular}{ccccc}
-    \toprule
-      & \textbf{正文字体} & \textbf{无衬线字体} & \textbf{等宽字体} & \textbf{数学字体} \\
-    \midrule
-      |garamond|        & EB Garamond         & Libertinus Sans & LM Mono\tnote{a} & Garamond Math   \\
-      |libertinus|      & Libertinus Serif    & Libertinus Sans & LM Mono          & Libertinus Math \\
-      |lm|              & LM Roman            & LM Sans         & LM Mono          & LM Math         \\
-      |palatino|        & TG Pagella\tnote{b} & Libertinus Sans & LM Mono          & TG Pagella Math \\
-      |times|           & XITS                & TG Heros        & TG Cursor        & XITS Math       \\
-      |times*|\tnote{c} & Times New Roman     & Arial           & Courier New      & XITS Math       \\
-    \bottomrule
-  \end{tabular}
-  \begin{tablenotes}
-    \item[a] “LM”是 Latin Modern 的缩写。
-    \item[b] “TG”是 TeX Gyre 的缩写。
-    \item[c] 本行中，Times New Roman、Arial 和 Courier New 是商业字体，
-      不包含在 \TeXLive{} 发行版中，但在 Windows 和 macOS 系统上均默认安装。
-  \end{tablenotes}
-\end{threeparttable}
-\end{table}
+% \begin{table}[ht]
+% \centering
+% \begin{threeparttable}
+%   \caption{西文字体配置}
+%   \label{tab:font}
+%   \small
+%   \begin{tabular}{ccccc}
+%     \toprule
+%       & \textbf{正文字体} & \textbf{无衬线字体} & \textbf{等宽字体} & \textbf{数学字体} \\
+%     \midrule
+%       |garamond|        & EB Garamond         & Libertinus Sans & LM Mono\tnote{a} & Garamond Math   \\
+%       |libertinus|      & Libertinus Serif    & Libertinus Sans & LM Mono          & Libertinus Math \\
+%       |lm|              & LM Roman            & LM Sans         & LM Mono          & LM Math         \\
+%       |palatino|        & TG Pagella\tnote{b} & Libertinus Sans & LM Mono          & TG Pagella Math \\
+%       |times|           & XITS                & TG Heros        & TG Cursor        & XITS Math       \\
+%       |times*|\tnote{c} & Times New Roman     & Arial           & Courier New      & XITS Math       \\
+%     \bottomrule
+%   \end{tabular}
+%   \begin{tablenotes}
+%     \item[a] “LM”是 Latin Modern 的缩写。
+%     \item[b] “TG”是 TeX Gyre 的缩写。
+%     \item[c] 本行中，Times New Roman、Arial 和 Courier New 是商业字体，
+%       不包含在 \TeXLive{} 发行版中，但在 Windows 和 macOS 系统上均默认安装。
+%   \end{tablenotes}
+% \end{threeparttable}
+% \end{table}
+\begin{table}[htbp]
+  \centering
+  \begin{threeparttable}
+    \caption{西文字体配置}
+    \label{tab:font}
+    \small
+    \begin{tabular}{ccccc}
+      \toprule
+        & \textbf{正文字体} & \textbf{无衬线字体} & \textbf{等宽字体} & \textbf{数学字体} \\
+      \midrule
+      |stixtwo| & STIX Two Text   & TG Heros\tnote{a} & TG Cursor   & STIX Two Math \\
+      |xits |   & XITS            & TG Heros & TG Cursor   & XITS Math \\
+      |times|\tnote{b}   & Times New Roman & Arial    & Courier New & newtxmath \\
+      |newtx|   & TG Termes   & TG Heros & TG Cursor   & newtxmath \\
+      |tg|      & TG Termes       & TG Heros & TG Cursor   & TG Termes Math \\
+      \bottomrule
+    \end{tabular}
+    \begin{tablenotes}
+      % \item[a] “LM”是 Latin Modern 的缩写。
+      \item[a] “TG”是 TeX Gyre 的缩写。
+      \item[b] 本行中，Times New Roman、Arial 和 Courier New 是商业字体，
+        不包含在 \TeXLive{} 发行版中，但在 Windows 和 macOS 系统上均默认安装。
+    \end{tablenotes}
+  \end{threeparttable}
+  \end{table}
 
 
-\begin{function}[rEXP,updated=2019-03-05]{style/cjk-font}
-  \begin{fdusyntax}[emph={[1]cjk-font}]
+\begin{function}{style/cjk-font}
+  \begin{ccnusyntax}[emph={[1]cjk-font}]
     cjk-font = (*<adobe|(fandol)|founder|mac|sinotype|sourcehan|windows|none>*)
-  \end{fdusyntax}
+  \end{ccnusyntax}
 
   设置中文字体。具体配置见表~\ref{tab:cjk-font}。
 \end{function}
 
-\begin{table}[ht]
+\begin{table}[htbp]
   \caption{中文字体配置}
   \label{tab:cjk-font}
   \centering
@@ -563,19 +582,19 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
 \cs{setCJKmainfont}、\cs{setmathfont} 等命令来配置字体。
 
 
-\begin{function}{style/font-size}
-  \begin{fdusyntax}[emph={[1]font-size}]
-    font-size = (*<(-4)|5>*)
-  \end{fdusyntax}
+% \begin{function}{style/font-size}
+%   \begin{ccnusyntax}[emph={[1]font-size}]
+%     font-size = (*<(-4)|5>*)
+%   \end{ccnusyntax}
 
-  设置论文的基础字号。
-\end{function}
+%   设置论文的基础字号。
+% \end{function}
 
 
-\begin{function}[rEXP,updated=2017-10-14]{style/fullwidth-stop}
-  \begin{fdusyntax}[emph={[1]fullwidth-stop}]
+\begin{function}{style/fullwidth-stop}
+  \begin{ccnusyntax}[emph={[1]fullwidth-stop}]
     fullwidth-stop = (*<catcode|mapping|(false)>*)
-  \end{fdusyntax}
+  \end{ccnusyntax}
 
   选择是否把全角实心句点\FSFW 作为默认的句号形状。
   这种句号一般用于科技类文章，以避免与下标“$_o$”或“$_0$”混淆。
@@ -587,8 +606,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
 如果您用宏保存了一些含有\FSID 的文字，那么在选择 \opt{catcode} 时，其中
 的\FSID 不会将被替换为\FSFW。
 
-选项 \kvopt{fullwidth-stop}{mapping} 只在 \XeTeX{} 下有效。使用
-\LuaTeX{} 编译时，该选项相当于 \kvopt{fullwidth-stop}{catcode}。
+选项 \kvopt{fullwidth-stop}{mapping} 只在 \XeTeX{} 下有效。
 
 如果您在选择 \kvopt{fullwidth-stop}{mapping} 后仍需要临时显示\FSID，
 可以按如下方法操作：
@@ -599,14 +617,13 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
 \end{latexexample}
 
 \begin{function}{style/footnote-style}
-% 这里奇怪的东西是用来控制对齐的。fdusyntax 会吃掉开头的几个
-% 空格，因此这里用 X 来占位。
-  \begin{fdusyntax}[emph={[1]footnote-style}]
+% 这里奇怪的东西是用来控制对齐的。ccnusyntax 会吃掉开头的几个空格，因此这里用 X 来占位。
+  \begin{ccnusyntax}[emph={[1]footnote-style}]
     footnote-style = (*<plain|\\
       XXXX\mbox{}~~~~~~~~~~~~~~~~~libertinus|libertinus*|libertinus-sans|\\
       XXXX\mbox{}~~~~~~~~~~~~~~~~~pifont|pifont*|pifont-sans|pifont-sans*|\\
       XXXX\mbox{}~~~~~~~~~~~~~~~~~xits|xits-sans|xits-sans*>*)
-  \end{fdusyntax}
+  \end{ccnusyntax}
   设置脚注编号样式。西文字体设置会影响其默认取值（见
   表~\ref{tab:footnote-font}）。因此，要使得该选项生效，需将其
   放置在 \opt{font} 选项之后。带有 |sans| 的为相应的无衬线字体
@@ -629,21 +646,85 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
   \end{tabular}
 \end{table}
 
+\begin{function}{style/caption-labelstyle}
+  \begin{ccnusyntax}[emph={[1]caption-labelstyle}]
+    caption-labelstyle = (*<arabic|(hyphen)|dot>*)
+  \end{ccnusyntax}
 
-\begin{function}[added=2017-08-13]{style/hyperlink}
-  \begin{fdusyntax}[emph={[1]hyperlink}]
-    hyperlink = (*<border|(color)|none>*)
-  \end{fdusyntax}
+  图表标题 label 计数样式。
+
+  \begin{itemize}
+    \item \opt{arabic}：图1，图2... 跨 chapter 连续编号，即若上一个 chapter 的图编号为 4，下一个 chapter 的第一个图编号为5
+    \item \opt{hyphen}：图1-1，图1-2，图2-1...其中图 $x$-$y$，$x$ 表示 chapter 的值，$y$ 表示该 chapter 的计数器值（通俗理解就是此 chapter 的第 $y$ 张图或表），$y$ 在新的 chapter 会自动重新开始计数
+    \item \opt{dot}：图1.1，图1.2，图2.1...其中图 $x$.$y$，$x,y$ 的含义同上
+  \end{itemize}
+\end{function}
+
+\begin{function}{style/caption-labelseperator}
+  \begin{ccnusyntax}[emph={[1]caption-labelseperator}]
+    caption-labelseperator = (*<(colon)|space>*)
+  \end{ccnusyntax}
+
+  图表标题 label 和标题内容之间的分隔符
+
+  \begin{itemize}
+    \item \opt{colon}：表示 「:␣」，即一个西文冒号加一个空格
+    \item \opt{space}：表示 「␣␣」，即两个空格
+  \end{itemize}
+\end{function}
+
+\begin{function}{style/show-headlogo}
+  \begin{ccnusyntax}[emph={[1]show-headlogo}]
+    show-headlogo = (*<\TFF>*)
+  \end{ccnusyntax}
+
+  是否显示页眉 logo，仅对硕博类型有效。具体 logo 样式见图~\ref{figure:headlogo}。
+\end{function}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{minipage}{0.45\textwidth}
+    \includegraphics[height = 2cm]{masterlogo.png}
+  \end{minipage}
+  \begin{minipage}{0.45\textwidth}
+    \includegraphics[height = 2cm]{doctorlogo.png}
+  \end{minipage}
+  \caption{ headlogo }
+  \label{figure:headlogo}
+\end{figure}
+
+\begin{function}{style/headline}
+  \begin{ccnusyntax}[emph={[1]headline}]
+    headline = (*<single|double|thin-thick|thick-thin|(none)>*)
+  \end{ccnusyntax}
+
+  页眉线的样式。
+
+  \begin{itemize}
+    \item \opt{single}：一条线
+    \item \opt{double}：两条线，一样粗细
+    \item \opt{thin-thick}：两条线，上细下粗（文武线）
+    \item \opt{thick-thin}：两条线，上粗下细（武文线）
+    \item \opt{none}：页眉没有线
+  \end{itemize}
+\end{function}
+
+
+
+\begin{function}{style/hyperlink}
+  \begin{ccnusyntax}[emph={[1]hyperlink}]
+    hyperlink = (*<border|color|(none)>*)
+  \end{ccnusyntax}
 
   设置超链接样式。\opt{border} 表示在超链接四周绘制方框；
   \opt{color} 表示用彩色显示超链接；\opt{none} 表示没有特殊装饰，
   可用于生成最终的打印版文稿。
 \end{function}
 
-\begin{function}[added=2017-08-13,updated=2021-12-27]{style/hyperlink-color}
-  \begin{fdusyntax}[emph={[1]hyperlink-color}]
+\begin{function}{style/hyperlink-color}
+  \begin{ccnusyntax}[emph={[1]hyperlink-color}]
     hyperlink-color = (*<(default)|classic|material|graylevel|prl>*)
-  \end{fdusyntax}
+  \end{ccnusyntax}
   设置超链接颜色。该选项在 \kvopt{hyperlink}{none} 时无效。
   各选项所代表的颜色见表~\ref{tab:hyperlink-color}。
 \end{function}
@@ -686,221 +767,169 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
 
 
 
-\begin{function}[added=2018-01-25]{style/bib-backend}
-  \begin{fdusyntax}[emph={[1]bib-backend}]
-    bib-backend = (*<bibtex|biblatex>*)
-  \end{fdusyntax}
+% \begin{function}{style/bib-backend}
+%   \begin{ccnusyntax}[emph={[1]bib-backend}]
+%     bib-backend = (*<bibtex|biblatex>*)
+%   \end{ccnusyntax}
 
-  选择参考文献的支持方式。选择 \opt{bibtex} 后，将使用 \BibTeX{}
-  处理文献，样式由 \pkg{natbib} 宏包负责；选择 \opt{biblatex} 后，
-  将使用 \biber{} 处理文献，样式则由 \pkg{biblatex} 宏包负责。
+%   选择参考文献的支持方式。选择 \opt{bibtex} 后，将使用 \BibTeX{}
+%   处理文献，样式由 \pkg{natbib} 宏包负责；选择 \opt{biblatex} 后，
+%   将使用 \biber{} 处理文献，样式则由 \pkg{biblatex} 宏包负责。
+% \end{function}
+
+\begin{function}{style/bib-style}
+  \begin{ccnusyntax}[emph={[1]bib-style}]
+    bib-style = (*<(ccnu-bachelor-numerical)|ccnu-bachelor-author-year|ccnu-master|ccnu-doctor|gb7714-2015>*)
+  \end{ccnusyntax}
+  设置参考文献样式。
+  \begin{itemize}
+    \item \opt{ccnu-bachelor-numerical}：参考 \parencite{本科生院毕业论文注释与参考文献著录格式} 定制的参考文献格式，顺序编码制
+    \item \opt{ccnu-bachelor-author-year}：和 \opt{ccnu-bachelor-numerical} 格式相同，著者—出版年制
+    \item \opt{ccnu-master}：国家标准 GB/T 7714--2015 的顺序编码制
+    \item \opt{ccnu-doctor}：国家标准 GB/T 7714--2015 的顺序编码制
+    \item \opt{gb7714-2015}：国家标准 GB/T 7714--2015 的顺序编码制
+  \end{itemize}
+  % \opt{author-year} 和 \opt{numerical} 分别对应国家标准 GB/T 7714--2015 \cite{gb-t-7714-2015} 中的著者—出版年制和顺序编码制。
+  % 选择 \meta{其他样式} 时，如果 \kvopt{bib-backend}{bibtex}，需保证相应的 \file{.bst} 格式文件能被调用；而如果\kvopt{bib-backend}{biblatex}，则需保证相应的 \file{.bbx} 格式文件能被调用。
 \end{function}
 
-\begin{function}[added=2017-10-28,updated=2018-01-25]{style/bib-style}
-  \begin{fdusyntax}[emph={[1]bib-style}]
-    bib-style = (*<author-year|(numerical)|\meta{其他样式}>*)
-  \end{fdusyntax}
-  设置参考文献样式。\opt{author-year} 和 \opt{numerical} 分别对应
-  国家标准 GB/T 7714--2015 \cite{gb-t-7714-2015} 中的著者—出版年制和
-  顺序编码制。选择 \meta{其他样式} 时，如果 \kvopt{bib-backend}{bibtex}，
-  需保证相应的 \file{.bst} 格式文件能被调用；而如果
-  \kvopt{bib-backend}{biblatex}，则需保证相应的 \file{.bbx} 格式文件
-  能被调用。
-\end{function}
+% \begin{function}{style/cite-style}
+%   \begin{ccnusyntax}[emph={[1]cite-style}]
+%     cite-style = (*\marg{引用样式}*)
+%   \end{ccnusyntax}
+%   选择引用格式。默认为空，即与参考文献样式（著者—出版年制或顺序
+%   编码制）保持一致。如果手动填写，需保证相应的 \file{.cbx} 格式文件
+%   能被调用。该选项在 \kvopt{bib-backend}{bibtex} 时无效。
+% \end{function}
 
-\begin{function}[added=2018-01-25]{style/cite-style}
-  \begin{fdusyntax}[emph={[1]cite-style}]
-    cite-style = (*\marg{引用样式}*)
-  \end{fdusyntax}
-  选择引用格式。默认为空，即与参考文献样式（著者—出版年制或顺序
-  编码制）保持一致。如果手动填写，需保证相应的 \file{.cbx} 格式文件
-  能被调用。该选项在 \kvopt{bib-backend}{bibtex} 时无效。
-\end{function}
-
-\begin{function}[added=2018-01-25]{style/bib-resource}
-  \begin{fdusyntax}[emph={[1]bib-resource}]
+\begin{function}{style/bib-resource}
+  \begin{ccnusyntax}[emph={[1]bib-resource}]
     bib-resource = (*\marg{文件}*)
-  \end{fdusyntax}
-  参考文献数据源。可以是单个文件，也可以是用英文逗号隔开的一组文件。
-  如果 \kvopt{bib-backend}{biblatex}，则必须明确给出 \file{.bib}
-  后缀名。
-\end{function}
-
-\begin{function}[added=2017-08-10]{style/logo}
-  \begin{fdusyntax}[emph={[1]logo}]
-    logo = (*\marg{文件}*)
-  \end{fdusyntax}
-  封面中校名图片的文件名。默认值为 \file{fudan-name.pdf}。
-\end{function}
-
-\begin{function}[added=2017-08-10]{style/logo-size}
-  \begin{fdusyntax}[emph={[1]logo-size}]
-    logo-size = (*\marg{宽度}*)
-    logo-size = {(*\meta{宽度}*), (*\meta{高度}*)}
-  \end{fdusyntax}
-  校名图片的大小。默认仅指定了宽度，为 |0.5\textwidth|\/。
-  如果仅需指定高度，可在 \meta{宽度} 处填入一个空的分组 |{}|。
+  \end{ccnusyntax}
+  参考文献数据源。可以是单个文件，也可以是用英文逗号隔开的一组文件。\emph{必须明确给出 \file{.bib} 后缀名}。默认为 \file{CCNUthesis-main.bib}。
 \end{function}
 
 
-\begin{function}[added=2017-07-06]{style/auto-make-cover}
-  \begin{fdusyntax}[emph={[1]auto-make-cover}]
-    auto-make-cover = (*<\TTF>*)
-  \end{fdusyntax}
-
-  是否自动生成论文封面（封一）、指导小组成员名单（封二）和
-  声明页（封三）。封面中的各项信息，可通过 \cs{fdusetup} 录入，
-  具体请参阅 \ref{subsubsec:信息录入}~节。
-\end{function}
-
-
-\begin{function}[added=2021-09-21]{style/declaration-page}
-  \begin{fdusyntax}[emph={[1]declaration-page}]
-    declaration-page = (*\marg{文件}*)
-  \end{fdusyntax}
-
-  插入扫描版的声明页 PDF 文档。如果为空（默认），则使用模板预定义的声明页。
-\end{function}
-
-\begin{function}{\makecoveri,\makecoverii,\makecoveriii}
-  用于手动生成论文封面、指导小组成员名单和声明页。这几个命令不能
-  确保页码的正确编排，因此除非必要，您应当始终使用自动生成的封面。
-\end{function}
 
 \subsubsection{信息录入} \label{subsubsec:信息录入}
 
 \begin{function}{info}
-  \begin{fdusyntax}[emph={[1]info}]
+  \begin{ccnusyntax}[emph={[1]info}]
     info = (*\marg{键值列表}*)
     info/(*\meta{key}*) = (*\meta{value}*)
-  \end{fdusyntax}
-  该选项包含许多子项目，用于录入论文信息。具体内容见下。以下带“|*|”
-  的项目表示对应的英文字段。
+  \end{ccnusyntax}
+  该选项包含许多子项目用于录入论文信息。具体内容见下。以下带“|*|”的项目表示对应的\emph{英文}字段或\emph{拼音}字段。
 \end{function}
 
-
-\begin{function}[added=2018-02-01,updated=2019-03-12]{info/degree}
-  \begin{fdusyntax}[emph={[1]degree}]
-    degree = (*<(academic)|professional>*)
-  \end{fdusyntax}
-
-  学位类型，仅适用于博士和硕士学位论文。\opt{academic} 和 \opt{professional}
-  分别表示学术学位和专业学位。
+\begin{function}{info/cover-type}
+  \begin{ccnusyntax}[emph={[1]cover-type}]
+    cover-type  = (*<word|(math)>*)
+  \end{ccnusyntax}
+  封面类型。\opt{word} 表示几乎完全按照教务处给的 word 版本模版处理；\opt{math} 表示华中师范大学数学与统计学学院在 word 版本模版基础上进行部分细节调整。
 \end{function}
+
 
 \begin{function}{info/title,info/title*}
-  \begin{fdusyntax}[emph={[1]title,title*}]
+  \begin{ccnusyntax}[emph={[1]title,title*}]
     title  = (*\marg{中文标题}*)
     title* = (*\marg{英文标题}*)
-  \end{fdusyntax}
-  论文标题。默认会在约 20 个汉字字宽处强制断行，但为了语义的
-  连贯以及排版的美观，如果您的标题长于一行，建议使用“|\\|”
-  手动断行。
+  \end{ccnusyntax}
+  论文标题。默认会在约 21 个汉字（本科，硕博在 14 个汉字）字宽处自动断行，但为了语义的连贯以及排版的美观，如果您的标题长于一行，可以根据语义使用“|\\|”手动断行。如果您的标题中有副标题，使用“|\\|”手动断行并以“——”开头，如
+  \begin{latexexample}
+    title = {
+      如何使用 \LaTeX 编写论文模版 \\
+      ——以华中师范大学为例
+    }
+  \end{latexexample}
 \end{function}
 
 \begin{function}{info/author,info/author*}
-  \begin{fdusyntax}[emph={[1]author,author*}]
+  \begin{ccnusyntax}[emph={[1]author,author*}]
     author  = (*\marg{姓名}*)
-    author* = (*\marg{英文姓名（或拼音）}*)
-  \end{fdusyntax}
+    author* = (*\marg{姓名拼音）}*)
+  \end{ccnusyntax}
   作者姓名。
 \end{function}
 
-\begin{function}{info/supervisor}
-  \begin{fdusyntax}[emph={[1]supervisor}]
-    supervisor = (*\marg{姓名}*)
-  \end{fdusyntax}
-  导师姓名。
-\end{function}
-
-\begin{function}{info/department}
-  \begin{fdusyntax}[emph={[1]department}]
-    department = (*\marg{名称}*)
-  \end{fdusyntax}
-  院系名称。
-\end{function}
-
-\begin{function}{info/major}
-  \begin{fdusyntax}[emph={[1]major}]
-    major = (*\marg{名称}*)
-  \end{fdusyntax}
-  专业名称。
-\end{function}
-
 \begin{function}{info/student-id}
-  \begin{fdusyntax}[emph={[1]student-id}]
-    student-id = (*\marg{数字}*)
-  \end{fdusyntax}
+  \begin{ccnusyntax}[emph={[1]student-id}]
+    student-id  = (*\marg{学号}*)
+  \end{ccnusyntax}
   作者学号。
 \end{function}
 
-复旦大学学号共 11 位，前两位为入学年份，之后一位为学生类型
-代码（博士生为 1，硕士生为 2，本科生为 3），接下来的五位为
-专业代码，最后三位为顺序号。
-
-\begin{function}{info/school-id}
-  \begin{fdusyntax}[emph={[1]school-id}]
-    school-id = (*\marg{数字}*)
-  \end{fdusyntax}
-  学校代码。默认值为 10246（这是复旦大学的学校代码）。
+\begin{function}{info/level}
+  \begin{ccnusyntax}[emph={[1]level}]
+    level  = (*\marg{年级}*)
+  \end{ccnusyntax}
+  年级。
 \end{function}
 
-\begin{function}{info/date}
-  \begin{fdusyntax}[emph={[1]date}]
-    date = (*\marg{日期}*)
-  \end{fdusyntax}
-  论文完成日期。默认值为文档编译日期（\tn{today}）。
+\begin{function}{info/supervisor,info/supervisor*-name,info/supervisor*-academic-title}
+  \begin{ccnusyntax}[emph={[1]supervisor,supervisor*-name,supervisor*-academic-title}]
+    supervisor = (*\marg{姓名}*)
+    supervisor*-name = (*\marg{姓名拼音}*)
+    supervisor*-academic-title = (*\marg{职称英文}*)
+  \end{ccnusyntax}
+  导师姓名、职称。
 \end{function}
 
-
-\begin{function}[added=2017-07-04]{info/secret-level}
-  \begin{fdusyntax}[emph={[1]secret-level}]
-    secret-level = (*<(none)|i|ii|iii>*)
-  \end{fdusyntax}
-
-  密级。\opt{i}、\opt{ii}、\opt{iii} 分别表示秘密、机密、绝密；
-  \opt{none} 表示论文不涉密，即不显示密级与保密年限。
+\begin{function}{info/department,info/department*}
+  \begin{ccnusyntax}[emph={[1]department,department*}]
+    department = (*\marg{学院名称}*)
+    department* = (*\marg{学院英文名称}*)
+  \end{ccnusyntax}
+  学院名称。
 \end{function}
 
-\begin{function}[added=2017-07-04]{info/secret-year}
-  \begin{fdusyntax}[emph={[1]secret-year}]
-    secret-year = (*\marg{年限}*)
-  \end{fdusyntax}
-  保密年限。建议您使用中文，如“五年”。该选项在设置
-  \kvopt{secret-level}{none} 时无效。
+\begin{function}{info/major,info/major*}
+  \begin{ccnusyntax}[emph={[1]major,major*}]
+    major = (*\marg{专业名称}*)
+    major* = (*\marg{专业英文名称}*)
+  \end{ccnusyntax}
+  专业名称。
 \end{function}
 
-\begin{function}{info/instructors}
-  \begin{fdusyntax}[emph={[1]instructors}]
-    instructors = (*\marg{成员 1, 成员 2, ...}*)
-  \end{fdusyntax}
-  指导小组成员。各成员之间需使用英文逗号隔开。为防止歧义，
-  可以用分组括号“|{...}|”把各成员字段括起来。
+\begin{function}{info/research-area,info/research-area*}
+  \begin{ccnusyntax}[emph={[1]research-area,research-area*}]
+    research-area = (*\marg{研究方向名称}*)
+    research-area* = (*\marg{研究方向英文名称}*)
+  \end{ccnusyntax}
+  作者研究方向。
 \end{function}
+
+\begin{function}{info/degree-type,info/degree-type*}
+  \begin{ccnusyntax}[emph={[1]degree-type,degree-type*}]
+    degree-type = (*\marg{申请学位学生类别}*)
+    degree-type* = (*\marg{英文申请学位学生类别缩写}*)
+  \end{ccnusyntax}
+  申请学位学生类别。如
+  \begin{itemize}
+    \item 教育硕士｜应用统计硕士｜全日制硕士｜同等学力人员｜高校教师在职攻读硕士学位人员｜专业学位人员
+    \item 博士
+  \end{itemize}
+  英文缩写比如：M.S.
+\end{function}
+
 
 \begin{function}{info/keywords,info/keywords*}
-  \begin{fdusyntax}[emph={[1]keywords,keywords*}]
+  \begin{ccnusyntax}[emph={[1]keywords,keywords*}]
     keywords  = (*\marg{中文关键字}*)
     keywords* = (*\marg{英文关键字}*)
-  \end{fdusyntax}
-  关键字列表。各关键字之间需使用英文逗号隔开。为防止歧义，
-  可以用分组括号“|{...}|”把各字段括起来。
+  \end{ccnusyntax}
+  关键字列表。各关键字之间需使用 \emph{英文逗号} 隔开。
 \end{function}
 
-\begin{function}{info/clc}
-  \begin{fdusyntax}[emph={[1]clc}]
-    clc = (*\marg{分类号}*)
-  \end{fdusyntax}
-  中图分类号（CLC）。
+
+\begin{function}{info/year,info/month}
+  \begin{ccnusyntax}[emph={[1]year,month}]
+    year = (*\marg{年}*)
+    month = (*\marg{月份}*)
+  \end{ccnusyntax}
+  论文完成的年月。默认值为文档编译时的年和月。
 \end{function}
 
-\begin{function}[added=2021-09-16]{info/jel}
-  \begin{fdusyntax}[emph={[1]jel}]
-    jel = (*\marg{分类号}*)
-  \end{fdusyntax}
-  JEL 分类号，仅适用于部分院系。当被指定时，英文摘要中将仅显示 JEL
-  分类号，而不再显示中图分类号。
-\end{function}
+
 
 \subsection{正文编写}
 
@@ -911,58 +940,52 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
 \end{quotation}
 \hfill ——陶宗儀《南村輟耕錄·作今樂府法》
 
+
 \subsubsection{凤头}
 
 \begin{function}{\frontmatter}
   声明前置部分开始。
 \end{function}
 
-在本模板中，前置部分包含目录、中英文摘要以及符号表等。
-前置部分的页码采用小写罗马字母，并且与正文分开计数。
+在本模板中，前置部分包含目录、中英文摘要以及符号表等。硕博模版的前置部分的页码采用小写罗马字母，并且与正文分开计数；本科模版采用阿拉伯数字，并与正文连续计数。本硕博模版目录均无页码。
 
-\begin{function}{\tableofcontents,\listoffigures,\listoftables}
-  生成目录。为了生成完整、正确的目录，您至少需要编译\emph{两次}。对于图表
-  较多的论文，也可以使用 \cs{listoffigures} 和 \cs{listoftables} 生成单独的
-  插图、表格目录。
-\end{function}
+目录会自动生成，无需用户手动控制。
 
-% TODO: \DescribeEnv{abstract}
-% TODO: \DescribeEnv{abstract*}
 \begin{function}{abstract}
-  \begin{fdusyntax}[emph={[2]abstract}]
-    % 中文论文模板 (fduthesis)      % 英文论文模板 (fduthesis-en)
-    \begin{abstract}                \begin{abstract}
-      (*\meta{中文摘要} \hspace{3.52cm} \meta{英文摘要}*)
-    \end{abstract}                  \end{abstract}
-  \end{fdusyntax}
+  \begin{ccnusyntax}[emph={[2]abstract}]
+    % abstract.tex
+    \begin{abstract}
+      (*\meta{中文摘要}*)
+    \end{abstract}
+  \end{ccnusyntax}
+  中文摘要。
 \end{function}
-\begin{function}[rEXP]{abstract*}
-  \begin{fdusyntax}[emph={[2]abstract*}]
-    % 中文论文模板 (fduthesis)
+\begin{function}{abstract*}
+  \begin{ccnusyntax}[emph={[2]abstract*}]
+    % abstract.tex
     \begin{abstract*}
       (*\meta{英文摘要}*)
     \end{abstract*}
-  \end{fdusyntax}
-  摘要。中文模板中，不带星号和带星号的版本分别用来输入中文摘要
-  和英文摘要；英文模板中没有带星号的版本，您只需输入英文摘要。
+  \end{ccnusyntax}
+  英文摘要。
 \end{function}
 
-摘要的最后，会显示关键字列表以及中图分类号（CLC）或 JEL 分类号。这两项
-可通过 \cs{fdusetup} 录入，具体请参阅 \ref{subsubsec:信息录入}~节。
 
-% TODO: \DescribeEnv{notation}
 \begin{function}{notation}
-  \begin{fdusyntax}[emph={[2]notation}]
+  \begin{ccnusyntax}[emph={[2]notation}]
     \begin{notation}(*\oarg{列格式说明}*)
       (*\meta{符号 1}*)  &  (*\meta{说明}*)  \\
       (*\meta{符号 2}*)  &  (*\meta{说明}*)  \\
       (*\phantom{\meta{符号 $n$}}*)  (*$\vdots$*)
       (*\meta{符号\ \kern-0.1em$n$}*)  &  (*\meta{说明}*)
     \end{notation}
-  \end{fdusyntax}
-  符号表。可选参数 \meta{列格式说明}与 \LaTeX{} 中标准表格的列格
-  式说明语法一致，默认值为“|lp{7.5cm}|”，即第一列宽度自动调整，
-  第二列限宽 \qty{7.5}{cm}，两列均为左对齐。
+  \end{ccnusyntax}
+  符号表。基于 \pkg{tabularray} 宏包的 \env{longtblr} 环境，可选参数 \meta{列格式说明} 和 \env{longtblr} 环境的可选参数接口相同，并设置默认为
+  \begin{latexexample}
+    width   = 0.3\textwidth,
+    colspec = {X[1,c]X[1,c]}
+  \end{latexexample}
+  如果效果不满意，请您命令行输入 \cmd{texdoc tabularray} 自行查阅 \pkg{tabularray} 宏包的用户手册了解更多使用参数和细节。
 \end{function}
 
 \subsubsection{猪肚}
@@ -974,23 +997,25 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
 主体部分是论文的核心，您可以分章节撰写。如有需求，也可以采用
 多文件编译的方式。主体部分的页码采用阿拉伯数字。
 
-\begin{function}[updated=2018-01-15]{\footnote}
-  \begin{fdusyntax}[deletetexcs={\footnote},morekeywords={\footnote}]
+\begin{function}{\footnote}
+  \begin{ccnusyntax}[deletetexcs={\footnote},morekeywords={\footnote}]
     \footnote(*\marg{脚注文字}*)
-  \end{fdusyntax}
+  \end{ccnusyntax}
   插入脚注。脚注编号样式可利用 \opt{style/footnote-style} 选项控制，
   具体见 \ref{subsubsec:论文格式}~小节。
+
+  需要注意的是，\parencite{本科生院毕业论文注释与参考文献著录格式} 中指出
+  \begin{itemize}
+    \item 文科术科的论文注释使用脚注
+    \item 理工科的论文注释\textcolor{red}{\emph{不使用}}脚注
+  \end{itemize}
 \end{function}
 
 \begin{function}{\caption}
-  \begin{fdusyntax}[deletetexcs={\caption},morekeywords={\caption}]
+  \begin{ccnusyntax}[deletetexcs={\caption},morekeywords={\caption}]
     \caption(*\marg{图表标题}*)
-    \caption(*\oarg{短标题}\marg{长标题}*)
-  \end{fdusyntax}
-  插入图表标题。可选参数 \meta{短标题} 用于图表目录。在
-  \meta{长标题} 中，您可以进行长达多段的叙述；但 \meta{短标题}
-  和单独的 \meta{图表标题} 中则不允许分段。
-  \cite{刘海洋2013latex入门}
+  \end{ccnusyntax}
+  插入图表标题。
 \end{function}
 
 按照排版惯例，建议您将表格的标题放置在绘制表格的命令之前，
@@ -998,113 +1023,95 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
 \tn{caption} 命令必须放置在浮动体环境（如 \env{table} 和
 \env{figure}）中。
 
+
 \paragraph{参考文献引用}
 
-\begin{function}{\cite}
-  \begin{fdusyntax}[deletetexcs={\cite},morekeywords={\cite}]
-    \cite(*\marg{文献标签}*)
-    \cite(*\oarg{页码}\marg{文献标签}*)
-  \end{fdusyntax}
-  插入所引用的文献。可选参数 \meta{页码} 可用来标注引文的页码。在不同的
-  参考文献样式中，引用的样式也不尽相同。根据需要，模板还提供了更多的命令
-  用来标记引用。顺序编码制和著者—出版年制下的各种引用方式见
-  表~\ref{tab:citation-numerical} 和表~\ref{tab:citation-author-year}。
+\begin{function}{\parencite}
+  \begin{ccnusyntax}[deletetexcs={\parencite},morekeywords={\parencite}]
+    \parencite(*\marg{文献标签}*)
+    \parencite(*\oarg{postnote}\marg{文献标签}*)
+    \parencite(*\oarg{prenote}\oarg{postnote}\marg{文献标签}*)
+  \end{ccnusyntax}
 \end{function}
 
-\NewDocumentCommand\verbcite{O{cite}om}{%
-  \IfNoValueTF{#2}{%
-    \texttt{\textbackslash#1\{#3\}}%
-  }{%
-    \texttt{\textbackslash#1[#2]\{#3\}}%
-  }}
+\begin{function}{\cite}
+  \begin{ccnusyntax}[deletetexcs={\cite},morekeywords={\cite}]
+    \cite(*\marg{文献标签}*)
+    \cite(*\oarg{postnote}\marg{文献标签}*)
+    \cite(*\oarg{prenote}\oarg{postnote}\marg{文献标签}*)
+  \end{ccnusyntax}
+\end{function}
 
-\begin{table}[ht]
-  \caption{顺序编码制下的引用样式} \label{tab:citation-numerical}
-  \centering
-  \small
-  \begin{tabularx}{\textwidth}{cCll}
-    \toprule
-      \textbf{引用方式} &
-      \textbf{排版效果} &
-      \textbf{\kvopt{bib-backend}{bibtex}} &
-      \textbf{\kvopt{bib-backend}{biblatex}} \\
-    \midrule
-    单篇文献 &
-      引文\cite{texbook} &
-      \verbcite{texbook} &
-      同右 \\
-    多篇文献 &
-      引文\cite{texbook,companion} &
-      \verbcite{texbook,companion} &
-      同右 \\
-    标注页码 &
-      引文\cite[126--137]{texbook} &
-      \verbcite[cite][126--137]{texbook} &
-      同右 \\
-    标注作者 &
-      \citet{texbook}指出 &
-      \verbcite[citet]{texbook} &
-      \verbcite[authornumcite]{texbook} \\
-    标注作者、页码 &
-      \citet[42]{texbook}指出 &
-      \verbcite[citet][42]{texbook} &
-      \verbcite[authornumcite][42]{texbook} \\
-    非上标 &
-      引文{\citestyle{numbers}\cite{texbook}} &
-      \verbcite[parencite]{texbook} &
-      同右 \\
-    \bottomrule
-  \end{tabularx}
-\end{table}
+插入所引用的文献。\meta{prenote} 和 \meta{posnote} 由名称可看出，一个是出现在前方，一个出现在后方。绝大部分情况只需用到可选参数 \meta{postnote}，可用来标注引文的页码或引用的定理。
 
-\begin{table}[ht]
-  \caption{著者—出版年制下的引用样式} \label{tab:citation-author-year}
+\tn{parencite} 是行内引用，\tn{cite} 是上标引用。通常情况下
+
+\begin{itemize}
+  \item 下面两种情况要用行内引用 \tn{parencite}：
+    \begin{enumerate}
+      \item 去掉这个引用句子结构不完整，比如“定理证明可参看[1]”
+      \item 英文文献的引用
+    \end{enumerate}
+  \item 下面情况用上标引用 \tn{cite}：
+    \begin{itemize}
+      \item 去掉这个引用后句子结构仍然完整，比如“作者提到，CCNUthesis 是一个非常好的好模版。$^{[1]}$”
+    \end{itemize}
+\end{itemize}
+
+如果您对上述的说法觉得不赞同或有所补充，欢迎提出！(可按~\ref{subsec:提issues} 节的链接到 \cls{CCNUthesis} 项目主页提 issues)
+
+效果举例：
+
+\begin{latexexample}
+  % CCNUthesis-main.bib
+  % @book{feynman2011,
+  %   title     = {The Feynman lectures on physics, Vol. I: The new millennium edition: mainly mechanics, radiation, and heat},
+  %   author    = {Feynman, Richard P and Leighton, Robert B and Sands, Matthew},
+  %   volume    = {1},
+  %   year      = {2011},
+  %   publisher = {Basic books},
+  %   pages     = {2-8},
+  %   edition   = {7},
+  %   url       = {https://arxiv.org/abs/2201.00067}
+  % }
+
+  % main.tex
+  英文文献 \parencite{feynman2011}
+
+  英文文献 \parencite[12]{feynman2011}
+
+  英文文献 \parencite[Thm1]{feynman2011}
+
+  英文文献 \parencite[12][Thm1]{feynman2011}
+
+  英文文献 \cite{feynman2011}
+
+  英文文献 \cite[12]{feynman2011}
+
+  英文文献 \cite[Thm1]{feynman2011}
+
+  英文文献 \cite[12][Thm1]{feynman2011}
+\end{latexexample}
+
+最终效果见图~\ref{figure:cite-parencite效果}（其中“4”仅为测试效果，具体取决于 \cmd{bib-style} 的样式及引用顺序等）。
+
+\begin{figure}[htbp]
   \centering
-  \small
-  \def\!{\kern-1.5pt}
-  \begin{tabularx}{\textwidth}{cCll}
-    \toprule
-      \textbf{引用方式} &
-      \textbf{排版效果} &
-      \textbf{\kvopt{bib-backend}{bibtex}} &
-      \textbf{\kvopt{bib-backend}{biblatex}} \\
-    \midrule
-    单篇文献 &
-      (\citeauthor{texbook}\!, \citeyear{texbook}\!) &
-      \verbcite[citep]{texbook} &
-      \verbcite{texbook} \\
-    多篇文献 &
-      (\citeauthor{texbook}\!, \citeyear{texbook}\!;
-        \citeauthor{companion}\!, \citeyear{companion}\!) &
-      \verbcite[citep]{texbook,companion} &
-      \verbcite{texbook,companion} \\
-    标注页码 &
-      (\citeauthor{texbook}\!, \citeyear{texbook}\!)%
-        \textsuperscript{126--137} &
-      \verbcite[citep][126--137]{texbook} &
-      \verbcite[cite][126--137]{texbook} \\
-    标注作者 &
-      \citeauthor{texbook}(\citeyear{texbook}\!) &
-      \verbcite[citet]{texbook} &
-      同右 \\
-    标注作者、页码 &
-      \citeauthor{texbook}(\citeyear{texbook}\!)\textsuperscript{42} &
-      \verbcite[citet][42]{texbook} &
-      同右 \\
-    \bottomrule
-  \end{tabularx}
-\end{table}
+  \includegraphics[width = 0.5\textwidth]{cite-parencite效果.png}
+  \caption{\tn{cite} 和 \tn{parencite} 的效果}
+  \label{figure:cite-parencite效果}
+\end{figure}
+
 
 \paragraph{定理类环境}
 
-% TODO: \DescribeEnv{proof}
-\begin{function}{axiom,corollary,definition,example,lemma,
-  proof,theorem}
-  \begin{fdusyntax}[emph={[2]proof}]
+
+\begin{function}{axiom,antiexample,claim,corollary,conjecture,definition,example,lemma,property,proof,proposition,question,remark,theorem}
+  \begin{ccnusyntax}[emph={[2]proof}]
     \begin{proof}(*\oarg{小标题}*)
       (*\meta{证明过程}*)
     \end{proof}
-  \end{fdusyntax}
+  \end{ccnusyntax}
   一系列预定义的数学环境。具体含义见表~\ref{tab:theorem}。
 \end{function}
 
@@ -1112,89 +1119,80 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
   \caption{预定义的数学环境} \label{tab:theorem}
   \centering
   \small
-  \begin{tabular}{*{8}{c}}
-    \toprule
-      \textbf{名称} &
-        \env{axiom} & \env{corollary} & \env{definition} & \env{example} &
-        \env{lemma} & \env{proof}     & \env{theorem} \\
-    \midrule
-      \textbf{含义} &
-        公理 & 推论 & 定义 & 例 &
-        引理 & 证明 & 定理 \\
-    \bottomrule
-  \end{tabular}
+  \begin{tblr}{
+    width = \textwidth,
+    columns = {c},
+    hline{1,2,Z} = {solid}
+  }
+    \textbf{名称} &
+      \env{axiom} & \env{antiexample} & \env{claim} & \env{corollary} & \env{conjecture} & \env{definition} & \env{example} \\
+    \textbf{含义} &
+      公理 & 反例 & 断言 & 推论 &
+      猜想 & 定义 & 例 \\
+  \end{tblr}
+
+  \begin{tblr}{
+    width = \textwidth,
+    columns = {c},
+    hline{1,2,Z} = {solid}
+  }
+    \textbf{名称} &
+      \env{lemma} & \env{property} & \env{proof} & \env{proposition} & \env{question} & \env{remark} & \env{theorem} \\
+    \textbf{含义} &
+      引理 & 性质 & 证明 & 命题 &
+      问题 & 注  & 定理 \\
+  \end{tblr}
 \end{table}
 
-证明环境（\env{proof}）的最后会添加证毕符号“$\QED$”。要确保
-该符号在正确的位置显示，您需要按照 \ref{subsec:编译方式}~节
-中的有关说明编译\emph{两次}。
+证明环境（\env{proof}）的最后会添加证毕符号“$\square$”。对于证明如果以公式结尾或其它某些情况时“$\square$”可能会出现在新的空白行的行尾，如果想要“$\square$”出现在“有内容的”行尾，可以在想要出现的地方使用 \tn{qedhere} 命令，比如您可以在模版中测试下面代码查看效果：
 
-\begin{function}[updated=2017-12-12]{\newtheorem}
-  \begin{fdusyntax}[deletetexcs={\newtheorem},
-      morekeywords={\newtheorem,\newtheorem*}]
-    \newtheorem(*\oarg{选项}\marg{环境名}\marg{标题}*)
-    \newtheorem*(*\oarg{选项}\marg{环境名}\marg{标题}*)
-    \begin(*\marg{环境名}\oarg{小标题}*)
-      (*\meta{内容}*)
-    \end(*\marg{环境名}*)
-  \end{fdusyntax}
-  声明新的定理类环境（数学环境）。带星号的版本表示不进行编号，
-  并且会默认添加证毕符号“$\QED$”。声明后，即可同预定义的数学环境
-  一样使用。
-\end{function}
-
-事实上，表~\ref{tab:theorem} 中预定义的环境正是通过以下方式定义的：
-\begin{latexexample}[deletetexcs={\newtheorem},
-    morekeywords={\newtheorem,\newtheorem*}]
-  \newtheorem*{proof}{证明}
-  \newtheorem{axiom}{公理}
-  \newtheorem{corollary}{定理}
-  ...
+\begin{latexexample}
+  \begin{proof}
+    \[
+      x^2
+    \]
+  \end{proof}
+  \begin{proof}
+    \[
+      x^2  \qedhere
+    \]
+  \end{proof}
 \end{latexexample}
 
-与 \cs{fdusetup} 相同，\cs{newtheorem} 的可选参数 \meta{选项}
-也为一组键值列表。可用的选项见下。注意您无需输入“|theorem/|”。
 
-\begin{function}{theorem/style}
-  \begin{fdusyntax}[emph={[1]style}]
-    style = (*<(plain)|margin|change|\\
-      XXXXXX\mbox{}~~~~~~~~break|marginbreak|changebreak>*)
-  \end{fdusyntax}
-  定理类环境的总体样式。
+\begin{function}[added = 2022-06-04]{\ccnunewtheorem,\ccnunewtheorem*}
+  \begin{ccnusyntax}[deletetexcs={\ccnunewtheorem,\ccnunewtheorem*},morekeywords={\ccnunewtheorem,\ccnunewtheorem*}]
+    \ccnunewtheorem(*\oarg{计数器样式设置}\marg{环境中文名称}\marg{环境名}*)
+    \ccnunewtheorem*(*\oarg{计数器样式设置}\marg{环境中文名称}\marg{环境名}*)
+  \end{ccnusyntax}
+  自定义定理类环境的命令。带星号的表示新定义的环境无计数器，类似于 \env{proof} 环境。
 \end{function}
 
-\begin{function}{theorem/header-font}
-  \begin{fdusyntax}[emph={[1]header-font}]
-    header-font = (*\marg{字体}*)
-  \end{fdusyntax}
-  定理头（即标题）的字体。中文模板默认为 \tn{sffamily}，即无衬线体
-  （黑体）；英文模板默认为 |\bfseries\upshape|，即加粗直立体。
-\end{function}
+该命令的主要用法有下面四种：
+\begin{latexexample}
+\ccnunewtheorem{测试}{test}
+\ccnunewtheorem*{测试试}{testt}
+\ccnunewtheorem[sibling = theorem]{测试试试}{testtt}
+\ccnunewtheorem[within = chapter]{测试试试试}{testttt}
+\end{latexexample}
 
-\begin{function}{theorem/body-font}
-  \begin{fdusyntax}[emph={[1]body-font}]
-    body-font = (*\marg{字体}*)
-  \end{fdusyntax}
-  定理内容的字体。中文模板默认为 \tn{fdu@kai}，即楷体；英文模板
-  默认为 \tn{itshape}，即斜体。
-\end{function}
+\begin{itemize}
+  \item |\ccnunewtheorem{测试}{test}| 定义了一个 \env{test} 环境，label 名为 \env{测试}。环境自己用自己的计数器，并且跨 chapter 连续编号
+  \item |\ccnunewtheorem*{测试试}{testt}| 定义了一个 \env{testt} 环境，label 名为 \env{测试试}。环境不编号。
+  \item |\ccnunewtheorem[sibling = theorem]{测试试试}{testtt}| 定义了一个 \env{testtt} 环境，label 名为 \env{测试试试}。环境和 theorem 环境共用一个计数器。
+  \item |\ccnunewtheorem[within = chapter]{测试试试试}{testttt}| 定义了一个 \env{testttt} 环境，label 名为 \env{测试试试试}。环境计数器的值和章节有关，形如 $x.y$，$x$ 表示章节的计数器的值，子计数器 $y$ 随新章节清零重新计数。
+\end{itemize}
 
-\begin{function}{theorem/qed}
-  \begin{fdusyntax}[emph={[1]qed}]
-    qed = (*\marg{符号}*)
-  \end{fdusyntax}
-  定理结束标记（即证毕符号）。如果用 \cs{newtheorem} 声明定理，则默认为空；
-  用 \cs{newtheorem*} 声明，则默认为 |\ensuremath{\QED}|，即“$\QED$”。
-\end{function}
+您可以看图~\ref{figure:ccnunewtheorem} 的效果来更好地理解四种用法的效果，
 
-\begin{function}{theorem/counter}
-  \begin{fdusyntax}[emph={[1]counter}]
-    counter = (*\marg{计数器}*)
-  \end{fdusyntax}
-  定理计数器，表示定理编号在 \meta{计数器} 的下一级，并会随 \meta{计数器}
-  的变化而清零。\cite{刘海洋2013latex入门}默认为 |chapter|，表示按章编号。
-  使用 \cs{newtheorem*} 时，该选项无效。
-\end{function}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width = 0.7\textwidth]{ccnunewtheorem.png}
+  \caption{\tn{ccnunewtheorem} 示例}
+  \label{figure:ccnunewtheorem}
+\end{figure}
+
+
 
 \subsubsection{豹尾}
 
@@ -1205,15 +1203,15 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
 后置部分包含参考文献、声明页等。
 
 \begin{function}[updated=2018-01-25]{\printbibliography}
-  \begin{fdusyntax}[morekeywords={\printbibliography}]
+  \begin{ccnusyntax}[morekeywords={\printbibliography}]
     \printbibliography(*\oarg{选项}*)
-  \end{fdusyntax}
+  \end{ccnusyntax}
   打印参考文献列表。如果 \kvopt{bib-backend}{bibtex}，则 \meta{选项}
   无效，相当于 \tn{bibliography} \texttt{\marg{文献数据库}}，其中的
   \meta{文献数据库} 可利用 \opt{style/bib-resource} 选项指定，具体见
   \ref{subsubsec:论文格式}~小节；而如果 \kvopt{bib-backend}{biblatex}，
   则该命令由 \pkg{biblatex} 宏包直接提供，可用选项请参阅其文档
-  \cite{biblatex}。
+  。
 \end{function}
 
 \section{宏包依赖情况}
@@ -1226,8 +1224,8 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
     \begin{itemize}
       \item \pkg{xtemplate} 和 \pkg{l3keys2e}，用于扩展 \LaTeX3 编程环境。
         它们属于 \pkg{l3packages} 宏集。
-      \item \cls{CTeXbook}，提供中文排版的通用框架。属于 \CTeX{}
-        宏集 \cite{CTeX}。
+      \item \cls{C研究生院研究生学位论文规范}，提供中文排版的通用框架。属于 \CTeX{}
+        宏集 。
       \item \pkg{amsmath}，对 \LaTeX{} 的数学排版功能进行了
         全面扩展。属于 \AmSLaTeX{} 套件。
       \item \pkg{unicode-math}，负责处理 Unicode 编码的
@@ -1246,11 +1244,11 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
     \pkg{pifont} 宏包。它属于 \pkg{psnfss} 套件。
   \item 开启 \kvopt{style/bib-backend}{bibtex} 后，会调用
     \pkg{natbib} 宏包，并依赖 \BibTeX{} 程序。参考文献样式由
-    \pkg{gbt7714} 宏包提供 \cite{natbib,gbt7714}。
+    \pkg{gbt7714} 宏包提供 。
   \item 开启 \kvopt{style/bib-backend}{biblatex} 后，会调用
     \pkg{biblatex} 宏包，并依赖 \biber{} 程序。参考文献样式由
     \pkg{biblatex-gb7714-2015} 宏包提供
-    \cite{biblatex,biblatex-gb7714-2015}。
+    。
 \end{itemize}
 
 这里只列出了本模板直接调用的宏包。这些宏包自身的调用情况，
@@ -1284,232 +1282,239 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
   \item 处理硕士模版
   \item 单面双面打印，空白，cleardoublepage？看 thuthesis 的处理
   \item 录制新的讲解视频
+  \item 标题中输入命令 texofxxxx
 \end{itemize}
 
 
-\begin{thebibliography}{99}
 
-\newcommand\urlprefix{\newline\hspace*{\fill}}
-\let\OldUrl=\url
-\renewcommand\url[2][]{{\small\textit{#1}~\OldUrl{#2}}}
-\newcommand\CTANurl[2][]{{%
-  \small\textit{#1}~\href{http://mirror.ctan.org/#2}{\texttt{CTAN://#2}}}}
+\printbibliography
+% \begin{thebibliography}{99}
 
-\subsection{图书}
+% \newcommand\urlprefix{\newline\hspace*{\fill}}
+% \let\OldUrl=\url
+% \renewcommand\url[2][]{{\small\textit{#1}~\OldUrl{#2}}}
+% \newcommand\CTANurl[2][]{{%
+%   \small\textit{#1}~\href{http://mirror.ctan.org/#2}{\texttt{CTAN://#2}}}}
 
-\bibitem[Knuth(1986)]{texbook}
-\textsc{Knuth D E}.
-\newblock \textit{The \TeX book: Computers \& Typesetting, volume A} [M].
-\newblock Boston: Addison--Wesley Publishing Company, 1986
-\urlprefix \CTANurl[源代码%
-  \footnote{此代码只可作为学习之用。未经 Knuth 本人同意，您不应当编译此文档。}：]%
-  {systems/knuth/dist/tex/texbook.tex}
+% \subsection{图书}
 
-\bibitem[Mittelbach et~al.(2004)]{companion}
-\textsc{Mittelbach F} and \textsc{Goossens M}.
-\newblock \textit{The \LaTeX{} Companion} [M].
-\newblock 2nd ed.
-\newblock Boston: Addison--Wesley Publishing Company, 2004
+% \bibitem[Knuth(1986)]{研究生院研究生学位论文规范}
+% \textsc{Knuth D E}.
+% \newblock \textit{The \TeX book: Computers \& Typesetting, volume A} [M].
+% \newblock Boston: Addison--Wesley Publishing Company, 1986
+% \urlprefix \CTANurl[源代码%
+%   \footnote{此代码只可作为学习之用。未经 Knuth 本人同意，您不应当编译此文档。}：]%
+%   {systems/knuth/dist/tex/研究生院研究生学位论文规范.tex}
 
-\bibitem[()]{胡伟2017latex2e}
-胡伟.
-\newblock \textit{\LaTeXe{} 文类和宏包学习手册} [M].
-\newblock 北京: 清华大学出版社, 2017
+% \bibitem[Mittelbach et~al.(2004)]{companion}
+% \textsc{Mittelbach F} and \textsc{Goossens M}.
+% \newblock \textit{The \LaTeX{} Companion} [M].
+% \newblock 2nd ed.
+% \newblock Boston: Addison--Wesley Publishing Company, 2004
 
-\bibitem[()]{刘海洋2013latex入门}
-刘海洋.
-\newblock \textit{\LaTeX{} 入门} [M].
-\newblock 北京: 电子工业出版社, 2013
+% \bibitem[()]{胡伟2017latex2e}
+% 胡伟.
+% \newblock \textit{\LaTeXe{} 文类和宏包学习手册} [M].
+% \newblock 北京: 清华大学出版社, 2017
 
-\subsection{标准、规范}
+% \bibitem[()]{刘海洋2013latex入门}
+% 刘海洋.
+% \newblock \textit{\LaTeX{} 入门} [M].
+% \newblock 北京: 电子工业出版社, 2013
 
-\bibitem[()]{gb-t-7713.1-2006}
-国务院学位委员会办公室, 全国信息与文献标准化技术委员会.
-\newblock \textit{学位论文编写规则: GB/T 7713.1--2006} [S].
-\newblock 北京: 中国标准出版社, 2007
+% \subsection{标准、规范}
 
-\bibitem[()]{gb-t-7714-2015}
-全国信息与文献标准化技术委员会.
-\newblock \textit{信息与文献\quad 参考文献著录规则: GB/T 7714--2015} [S].
-\newblock 北京: 中国标准出版社, 2015
 
-\bibitem[()]{gb-t-15834-2011}
-教育部语言文字信息管理司.
-\newblock \textit{标点符号用法: GB/T 15834--2011} [S/OL].
-\newblock 北京: 中国标准出版社, 2012
-\urlprefix\url{http://www.moe.gov.cn/ewebeditor/uploadfile/2015/01/13/20150113091548267.pdf}
 
-\bibitem[()]{clreq}
-W3C.
-\newblock \textit{中文排版需求（Requirements for Chinese Text Layout）} [EB/OL].
-\newblock (2020-08-17)
-\urlprefix\url{https://w3c.github.io/clreq/}
 
-\bibitem[()]{复旦大学论文规范}
-复旦大学图书馆, 复旦大学研究生院.
-\newblock \textit{复旦大学博士、硕士学位论文规范} [EB/OL].
-\newblock 2017 年 3 月修订版.
-\newblock (2017-03-27)
-\urlprefix\url{http://www.gs.fudan.edu.cn/_upload/article/4c/a8/a82545ef443b9c057c14ba13782c/c883c6f3-6d7f-410c-8f30-d8bde6fcb990.doc}
 
-\subsection{宏包、模版}
+% \bibitem[()]{gb-t-7713.1-2006}
+% 国务院学位委员会办公室, 全国信息与文献标准化技术委员会.
+% \newblock \textit{学位论文编写规则: GB/T 7713.1--2006} [S].
+% \newblock 北京: 中国标准出版社, 2007
 
-\bibitem[()]{source2e}
-\textsc{Braams J}, \textsc{Carlisle D}, \textsc{Jeffrey A}, et al.
-\newblock \textit{The \LaTeXe{} Sources} [CP/OL].
-\newblock (2020-02-02)
-\urlprefix\url{https://ctan.org/pkg/latex}
-\urlprefix\CTANurl[源代码：]{macros/latex/base/source2e.pdf}
+% \bibitem[()]{gb-t-7714-2015}
+% 全国信息与文献标准化技术委员会.
+% \newblock \textit{信息与文献\quad 参考文献著录规则: GB/T 7714--2015} [S].
+% \newblock 北京: 中国标准出版社, 2015
 
-\bibitem[()]{\CTeX}
-\textsc{\CTeX.ORG}.
-\newblock \textit{\\CTeX{} 宏集手册} [EB/OL].
-\newblock version 2.5.4,
-\newblock (2020-08-23)
-\urlprefix\url{https://ctan.org/pkg/\CTeX}
-\urlprefix\CTANurl[文档及源代码：]{language/chinese/\CTeX/\CTeX.pdf}
+% \bibitem[()]{gb-t-15834-2011}
+% 教育部语言文字信息管理司.
+% \newblock \textit{标点符号用法: GB/T 15834--2011} [S/OL].
+% \newblock 北京: 中国标准出版社, 2012
+% \urlprefix\url{http://www.moe.gov.cn/ewebeditor/uploadfile/2015/01/13/20150113091548267.pdf}
 
-\bibitem[()]{xeCJK}
-\textsc{\CTeX.ORG}.
-\newblock \textit{\pkg{xeCJK} 宏包} [EB/OL].
-\newblock version 3.8.5,
-\newblock (2020-08-23)
-\urlprefix\url{https://ctan.org/pkg/xecjk}
-\urlprefix\CTANurl[文档及源代码：]{macros/xetex/latex/xecjk/xeCJK.pdf}
+% \bibitem[()]{clreq}
+% W3C.
+% \newblock \textit{中文排版需求（Requirements for Chinese Text Layout）} [EB/OL].
+% \newblock (2020-08-17)
+% \urlprefix\url{https://w3c.github.io/clreq/}
 
-\bibitem[()]{natbib}
-\textsc{Daly P W}.
-\newblock \textit{Natural Sciences Citations and References} [EB/OL].
-\newblock version 8.31b,
-\newblock (2010-09-13)
-\urlprefix\url{https://ctan.org/pkg/natbib}
-\urlprefix\CTANurl[文档及源代码：]{macros/latex/contrib/natbib/natbib.pdf}
+% \bibitem[()]{复旦大学论文规范}
+% 复旦大学图书馆, 复旦大学研究生院.
+% \newblock \textit{复旦大学博士、硕士学位论文规范} [EB/OL].
+% \newblock 2017 年 3 月修订版.
+% \newblock (2017-03-27)
+% \urlprefix\url{http://www.gs.fudan.edu.cn/_upload/article/4c/a8/a82545ef443b9c057c14ba13782c/c883c6f3-6d7f-410c-8f30-d8bde6fcb990.doc}
 
-\bibitem[()]{source3}
-\textsc{The \LaTeX3 Project}.
-\newblock \textit{The \LaTeX3 Sources} [CP/OL].
-\newblock (2020-08-07)
-\urlprefix\url{https://ctan.org/pkg/l3kernel}
-\urlprefix\CTANurl[源代码：]{macros/latex/contrib/l3kernel/source3.pdf}
+% \subsection{宏包、模版}
 
-\bibitem[()]{biblatex}
-\textsc{Lehman P}, \textsc{Kime P}, \textsc{Boruvka A}, et al.
-\newblock \textit{The \pkg{biblatex} Package} [EB/OL].
-\newblock version 3.15a,
-\newblock (2020-08-23)
-\urlprefix\url{https://ctan.org/pkg/biblatex}
-\urlprefix\CTANurl[文档：]{macros/latex/contrib/biblatex/doc/biblatex.pdf}
+% \bibitem[()]{source2e}
+% \textsc{Braams J}, \textsc{Carlisle D}, \textsc{Jeffrey A}, et al.
+% \newblock \textit{The \LaTeXe{} Sources} [CP/OL].
+% \newblock (2020-02-02)
+% \urlprefix\url{https://ctan.org/pkg/latex}
+% \urlprefix\CTANurl[源代码：]{macros/latex/base/source2e.pdf}
 
-\bibitem[()]{lshort}
-\textsc{Oetiker T}, \textsc{Partl H}, \textsc{Hyna I}, et al.
-\newblock \textit{The Not So Short Introduction to \LaTeXe{}: Or \LaTeXe{} in 139 minutes} [EB/OL].
-\newblock version 6.2,
-\newblock (2018-02-28)
-\urlprefix\url{https://ctan.org/pkg/lshort-english}
-\urlprefix\CTANurl[文档：]{info/lshort/english/lshort.pdf}
+% \bibitem[()]{\CTeX}
+% \textsc{\CTeX.ORG}.
+% \newblock \textit{\\CTeX{} 宏集手册} [EB/OL].
+% \newblock version 2.5.4,
+% \newblock (2020-08-23)
+% \urlprefix\url{https://ctan.org/pkg/\CTeX}
+% \urlprefix\CTANurl[文档及源代码：]{language/chinese/\CTeX/\CTeX.pdf}
 
-\bibitem[()]{lshort-zh-cn}
-\textsc{Oetiker T}, \textsc{Partl H}, \textsc{Hyna I}, et al.
-\newblock \textit{一份（不太）简短的 \LaTeXe{} 介绍: 或 112 分钟了解 \LaTeXe{}} [EB/OL].
-\newblock \\CTeX{} 开发小组, 译.
-\newblock 原版版本 version 6.2, 中文版本 version 6.02,
-\newblock (2020-08-03)
-\urlprefix\url{https://ctan.org/pkg/lshort-zh-cn}
-\urlprefix\CTANurl[文档：]{info/lshort/chinese/lshort-zh-cn.pdf}
+% \bibitem[()]{xeCJK}
+% \textsc{\CTeX.ORG}.
+% \newblock \textit{\pkg{xeCJK} 宏包} [EB/OL].
+% \newblock version 3.8.5,
+% \newblock (2020-08-23)
+% \urlprefix\url{https://ctan.org/pkg/xecjk}
+% \urlprefix\CTANurl[文档及源代码：]{macros/xetex/latex/xecjk/xeCJK.pdf}
 
-\bibitem[()]{biblatex-gb7714-2015}
-胡振震.
-\newblock \textit{符合 GB/T 7714-2015 标准的 biblatex 参考文献样式} [EB/OL].
-\newblock version 1.0v,
-\newblock (2020-07-21)
-\urlprefix\url{https://ctan.org/pkg/biblatex-gb7714-2015}
-\urlprefix\CTANurl[文档：]{biblatex-contrib/biblatex-gb7714-2015/biblatex-gb7714-2015.pdf}
+% \bibitem[()]{natbib}
+% \textsc{Daly P W}.
+% \newblock \textit{Natural Sciences Citations and References} [EB/OL].
+% \newblock version 8.31b,
+% \newblock (2010-09-13)
+% \urlprefix\url{https://ctan.org/pkg/natbib}
+% \urlprefix\CTANurl[文档及源代码：]{macros/latex/contrib/natbib/natbib.pdf}
 
-\bibitem[()]{gbt7714}
-李泽平（\textsc{Zeping L}）.
-\newblock \textit{GB/T 7714-2015 \BibTeX{} Style} [EB/OL].
-\newblock version 2.0.2,
-\newblock (2020-06-08)
-\urlprefix\url{https://ctan.org/pkg/gbt7714}
-\urlprefix\CTANurl[文档：]{biblio/bibtex/contrib/gbt7714/gbt7714.pdf}
+% \bibitem[()]{source3}
+% \textsc{The \LaTeX3 Project}.
+% \newblock \textit{The \LaTeX3 Sources} [CP/OL].
+% \newblock (2020-08-07)
+% \urlprefix\url{https://ctan.org/pkg/l3kernel}
+% \urlprefix\CTANurl[源代码：]{macros/latex/contrib/l3kernel/source3.pdf}
 
-\bibitem[()]{cquthesis}
-李振楠.
-\newblock \textit{\textsc{CquThesis}：重庆大学毕业论文 \LaTeX{} 模板} [EB/OL].
-\newblock version 1.50,
-\newblock (2020-06-23)
-\urlprefix\url{https://ctan.org/pkg/cquthesis}
-\urlprefix\CTANurl[文档及源代码：]{macros/latex/contrib/cquthesis/cquthesis.pdf}
+% \bibitem[()]{biblatex}
+% \textsc{Lehman P}, \textsc{Kime P}, \textsc{Boruvka A}, et al.
+% \newblock \textit{The \pkg{biblatex} Package} [EB/OL].
+% \newblock version 3.15a,
+% \newblock (2020-08-23)
+% \urlprefix\url{https://ctan.org/pkg/biblatex}
+% \urlprefix\CTANurl[文档：]{macros/latex/contrib/biblatex/doc/biblatex.pdf}
 
-\bibitem[()]{thuthesis}
-清华大学 TUNA 协会.
-\newblock \textit{\textsc{ThuThesis}：清华大学学位论文模板} [EB/OL].
-\newblock version 6.1.3,
-\newblock (2020-07-09)
-\urlprefix\url{https://ctan.org/pkg/thuthesis}
-\urlprefix\CTANurl[文档及源代码：]{macros/latex/contrib/thuthesis/thuthesis.pdf}
+% \bibitem[()]{lshort}
+% \textsc{Oetiker T}, \textsc{Partl H}, \textsc{Hyna I}, et al.
+% \newblock \textit{The Not So Short Introduction to \LaTeXe{}: Or \LaTeXe{} in 139 minutes} [EB/OL].
+% \newblock version 6.2,
+% \newblock (2018-02-28)
+% \urlprefix\url{https://ctan.org/pkg/lshort-english}
+% \urlprefix\CTANurl[文档：]{info/lshort/english/lshort.pdf}
 
-\emph{以下模版未收录至 CTAN，但仍然保持活跃更新。}
+% \bibitem[()]{lshort-zh-cn}
+% \textsc{Oetiker T}, \textsc{Partl H}, \textsc{Hyna I}, et al.
+% \newblock \textit{一份（不太）简短的 \LaTeXe{} 介绍: 或 112 分钟了解 \LaTeXe{}} [EB/OL].
+% \newblock \\CTeX{} 开发小组, 译.
+% \newblock 原版版本 version 6.2, 中文版本 version 6.02,
+% \newblock (2020-08-03)
+% \urlprefix\url{https://ctan.org/pkg/lshort-zh-cn}
+% \urlprefix\CTANurl[文档：]{info/lshort/chinese/lshort-zh-cn.pdf}
 
-\bibitem[()]{sjtuthesis}
-\textsc{SJTUG}.
-\newblock \textit{上海交通大学学位论文模板} [EB/OL].
-\newblock version 1.0.0rc7,
-\newblock (2020-07-31)
-\urlprefix\url{https://github.com/sjtug/SJTUThesis}
-\urlprefix\url[源代码仓库：]{https://github.com/sjtug/SJTUTeX}
+% \bibitem[()]{biblatex-gb7714-2015}
+% 胡振震.
+% \newblock \textit{符合 GB/T 7714-2015 标准的 biblatex 参考文献样式} [EB/OL].
+% \newblock version 1.0v,
+% \newblock (2020-07-21)
+% \urlprefix\url{https://ctan.org/pkg/biblatex-gb7714-2015}
+% \urlprefix\CTANurl[文档：]{biblatex-contrib/biblatex-gb7714-2015/biblatex-gb7714-2015.pdf}
 
-\bibitem[()]{ustcthesis}
-\textsc{USTC \TeX{} User Group}.
-\newblock \textit{中国科学技术大学学位论文 \LaTeX{} 模板} [EB/OL].
-\newblock version 3.2.1,
-\newblock (2020-04-03)
-\urlprefix\url{https://github.com/ustctug/ustcthesis}
+% \bibitem[()]{gbt7714}
+% 李泽平（\textsc{Zeping L}）.
+% \newblock \textit{GB/T 7714-2015 \BibTeX{} Style} [EB/OL].
+% \newblock version 2.0.2,
+% \newblock (2020-06-08)
+% \urlprefix\url{https://ctan.org/pkg/gbt7714}
+% \urlprefix\CTANurl[文档：]{biblio/bibtex/contrib/gbt7714/gbt7714.pdf}
 
-\bibitem[()]{ucasthesis}
-\textsc{mohuangrui}.
-\newblock \textit{\pkg{ucasthesis} 国科大学位论文 \LaTeX{} 模板} [EB/OL].
-\newblock (2020-07-28)
-\urlprefix\url{https://github.com/mohuangrui/ucasthesis}
+% \bibitem[()]{cquthesis}
+% 李振楠.
+% \newblock \textit{\textsc{CquThesis}：重庆大学毕业论文 \LaTeX{} 模板} [EB/OL].
+% \newblock version 1.50,
+% \newblock (2020-06-23)
+% \urlprefix\url{https://ctan.org/pkg/cquthesis}
+% \urlprefix\CTANurl[文档及源代码：]{macros/latex/contrib/cquthesis/cquthesis.pdf}
 
-\emph{以下模版现已停止更新。}
+% \bibitem[()]{thuthesis}
+% 清华大学 TUNA 协会.
+% \newblock \textit{\textsc{ThuThesis}：清华大学学位论文模板} [EB/OL].
+% \newblock version 6.1.3,
+% \newblock (2020-07-09)
+% \urlprefix\url{https://ctan.org/pkg/thuthesis}
+% \urlprefix\CTANurl[文档及源代码：]{macros/latex/contrib/thuthesis/thuthesis.pdf}
 
-\bibitem[()]{pandoxie2014fduthesislatex}
-\textsc{Pandoxie}.
-\newblock \textit{Fudan University-Latex Template} [EB/OL].
-\newblock (2014-06-07)
-\urlprefix\url{https://github.com/Pandoxie/FDU-Thesis-Latex}
+% \emph{以下模版未收录至 CTAN，但仍然保持活跃更新。}
 
-\bibitem[()]{richard2016fudanthesis}
-\textsc{richard}.
-\newblock \textit{复旦大学硕士学位论文模板} [EB/OL].
-\newblock (2016-01-31)
-\urlprefix\url{https://github.com/richarddzh/fudan-thesis}
+% \bibitem[()]{sjtuthesis}
+% \textsc{SJTUG}.
+% \newblock \textit{上海交通大学学位论文模板} [EB/OL].
+% \newblock version 1.0.0rc7,
+% \newblock (2020-07-31)
+% \urlprefix\url{https://github.com/sjtug/SJTUThesis}
+% \urlprefix\url[源代码仓库：]{https://github.com/sjtug/SJTUTeX}
 
-\bibitem[()]{数院毕业论文格式}
-复旦大学数学科学学院.
-\newblock \textit{毕业论文格式 tex 版和 word 版} [EB/OL].
-\urlprefix\url{http://math.fudan.edu.cn/show.aspx?info_lb=664&flag=101&info_id=1816}
+% \bibitem[()]{ustcthesis}
+% \textsc{USTC \TeX{} User Group}.
+% \newblock \textit{中国科学技术大学学位论文 \LaTeX{} 模板} [EB/OL].
+% \newblock version 3.2.1,
+% \newblock (2020-04-03)
+% \urlprefix\url{https://github.com/ustctug/ustcthesis}
 
-\bibitem[()]{数院毕业论文格式更新}
-复旦大学数学科学学院.
-\newblock \textit{毕业论文格式: Word、\TeX{} 模板更新} [EB/OL].
-\urlprefix\url{http://math.fudan.edu.cn/Show.aspx?info_lb=664&info_id=1855&flag=101}
+% \bibitem[()]{ucasthesis}
+% \textsc{mohuangrui}.
+% \newblock \textit{\pkg{ucasthesis} 国科大学位论文 \LaTeX{} 模板} [EB/OL].
+% \newblock (2020-07-28)
+% \urlprefix\url{https://github.com/mohuangrui/ucasthesis}
 
-\subsection{其他}
+% \emph{以下模版现已停止更新。}
 
-\bibitem[()]{wright2009dtxfile}
-\textsc{Wright J}.
-\newblock \textit{A model dtx file} [EB/OL].
-\newblock (2009-10-06)
-\urlprefix\url{https://www.texdev.net/2009/10/06/a-model-dtx-file/}
+% \bibitem[()]{pandoxie2014CCNUthesislatex}
+% \textsc{Pandoxie}.
+% \newblock \textit{Fudan University-Latex Template} [EB/OL].
+% \newblock (2014-06-07)
+% \urlprefix\url{https://github.com/Pandoxie/FDU-Thesis-Latex}
 
-\bibitem[()]{孔雀计划}
-刘庆（\textsc{Eric Q L}）.
-\newblock \textit{孔雀计划：中文字体排印的思路} [EB/OL].
-\urlprefix\url{https://thetype.com/kongque/}
+% \bibitem[()]{richard2016fudanthesis}
+% \textsc{richard}.
+% \newblock \textit{复旦大学硕士学位论文模板} [EB/OL].
+% \newblock (2016-01-31)
+% \urlprefix\url{https://github.com/richarddzh/fudan-thesis}
 
-\end{thebibliography}
+% \bibitem[()]{数院毕业论文格式}
+% 复旦大学数学科学学院.
+% \newblock \textit{毕业论文格式 tex 版和 word 版} [EB/OL].
+% \urlprefix\url{http://math.fudan.edu.cn/show.aspx?info_lb=664&flag=101&info_id=1816}
+
+% \bibitem[()]{数院毕业论文格式更新}
+% 复旦大学数学科学学院.
+% \newblock \textit{毕业论文格式: Word、\TeX{} 模板更新} [EB/OL].
+% \urlprefix\url{http://math.fudan.edu.cn/Show.aspx?info_lb=664&info_id=1855&flag=101}
+
+% \subsection{其他}
+
+% \bibitem[()]{wright2009dtxfile}
+% \textsc{Wright J}.
+% \newblock \textit{A model dtx file} [EB/OL].
+% \newblock (2009-10-06)
+% \urlprefix\url{https://www.texdev.net/2009/10/06/a-model-dtx-file/}
+
+% \bibitem[()]{孔雀计划}
+% 刘庆（\textsc{Eric Q L}）.
+% \newblock \textit{孔雀计划：中文字体排印的思路} [EB/OL].
+% \urlprefix\url{https://thetype.com/kongque/}
+
+% \end{thebibliography}
 
 \clearpage
 

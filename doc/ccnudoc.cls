@@ -4,7 +4,6 @@
 \@namedef{ver@thumbpdf.sty}{9999/99/99}
 \LoadClass[a4paper, full]{l3doc}
 \RequirePackage[heading, sub3section, fontset=none]{ctex}
-\RequirePackage[sort&compress]{gbt7714}
 \RequirePackage{%
   caption,
   geometry,
@@ -471,7 +470,7 @@
     \__fdudoc_plain_punct_style:
     \__fdudoc_disable_ecglue:
   }
-\AtBeginEnvironment { fdusyntax }
+\AtBeginEnvironment { ccnusyntax }
   {
     \cs_set:Npn \lparen { \textup { ( } }
     \cs_set:Npn \rparen { \textup { ) } }
@@ -1008,8 +1007,8 @@
 \lstnewenvironment{shellexample}[1][]{%
   \lstset{style=style@shell, #1}}{}
 \lstnewenvironment{latexexample}[1][]{%
-  \lstset{style=style@latex, #1}}{}
-\lstnewenvironment{fdusyntax}[1][]{%
+  \lstset{style=style@latex, breaklines = true, #1}}{}
+\lstnewenvironment{ccnusyntax}[1][]{%
   \lstset{style=style@syntax, #1}\vspace{-1.8ex}}{}
 \endinput
 %%
