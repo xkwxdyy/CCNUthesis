@@ -4018,7 +4018,7 @@
         %     double：两条线，一样粗细
         %     thin-thick：两条线，上细下粗
         %     thick-thin：两条线，上粗下细
-        %     none：没有页眉的线
+        %     none：页眉没有线
         %     默认：none
         %
       fullwidth-stop = catcode,
@@ -4039,7 +4039,7 @@
         %     ccnu-bachelor-numerical|ccnu-bachelor-author-year
         %     ccnu-master|ccnu-doctor|gb7714-2015
         %       ccnu-bachelor-numerical：【本】学校标准，顺序编码制
-        %       ccnu-bachelor-author-year：【本】学校标准，作者-年制
+        %       ccnu-bachelor-author-year：【本】学校标准，著者—出版年制
         %       ccnu-master：【硕】国标，顺序编码制
         %       ccnu-doctor：【博】国标，顺序编码制
         %       gb7714-2015：国标，顺序编码制
