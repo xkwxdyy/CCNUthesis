@@ -23,7 +23,7 @@
 \title{\textcolor{MaterialIndigo800}{%
   \textbf{CCNUthesis: 华中师范大学学位论文\xpinyin[font=\sffamily,format=\color{MaterialIndigo800}]{模}{mu2}板}}}
 \author{夏康玮}
-\date{2022/06/02\quad v1.2.3%
+\date{2022/06/04\quad v1.2.4%
   \thanks{%
     \parbox{0.5\textwidth}{
       \url{https://github.com/xkwxdyy/CCNUthesis} \\
@@ -492,7 +492,6 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
   \begin{ccnusyntax}[emph={[1]font}]
     font = (*<newtx|(times)|stixtwo|xits|tg|none>*)
   \end{ccnusyntax}
-
   设置西文字体（包括数学字体）。具体配置见表~\ref{tab:font}。
 \end{function}
 
@@ -553,7 +552,6 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
   \begin{ccnusyntax}[emph={[1]cjk-font}]
     cjk-font = (*<adobe|(fandol)|founder|mac|sinotype|sourcehan|windows|none>*)
   \end{ccnusyntax}
-
   设置中文字体。具体配置见表~\ref{tab:cjk-font}。
 \end{function}
 
@@ -650,7 +648,6 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
   \begin{ccnusyntax}[emph={[1]caption-labelstyle}]
     caption-labelstyle = (*<arabic|(hyphen)|dot>*)
   \end{ccnusyntax}
-
   图表标题 label 计数样式。
 
   \begin{itemize}
@@ -664,7 +661,6 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
   \begin{ccnusyntax}[emph={[1]caption-labelseperator}]
     caption-labelseperator = (*<(colon)|space>*)
   \end{ccnusyntax}
-
   图表标题 label 和标题内容之间的分隔符
 
   \begin{itemize}
@@ -673,11 +669,24 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
   \end{itemize}
 \end{function}
 
+\begin{function}[added = 2022-06-04]{style/chapter-breakstyle}
+  \begin{ccnusyntax}[emph={[1]chapter-breakstyle}]
+    caption-labelseperator = (*<(continuous)|newpage>*)
+  \end{ccnusyntax}
+  控制 \tn{chapter} 是否新起一页。根据 \parencite{研究生院研究生学位论文规范}，硕博模版的 \tn{chapter} 是新起一页的，故此键值设计仅对本科模版生效。
+
+  \begin{itemize}
+    \item \opt{continuous}：不新起一页，接着上一个 \tn{chapter} 连续排版
+    \item \opt{newpage}：\tn{chapter} 会新起一页开始排版
+  \end{itemize}
+\end{function}
+
+
+
 \begin{function}{style/show-headlogo}
   \begin{ccnusyntax}[emph={[1]show-headlogo}]
     show-headlogo = (*<\TFF>*)
   \end{ccnusyntax}
-
   是否显示页眉 logo，仅对硕博类型有效。具体 logo 样式见图~\ref{figure:headlogo}。
 \end{function}
 
@@ -1095,7 +1104,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width = 0.5\textwidth]{cite-parencite效果.png}
+  \includegraphics[width = 0.4\textwidth]{cite-parencite效果.png}
   \caption{\tn{cite} 和 \tn{parencite} 的效果}
   \label{figure:cite-parencite效果}
 \end{figure}
@@ -1129,6 +1138,8 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
       猜想 & 定义 & 例 \\
   \end{tblr}
 
+  \medskip
+
   \begin{tblr}{
     width = \textwidth,
     columns = {c},
@@ -1142,7 +1153,11 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
   \end{tblr}
 \end{table}
 
-证明环境（\env{proof}）的最后会添加证毕符号“$\square$”。对于证明如果以公式结尾或其它某些情况时“$\square$”可能会出现在新的空白行的行尾，如果想要“$\square$”出现在“有内容的”行尾，可以在想要出现的地方使用 \tn{qedhere} 命令，比如您可以在模版中测试下面代码查看效果：
+\begin{function}{\qedhere}
+  证明环境（\env{proof}）的最后会添加证毕符号“$\square$”。对于证明如果以公式结尾或其它某些情况时“$\square$”可能会出现在新的空白行的行尾，如果想要“$\square$”出现在“有内容的”行尾，可以在想要出现的地方使用 \tn{qedhere} 命令。
+\end{function}
+
+比如您可以在模版中测试下面代码查看效果：
 
 \begin{latexexample}
   \begin{proof}
@@ -1207,7 +1222,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
   打印参考文献列表。该命令由 \pkg{biblatex} 宏包直接提供，可用选项请参阅其文档。
 \end{function}
 
-\begin{function}{\Acknowledgements}
+\begin{function}{\acknowledgements}
   开启致谢章节。
 
 \begin{latexexample}
@@ -1384,7 +1399,6 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
       \item \pkg{calc}，提供 \tn{settototalheight} 等命令处理封面下划线。
       \item \pkg{etoolbox}，给命令环境打补丁。
       \item \pkg{amsthm}、\pkg{thmtools}，提供定理类环境设置接口。
-      % \item \pkg{needspace}，如果 \kvopt{chapter-breakstyle}{continuous} 则会载入此包并使得 \tn{chapter} 不新起一页开始。
       \item \pkg{xeCJKfntef}，提供个人信息的下划线。
       \item \pkg{enumitem}，列表环境相关设置。
       \item \pkg{tocloft}，目录修改。
@@ -1394,26 +1408,43 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
     \end{itemize}
   \item 开启 \kvopt{style/footnote-style}{pifont} 后，会调用
     \pkg{pifont} 宏包。它属于 \pkg{psnfss} 套件。
-  \item 开启 \kvopt{style/bib-backend}{bibtex} 后，会调用 \pkg{natbib} 宏包，并依赖 \BibTeX{} 程序。参考文献样式由\pkg{gbt7714} 宏包提供 。
 \end{itemize}
 
 这里只列出了本模板直接调用的宏包。这些宏包自身的调用情况，此处不再具体展开。如有需要，请参阅相关文档。
 
 
-\section{TODO}
+
+\section{CCNUthesis: TODO}
+
 
 \begin{itemize}
-  \item 减少宏包依赖
-  \item 如果是 author-year 的时候，对于多音字怎么办？——加 key
-  \item 完整例子、physicx、tabularray示例和用户使用的分开
-  \item 重写 Readme
-  \item 重写 wiki
-  \item 把 manual 中有用的部分写进 wiki
-  \item 写用户手册
+  \item 手册本身
     \begin{itemize}
-      \item 如何提问
+      \item 把 manual 中有用的部分写进 wiki 或手册
+      \item “如何提问”
+      \item 参考文献
     \end{itemize}
-  \item 看 AlphaZTX 的知乎
+  \item wiki
+    \begin{itemize}
+      \item 问题解决
+        \begin{itemize}
+          \item 如果是 author-year 的时候，对于多音字怎么办？——加 key
+          \item 标题中一些宏如果报错：\tn{texorpdfstring}
+        \end{itemize}
+      \item 学习其它模版的 wiki
+      \item 重新整理 wiki，并和手册进行取舍合并
+        \begin{itemize}
+          \item \TeXLive 安装细节
+          \item VScode
+        \end{itemize}
+      \item 提供一些示例
+        \begin{itemize}
+          \item tabularray
+          \item physicx
+          \item fixdif
+          \item choices
+        \end{itemize}
+    \end{itemize}
   \item 学习其它论文模版的处理
     \begin{itemize}
       \item thuthesis
@@ -1424,243 +1455,10 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
       \item njuthesis
       \item hithesis
     \end{itemize}
-  \item 处理硕士模版
-  \item 单面双面打印，空白，cleardoublepage？看 thuthesis 的处理
   \item 录制新的讲解视频
-  \item 标题中输入命令 texofxxxx
 \end{itemize}
 
 
-
 \printbibliography
-% \begin{thebibliography}{99}
-
-% \newcommand\urlprefix{\newline\hspace*{\fill}}
-% \let\OldUrl=\url
-% \renewcommand\url[2][]{{\small\textit{#1}~\OldUrl{#2}}}
-% \newcommand\CTANurl[2][]{{%
-%   \small\textit{#1}~\href{http://mirror.ctan.org/#2}{\texttt{CTAN://#2}}}}
-
-% \subsection{图书}
-
-% \bibitem[Knuth(1986)]{研究生院研究生学位论文规范}
-% \textsc{Knuth D E}.
-% \newblock \textit{The \TeX book: Computers \& Typesetting, volume A} [M].
-% \newblock Boston: Addison--Wesley Publishing Company, 1986
-% \urlprefix \CTANurl[源代码%
-%   \footnote{此代码只可作为学习之用。未经 Knuth 本人同意，您不应当编译此文档。}：]%
-%   {systems/knuth/dist/tex/研究生院研究生学位论文规范.tex}
-
-% \bibitem[Mittelbach et~al.(2004)]{companion}
-% \textsc{Mittelbach F} and \textsc{Goossens M}.
-% \newblock \textit{The \LaTeX{} Companion} [M].
-% \newblock 2nd ed.
-% \newblock Boston: Addison--Wesley Publishing Company, 2004
-
-% \bibitem[()]{胡伟2017latex2e}
-% 胡伟.
-% \newblock \textit{\LaTeXe{} 文类和宏包学习手册} [M].
-% \newblock 北京: 清华大学出版社, 2017
-
-% \bibitem[()]{刘海洋2013latex入门}
-% 刘海洋.
-% \newblock \textit{\LaTeX{} 入门} [M].
-% \newblock 北京: 电子工业出版社, 2013
-
-% \subsection{标准、规范}
-
-
-
-
-
-% \bibitem[()]{gb-t-7713.1-2006}
-% 国务院学位委员会办公室, 全国信息与文献标准化技术委员会.
-% \newblock \textit{学位论文编写规则: GB/T 7713.1--2006} [S].
-% \newblock 北京: 中国标准出版社, 2007
-
-% \bibitem[()]{gb-t-7714-2015}
-% 全国信息与文献标准化技术委员会.
-% \newblock \textit{信息与文献\quad 参考文献著录规则: GB/T 7714--2015} [S].
-% \newblock 北京: 中国标准出版社, 2015
-
-% \bibitem[()]{gb-t-15834-2011}
-% 教育部语言文字信息管理司.
-% \newblock \textit{标点符号用法: GB/T 15834--2011} [S/OL].
-% \newblock 北京: 中国标准出版社, 2012
-% \urlprefix\url{http://www.moe.gov.cn/ewebeditor/uploadfile/2015/01/13/20150113091548267.pdf}
-
-% \bibitem[()]{clreq}
-% W3C.
-% \newblock \textit{中文排版需求（Requirements for Chinese Text Layout）} [EB/OL].
-% \newblock (2020-08-17)
-% \urlprefix\url{https://w3c.github.io/clreq/}
-
-% \bibitem[()]{复旦大学论文规范}
-% 复旦大学图书馆, 复旦大学研究生院.
-% \newblock \textit{复旦大学博士、硕士学位论文规范} [EB/OL].
-% \newblock 2017 年 3 月修订版.
-% \newblock (2017-03-27)
-% \urlprefix\url{http://www.gs.fudan.edu.cn/_upload/article/4c/a8/a82545ef443b9c057c14ba13782c/c883c6f3-6d7f-410c-8f30-d8bde6fcb990.doc}
-
-% \subsection{宏包、模版}
-
-% \bibitem[()]{source2e}
-% \textsc{Braams J}, \textsc{Carlisle D}, \textsc{Jeffrey A}, et al.
-% \newblock \textit{The \LaTeXe{} Sources} [CP/OL].
-% \newblock (2020-02-02)
-% \urlprefix\url{https://ctan.org/pkg/latex}
-% \urlprefix\CTANurl[源代码：]{macros/latex/base/source2e.pdf}
-
-% \bibitem[()]{\CTeX}
-% \textsc{\CTeX.ORG}.
-% \newblock \textit{\\CTeX{} 宏集手册} [EB/OL].
-% \newblock version 2.5.4,
-% \newblock (2020-08-23)
-% \urlprefix\url{https://ctan.org/pkg/\CTeX}
-% \urlprefix\CTANurl[文档及源代码：]{language/chinese/\CTeX/\CTeX.pdf}
-
-% \bibitem[()]{xeCJK}
-% \textsc{\CTeX.ORG}.
-% \newblock \textit{\pkg{xeCJK} 宏包} [EB/OL].
-% \newblock version 3.8.5,
-% \newblock (2020-08-23)
-% \urlprefix\url{https://ctan.org/pkg/xecjk}
-% \urlprefix\CTANurl[文档及源代码：]{macros/xetex/latex/xecjk/xeCJK.pdf}
-
-% \bibitem[()]{natbib}
-% \textsc{Daly P W}.
-% \newblock \textit{Natural Sciences Citations and References} [EB/OL].
-% \newblock version 8.31b,
-% \newblock (2010-09-13)
-% \urlprefix\url{https://ctan.org/pkg/natbib}
-% \urlprefix\CTANurl[文档及源代码：]{macros/latex/contrib/natbib/natbib.pdf}
-
-% \bibitem[()]{source3}
-% \textsc{The \LaTeX3 Project}.
-% \newblock \textit{The \LaTeX3 Sources} [CP/OL].
-% \newblock (2020-08-07)
-% \urlprefix\url{https://ctan.org/pkg/l3kernel}
-% \urlprefix\CTANurl[源代码：]{macros/latex/contrib/l3kernel/source3.pdf}
-
-% \bibitem[()]{biblatex}
-% \textsc{Lehman P}, \textsc{Kime P}, \textsc{Boruvka A}, et al.
-% \newblock \textit{The \pkg{biblatex} Package} [EB/OL].
-% \newblock version 3.15a,
-% \newblock (2020-08-23)
-% \urlprefix\url{https://ctan.org/pkg/biblatex}
-% \urlprefix\CTANurl[文档：]{macros/latex/contrib/biblatex/doc/biblatex.pdf}
-
-% \bibitem[()]{lshort}
-% \textsc{Oetiker T}, \textsc{Partl H}, \textsc{Hyna I}, et al.
-% \newblock \textit{The Not So Short Introduction to \LaTeXe{}: Or \LaTeXe{} in 139 minutes} [EB/OL].
-% \newblock version 6.2,
-% \newblock (2018-02-28)
-% \urlprefix\url{https://ctan.org/pkg/lshort-english}
-% \urlprefix\CTANurl[文档：]{info/lshort/english/lshort.pdf}
-
-% \bibitem[()]{lshort-zh-cn}
-% \textsc{Oetiker T}, \textsc{Partl H}, \textsc{Hyna I}, et al.
-% \newblock \textit{一份（不太）简短的 \LaTeXe{} 介绍: 或 112 分钟了解 \LaTeXe{}} [EB/OL].
-% \newblock \\CTeX{} 开发小组, 译.
-% \newblock 原版版本 version 6.2, 中文版本 version 6.02,
-% \newblock (2020-08-03)
-% \urlprefix\url{https://ctan.org/pkg/lshort-zh-cn}
-% \urlprefix\CTANurl[文档：]{info/lshort/chinese/lshort-zh-cn.pdf}
-
-% \bibitem[()]{biblatex-gb7714-2015}
-% 胡振震.
-% \newblock \textit{符合 GB/T 7714-2015 标准的 biblatex 参考文献样式} [EB/OL].
-% \newblock version 1.0v,
-% \newblock (2020-07-21)
-% \urlprefix\url{https://ctan.org/pkg/biblatex-gb7714-2015}
-% \urlprefix\CTANurl[文档：]{biblatex-contrib/biblatex-gb7714-2015/biblatex-gb7714-2015.pdf}
-
-% \bibitem[()]{gbt7714}
-% 李泽平（\textsc{Zeping L}）.
-% \newblock \textit{GB/T 7714-2015 \BibTeX{} Style} [EB/OL].
-% \newblock version 2.0.2,
-% \newblock (2020-06-08)
-% \urlprefix\url{https://ctan.org/pkg/gbt7714}
-% \urlprefix\CTANurl[文档：]{biblio/bibtex/contrib/gbt7714/gbt7714.pdf}
-
-% \bibitem[()]{cquthesis}
-% 李振楠.
-% \newblock \textit{\textsc{CquThesis}：重庆大学毕业论文 \LaTeX{} 模板} [EB/OL].
-% \newblock version 1.50,
-% \newblock (2020-06-23)
-% \urlprefix\url{https://ctan.org/pkg/cquthesis}
-% \urlprefix\CTANurl[文档及源代码：]{macros/latex/contrib/cquthesis/cquthesis.pdf}
-
-% \bibitem[()]{thuthesis}
-% 清华大学 TUNA 协会.
-% \newblock \textit{\textsc{ThuThesis}：清华大学学位论文模板} [EB/OL].
-% \newblock version 6.1.3,
-% \newblock (2020-07-09)
-% \urlprefix\url{https://ctan.org/pkg/thuthesis}
-% \urlprefix\CTANurl[文档及源代码：]{macros/latex/contrib/thuthesis/thuthesis.pdf}
-
-% \emph{以下模版未收录至 CTAN，但仍然保持活跃更新。}
-
-% \bibitem[()]{sjtuthesis}
-% \textsc{SJTUG}.
-% \newblock \textit{上海交通大学学位论文模板} [EB/OL].
-% \newblock version 1.0.0rc7,
-% \newblock (2020-07-31)
-% \urlprefix\url{https://github.com/sjtug/SJTUThesis}
-% \urlprefix\url[源代码仓库：]{https://github.com/sjtug/SJTUTeX}
-
-% \bibitem[()]{ustcthesis}
-% \textsc{USTC \TeX{} User Group}.
-% \newblock \textit{中国科学技术大学学位论文 \LaTeX{} 模板} [EB/OL].
-% \newblock version 3.2.1,
-% \newblock (2020-04-03)
-% \urlprefix\url{https://github.com/ustctug/ustcthesis}
-
-% \bibitem[()]{ucasthesis}
-% \textsc{mohuangrui}.
-% \newblock \textit{\pkg{ucasthesis} 国科大学位论文 \LaTeX{} 模板} [EB/OL].
-% \newblock (2020-07-28)
-% \urlprefix\url{https://github.com/mohuangrui/ucasthesis}
-
-% \emph{以下模版现已停止更新。}
-
-% \bibitem[()]{pandoxie2014CCNUthesislatex}
-% \textsc{Pandoxie}.
-% \newblock \textit{Fudan University-Latex Template} [EB/OL].
-% \newblock (2014-06-07)
-% \urlprefix\url{https://github.com/Pandoxie/FDU-Thesis-Latex}
-
-% \bibitem[()]{richard2016fudanthesis}
-% \textsc{richard}.
-% \newblock \textit{复旦大学硕士学位论文模板} [EB/OL].
-% \newblock (2016-01-31)
-% \urlprefix\url{https://github.com/richarddzh/fudan-thesis}
-
-% \bibitem[()]{数院毕业论文格式}
-% 复旦大学数学科学学院.
-% \newblock \textit{毕业论文格式 tex 版和 word 版} [EB/OL].
-% \urlprefix\url{http://math.fudan.edu.cn/show.aspx?info_lb=664&flag=101&info_id=1816}
-
-% \bibitem[()]{数院毕业论文格式更新}
-% 复旦大学数学科学学院.
-% \newblock \textit{毕业论文格式: Word、\TeX{} 模板更新} [EB/OL].
-% \urlprefix\url{http://math.fudan.edu.cn/Show.aspx?info_lb=664&info_id=1855&flag=101}
-
-% \subsection{其他}
-
-% \bibitem[()]{wright2009dtxfile}
-% \textsc{Wright J}.
-% \newblock \textit{A model dtx file} [EB/OL].
-% \newblock (2009-10-06)
-% \urlprefix\url{https://www.texdev.net/2009/10/06/a-model-dtx-file/}
-
-% \bibitem[()]{孔雀计划}
-% 刘庆（\textsc{Eric Q L}）.
-% \newblock \textit{孔雀计划：中文字体排印的思路} [EB/OL].
-% \urlprefix\url{https://thetype.com/kongque/}
-
-% \end{thebibliography}
-
-\clearpage
 
 \end{document}
