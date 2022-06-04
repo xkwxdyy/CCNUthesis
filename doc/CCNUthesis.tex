@@ -352,9 +352,17 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
 \begin{shellexample}[morekeywords={xelatex}]
   xelatex main
 \end{shellexample}
+
+如果您想要编译参考文献，在 \file{CCNUthesis-main.bib} 中输入正确的条目信息并在正文中正确引用之后（引用方式见~\ref{para:参考文献引用}），请使用“\pkg{biber}”编译链，即在命令行中一次执行下面四条命令：
+\begin{shellexample}[morekeywords={biber}]
+  xelatex main
+  biber main
+  xelatex main
+  xelatex main
+\end{shellexample}
 或使用 \pkg{latexmk}：
-\begin{shellexample}[morekeywords={latexmk},emph={-xelatex}]
-  latexmk -xelatex thesis
+\begin{shellexample}[morekeywords={latexmk}]
+  latexmk main
 \end{shellexample}
 
 
@@ -1052,7 +1060,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
 \env{figure}）中。
 
 
-\paragraph{参考文献引用}
+\paragraph{参考文献引用}\label{para:参考文献引用}
 
 \begin{function}{\parencite}
   \begin{ccnusyntax}[deletetexcs={\parencite},morekeywords={\parencite}]
@@ -1240,7 +1248,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
   \begin{ccnusyntax}[morekeywords={\printbibliography}]
     \printbibliography(*\oarg{选项}*)
   \end{ccnusyntax}
-  打印参考文献列表。该命令由 \pkg{biblatex} 宏包直接提供，可用选项请参阅其文档。
+  打印参考文献列表。该命令由 \pkg{biblatex} 宏包直接提供，可用选项请参阅其文档。一般来说，用户不需要做任何改动。
 \end{function}
 
 \begin{function}{\acknowledgements}
