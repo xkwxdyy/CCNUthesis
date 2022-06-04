@@ -370,15 +370,36 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
 中取值。对于这些选项，\kvopt{\meta{选项}}{true} 中的“|= true|”
 可以省略。
 
+下面用形如“【本｜硕｜博】”表示该命令或环境的适用范围，比如“【硕｜博】”表示输入之后仅对硕博模版起作用，对本科模版不起作用（作用范围的设置往往来源于格式规范的要求等），其余“【本】”等同理解释。
+
 
 \begin{function}{type}
   \begin{ccnusyntax}[emph={[1]type}]
     type = (*<doctor|master|(bachelor)>*)
   \end{ccnusyntax}
-
   选择论文类型。三种选项分别代表博士学位论文、硕士学位论文和本科
   毕业论文。
 \end{function}
+
+\begin{function}{version}
+  \begin{ccnusyntax}[emph={[1]version}]
+    version = (*<(electronic)|print-bachelor-oneside|print-bachelor-twoside|\\
+    XXXX\mbox{}~~~~~~~~~~print-master-oneside|print-master-twoside|print-doctor-twoside>*)
+  \end{ccnusyntax}
+  文档版本。
+\end{function}
+
+\begin{itemize}
+  \item electronic：电子版，无空白页
+  \item print-bachelor-oneside：打印版，本科，单面打印。数学与统计学学院「本科」终稿要求「单面」打印
+  \item print-bachelor-twoside：打印版，本科，双面打印。答辩打印可以双面打印（因为只是给答辩老师看，并不上交）
+  \item print-master-oneside：打印版，硕士，无空白页，单面打印
+  \item print-master-twoside：打印版，硕士，有空白页，双面打印
+  \item print-doctor-twoside：打印版，博士，有空白页，双面打印
+\end{itemize}
+
+注意：对于硕博的模版，\parencite{研究生院研究生学位论文规范} 中提到的“封面、原创性声明和使用授权书采用单面印刷，中英文扉页、摘要及后续内容采用双面印刷（硕士学位论文可以单面印刷）。” 实现方式即为在所需要单面印刷的后面加一页空白页，然后全部双面打印即可，这个就是上面键值的设计想法，用户不需要自己手动加空白页，只需要选择自己对应所需版本就会对应自动判断是否添加空白页。
+
 
 % \begin{function}{oneside,twoside}
 %   指明论文的单双面模式，默认为 \opt{twoside}。该选项会影响每章
@@ -1061,7 +1082,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
     \end{enumerate}
   \item 下面情况用上标引用 \tn{cite}：
     \begin{itemize}
-      \item 去掉这个引用后句子结构仍然完整，比如“作者提到，CCNUthesis 是一个非常好的好模版。$^{[1]}$”
+      \item 去掉这个引用后句子结构仍然完整，比如“作者提到，CCNUthesis 是一个非常好的好模版$^{[1]}$。”
     \end{itemize}
 \end{itemize}
 
@@ -1113,7 +1134,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
 \paragraph{定理类环境}
 
 
-\begin{function}{axiom,antiexample,claim,corollary,conjecture,definition,example,lemma,property,proof,proposition,question,remark,theorem}
+\begin{function}{axiom,counterexample,claim,corollary,conjecture,definition,example,lemma,property,proof,proposition,question,remark,theorem}
   \begin{ccnusyntax}[emph={[2]proof}]
     \begin{proof}(*\oarg{小标题}*)
       (*\meta{证明过程}*)
@@ -1132,7 +1153,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
     hline{1,2,Z} = {solid}
   }
     \textbf{名称} &
-      \env{axiom} & \env{antiexample} & \env{claim} & \env{corollary} & \env{conjecture} & \env{definition} & \env{example} \\
+      \env{axiom} & \env{counterexample} & \env{claim} & \env{corollary} & \env{conjecture} & \env{definition} & \env{example} \\
     \textbf{含义} &
       公理 & 反例 & 断言 & 推论 &
       猜想 & 定义 & 例 \\
