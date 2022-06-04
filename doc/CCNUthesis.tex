@@ -429,7 +429,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
   \begin{ccnusyntax}[emph={[1]draft}]
     draft = (*<\TFF>*)
   \end{ccnusyntax}
-  选择是否开启草稿模式，默认关闭。
+  【本｜硕｜博】选择是否开启草稿模式，默认关闭。
 \end{function}
 
 草稿模式为全局选项，会影响到很多宏包的工作方式。
@@ -455,7 +455,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
   \begin{ccnusyntax}[morekeywords={\ccnusetup}]
     \ccnusetup(*\marg{键值列表}*)
   \end{ccnusyntax}
-  本模板提供了一系列选项，可由您自行配置。载入文档类之后，以下
+  【本｜硕｜博】本模板提供了一系列选项，可由您自行配置。载入文档类之后，以下
   所有选项均可通过统一的命令 \cs{ccnusetup} 来设置。
 \end{function}
 
@@ -513,7 +513,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
     style = (*\marg{键值列表}*)
     style/(*\meta{key}*) = (*\meta{value}*)
   \end{ccnusyntax}
-  该选项包含许多子项目，用于设置论文格式。具体内容见下。
+  【本｜硕｜博】该选项包含许多子项目，用于设置论文格式。具体内容见下。
 \end{function}
 
 
@@ -521,7 +521,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
   \begin{ccnusyntax}[emph={[1]font}]
     font = (*<newtx|(times)|stixtwo|xits|tg|none>*)
   \end{ccnusyntax}
-  设置西文字体（包括数学字体）。具体配置见表~\ref{tab:font}。
+  【本｜硕｜博】设置西文字体（包括数学字体）。具体配置见表~\ref{tab:font}。
 \end{function}
 
 % \begin{table}[ht]
@@ -581,7 +581,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
   \begin{ccnusyntax}[emph={[1]cjk-font}]
     cjk-font = (*<adobe|(fandol)|founder|mac|sinotype|sourcehan|windows|none>*)
   \end{ccnusyntax}
-  设置中文字体。具体配置见表~\ref{tab:cjk-font}。
+  【本｜硕｜博】设置中文字体。具体配置见表~\ref{tab:cjk-font}。
 \end{function}
 
 \begin{table}[htbp]
@@ -622,8 +622,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
   \begin{ccnusyntax}[emph={[1]fullwidth-stop}]
     fullwidth-stop = (*<catcode|mapping|(false)>*)
   \end{ccnusyntax}
-
-  选择是否把全角实心句点\FSFW 作为默认的句号形状。
+  【本｜硕｜博】选择是否把全角实心句点\FSFW 作为默认的句号形状。
   这种句号一般用于科技类文章，以避免与下标“$_o$”或“$_0$”混淆。
 \end{function}
 
@@ -651,7 +650,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
       XXXX\mbox{}~~~~~~~~~~~~~~~~~pifont|pifont*|pifont-sans|pifont-sans*|\\
       XXXX\mbox{}~~~~~~~~~~~~~~~~~xits|xits-sans|xits-sans*>*)
   \end{ccnusyntax}
-  设置脚注编号样式。西文字体设置会影响其默认取值（见
+  【本｜硕｜博】设置脚注编号样式。西文字体设置会影响其默认取值（见
   表~\ref{tab:footnote-font}）。因此，要使得该选项生效，需将其
   放置在 \opt{font} 选项之后。带有 |sans| 的为相应的无衬线字体
   版本；带有 |*| 的为阴文样式（即黑底白字）。
@@ -677,7 +676,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
   \begin{ccnusyntax}[emph={[1]caption-labelstyle}]
     caption-labelstyle = (*<arabic|(hyphen)|dot>*)
   \end{ccnusyntax}
-  图表标题 label 计数样式。
+  【本｜硕｜博】图表标题 label 计数样式。
 
   \begin{itemize}
     \item \opt{arabic}：图1，图2... 跨 chapter 连续编号，即若上一个 chapter 的图编号为 4，下一个 chapter 的第一个图编号为5
@@ -690,7 +689,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
   \begin{ccnusyntax}[emph={[1]caption-labelseperator}]
     caption-labelseperator = (*<(colon)|space>*)
   \end{ccnusyntax}
-  图表标题 label 和标题内容之间的分隔符
+  【本｜硕｜博】图表标题 label 和标题内容之间的分隔符
 
   \begin{itemize}
     \item \opt{colon}：表示 「:␣」，即一个西文冒号加一个空格
@@ -702,7 +701,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
   \begin{ccnusyntax}[emph={[1]chapter-breakstyle}]
     caption-labelseperator = (*<(continuous)|newpage>*)
   \end{ccnusyntax}
-  控制 \tn{chapter} 是否新起一页。根据 \parencite{研究生院研究生学位论文规范}，硕博模版的 \tn{chapter} 是新起一页的，故此键值设计仅对本科模版生效。
+  【本】控制 \tn{chapter} 是否新起一页。根据 \parencite{研究生院研究生学位论文规范}，硕博模版的 \tn{chapter} 是新起一页的，故此键值设计仅对本科模版生效。
 
   \begin{itemize}
     \item \opt{continuous}：不新起一页，接着上一个 \tn{chapter} 连续排版
@@ -716,7 +715,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
   \begin{ccnusyntax}[emph={[1]show-headlogo}]
     show-headlogo = (*<\TFF>*)
   \end{ccnusyntax}
-  是否显示页眉 logo，仅对硕博类型有效。具体 logo 样式见图~\ref{figure:headlogo}。
+  【硕｜博】是否显示页眉 logo，仅对硕博类型有效。具体 logo 样式见图~\ref{figure:headlogo}。
 \end{function}
 
 \begin{figure}[htbp]
@@ -735,8 +734,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
   \begin{ccnusyntax}[emph={[1]headline}]
     headline = (*<single|double|thin-thick|thick-thin|(none)>*)
   \end{ccnusyntax}
-
-  页眉线的样式。
+  【硕｜博】页眉线的样式。
 
   \begin{itemize}
     \item \opt{single}：一条线
@@ -753,15 +751,14 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
   \begin{ccnusyntax}[emph={[1]hyperlink}]
     hyperlink = (*<color|(none)>*)
   \end{ccnusyntax}
-
-  设置超链接样式。\opt{color} 表示用彩色显示超链接；\opt{none} 表示没有特殊装饰，可用于生成最终的打印版文稿。
+  【本｜硕｜博】设置超链接样式。\opt{color} 表示用彩色显示超链接；\opt{none} 表示没有特殊装饰，可用于生成最终的打印版文稿。
 \end{function}
 
 \begin{function}{style/hyperlink-color}
   \begin{ccnusyntax}[emph={[1]hyperlink-color}]
     hyperlink-color = (*<(default)|classic|material|graylevel|prl>*)
   \end{ccnusyntax}
-  设置超链接颜色。该选项在 \kvopt{hyperlink}{none} 时无效。
+  【本｜硕｜博】设置超链接颜色。该选项在 \kvopt{hyperlink}{none} 时无效。
   各选项所代表的颜色见表~\ref{tab:hyperlink-color}。
 \end{function}
 
@@ -817,7 +814,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
   \begin{ccnusyntax}[emph={[1]bib-style}]
     bib-style = (*<(ccnu-bachelor-numerical)|ccnu-bachelor-author-year|ccnu-master|ccnu-doctor|gb7714-2015>*)
   \end{ccnusyntax}
-  设置参考文献样式。
+  【本｜硕｜博】设置参考文献样式。
   \begin{itemize}
     \item \opt{ccnu-bachelor-numerical}：参考 \parencite{本科生院毕业论文注释与参考文献著录格式} 定制的参考文献格式，顺序编码制
     \item \opt{ccnu-bachelor-author-year}：和 \opt{ccnu-bachelor-numerical} 格式相同，著者—出版年制
@@ -842,7 +839,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
   \begin{ccnusyntax}[emph={[1]bib-resource}]
     bib-resource = (*\marg{文件}*)
   \end{ccnusyntax}
-  参考文献数据源。可以是单个文件，也可以是用英文逗号隔开的一组文件。\emph{必须明确给出 \file{.bib} 后缀名}。默认为 \file{CCNUthesis-main.bib}。
+  【本｜硕｜博】参考文献数据源。可以是单个文件，也可以是用英文逗号隔开的一组文件。\emph{必须明确给出 \file{.bib} 后缀名}。默认为 \file{CCNUthesis-main.bib}。
 \end{function}
 
 
@@ -854,14 +851,14 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
     info = (*\marg{键值列表}*)
     info/(*\meta{key}*) = (*\meta{value}*)
   \end{ccnusyntax}
-  该选项包含许多子项目用于录入论文信息。具体内容见下。以下带“|*|”的项目表示对应的\emph{英文}字段或\emph{拼音}字段。
+  【本｜硕｜博】该选项包含许多子项目用于录入论文信息。具体内容见下。以下带“|*|”的项目表示对应的\emph{英文}字段或\emph{拼音}字段。
 \end{function}
 
 \begin{function}{info/cover-type}
   \begin{ccnusyntax}[emph={[1]cover-type}]
     cover-type  = (*<word|(math)>*)
   \end{ccnusyntax}
-  封面类型。\opt{word} 表示几乎完全按照教务处给的 word 版本模版处理；\opt{math} 表示华中师范大学数学与统计学学院在 word 版本模版基础上进行部分细节调整。
+  【本｜硕｜博】封面类型。\opt{word} 表示几乎完全按照教务处给的 word 版本模版处理；\opt{math} 表示华中师范大学数学与统计学学院在 word 版本模版基础上进行部分细节调整。
 \end{function}
 
 
@@ -870,19 +867,19 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
     title  = (*\marg{中文标题}*)
     title* = (*\marg{英文标题}*)
   \end{ccnusyntax}
-  论文标题。默认会在约 21 个汉字（本科，硕博在 14 个汉字）字宽处自动断行，但为了语义的连贯以及排版的美观，如果您的标题长于一行，可以根据语义使用“|\\|”手动断行。如果您的标题中有副标题，使用“|\\|”手动断行并以“——”开头，如
-  \begin{latexexample}
-    title = {
-      如何使用 \LaTeX 编写论文模版 \\
-      ——以华中师范大学为例
-    }
-  \end{latexexample}
+  【本｜硕｜博】论文标题。默认会在约 21 个汉字（本科，硕博在 14 个汉字）字宽处自动断行，但为了语义的连贯以及排版的美观，如果您的标题长于一行，可以根据语义使用“|\\|”手动断行。如果您的标题中有副标题，使用“|\\|”手动断行并以“——”开头，如
+\begin{latexexample}
+  title = {
+    如何使用 \LaTeX 编写论文模版 \\
+    ——以华中师范大学为例
+  }
+\end{latexexample}
 \end{function}
 
 \begin{function}{info/author,info/author*}
   \begin{ccnusyntax}[emph={[1]author,author*}]
-    author  = (*\marg{姓名}*)
-    author* = (*\marg{姓名拼音）}*)
+    author  = (*\marg{姓名}*)【本｜硕｜博】
+    author* = (*\marg{姓名拼音）}*)【硕｜博】
   \end{ccnusyntax}
   作者姓名。
 \end{function}
@@ -891,37 +888,37 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
   \begin{ccnusyntax}[emph={[1]student-id}]
     student-id  = (*\marg{学号}*)
   \end{ccnusyntax}
-  作者学号。
+  【本】作者学号。
 \end{function}
 
 \begin{function}{info/level}
   \begin{ccnusyntax}[emph={[1]level}]
     level  = (*\marg{年级}*)
   \end{ccnusyntax}
-  年级。
+  【本】年级。
 \end{function}
 
 \begin{function}{info/supervisor,info/supervisor*-name,info/supervisor*-academic-title}
   \begin{ccnusyntax}[emph={[1]supervisor,supervisor*-name,supervisor*-academic-title}]
-    supervisor = (*\marg{姓名}*)
-    supervisor*-name = (*\marg{姓名拼音}*)
-    supervisor*-academic-title = (*\marg{职称英文}*)
+    supervisor = (*\marg{姓名}*)【本｜硕｜博】
+    supervisor*-name = (*\marg{姓名拼音}*)【硕｜博】
+    supervisor*-academic-title = (*\marg{职称英文}*)【硕｜博】
   \end{ccnusyntax}
   导师姓名、职称。
 \end{function}
 
 \begin{function}{info/department,info/department*}
   \begin{ccnusyntax}[emph={[1]department,department*}]
-    department = (*\marg{学院名称}*)
-    department* = (*\marg{学院英文名称}*)
+    department = (*\marg{学院名称}*)【本｜硕｜博】
+    department* = (*\marg{学院英文名称}*)【硕｜博】
   \end{ccnusyntax}
   学院名称。
 \end{function}
 
 \begin{function}{info/major,info/major*}
   \begin{ccnusyntax}[emph={[1]major,major*}]
-    major = (*\marg{专业名称}*)
-    major* = (*\marg{专业英文名称}*)
+    major = (*\marg{专业名称}*)【本｜硕｜博】
+    major* = (*\marg{专业英文名称}*)【硕｜博】
   \end{ccnusyntax}
   专业名称。
 \end{function}
@@ -931,7 +928,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
     research-area = (*\marg{研究方向名称}*)
     research-area* = (*\marg{研究方向英文名称}*)
   \end{ccnusyntax}
-  作者研究方向。
+  【硕｜博】作者研究方向。
 \end{function}
 
 \begin{function}{info/degree-type,info/degree-type*}
@@ -939,7 +936,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
     degree-type = (*\marg{申请学位学生类别}*)
     degree-type* = (*\marg{英文申请学位学生类别缩写}*)
   \end{ccnusyntax}
-  申请学位学生类别。如
+  【硕｜博】申请学位学生类别。如
   \begin{itemize}
     \item 教育硕士｜应用统计硕士｜全日制硕士｜同等学力人员｜高校教师在职攻读硕士学位人员｜专业学位人员
     \item 博士
@@ -953,7 +950,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
     keywords  = (*\marg{中文关键字}*)
     keywords* = (*\marg{英文关键字}*)
   \end{ccnusyntax}
-  关键字列表。各关键字之间需使用 \emph{英文逗号} 隔开。
+  【本｜硕｜博】关键字列表。各关键字之间需使用 \emph{英文逗号} 隔开。
 \end{function}
 
 
@@ -962,7 +959,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
     year = (*\marg{年}*)
     month = (*\marg{月份}*)
   \end{ccnusyntax}
-  论文完成的年月。默认值为文档编译时的年和月。
+  【本｜硕｜博】论文完成的年月。默认值为文档编译时的年和月。
 \end{function}
 
 
@@ -980,7 +977,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
 \subsubsection{凤头}
 
 \begin{function}{\frontmatter}
-  声明前置部分开始。
+  【本｜硕｜博】声明前置部分开始。
 \end{function}
 
 在本模板中，前置部分包含目录、中英文摘要以及符号表等。硕博模版的前置部分的页码采用小写罗马字母，并且与正文分开计数；本科模版采用阿拉伯数字，并与正文连续计数。本硕博模版目录均无页码。
@@ -994,7 +991,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
       (*\meta{中文摘要}*)
     \end{abstract}
   \end{ccnusyntax}
-  中文摘要。
+  【本｜硕｜博】中文摘要。
 \end{function}
 \begin{function}{abstract*}
   \begin{ccnusyntax}[emph={[2]abstract*}]
@@ -1003,7 +1000,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
       (*\meta{英文摘要}*)
     \end{abstract*}
   \end{ccnusyntax}
-  英文摘要。
+  【本｜硕｜博】英文摘要。
 \end{function}
 
 
@@ -1016,18 +1013,18 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
       (*\meta{符号\ \kern-0.1em$n$}*)  &  (*\meta{说明}*)
     \end{notation}
   \end{ccnusyntax}
-  符号表。基于 \pkg{tabularray} 宏包的 \env{longtblr} 环境，可选参数 \meta{列格式说明} 和 \env{longtblr} 环境的可选参数接口相同，并设置默认为
-  \begin{latexexample}
-    width   = 0.3\textwidth,
-    colspec = {X[1,c]X[1,c]}
-  \end{latexexample}
+  【本｜硕｜博】符号表。基于 \pkg{tabularray} 宏包的 \env{longtblr} 环境，可选参数 \meta{列格式说明} 和 \env{longtblr} 环境的可选参数接口相同，并设置默认为
+\begin{latexexample}
+  width   = 0.3\textwidth,
+  colspec = {X[1,c]X[1,c]}
+\end{latexexample}
   如果效果不满意，请您命令行输入 \cmd{texdoc tabularray} 自行查阅 \pkg{tabularray} 宏包的用户手册了解更多使用参数和细节。
 \end{function}
 
 \subsubsection{猪肚}
 
 \begin{function}{\mainmatter}
-  声明主体部分开始。
+  【本｜硕｜博】声明主体部分开始。
 \end{function}
 
 主体部分是论文的核心，您可以分章节撰写。如有需求，也可以采用
@@ -1037,7 +1034,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
   \begin{ccnusyntax}[deletetexcs={\footnote},morekeywords={\footnote}]
     \footnote(*\marg{脚注文字}*)
   \end{ccnusyntax}
-  插入脚注。脚注编号样式可利用 \opt{style/footnote-style} 选项控制，
+  【本｜硕｜博】插入脚注。脚注编号样式可利用 \opt{style/footnote-style} 选项控制，
   具体见 \ref{subsubsec:论文格式}~小节。
 
   需要注意的是，\parencite{本科生院毕业论文注释与参考文献著录格式} 中指出
@@ -1051,7 +1048,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
   \begin{ccnusyntax}[deletetexcs={\caption},morekeywords={\caption}]
     \caption(*\marg{图表标题}*)
   \end{ccnusyntax}
-  插入图表标题。
+  【本｜硕｜博】插入图表标题。
 \end{function}
 
 按照排版惯例，建议您将表格的标题放置在绘制表格的命令之前，
@@ -1078,7 +1075,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
   \end{ccnusyntax}
 \end{function}
 
-插入所引用的文献。\meta{prenote} 和 \meta{posnote} 由名称可看出，一个是出现在前方，一个出现在后方。绝大部分情况只需用到可选参数 \meta{postnote}，可用来标注引文的页码或引用的定理。
+【本｜硕｜博】插入所引用的文献。\meta{prenote} 和 \meta{posnote} 由名称可看出，一个是出现在前方，一个出现在后方。绝大部分情况只需用到可选参数 \meta{postnote}，可用来标注引文的页码或引用的定理。
 
 \tn{parencite} 是行内引用，\tn{cite} 是上标引用。通常情况下
 
@@ -1148,7 +1145,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
       (*\meta{证明过程}*)
     \end{proof}
   \end{ccnusyntax}
-  一系列预定义的数学环境。具体含义见表~\ref{tab:theorem}。
+  【本｜硕｜博】一系列预定义的数学环境。具体含义见表~\ref{tab:theorem}。
 \end{function}
 
 \begin{table}[ht]
@@ -1183,7 +1180,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
 \end{table}
 
 \begin{function}{\qedhere}
-  证明环境（\env{proof}）的最后会添加证毕符号“$\square$”。对于证明如果以公式结尾或其它某些情况时“$\square$”可能会出现在新的空白行的行尾，如果想要“$\square$”出现在“有内容的”行尾，可以在想要出现的地方使用 \tn{qedhere} 命令。
+  【本｜硕｜博】证明环境（\env{proof}）的最后会添加证毕符号“$\square$”。对于证明如果以公式结尾或其它某些情况时“$\square$”可能会出现在新的空白行的行尾，如果想要“$\square$”出现在“有内容的”行尾，可以在想要出现的地方使用 \tn{qedhere} 命令。
 \end{function}
 
 比如您可以在模版中测试下面代码查看效果：
@@ -1207,7 +1204,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
     \ccnunewtheorem(*\oarg{计数器样式设置}\marg{环境中文名称}\marg{环境名}*)
     \ccnunewtheorem*(*\oarg{计数器样式设置}\marg{环境中文名称}\marg{环境名}*)
   \end{ccnusyntax}
-  自定义定理类环境的命令。带星号的表示新定义的环境无计数器，类似于 \env{proof} 环境。
+  【本｜硕｜博】自定义定理类环境的命令。带星号的表示新定义的环境无计数器，类似于 \env{proof} 环境。
 \end{function}
 
 该命令的主要用法有下面四种：
@@ -1239,7 +1236,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
 \subsubsection{豹尾}
 
 \begin{function}{\backmatter}
-  声明后置部分开始。
+  【本｜硕｜博】声明后置部分开始。
 \end{function}
 
 后置部分包含参考文献、声明页等。
@@ -1248,11 +1245,11 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
   \begin{ccnusyntax}[morekeywords={\printbibliography}]
     \printbibliography(*\oarg{选项}*)
   \end{ccnusyntax}
-  打印参考文献列表。该命令由 \pkg{biblatex} 宏包直接提供，可用选项请参阅其文档。一般来说，用户不需要做任何改动。
+  【本｜硕｜博】打印参考文献列表。该命令由 \pkg{biblatex} 宏包直接提供，可用选项请参阅其文档。一般来说，用户不需要做任何改动。
 \end{function}
 
 \begin{function}{\acknowledgements}
-  开启致谢章节。
+  【本｜硕｜博】开启致谢章节。
 
 \begin{latexexample}
   % acknowledgements.tex
@@ -1268,7 +1265,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
       <落款>
     \end{signature}
   \end{ccnusyntax}
-  落款签名。整体右对齐，内部居中对齐。可用|\\|换行
+  【本｜硕｜博】落款签名。整体右对齐，内部居中对齐。可用|\\|换行
 \begin{latexexample}
   \begin{signature}
     夏康玮 \\
@@ -1279,7 +1276,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
 
 
 \begin{function}{\appendix}
-  开启附录章节。
+  【本｜硕｜博】开启附录章节。
   
 \begin{latexexample}
   % appendix.tex
@@ -1304,11 +1301,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
 
 
 \begin{function}{\publication}
-  开启“攻读学位期间取得的研究成果”章节。此章节只有博士模版需要，只需要取消 \file{main.tex} 中的
-\begin{latexexample}
-  % \include{./back/publications.tex}
-\end{latexexample}
-  的代码注释，并且在 \file{publications.tex} 文件中输入相应内容即可。
+  【博】开启“攻读学位期间取得的研究成果”章节。
 \end{function}
 
 \begin{function}{publications}
@@ -1319,8 +1312,14 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
       ...
     \end{publications}
   \end{ccnusyntax}
-  研究成果列表环境。研究成果的格式等需要用户自行输入，无法像参考文献一样自动化，具体的字体字样等命令请自行查阅 \href{https://ctan.math.illinois.edu/info/lshort/chinese/lshort-zh-cn.pdf}{lshort-zh-cn}。
+  【博】研究成果列表环境。研究成果的格式等需要用户自行输入，无法像参考文献一样自动化，具体的字体字样等命令请自行查阅 \href{https://ctan.math.illinois.edu/info/lshort/chinese/lshort-zh-cn.pdf}{lshort-zh-cn}。
 \end{function}
+
+博士模版使用只需要取消 \file{main.tex} 中的
+\begin{latexexample}
+  % \include{./back/publications.tex}
+\end{latexexample}
+的代码注释，并且在 \file{publications.tex} 文件中输入相应内容然后编译即可。
 
 \begin{function}{choices}
   \begin{ccnusyntax}[emph={[2]choices}]
@@ -1330,7 +1329,7 @@ The \cls{CCNUthesis} class is intended for typesetting Central China Normal Univ
       ...
     \end{choices}
   \end{ccnusyntax}
-  选项排版环境。对于有排版试卷、问卷等需求的用户，此环境能方便地帮您进行任意个选项的排版，并可以方便地调整选项 label 的样式。
+  【本｜硕｜博】选项排版环境。对于有排版试卷、问卷等需求的用户，此环境能方便地帮您进行任意个选项的排版，并可以方便地调整选项 label 的样式。
 \end{function}
 
 用法和列表环境相同，使用 \tn{item} 分隔选项。label 的样式支持

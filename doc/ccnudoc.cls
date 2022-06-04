@@ -964,7 +964,7 @@
     lineskip        = 2 pt,
     frame           = l,
     framerule       = 1 pt,
-    framesep        = 0 pt,
+    framesep        = 3 pt,
     escapeinside    = {(*}{*)},
     basicstyle      = \small\ttfamily\color{MaterialGrey900},
     keywordstyle    = \bfseries\color{MaterialIndigo},
