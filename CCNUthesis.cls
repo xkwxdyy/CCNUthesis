@@ -1198,6 +1198,7 @@
       { \clist_item:nn {#1} {4} }
   }
 
+
 % 和旧模版一样的计数器依赖
 
 \clist_map_function:nN
@@ -1216,11 +1217,39 @@
     { 推论, 推论, theorem, corollary },
     { 引理, 引理, theorem, lemma },
     { 公理, 公理, theorem, axiom },
-    { 反例, 反例, theorem, antiexample },
+    { 反例, 反例, theorem, counterexample },
     { 猜想, 猜想, theorem, conjecture },
     { 断言, 断言, theorem, claim },
     { 注, 注, theorem, remark },
   }\__xdyymath_declare_theorem_with_counter_sibling:n
+
+\NewDocumentCommand { \ccnunewtheorem } { s O{} m m }
+  {
+    \IfBooleanTF {#1}
+      {
+        % 有*
+        \declaretheorem
+          [
+            style = ccnustyle,
+            name =  #3 ,
+            refname = #3 ,
+            numbered = no,
+            #2
+          ]
+          { #4 }
+      }
+      {
+        % 无*
+        \declaretheorem
+          [
+            style = ccnustyle,
+            name =  #3 ,
+            refname = #3 ,
+            #2
+          ]
+          { #4 }
+      }
+  }
 
 % 重定义 proof 环境的样式
 \RenewDocumentEnvironment { proof } { O{\proofname} +b }
@@ -2716,7 +2745,7 @@
         thickness = 0pt
       ]
       {
-        \box_move_up:nn { 1pt }
+        \box_move_up:nn { 0.5pt }
           {
             \hbox_to_wd:nn { #1 }
               { 
@@ -3915,7 +3944,7 @@
         %     博：博士
         %
       degree-type* = {M.S.},
-        % 英文-申请学位学生类别
+        % 英文-申请学位学生类别，缩写
         %   适用学位类型：【硕｜博】
         %   选项参考：
         %     硕：M.S.

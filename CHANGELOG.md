@@ -4,6 +4,17 @@
 
 更多关于模版的内容和如何使用，请仔细阅读 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis)！
 
+## [v1.2.4] - 2022-06-04
+
+### Added
+
+- 提供用户自定义定理类环境接口
+
+### Changed
+
+- 更改反例环境为“counterexample”
+
+
 ## [v1.2.3] - 2022-06-03
 
 ### Changed
