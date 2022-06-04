@@ -9,10 +9,15 @@
 ### Added
 
 - 提供用户自定义定理类环境接口
+- 增加本科模版的“chapter 是否新起一页”的键值控制
 
 ### Changed
 
 - 更改反例环境为“counterexample”
+
+### Removed
+
+- 去掉 `needspace` 宏包
 
 
 ## [v1.2.3] - 2022-06-03

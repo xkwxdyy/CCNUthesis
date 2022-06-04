@@ -14,8 +14,8 @@
 %********************************************
 
 
-% \documentclass[type = bachelor]{CCNUthesis}
-\documentclass[type = master, version = print-master-twoside]{CCNUthesis}
+\documentclass[type = bachelor]{CCNUthesis}
+% \documentclass[type = master, version = print-master-twoside]{CCNUthesis}
 % \documentclass[type = doctor]{CCNUthesis}
 
 
@@ -208,6 +208,14 @@
       %     2. 除 fandol 和 sourcehan 外，其余字体均为商用字体，请注意版权问题
       %     3. 但 fandol 字体缺字比较严重，而 sourcehan 没有配备楷体和仿宋体
       %
+    chapter-breakstyle = continuous,
+      % chapter 是否要新起一页开始
+      %   适用学位类型：【本】
+      %   可选选项：continuous|newpage
+      %   默认：continuous
+      %     continuous：chapter 不新起一页开始
+      %     newpage：chapter 新起一页开始
+      %
     caption-labelstyle = hyphen,
       % 图表标题 label 计数样式
       %   适用学位类型：【本｜硕｜博】
@@ -278,7 +286,7 @@
       %
     hyperlink = none,
       % 超链接样式
-      %   可选选项：border|color|none
+      %   可选选项：color|none
       %   默认：none
       %
     hyperlink-color = default,

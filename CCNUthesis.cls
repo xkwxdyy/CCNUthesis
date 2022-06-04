@@ -1,9 +1,9 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-06-03}{v1.2.3}
+  {2022-06-04}{v1.2.4}
   {Thesis template for Central China Normal University}
-\RequirePackage { xtemplate, l3keys2e, xparse }
+\RequirePackage { l3keys2e, xparse }
 
 
 % 宏包报错信息
@@ -14,8 +14,8 @@
     "l3kernel"~ and~ "l3packages"~ using~ your~ TeX~ package \\
     manager~ or~ from~ CTAN.
   }
-% 检测 xtemplate, l3keys2e 两个宏包的版本
-\clist_map_inline:nn { xtemplate, l3keys2e }
+% 检测 l3keys2e 的版本
+\clist_map_inline:nn { l3keys2e }
   {
     \@ifpackagelater {#1} { 2020/07/17 }
       { } { \msg_error:nnn { ccnuthesis } { l3-too-old } {#1} }
@@ -58,18 +58,19 @@
 \skip_new:N       \l__ccnu_tmpa_skip  % 用于 \__ccnu_vspace:n 函数的临时长度变量
 \tl_new:N         \l__ccnu_tmpa_tl
 \tl_new:N         \l__ccnu_tmpb_tl
-\int_new:N        \g__ccnu_thesis_type_int           % 学位论文类型
+\int_new:N        \g__ccnu_thesis_type_int             % 学位论文类型
 \clist_new:N      \g__ccnu_to_ctexbook_clist
 \clist_new:N      \g__ccnu_to_hyperref_clist
-\bool_new:N       \g__ccnu_cover_word_version_bool   % word 版本控制
+\bool_new:N       \g__ccnu_cover_word_version_bool     % word 版本控制
 \bool_new:N       \g__ccnu_twoside_bool
 \bool_new:N       \g__ccnu_draft_bool
-\bool_new:N       \g__ccnu_showheadlogo_bool    % 页眉 logo
-\str_new:N        \g__ccnu_headline_str         % 页眉 阴阳线
-\str_new:N        \g__ccnu_type_version_str     % 打印、电子版本控制
+\bool_new:N       \g__ccnu_showheadlogo_bool           % 页眉 logo
+\bool_new:N       \g__ccnu_chapter_newpage_bool    % chapter 是否新起一页
+\str_new:N        \g__ccnu_headline_str                % 页眉 阴阳线
+\str_new:N        \g__ccnu_type_version_str      % 打印、电子版本控制
 \fp_new:N         \g__ccnu_doctor_linespread_ration_fp
 \fp_set:Nn \g__ccnu_doctor_linespread_ration_fp
-  { 25 / 24}
+  { 25 / 24 }
 
 % 下划线
 \dim_new:N \l__ccnu_title_tmp_height_dim
@@ -82,6 +83,20 @@
 \dim_new:N \l__ccnu_title_left_right_extra_width_dim
 \dim_new:N \l__ccnu_title_sep_width
 
+
+\keys_define:nn { ccnu / style }
+  {
+    chapter-breakstyle .choice:,
+    chapter-breakstyle / continuous .code:n = 
+      {
+        \bool_gset_false:N \g__ccnu_chapter_newpage_bool
+      },
+    chapter-breakstyle / newpage .code:n = 
+      {
+        \bool_gset_true:N \g__ccnu_chapter_newpage_bool
+      },
+    chapter-breakstyle .value_required:n = true,
+  }
 
 % 生成新变体
 \cs_generate_variant:Nn \file_input:n     { V  }
@@ -297,12 +312,10 @@
     etoolbox,          % 补丁
     amsthm,            % 定理类环境
     thmtools,          % 定理类环境
-    needspace,
     xeCJKfntef         % 下划线
   }
 \RequirePackage[shortlabels]{enumitem}   % 列表环境
 \RequirePackage[titles]{tocloft}         % 目录修改
-
 
 
 % 宏包版本检测
@@ -1296,7 +1309,7 @@
 % 把致谢和附录的标题设置代码封装
 
 % 致谢
-\NewDocumentCommand { \Acknowledgements } { }
+\NewDocumentCommand { \acknowledgements } { }
   {
     \int_case:nnF { \g__ccnu_thesis_type_int }
       {
@@ -1447,23 +1460,44 @@
 
 \cs_new:Npn \__ccnu_ctex_format_bachelor:
   {
+    \bool_if:NTF \g__ccnu_chapter_newpage_bool
+      {
+        \keys_set:nn { ctex }
+          {
+            chapter =
+              {
+                format      = \zihao{-3} \normalfont \bfseries,
+                name        = {},
+                indent      = 2\ccwd,
+                number      = \__ccnu_arabic:n { chapter },
+                beforeskip  = 5 ex plus 0.5 ex,
+                afterskip   = 2.7 ex plus 0.5 ex,
+                break       = { \newpage },
+                fixskip     = true
+              }
+          }
+      }
+      {
+        \keys_set:nn { ctex }
+          {
+            chapter =
+              {
+                format      = \zihao{-3} \normalfont \bfseries,
+                name        = {},
+                indent      = 2\ccwd,
+                number      = \__ccnu_arabic:n { chapter },
+                beforeskip  = 5 ex plus 0.5 ex,
+                afterskip   = 2.7 ex plus 0.5 ex,
+                % break       = { \needspace { 4em } },
+                break       = { \addpenalty { \@secpenalty } },
+                fixskip     = true
+              }
+          }
+      }
     \keys_set:nn { ctex }
       {
         % 编号的章节深度：到 subsubsection
         secnumdepth = 3,
-        chapter =
-          {
-            format      = \zihao{-3} \normalfont \bfseries,
-            name        = {},
-            indent      = 2\ccwd,
-            number      = \__ccnu_arabic:n { chapter },
-            beforeskip  = 5 ex plus 0.5 ex,
-            afterskip   = 2.7 ex plus 0.5 ex,
-            break       = { \needspace { 4em } },
-            % TODO: penalty失效，但是 MWE 正常
-            % break       = { \addpenalty { \@secpenalty } },
-            fixskip     = true
-          },
         section =
           {
             format      = \zihao{4} \normalfont \bfseries \raggedright,
@@ -1532,13 +1566,15 @@
           }
       }
   }
-\int_case:nnF { \g__ccnu_thesis_type_int }
+
+% 要放在导言区后，否则 chapter-breakstyle 键值设置之前就设置完了 chapter 的样式，就会使得控制失效
+\AtEndPreamble
   {
-    {3} { \__ccnu_ctex_format_bachelor: }
+    \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {3}
+      { \__ccnu_ctex_format_bachelor: }
+      { \__ccnu_ctex_format_master_doctor: }
   }
-  {
-    \__ccnu_ctex_format_master_doctor:
-  }
+
 \cs_new_protected:Npn \__ccnu_chapter_bachelor:n #1
   {
     \group_begin:
@@ -3380,8 +3416,6 @@
   {
     hyperlink .choice:,
     hyperlink .value_required:n = true,
-    hyperlink / border .code:n =
-      { \ccnu_hyperref_setup:n { colorlinks = false } },
     hyperlink / color  .code:n =
       { \ccnu_hyperref_setup:n { colorlinks = true  } },
     hyperlink / none   .code:n =
@@ -4012,6 +4046,14 @@
         %     2. 除 fandol 和 sourcehan 外，其余字体均为商用字体，请注意版权问题
         %     3. 但 fandol 字体缺字比较严重，而 sourcehan 没有配备楷体和仿宋体
         %
+      % chapter-breakstyle = continuous,
+        % chapter 是否要新起一页开始
+        %   适用学位类型：【本】
+        %   可选选项：continuous|newpage
+        %   默认：continuous
+        %     continuous：chapter 不新起一页开始
+        %     newpage：chapter 新起一页开始
+        %
       caption-labelstyle = hyphen,
         % 图表标题 label 计数样式
         %   适用学位类型：【本｜硕｜博】
@@ -4082,7 +4124,7 @@
         %
       hyperlink = none,
         % 超链接样式
-        %   可选选项：border|color|none
+        %   可选选项：color|none
         %   默认：none
         %
       hyperlink-color = default,
