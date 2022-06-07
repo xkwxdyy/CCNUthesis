@@ -1,0 +1,48 @@
+% !TeX root = ../CCNUthesis.tex
+
+\subsection{如何更新宏包}
+
+\begin{itemize}
+  \item Windows用户，在控制台 cmd 中输入
+  
+  \begin{shellexample}[gobble = 4]
+    tlmgr update --all --self
+  \end{shellexample}
+  
+  回车，然后等待更新宏包完成再使用
+  
+  \item Mac用户，在终端（terminal）输入
+  
+  \begin{shellexample}[gobble = 4]
+    tlmgr update --all --self
+  \end{shellexample}
+  
+  回车，如果提示``No permission''，输入
+  
+  \begin{shellexample}[gobble = 4]
+    sudotlmgr update --all --self
+  \end{shellexample}
+  
+  然后输入管理员密码，回车即可
+\end{itemize}
+
+
+\subsubsection{关于 \TeXLive 包管理器 \cmd{tlmgr} 的其他功能}
+
+关于一些简短的功能，可以查看 \href{http://mirrors.ctan.org/info/tlmgrbasics/doc/tlmgr.pdf}{tlmgrBasics}，syvshc 做了部分内容的翻译，见~\href{http://mirrors.ctan.org/info/tlmgr-intro-zh-cn/tlmgr-intro-zh-cn.pdf}{tlmgr-intro-zh-cn}。
+
+更完整的使用说明可以看~\href{https://www.tug.org/texlive/doc/tlmgr.html}{full document for tlmgr}。
+
+
+\subsubsection{如果升级到一半意外终止了更新，如何继续}
+
+当使用 \cmd{tlmgr} 升级宏包到一半时因为意外终止, 运行下面的命令来继续没有完成的升级：
+
+\begin{shellexample}
+  tlmgr update –reinstall-forcibly-removed –all
+\end{shellexample}
+
+
+\subsubsection{windows用户：如果更新时，不小心点了一下 cmd 窗口，宏包更新暂停了怎么办}
+
+重新点一下窗口，然后回车

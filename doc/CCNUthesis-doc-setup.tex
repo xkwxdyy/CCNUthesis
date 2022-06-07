@@ -1,0 +1,32 @@
+\usepackage{multirow, xeCJKfntef, xpinyin}
+\usepackage{graphicx}
+\usepackage{tabularray}
+\usepackage[
+  backend = biber,
+  style = gb7714-2015
+]{biblatex}
+\addbibresource{CCNUthesis.bib}
+\graphicspath{{figures}}
+
+\hypersetup{
+  pdftitle  = {CCNUthesis: 华中师范大学学位论文模版},
+  pdfauthor = {夏康玮}
+}
+% 全角标点放在引号中，需要改成半角式，否则间距过大，不好看
+\def\FSID{“{\xeCJKsetup{PunctStyle=banjiao}。}”} % U+3002
+\def\FSFW{“{\xeCJKsetup{PunctStyle=banjiao}．}”} % U+FF0E
+\def\COFW{“{\xeCJKsetup{PunctStyle=banjiao}：}”} % U+FF1A
+\def\SCFW{“{\xeCJKsetup{PunctStyle=banjiao}；}”} % U+FF1B
+
+
+\title{\textcolor{MaterialIndigo800}{%
+  \textbf{CCNUthesis: 华中师范大学学位论文\xpinyin[font=\sffamily,format=\color{MaterialIndigo800}]{模}{mu2}板}}}
+\author{夏康玮}
+\date{2022/06/04\quad v1.2.4%
+  \thanks{%
+    \parbox{0.5\textwidth}{
+      \url{https://github.com/xkwxdyy/CCNUthesis} \\
+      \url{https://gitee.com/xkwxdyy/CCNUthesis}
+    }
+  }
+}

@@ -1,0 +1,39 @@
+% !TeX root = ../CCNUthesis.tex
+
+\subsection{参考文献的相关问题}
+
+\subsubsection{ bib 文件如何使用}
+
+主要参考 \href{https://ctan.math.illinois.edu/info/lshort/chinese/lshort-zh-cn.pdf}{lshort-zh-cn} 的 6.1.2 节，但在这多说一点，参考文献的数据库（\file{.bib} 文件）中文献条目的获取方式，可以通过 google 学术等搜索文献，然后“导出 bib 格式”，或是用 zotero 等软件管理参考文献进行导出 bib 格式。
+
+但要注意的事，这样的导出方式，经常出现文献的类型不匹配，所以需要自己根据~\ref{subsec:参考文献的类型示例} 节的数据类型自行甄别。
+
+
+\subsubsection{作者姓氏的多音字问题}
+
+在设置了
+\begin{latexexample}
+  \ccnusetup{
+    style = {
+      bib-style = ccnu-bachelor-author-year
+    }
+  }
+\end{latexexample}
+后，即此时参考文献的格式为作者-年制，但是有的时候会发现一些中文作者文献的顺序“出乎意料”，比如第一作者为“曾xx”的文献竟然会排在非 Z 开头的文献前，这主要是姓氏的多音字问题，比如“曾”就有“\pinyin{ceng2}”和“\pinyin{zeng1}”两种读音，而默认会取字母靠前的作为读音，就导致了自动把“曾xx”的“曾”作为“\pinyin{ceng2}”进行排序所以才有了上述的结果。
+
+那怎么解决呢？这个时候需要用到 \cmd{key} 域
+
+\begin{latexexample}[emph={key}]
+  @book{曾谨言2013量子力学,
+    title     = {量子力学: 卷 I},
+    author    = {曾谨言},
+    year      = {2013},
+    publisher = {科学出版社},
+    address   = {北京},
+    pages     = {1-10},
+    edition   = {2},
+    key       = {zeng1jin3yan3}
+  }
+\end{latexexample}
+
+内容就是第一作者名的拼音，用法一看这个示例便知(和 \pkg{xpinyin} 宏包的使用相同)。然后按照正确的参考文献编译方式（因为 \LaTeX 要重新写 \file{.bbl} 文件）重新编译即可获得正确的排序。

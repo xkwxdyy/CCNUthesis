@@ -1,0 +1,46 @@
+% !TeX root = ../CCNUthesis.tex
+
+\section{介绍} 
+
+目前，在网上可以找到的华中师范大学 \LaTeX{} 论文模板主要是
+
+\begin{itemize}
+  \item 由华中师范大学数学与统计学学院邓国泰老师编写的本科毕业论文模版
+  \item 华中师范大学数学与统计学学院基础数学方向“流传”下来的硕士模版
+\end{itemize}
+
+但这些模板基于 \CTeX 套装编写， \CTeX 套装已经近十年未更新，已不能适应当前 \TeX{} 中文技术的发展，引用 \CTeX 套装的开发之一刘海洋的话：\emph{\CTeX 已经完成了它的历史使命。} 更多关于不推荐使用 \CTeX 套装的原因参看 \href{https://gitee.com/xkwxdyy/CCNUthesis/wikis/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98FAQ/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E6%8E%A8%E8%8D%90%E5%AE%89%E8%A3%85\CTeX%E5%A5%97%E8%A3%85%E4%BA%86}{《为什么不推荐安装 \CTeX 套装了》}。
+
+抛开旧模版是基于 \CTeX 套装编写的这一点，关于旧模版本身也有众多使用问题，比如格式相关代码不能完全剥离，导致用户，尤其是 \LaTeX{} 初学者，使用起来体验不佳。笔者整理过邓国泰老师编写的本科毕业论文模版中出现的问题，并对照着阐述了新模版的优化处理，感兴趣的用户可以参看 \href{https://gitee.com/xkwxdyy/CCNUthesis/wikis/%E6%97%A7%E6%A8%A1%E7%89%88%E7%9A%84%E9%97%AE%E9%A2%98%E5%92%8C%E6%96%B0%E6%A8%A1%E7%89%88%E7%9A%84%E5%A4%84%E7%90%86}{旧模版的问题和新模版的处理}
+
+相比之下，复旦大学 \cls{fduthesis}、清华大学 \cls{thuthesis}、中国科学技术大学 \cls{ustcthesis}、中国科学院大学 \cls{ucasthesis} 以及上海交通大学 \cls{sjtuthesis} 等学位论文 \LaTeX{} 模版成熟稳定，值得参考。
+
+本模板将借鉴前辈经验，重新设计，并使用 \LaTeX3 编写，以适应 \TeX{} 技术发展潮流；同时还将构建一套简洁的接口，方便用户使用。
+
+
+\subsection{\TeXLive 安装}
+
+要想使用 \LaTeX{} 及此模板，必须安装 \TeXLive 发行版（而不能安装 \CTeX 套装），且最好是安装最新年份版本。安装介绍只推荐啸行编写的 \href{https://ctan.math.illinois.edu/info/install-latex-guide-zh-cn/install-latex-guide-zh-cn.pdf}{install-latex-guide-zh-cn}，关于此文档的一些补充见 \href{https://gitee.com/xkwxdyy/CCNUthesis/wikis/install-latex-guide-zh-cn%E6%96%87%E6%A1%A3%E8%A1%A5%E5%85%85}{install-latex-guide-zh-cn 文档补充}
+
+
+\subsection{\LaTeX{} 入门}
+
+本文档并非是一份 \LaTeX{} 零基础教程。如果您是完完全全的新手，建议先阅读相关入门文档，虽然网络上的入门教程多如牛毛，但是强烈建议一定要先阅读一遍 \href{https://ctan.math.illinois.edu/info/lshort/chinese/lshort-zh-cn.pdf}{lshort-zh-cn}，并且用好 \cmd{texdoc} 命令（lshort-zh-cn 中有介绍）查看相关宏包手册进行更全面的学习。
+
+
+\subsection{关于本文档} \label{subsec:提issues}
+
+本文采用不同字体表示不同内容。无衬线字体表示宏包名称，如
+\pkg{xeCJK} 宏包、\cls{CCNUthesis} 文档类等；等宽字体表示代码或文件名，如 \cs{ccnusetup} 命令、\env{abstract} 环境、\TeX{} 文档\file{main.tex} 等；带有尖括号的楷体（或西文斜体）表示命令参数，如 \meta{模板选项}、\meta{English title} 等。在使用时，参数两侧的尖括号不必输入。示例代码进行了语法高亮处理，以方便阅读。
+
+在用户手册中，带有蓝色侧边线的为 \LaTeX{} 代码，而带有粉色侧边线的则为命令行代码，请注意区分。模板提供的选项、命令、环境等，均用横线框起，同时给出使用语法和相关说明。
+
+% 本模板中的选项、命令或环境可以分为以下三类：
+% \begin{itemize}
+%   \item 名字后面带有 \rexptarget\rexpstar{} 的，表示只能
+%     在\emph{中文模板}中使用；
+%   \item 名字后面带有 \exptarget\expstar{} 的，表示只能
+%     在\emph{英文模板}中使用；
+%   \item 名字后面不带有特殊符号的，表示既可以在中文模板中使用，
+%     也可以在英文模板中使用。
+% \end{itemize}
