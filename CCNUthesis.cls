@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-06-04}{v1.2.4}
+  {2022-06-07}{v1.2.5}
   {Thesis template for Central China Normal University}
 \RequirePackage { l3keys2e, xparse }
 
@@ -1655,12 +1655,14 @@
 \captionsetup [ figure ]
   {
     font     = ccnufigurecap,
+    position = bottom,
     labelsep = \tl_use:N \l__ccnu_caption_label_seperator_tl
   }
 \captionsetup [ table  ]
   {
     % font     = { small, sf },
     font     = ccnutablecap,
+    position = top,
     labelsep = \tl_use:N \l__ccnu_caption_label_seperator_tl
   }
 % 图表的标题 label 样式

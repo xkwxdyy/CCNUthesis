@@ -4,6 +4,14 @@
 
 更多关于模版的内容和如何使用，请仔细阅读模版中的 `CCNUthesis.pdf` 用户手册和 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis)！
 
+## [v1.2.5] - 2022-06-07
+
+
+### Added
+
+- 增加图标的 `postion`
+
+
 ## [v1.2.4] - 2022-06-04
 
 ### Added
