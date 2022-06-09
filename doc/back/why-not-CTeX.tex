@@ -68,11 +68,11 @@
 
 \subsubsection{如果安装了 \CTeX 套装怎么办？}
 
-先明确你要使用哪个模版，旧模版还是 \cls{CCNUthesis}，二者不兼容。
+先明确你要使用哪个模版，旧模版还是 \cls{CCNUthesis}，二者可以兼容，但需要处理环境变量，具体看 ljguo 的博客 \href{https://ljguo1020.github.io/2022/06/09/texlive-and-ctex/}{Windows 系统下 \TeXLive 与 \CTeX 套装共存}。
 
 如果要用旧模版，那么一切使用和问题请找邓国泰老师。
 
-如果确定要使用 \cls{CCNUthesis}，卸载掉 \CTeX 套装，然后跟着[install-latex-guide-zh-cn](https://gitee.com/OsbertWang/install-latex-guide-zh-cn/releases) 文档正确安装 \TeXLive 。
+如果确定要使用 \cls{CCNUthesis}，卸载掉 \CTeX 套装（除非你要投稿中文核心期刊），然后跟着[install-latex-guide-zh-cn](https://gitee.com/OsbertWang/install-latex-guide-zh-cn/releases) 文档正确安装 \TeXLive 。
 
 
 但是卸载 \CTeX 套装并安装了 `TeX Live`后，用户可能会发现无法编译参考文献（但是正常的 `xelatex` 编译是可行的），这个时候参考
