@@ -4,7 +4,7 @@
 
 %********************************************
 % CCNUthesis: 华中师范大学论文模板
-% 2022/05/29 v1.2.2
+% 2022/06/19 v1.2.6
 %
 % 重要提示：
 %   1. 请确保使用 UTF-8 编码保存
@@ -14,9 +14,9 @@
 %********************************************
 
 
-\documentclass[type = bachelor]{CCNUthesis}
-% \documentclass[type = master, version = print-master-twoside]{CCNUthesis}
-% \documentclass[type = doctor]{CCNUthesis}
+% \documentclass[type = bachelor]{CCNUthesis}
+% \documentclass[type = master]{CCNUthesis}
+\documentclass[type = doctor]{CCNUthesis}
 
 
 % type
@@ -236,14 +236,14 @@
       %     space 表示 「␣␣」，即两个空格
       %     默认：colon
       %
-    show-headlogo = false,
+    show-headlogo = true,
       % 是否显示页眉 logo
       %   适用学位类型：【硕｜博】
       %   可选选项：true|false
       %     默认：false
       %   logo 内容：华中师范大学校徽 + 硕士/博士学位论文中英文字样
       %
-    headline = none,
+    headline = thick-thin,
       % 页眉的线的类型
       %   适用学位类型：【硕｜博】
       %   可选选项：single|double|thin-thick|thick-thin|none
@@ -253,6 +253,37 @@
       %     thick-thin：两条线，上粗下细
       %     none：没有页眉的线
       %     默认：none
+      %
+    head-scope = main,
+    % head-scope = all,
+      % 页眉的作用范围
+      %   适用学位类型：【硕｜博】
+      %   可选选项：all|main
+      %     all：除了封面外所有
+      %     main：在正文开始才有页眉
+      %   默认：main
+    % keywords-newline = true,
+      % 摘要和关键词之间是否空一行
+      %   适用学位类型：【本｜硕｜博】
+      %   可选选项：true|false
+      %   默认：本：false，硕博：true
+      %
+    % listoffigures-show = true,
+      % 是否显示图目录
+      %   适用学位类型：【本｜硕｜博】
+      %   可选选项：true|false
+      %   默认：本：false，硕博：true
+      %
+    % listoftables-show = true,
+      % 是否显示表目录
+      %   适用学位类型：【本｜硕｜博】
+      %   可选选项：true|false
+      %   默认：本：false，硕博：true
+      %
+    listoffigures-name = {插 \quad 图},
+    listoftables-name  = {表 \quad 格},
+      % 图表目录的节标题
+      %   适用学位类型：【本｜硕｜博】
       %
     fullwidth-stop = catcode,
       % 标点的自动替换
@@ -346,7 +377,55 @@
 \input{./body/chapter2.tex}
 \input{./body/chapter3.tex}
 \input{./body/chapter4.tex}
-
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
+\chapter{test}
 
 
 % 论文后文部分，参考文献、致谢、附录等

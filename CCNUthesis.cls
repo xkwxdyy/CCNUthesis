@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-06-07}{v1.2.5}
+  {2022-06-19}{v1.2.6}
   {Thesis template for Central China Normal University}
 \RequirePackage { l3keys2e, xparse }
 
@@ -69,7 +69,7 @@
 \str_new:N        \g__ccnu_headline_str                % 页眉 阴阳线
 \str_new:N        \g__ccnu_type_version_str      % 打印、电子版本控制
 \fp_new:N         \g__ccnu_doctor_linespread_ration_fp
-\fp_set:Nn \g__ccnu_doctor_linespread_ration_fp
+\fp_set:Nn        \g__ccnu_doctor_linespread_ration_fp
   { 25 / 24 }
 
 % 下划线
@@ -1063,6 +1063,131 @@
 
 
 % 页眉页脚设置
+% --页眉--
+% 有页眉有页码｜有页眉无页码
+
+\AtBeginDocument
+  {
+    % \bool_lazy_and:nnTF
+    %   { \bool_if_p:N \g__ccnu_head_scope_all_bool }
+    %   { \bool_if_p:N \g__ccnu_showheadlogo_bool }
+    \bool_if:NTF \g__ccnu_showheadlogo_bool
+      {
+        \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
+          {
+            \fancypagestyle { plain }
+              {
+                \fancyhf { }
+                \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+                % logo
+                \fancyhead [ L ] 
+                  { \includegraphics[width = 5cm]{ masterlogo.png } }
+                % 页眉线
+                \__ccnu_headline:
+                \fancyfoot [ C ] { \zihao{5} \thepage }
+              }
+          }
+          {
+            \fancypagestyle { plain }
+              {
+                \fancyhf { }
+                \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+                % logo
+                \fancyhead [ L ] 
+                  { \includegraphics[width = 7cm]{ doctorlogo.png } }
+                % 页眉线
+                \__ccnu_headline:
+                \fancyfoot [ OR, EL ] { \zihao{5} \thepage }
+              }
+          }
+      }
+      {
+        \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
+          {
+            \fancypagestyle { plain }
+              {
+                \fancyhf { }
+                \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+                \fancyfoot [ C ] { \zihao{5} \thepage }
+              }
+          }
+          {
+            \fancypagestyle { plain }
+              {
+                \fancyhf { }
+                \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+                \fancyfoot [ OR, EL ] { \zihao{5} \thepage }
+              }
+          }
+      }
+    \patchcmd { \chapter }
+      { \thispagestyle{\CTEX@chapter@pagestyle} }
+      { \pagestyle{plain} }
+      {}
+      {\fail}
+  }
+
+\fancypagestyle { bachelorplain }
+  {
+    \fancyhf { }
+    \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+    \fancyfoot [ C ] { \small \thepage }
+  }
+\fancypagestyle { masterplain }
+  {
+    \fancyhf { }
+    \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+    \fancyfoot [ C ] { \zihao{5} \thepage }
+  }
+\fancypagestyle { masterplain-head }
+  {
+    \fancyhf { }
+    \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+    % logo
+    \fancyhead [ L ] 
+      { \includegraphics[width = 5cm]{ masterlogo.png } }
+    % 页眉线
+    \__ccnu_headline:
+    \fancyfoot [ C ] { \zihao{5} \thepage }
+  }
+\fancypagestyle { masterplain-head-nopage }
+  {
+    \fancyhf { }
+    \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+    % logo
+    \fancyhead [ L ] 
+      { \includegraphics[width = 5cm]{ masterlogo.png } }
+    % 页眉线
+    \__ccnu_headline:
+  }
+\fancypagestyle { doctorplain }
+  {
+    \fancyhf { }
+    \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+    \fancyfoot [ OR, EL ] { \zihao{5} \thepage }
+  }
+\fancypagestyle { doctorplain-head }
+  {
+    \fancyhf { }
+    \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+    % logo
+    \fancyhead [ L ] 
+      { \includegraphics[width = 7cm]{ doctorlogo.png } }
+    % 页眉线
+    \__ccnu_headline:
+    \fancyfoot [ OR, EL ] { \zihao{5} \thepage }
+  }
+\fancypagestyle { doctorplain-head-nopage }
+  {
+    \fancyhf { }
+    \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+    % logo
+    \fancyhead [ L ] 
+      { \includegraphics[width = 7cm]{ doctorlogo.png } }
+    % 页眉线
+    \__ccnu_headline:
+  }
+
 \cs_new:Npn \__ccnu_headline:
   {
     \str_case:VnTF \g__ccnu_headline_str
@@ -1111,62 +1236,26 @@
       }
       {}{}
   }
-\int_case:nn { \g__ccnu_thesis_type_int }
+
+\RenewDocumentCommand { \backmatter } { } {}
+
+
+\int_compare:nNnT { \g__ccnu_thesis_type_int } = {3}
   {
-    {3} 
-    {
-      % 本科
-      \fancypagestyle { plain }
-        {
-          \fancyhf { }
-          \RenewDocumentCommand { \headrulewidth } { } { 0pt }
-          \fancyfoot [ C ] { \small \thepage }
-        }
-      \pagestyle { plain }
-    }
-    {2} 
-    {
-      % 硕士
-      \fancypagestyle { plain }
-        {
-          \fancyhf { }
-          \RenewDocumentCommand { \headrulewidth } { } { 0pt }
-          \bool_if:NT \g__ccnu_showheadlogo_bool
-            {
-              \fancyhead [ L ] 
-                { \includegraphics[width = 5cm]{ masterlogo.png}}
-            }
-          % 页眉线
-          \__ccnu_headline:
-          \fancyfoot [ C ] { \zihao{5} \thepage }
-        }
-      \pagestyle { plain }
-    }
-    {1}
-    {
-      % 博士
-      \fancypagestyle { plain }
-        {
-          \fancyhf { }
-          \bool_if:NT \g__ccnu_showheadlogo_bool
-            {
-              \fancyhead [ L ] 
-                { \includegraphics[width = 7cm]{ doctorlogo.png}}
-            }
-          % 页眉线
-          \__ccnu_headline:
-          \RenewDocumentCommand { \headrulewidth } { } { 0pt }
-          \fancyfoot [ OR, EL ] { \zihao{5} \thepage }
-        }
-      \pagestyle { plain }
-    }
+    % 重新设置 frontmatter 的计数器的样式
+    \patchcmd { \frontmatter }
+    { \pagenumbering { roman } }
+    { \pagenumbering { arabic } }
+    {}{ \fail }
+    % 重新设置 mainmatter 的计数器，使得页码接着前面的(本科)
+    \patchcmd { \mainmatter }
+      { \pagenumbering { arabic } }
+      { \renewcommand { \thepage }{ \arabic{ page } } }
+      {}{ \fail }
   }
 
-\patchcmd { \chapter }
-  { \thispagestyle{\CTEX@chapter@pagestyle} }
-  { \pagestyle{plain} }
-  {}
-  {\fail}
+% 控制页眉的全局与否
+\bool_new:N \g__ccnu_head_scope_all_bool
 
 \keys_define:nn { ccnu / style }
   {
@@ -1176,6 +1265,15 @@
     headline .str_gset:N = \g__ccnu_headline_str,
     headline .value_required:n = true,
     headline .initial:n = false,
+    head-scope .choice:,
+    head-scope / all .code:n = 
+      {
+        \bool_gset_true:N \g__ccnu_head_scope_all_bool
+      },
+    head-scope / main .code:n = 
+      {
+        \bool_gset_false:N \g__ccnu_head_scope_all_bool
+      },
   }
 
 % 定理类环境
@@ -1311,12 +1409,11 @@
 % 致谢
 \NewDocumentCommand { \acknowledgements } { }
   {
-    \int_case:nnF { \g__ccnu_thesis_type_int }
+    \int_case:nn { \g__ccnu_thesis_type_int }
       {
         {3} { \__ccnu_acknowlegements_bachelor: }
-      }
-      {
-        \__ccnu_acknowlegements_master_doctor:
+        {2} { \__ccnu_acknowlegements_master: }
+        {1} { \__ccnu_acknowlegements_doctor: }
       }
   }
 
@@ -1342,7 +1439,30 @@
       }
   }
 
-\cs_new:Npn \__ccnu_acknowlegements_master_doctor:
+\cs_new:Npn \__ccnu_acknowlegements_master:
+  {
+    \newpage
+    \group_begin:
+      \keys_set:nn { ctex }
+        {
+          chapter = 
+            {
+              numbering = false,
+              indent = 0em,
+              format = \zihao{3} \sffamily \bfseries \centering
+            }
+        }
+      \chapter*{致 \quad 谢}
+      \addcontentsline{toc}{chapter}{\zihao{-4} \bfseries 致谢}
+    \group_end:
+    % 致谢采用全角标点
+    \keys_set:nn { ctex }
+      {
+        punct = quanjiao,
+      }
+  }
+
+\cs_new:Npn \__ccnu_acknowlegements_doctor:
   {
     \newpage
     \group_begin:
@@ -1364,8 +1484,6 @@
         punct = quanjiao,
       }
   }
-
-
 
 % 落款
 \NewDocumentEnvironment { signature } { +b }
@@ -1417,7 +1535,6 @@
     \gdef \CTEX@chapter@numbering { \CTEX@appendix@numbering }
     % 调整附录的目录层级为 1 层
     \addtocontents { toc } { \protect \value{tocdepth} = 0 }
-    % TODO 攻读学位期间发表的学术论文 这个的 chapter 要用 *
     \__ccnu_preto_cmd:Nn \chapter
       {
         \int_gincr:N \g__ccnu_appendix_index_aux_int
@@ -1428,30 +1545,12 @@
   {
     \iow_now:cx { @auxout }
       {
-      \token_to_str:N \ExplSyntaxOn %要加一个token_to_str
+      \token_to_str:N \ExplSyntaxOn   % 要加一个token_to_str
       ^^J
       \int_gset:Nn \exp_not:N \g__ccnu_appendix_index_int { \int_use:N \g__ccnu_appendix_index_aux_int }
       ^^J
-      \token_to_str:N \ExplSyntaxOff %要加一个token_to_str
+      \token_to_str:N \ExplSyntaxOff  % 要加一个token_to_str
       }
-  }
-
-
-\RenewDocumentCommand { \backmatter } { } {}
-
-
-\int_compare:nNnT { \g__ccnu_thesis_type_int } = {3}
-  {
-    % 重新设置 frontmatter 的计数器的样式
-    \patchcmd { \frontmatter }
-    { \pagenumbering { roman } }
-    { \pagenumbering { arabic } }
-    {}{ \fail }
-    % 重新设置 mainmatter 的计数器，使得页码接着前面的(本科)
-    \patchcmd { \mainmatter }
-      { \pagenumbering { arabic } }
-      { \renewcommand { \thepage }{ \arabic{ page } } }
-      {}{ \fail }
   }
 
 
@@ -2829,7 +2928,17 @@
           \end{tikzpicture}
         }
         {
-          \pagestyle { empty }
+          \bool_lazy_and:nnTF
+            { \bool_if_p:N \g__ccnu_head_scope_all_bool }
+            { \bool_if_p:N \g__ccnu_showheadlogo_bool }
+            {
+              \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
+                { \pagestyle { masterplain-head-nopage } }
+                { \pagestyle { doctorplain-head-nopage } }
+            }
+            {
+              \pagestyle { empty }
+            }
           \__ccnu_cover_i_master_doctor:
           \str_case:VnTF \g__ccnu_type_version_str
             {
@@ -2866,6 +2975,7 @@
   {
     \newpage \null \thispagestyle{empty} \newpage
   }
+
 
 % 目录处理
 
@@ -2982,7 +3092,7 @@
         }
       \__ccnu_line_spread:n { 1 }
       \t@bleofcontents
-      \thispagestyle{empty}
+      \thispagestyle { empty }
     \group_end:
   }
 
@@ -3000,9 +3110,9 @@
 \cs_new:Npn \__ccnu_tableofcontents_format_bachelor:
   {
     % chapter前的额外垂直间距
-    \dim_set:Nn \cftbeforechapskip { 0.5\baselineskip }
+    \dim_set:Nn \cftbeforechapskip { \baselineskip }
     % section前的额外垂直间距
-    \dim_set:Nn \cftbeforesecskip { 0.5\baselineskip }
+    \dim_set:Nn \cftbeforesecskip { \baselineskip }
     % 页码样式，设置为无样式
     \RenewDocumentCommand { \cftchappagefont } { } {}
     % 计数器宽度
@@ -3034,7 +3144,7 @@
     \RenewDocumentCommand { \cftsubsecpagefont } { }
       { \zihao{5} \normalfont }
     % 页码宽度
-    \cftsetpnumwidth { 1.1em }
+    \cftsetpnumwidth { 1.3em }
   }
 \cs_new:Npn \__ccnu_tableofcontents_format_doctor:
   {
@@ -3060,7 +3170,7 @@
     \RenewDocumentCommand { \cftsubsecpagefont } { }
       { \zihao{5} \normalfont }
     % 页码宽度
-    \cftsetpnumwidth { 1.1em }
+    \cftsetpnumwidth { 1.4em }
   }
 \int_case:nn { \g__ccnu_thesis_type_int }
   {
@@ -3069,11 +3179,16 @@
     {1} { \__ccnu_tableofcontents_format_doctor: }
   }
 
+% 摘要
+
+% 控制关键词是否要空一行
+\bool_new:N \g__ccnu_keywords_newline_bool
+
 
 \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {3}
   {
     % 中文摘要
-    \NewDocumentEnvironment { abstract  } { }
+      \NewDocumentEnvironment { abstract  } { }
       { \__ccnu_abstract_begin_bachelor: }
       { \__ccnu_abstract_end_bachelor:   }
     % 英文摘要
@@ -3113,7 +3228,13 @@
     % 把 关键词 写进目录
     \addcontentsline { toc } { chapter }
       { \normalfont  \c__ccnu_name_keywords_tl }
-    \par
+    \bool_if:NTF \g__ccnu_keywords_newline_bool
+      {
+        \par \vskip \baselineskip
+      }
+      {
+        \par
+      }
     \textbf { \c__ccnu_name_keywords_tl : }
     \c_space_tl \c_space_tl
     \clist_use:Nn \l__ccnu_info_keywords_clist 
@@ -3142,7 +3263,13 @@
     \phantomsection
     \addcontentsline { toc } { chapter }
       { \normalfont  \c__ccnu_name_keywords_en_tl }
-    \par
+    \bool_if:NTF \g__ccnu_keywords_newline_bool
+      {
+        \par \vskip \baselineskip
+      }
+      {
+        \par
+      }
     \textbf { \c__ccnu_name_keywords_en_tl : }
     \c_space_tl \c_space_tl
     \clist_use:Nn \l__ccnu_info_keywords_en_clist 
@@ -3151,13 +3278,42 @@
 % 硕博的摘要
 \cs_new:Npn \__ccnu_abstract_begin_master_doctor:
   { 
-    \int_set:Nn \c@page {0}
-    \pagenumbering{ Roman }
     \newpage
-    % \__ccnu_chapter_master_doctor:n {摘 \quad 要}
+    \bool_lazy_and:nnTF
+      { \bool_if_p:N \g__ccnu_head_scope_all_bool }
+      { \bool_if_p:N \g__ccnu_showheadlogo_bool }
+      {
+        \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
+          % { \thispagestyle { masterplain-head } \pagestyle { masterplain-head } }
+          % { \pagestyle { doctorplain-head } }
+          {
+            % \patchcmd { \chapter }
+            %   { \thispagestyle{\CTEX@chapter@pagestyle} }
+            %   { \pagestyle { empty } }
+            %   {}
+            %   {\fail}
+          }
+          {
+          }
+      }
+      {
+        \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
+          % { \pagestyle { masterplain } }
+          % { \pagestyle { doctorplain } }
+          { \pagestyle { empty } }
+          { \pagestyle { empty } }
+      }
+    \pagenumbering{ Roman }
     \chapter*{摘 \quad 要}
-    \addcontentsline { toc } { chapter }
-      { \bfseries \zihao{5} 摘要 }
+    \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
+      {
+        \addcontentsline { toc } { chapter }
+          { \bfseries \zihao{-4} 摘要 }
+      }
+      {
+        \addcontentsline { toc } { chapter }
+          { \bfseries \zihao{5} 摘要 }
+      }
     \group_begin:
       \keys_set:nn { ctex }
         { punct = quanjiao }
@@ -3167,7 +3323,13 @@
   }
 \cs_new:Npn \__ccnu_abstract_end_master_doctor:
   {
-      \par
+      \bool_if:NTF \g__ccnu_keywords_newline_bool
+        {
+          \par \vskip \baselineskip
+        }
+        {
+          \par
+        }
       \textbf { \c__ccnu_name_keywords_tl }：
       \clist_use:Nn \l__ccnu_info_keywords_clist 
         { ； }
@@ -3187,13 +3349,21 @@
   }
 \cs_new:Npn \__ccnu_abstract_en_end_master_doctor:
   {
-    \par
+      \bool_if:NTF \g__ccnu_keywords_newline_bool
+        {
+          \par \vskip \baselineskip
+        }
+        {
+          \par
+        }
       \textbf { \c__ccnu_name_keywords_en_tl }: \space
       \clist_use:Nn \l__ccnu_info_keywords_en_clist 
         { ;~ }
     \group_end:
   }
 
+\bool_new:N \g__ccnu_listoftables_show_bool
+\bool_new:N \g__ccnu_listoffigures_show_bool
 
 % 摘要和目录的顺序调整
 \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {3}
@@ -3202,6 +3372,10 @@
       {
         % 目录
         \tableofcontents
+        \bool_if:NT \g__ccnu_listoffigures_show_bool
+          { \listoffigures }
+        \bool_if:NT \g__ccnu_listoftables_show_bool
+          { \listoftables }
       }
   }
   {
@@ -3210,9 +3384,54 @@
       {
         % 目录
         \tableofcontents
+        \bool_if:NT \g__ccnu_listoffigures_show_bool
+          { \listoffigures }
+        \bool_if:NT \g__ccnu_listoftables_show_bool
+          { \listoftables }
       }
   }
 
+
+\keys_define:nn { ccnu / style }
+  {
+    % 控制关键词是否空一行
+    keywords-newline .bool_gset:N = \g__ccnu_keywords_newline_bool,
+    % 控制图表目录
+    listoffigures-show .bool_gset:N = \g__ccnu_listoffigures_show_bool,
+    listoftables-show .bool_gset:N = \g__ccnu_listoftables_show_bool,
+    % 图表目录的标题名称
+    listoffigures-name .tl_set:N = \g__ccnu_listoffigures_name_tl,
+    listoftables-name .tl_set:N = \g__ccnu_listoftables_name_tl,
+  }
+
+\keys_set:nn { ccnu /style }
+  {
+    listoffigures-name = {插 \quad 图},
+    listoftables-name = {表 \quad 格}
+  }
+
+\keys_set:nn { ctex }
+  {
+    listfigurename = {\g__ccnu_listoffigures_name_tl},
+    listtablename = {\g__ccnu_listoftables_name_tl}
+  }
+\int_compare:nNnTF { \g__ccnu_thesis_type_int } = {3}
+  {
+    \keys_set:nn { ccnu / style }
+      {
+        keywords-newline   = false,
+        listoffigures-show = false,
+        listoftables-show  = false,
+      }
+  }
+  {
+    \keys_set:nn { ccnu / style }
+      {
+        keywords-newline   = true,
+        listoffigures-show = true,
+        listoftables-show  = true,
+      }
+  }
 
 % 符号表
 \NewDocumentEnvironment { notation } 
@@ -4094,6 +4313,13 @@
         %     none：页眉没有线
         %     默认：none
         %
+      head-scope = main,
+        % 页眉的作用范围
+        %   适用学位类型：【硕｜博】
+        %   可选选项：all|main
+        %     all：除了封面外所有
+        %     main：在正文开始才有页眉
+        % 
       fullwidth-stop = catcode,
         % 标点的自动替换
         %   适用学位类型：【本｜硕｜博】
