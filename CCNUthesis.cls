@@ -1127,6 +1127,56 @@
       {\fail}
   }
 
+\cs_new:Npn \__ccnu_pagestyle_master_doctor_withouthead:
+  {
+    \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
+      {
+        \fancypagestyle { plain }
+          {
+            \fancyhf { }
+            \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+            \fancyfoot [ C ] { \zihao{5} \thepage }
+          }
+      }
+      {
+        \fancypagestyle { plain }
+          {
+            \fancyhf { }
+            \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+            \fancyfoot [ OR, EL ] { \zihao{5} \thepage }
+          }
+      }
+  }
+\cs_new:Npn \__ccnu_pagestyle_master_doctor_withhead:
+  {
+    \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
+      {
+        \fancypagestyle { plain }
+          {
+            \fancyhf { }
+            \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+            % logo
+            \fancyhead [ L ] 
+              { \includegraphics[width = 5cm]{ masterlogo.png } }
+            % 页眉线
+            \__ccnu_headline:
+            \fancyfoot [ C ] { \zihao{5} \thepage }
+          }
+      }
+      {
+        \fancypagestyle { plain }
+          {
+            \fancyhf { }
+            \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+            % logo
+            \fancyhead [ L ] 
+              { \includegraphics[width = 7cm]{ doctorlogo.png } }
+            % 页眉线
+            \__ccnu_headline:
+            \fancyfoot [ OR, EL ] { \zihao{5} \thepage }
+          }
+      }
+  }
 \fancypagestyle { bachelorplain }
   {
     \fancyhf { }
@@ -3368,7 +3418,7 @@
 % 摘要和目录的顺序调整
 \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {3}
   {
-    \BeforeBeginEnvironment {abstract}
+    \BeforeBeginEnvironment { abstract }
       {
         % 目录
         \tableofcontents
@@ -3380,14 +3430,18 @@
   }
   {
     % 硕博摘要在目录前
-    \AfterEndEnvironment {abstract*}
+    \AfterEndEnvironment { abstract* }
       {
         % 目录
         \tableofcontents
+        \bool_if:NF \g__ccnu_head_scope_all_bool
+          { \__ccnu_pagestyle_master_doctor_withouthead: }
         \bool_if:NT \g__ccnu_listoffigures_show_bool
           { \listoffigures }
         \bool_if:NT \g__ccnu_listoftables_show_bool
           { \listoftables }
+        \bool_if:NT \g__ccnu_showheadlogo_bool
+          { \__ccnu_pagestyle_master_doctor_withhead: }
       }
   }
 
