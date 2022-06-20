@@ -256,14 +256,10 @@
 % 正文字号
 \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {1}
   {
-    \PassOptionsToClass { zihao  = 5, twoside } { ctexbook }
+    \PassOptionsToClass { zihao  = 5, oneside } { ctexbook }
   }
   {
     \PassOptionsToClass { zihao  = -4, oneside } { ctexbook }
-  }
-\str_if_eq:nVT { print-bachelor-twoside } \g__ccnu_type_version_str
-  {
-    \PassOptionsToClass { twoside } { ctexbook }
   }
 \PassOptionsToClass
   {
@@ -1335,6 +1331,10 @@
 
 \RenewDocumentCommand { \backmatter } { } {}
 
+\patchcmd { \frontmatter }
+  { \cleardoublepage }
+  { \clearpage }
+  {} {\fail}
 
 \int_compare:nNnT { \g__ccnu_thesis_type_int } = {3}
   {
@@ -3215,7 +3215,6 @@
                       format = \zihao{-2} \normalfont \bfseries \centering,
                     }
                 }
-              \fontsize{12pt}{5bp}\selectfont
             }
             {
               \__ccnu_line_spread:n { 1 }
@@ -3258,9 +3257,9 @@
 \cs_new:Npn \__ccnu_tableofcontents_format_bachelor:
   {
     % chapter前的额外垂直间距
-    \dim_set:Nn \cftbeforechapskip { \baselineskip }
+    \dim_set:Nn \cftbeforechapskip { 0.3\baselineskip }
     % section前的额外垂直间距
-    \dim_set:Nn \cftbeforesecskip { \baselineskip }
+    \dim_set:Nn \cftbeforesecskip { 0.1\baselineskip }
     % 页码样式，设置为无样式
     \RenewDocumentCommand { \cftchappagefont } { } {}
     % 计数器宽度
@@ -3359,7 +3358,7 @@
   { 
     \newpage
     % 实现超链接
-    % \phantomsection
+    \phantomsection
     % \show\chapter
     % \patchcmd
     %   { \chapter }
@@ -3669,10 +3668,15 @@
           chapter = 
             {
               format = \zihao{-2} \normalfont \bfseries \centering,
-              indent = 0pt
+              indent = 0pt,
+              numbering = false
             }
         }
-      \__ccnu_chapter_bachelor:V \c__ccnu_name_notation_tl
+      % \patchcmd { \chapter }
+      %   { \if@openright\cleardoublepage\else\clearpage\fi }
+      %   {}
+      %   {}{\fail}
+      \chapter { 符号表 }
     \group_end:
   }
 \cs_new_protected:Npn \__ccnu_notation_begin_master_doctor:

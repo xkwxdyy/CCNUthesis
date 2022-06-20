@@ -4,6 +4,12 @@
 
 更多关于模版的内容和如何使用，请仔细阅读模版中的 `CCNUthesis.pdf` 用户手册和 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis)！
 
+## [v1.2.6] - 2022-06-20
+
+### Fixed
+
+- 修复本科目录的间距问题
+
 
 ## [v1.2.6] - 2022-06-19
 
