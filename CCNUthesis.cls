@@ -3583,7 +3583,7 @@
   }
 \cs_new:Npn \__ccnu_abstract_en_begin_master_doctor:
   { 
-    \pagenumbering{ Roman }
+    % \pagenumbering{ Roman }
     \keys_set:nn { ctex }
       {
         chapter = 
