@@ -83,18 +83,15 @@
   毕业论文。
 \end{function}
 
-\begin{function}{version}
+\begin{function}[updated = 2022-06-20]{version}
   \begin{ccnusyntax}[emph={[1]version}]
-    version = (*<(electronic)|print-bachelor-oneside|print-bachelor-twoside|\\
-    XXXX\mbox{}~~~~~~~~~~print-master-oneside|print-master-twoside|print-doctor-twoside>*)
+    version = (*<(electronic)|print-master-oneside|print-master-twoside|print-doctor-twoside>*)
   \end{ccnusyntax}
   文档版本。
 \end{function}
 
 \begin{itemize}
-  \item electronic：电子版，无空白页
-  \item print-bachelor-oneside：打印版，本科，单面打印。数学与统计学学院「本科」终稿要求「单面」打印
-  \item print-bachelor-twoside：打印版，本科，双面打印。答辩打印可以双面打印（因为只是给答辩老师看，并不上交）
+  \item electronic：电子版，无空白页（本科选择这个即可，单双打印皆可，答辩时可以双面打印，纸质版终稿教务处要求单面打印）
   \item print-master-oneside：打印版，硕士，无空白页，单面打印
   \item print-master-twoside：打印版，硕士，有空白页，双面打印
   \item print-doctor-twoside：打印版，博士，有空白页，双面打印
@@ -403,13 +400,19 @@
   \end{itemize}
 \end{function}
 
+\begin{function}[added = 2022-06-20]{style/show-head}
+  \begin{ccnusyntax}[emph={[1]show-head}]
+    show-head = (*<\TTF>*)
+  \end{ccnusyntax}
+  【硕｜博】是否显示页眉。统一控制页眉 logo 和页眉线的显示与否。
+\end{function}
 
 
-\begin{function}{style/show-headlogo}
+\begin{function}[updated = 2022-06-20]{style/show-headlogo}
   \begin{ccnusyntax}[emph={[1]show-headlogo}]
     show-headlogo = (*<\TFF>*)
   \end{ccnusyntax}
-  【硕｜博】是否显示页眉 logo，仅对硕博类型有效。具体 logo 样式见图~\ref{figure:headlogo}。
+  【硕｜博】是否显示页眉 logo。具体 logo 样式见图~\ref{figure:headlogo}。
 \end{function}
 
 \begin{figure}[htbp]
@@ -420,7 +423,7 @@
   \begin{minipage}{0.45\textwidth}
     \includegraphics[height = 2cm]{doctorlogo.png}
   \end{minipage}
-  \caption{ headlogo }
+  \caption{headlogo}
   \label{figure:headlogo}
 \end{figure}
 
@@ -439,6 +442,48 @@
   \end{itemize}
 \end{function}
 
+\begin{function}[added = 2022-6-19]{style/head-scope}
+  \begin{ccnusyntax}[emph={[1]head-scope}]
+    head-scope = (*<all|(main)>*)
+  \end{ccnusyntax}
+  【硕｜博】页眉线的作用范围。
+
+  \begin{itemize}
+    \item \opt{all}：除了全文的第一页封面，其他页面均有页眉。
+    \item \opt{main}：正文开始才有页眉。
+  \end{itemize}
+\end{function}
+
+\begin{function}[added = 2022-06-18]{style/keywords-newline}
+  \begin{ccnusyntax}[emph={[1]keywords-newline}]
+    keywords-newline = (*\TTF*)（硕｜博）
+    keywords-newline = (*\TFF*)（本）
+  \end{ccnusyntax}
+  【本｜硕｜博】（中英统一控制）摘要和关键词之间是否空一行。
+
+  \begin{itemize}
+    \item \opt{true}：摘要和关键词之间空一行
+    \item \opt{false}：摘要新起一段后为关键词
+  \end{itemize}
+\end{function}
+
+\begin{function}[added = 2022-06-19]{style/listoffigures-show,style/listoftables-show}
+  \begin{ccnusyntax}[emph={[1]listoffigures-show,listoftables-show}]
+    listoffigures-show = (*\TTF*)（硕｜博）
+    listoftables-show = (*\TTF*)（硕｜博）
+    listoffigures-show = (*\TFF*)（本）
+    listoftables-show = (*\TFF*)（本）
+  \end{ccnusyntax}
+  【本｜硕｜博】控制是否显示图表目录。若都显示则紧跟文章目录后，且图目录在表目录前。
+\end{function}
+
+\begin{function}[added = 2022-06-19]{style/listoffigures-name,style/listoftables-name}
+  \begin{ccnusyntax}[emph={[1]listoffigures-name,listoftables-name}]
+    listoffigures-name = (*<\marg{图目录的节标题}>*)
+    listoftables-name = (*<\marg{表目录的节标题}>*)
+  \end{ccnusyntax}
+  【本｜硕｜博】图表目录的节标题。分别默认为 |插 \quad 图| 和 |表 \quad 格|
+\end{function}
 
 
 \begin{function}{style/hyperlink}

@@ -64,7 +64,8 @@
 \bool_new:N       \g__ccnu_cover_word_version_bool     % word 版本控制
 \bool_new:N       \g__ccnu_twoside_bool
 \bool_new:N       \g__ccnu_draft_bool
-\bool_new:N       \g__ccnu_showheadlogo_bool           % 页眉 logo
+\bool_new:N       \g__ccnu_showhead_bool           % 页眉控制
+\bool_new:N       \g__ccnu_showheadlogo_bool        % 页眉 logo 控制
 \bool_new:N       \g__ccnu_chapter_newpage_bool    % chapter 是否新起一页
 \str_new:N        \g__ccnu_headline_str                % 页眉 阴阳线
 \str_new:N        \g__ccnu_type_version_str      % 打印、电子版本控制
@@ -1071,8 +1072,8 @@
   {
     % \bool_lazy_and:nnTF
     %   { \bool_if_p:N \g__ccnu_head_scope_all_bool }
-    %   { \bool_if_p:N \g__ccnu_showheadlogo_bool }
-    \bool_if:NTF \g__ccnu_showheadlogo_bool
+    %   { \bool_if_p:N \g__ccnu_showhead_bool }
+    \bool_if:NTF \g__ccnu_showhead_bool
       {
         \int_case:nn { \g__ccnu_thesis_type_int }
           {
@@ -1082,9 +1083,12 @@
                   {
                     \fancyhf { }
                     \RenewDocumentCommand { \headrulewidth } { } { 0pt }
-                    % logo
-                    \fancyhead [ L ] 
-                      { \includegraphics[width = 5cm]{ masterlogo.png } }
+                    \bool_if:NT \g__ccnu_showheadlogo_bool
+                      {
+                        % logo
+                        \fancyhead [ L ] 
+                          { \includegraphics[width = 5cm]{ masterlogo.png } }
+                      }
                     % 页眉线
                     \__ccnu_headline:
                     \fancyfoot [ C ] { \zihao{5} \thepage }
@@ -1096,9 +1100,12 @@
                   {
                     \fancyhf { }
                     \RenewDocumentCommand { \headrulewidth } { } { 0pt }
-                    % logo
-                    \fancyhead [ L ] 
-                      { \includegraphics[width = 7cm]{ doctorlogo.png } }
+                    \bool_if:NT \g__ccnu_showheadlogo_bool
+                      {
+                        % logo
+                        \fancyhead [ L ] 
+                          { \includegraphics[width = 7cm]{ doctorlogo.png } }
+                      }
                     % 页眉线
                     \__ccnu_headline:
                     \fancyfoot [ OR, EL ] { \zihao{5} \thepage }
@@ -1173,9 +1180,12 @@
           {
             \fancyhf { }
             \RenewDocumentCommand { \headrulewidth } { } { 0pt }
-            % logo
-            \fancyhead [ L ] 
-              { \includegraphics[width = 5cm]{ masterlogo.png } }
+            \bool_if:NT \g__ccnu_showheadlogo_bool
+              {
+                % logo
+                \fancyhead [ L ] 
+                  { \includegraphics[width = 5cm]{ masterlogo.png } }
+              }
             % 页眉线
             \__ccnu_headline:
             \fancyfoot [ C ] { \zihao{5} \thepage }
@@ -1186,9 +1196,12 @@
           {
             \fancyhf { }
             \RenewDocumentCommand { \headrulewidth } { } { 0pt }
-            % logo
-            \fancyhead [ L ] 
-              { \includegraphics[width = 7cm]{ doctorlogo.png } }
+            \bool_if:NT \g__ccnu_showheadlogo_bool
+              {
+                % logo
+                \fancyhead [ L ] 
+                  { \includegraphics[width = 7cm]{ doctorlogo.png } }
+              }
             % 页眉线
             \__ccnu_headline:
             \fancyfoot [ OR, EL ] { \zihao{5} \thepage }
@@ -1204,9 +1217,12 @@
           {
             \fancyhf { }
             \RenewDocumentCommand { \headrulewidth } { } { 0pt }
-            % logo
-            \fancyhead [ L ] 
-              { \includegraphics[width = 5cm]{ masterlogo.png } }
+            \bool_if:NT \g__ccnu_showheadlogo_bool
+              {
+                % logo
+                \fancyhead [ L ] 
+                  { \includegraphics[width = 5cm]{ masterlogo.png } }
+              }
             % 页眉线
             \__ccnu_headline:
           }
@@ -1216,9 +1232,12 @@
           {
             \fancyhf { }
             \RenewDocumentCommand { \headrulewidth } { } { 0pt }
-            % logo
-            \fancyhead [ L ] 
-              { \includegraphics[width = 7cm]{ doctorlogo.png } }
+            \bool_if:NT \g__ccnu_showheadlogo_bool
+              {
+                % logo
+                \fancyhead [ L ] 
+                  { \includegraphics[width = 7cm]{ doctorlogo.png } }                
+              }
             % 页眉线
             \__ccnu_headline:
           }
@@ -1240,9 +1259,12 @@
   {
     \fancyhf { }
     \RenewDocumentCommand { \headrulewidth } { } { 0pt }
-    % logo
-    \fancyhead [ L ] 
-      { \includegraphics[width = 5cm]{ masterlogo.png } }
+    \bool_if:NT \g__ccnu_showheadlogo_bool
+      {
+        % logo
+        \fancyhead [ L ] 
+          { \includegraphics[width = 5cm]{ masterlogo.png } }        
+      }
     % 页眉线
     \__ccnu_headline:
     \fancyfoot [ C ] { \zihao{5} \thepage }
@@ -1251,9 +1273,12 @@
   {
     \fancyhf { }
     \RenewDocumentCommand { \headrulewidth } { } { 0pt }
-    % logo
-    \fancyhead [ L ] 
-      { \includegraphics[width = 5cm]{ masterlogo.png } }
+    \bool_if:NT \g__ccnu_showheadlogo_bool
+      {
+        % logo
+        \fancyhead [ L ] 
+          { \includegraphics[width = 5cm]{ masterlogo.png } }
+      }
     % 页眉线
     \__ccnu_headline:
   }
@@ -1267,9 +1292,12 @@
   {
     \fancyhf { }
     \RenewDocumentCommand { \headrulewidth } { } { 0pt }
-    % logo
-    \fancyhead [ L ] 
-      { \includegraphics[width = 7cm]{ doctorlogo.png } }
+    \bool_if:NT \g__ccnu_showheadlogo_bool
+      {
+        % logo
+        \fancyhead [ L ] 
+          { \includegraphics[width = 7cm]{ doctorlogo.png } }
+      }
     % 页眉线
     \__ccnu_headline:
     \fancyfoot [ OR, EL ] { \zihao{5} \thepage }
@@ -1278,9 +1306,12 @@
   {
     \fancyhf { }
     \RenewDocumentCommand { \headrulewidth } { } { 0pt }
-    % logo
-    \fancyhead [ L ] 
-      { \includegraphics[width = 7cm]{ doctorlogo.png } }
+    \bool_if:NT \g__ccnu_showheadlogo_bool
+      {
+        % logo
+        \fancyhead [ L ] 
+          { \includegraphics[width = 7cm]{ doctorlogo.png } }
+      }
     % 页眉线
     \__ccnu_headline:
   }
@@ -1361,12 +1392,19 @@
 
 \keys_define:nn { ccnu / style }
   {
+    show-head .bool_gset:N = \g__ccnu_showhead_bool,
+    show-head .default:n = true,
+    show-head .initial:n = true,
     show-headlogo .bool_gset:N = \g__ccnu_showheadlogo_bool,
     show-headlogo .default:n = true,
-    show-headlogo .initial:n = false,
-    headline .str_gset:N = \g__ccnu_headline_str,
+    show-headlogo .initial:n = true,
+    % headline .str_gset:N = \g__ccnu_headline_str,
+    headline .code:n = 
+      {
+        \str_gset:Nn \g__ccnu_headline_str {#1}
+      },
     headline .value_required:n = true,
-    headline .initial:n = false,
+    headline .initial:n = none,
     head-scope .choice:,
     head-scope / all .code:n = 
       {
@@ -3032,7 +3070,7 @@
         {
           \bool_lazy_and:nnTF
             { \bool_if_p:N \g__ccnu_head_scope_all_bool }
-            { \bool_if_p:N \g__ccnu_showheadlogo_bool }
+            { \bool_if_p:N \g__ccnu_showhead_bool }
             {
               \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
                 { \pagestyle { masterplain-head-nopage } }
@@ -3167,7 +3205,7 @@
   {
     \bool_lazy_and:nnTF
       { \bool_if_p:N \g__ccnu_head_scope_all_bool }
-      { \bool_if_p:N \g__ccnu_showheadlogo_bool }
+      { \bool_if_p:N \g__ccnu_showhead_bool }
       {
         \int_case:nn { \g__ccnu_thesis_type_int }
           {
@@ -3233,7 +3271,7 @@
             {
               \bool_lazy_and:nnF
                 { \bool_if_p:N \g__ccnu_head_scope_all_bool }
-                { \bool_if_p:N \g__ccnu_showheadlogo_bool }
+                { \bool_if_p:N \g__ccnu_showhead_bool }
                 { \thispagestyle { empty } }
             }
         \group_end:
@@ -3591,7 +3629,7 @@
           { \listoffigures }
         \bool_if:NT \g__ccnu_listoftables_show_bool
           { \listoftables }
-        \bool_if:NT \g__ccnu_showheadlogo_bool
+        \bool_if:NT \g__ccnu_showhead_bool
           { \__ccnu_pagestyle_master_doctor_plain_withhead: }
       }
   }
