@@ -1072,83 +1072,62 @@
 % --页眉--
 % 有页眉有页码｜有页眉无页码
 
-\AtBeginDocument
+% 把 plain 设置为空
+\cs_new:Npn \__ccnu_pagestyle_plain_setting_to_empty:
   {
-    % \bool_lazy_and:nnTF
-    %   { \bool_if_p:N \g__ccnu_head_scope_all_bool }
-    %   { \bool_if_p:N \g__ccnu_showhead_bool }
-    \bool_if:NTF \g__ccnu_showhead_bool
+    \fancypagestyle { plain }
       {
-        \int_case:nn { \g__ccnu_thesis_type_int }
-          {
-            {2}
-              {
-                \fancypagestyle { plain }
-                  {
-                    \fancyhf { }
-                    \RenewDocumentCommand { \headrulewidth } { } { 0pt }
-                    \bool_if:NT \g__ccnu_showheadlogo_bool
-                      {
-                        % logo
-                        \fancyhead [ L ] 
-                          { \includegraphics[width = 5cm]{ masterlogo.png } }
-                      }
-                    % 页眉线
-                    \__ccnu_headline:
-                    \fancyfoot [ C ] { \zihao{5} \thepage }
-                  }
-              }
-            {1}
-              {
-                \fancypagestyle { plain }
-                  {
-                    \fancyhf { }
-                    \RenewDocumentCommand { \headrulewidth } { } { 0pt }
-                    \bool_if:NT \g__ccnu_showheadlogo_bool
-                      {
-                        % logo
-                        \fancyhead [ L ] 
-                          { \includegraphics[width = 7cm]{ doctorlogo.png } }
-                      }
-                    % 页眉线
-                    \__ccnu_headline:
-                    \fancyfoot [ OR, EL ] { \zihao{5} \thepage }
-                  }
-              }
-          }
+        \fancyhf { }
+        \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+      }
+  }
+
+% 目录的 pagestyle 设置
+\cs_new:Npn \__ccnu_pagestyle_tableofcontents_bachelor:
+  {
+    \fancypagestyle { plain }
+      {
+        \fancyhf { }
+        \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+      }
+  }
+\cs_new:Npn \__ccnu_pagestyle_tableofcontents_master_doctor:
+  {
+    \bool_lazy_and:nnTF
+      { \bool_if_p:N \g__ccnu_head_scope_all_bool }
+      { \bool_if_p:N \g__ccnu_showhead_bool }
+      {
+        % 有页眉，无页码
+        \__ccnu_pagestyle_master_doctor_plain_withhead_nopage:
       }
       {
-        \int_case:nn { \g__ccnu_thesis_type_int }
-          {
-            {3}
-              {
-                \fancypagestyle { plain }
-                  {
-                    \fancyhf { }
-                    \RenewDocumentCommand { \headrulewidth } { } { 0pt }
-                    \fancyfoot [ C ] { \small \thepage }
-                  }
-              }
-            {2}
-              {
-                \fancypagestyle { plain }
-                  {
-                    \fancyhf { }
-                    \RenewDocumentCommand { \headrulewidth } { } { 0pt }
-                    \fancyfoot [ C ] { \zihao{5} \thepage }
-                  }
-              }
-            {1}
-              {
-                \fancypagestyle { plain }
-                  {
-                    \fancyhf { }
-                    \RenewDocumentCommand { \headrulewidth } { } { 0pt }
-                    \fancyfoot [ OR, EL ] { \zihao{5} \thepage }
-                  }
-              }
-          }
+        % 无页眉，无页码
+        \__ccnu_pagestyle_master_doctor_plain_withouthead_nopage:
       }
+  }
+
+% 目录前的 pagestyle 设置
+\cs_new:Npn \__ccnu_pagestyle_setting_before_tableofcontents:
+  {
+    \bool_lazy_and:nnTF
+      { \bool_if_p:N \g__ccnu_head_scope_all_bool }
+      { \bool_if_p:N \g__ccnu_showhead_bool }
+      {
+        % 有页眉，无页码
+        \__ccnu_pagestyle_master_doctor_plain_withhead_nopage:
+      }
+      {
+        % 无页眉，无页码
+        \__ccnu_pagestyle_master_doctor_plain_withouthead_nopage:
+      }
+  }
+
+\AtEndPreamble
+  {
+    % 对硕博目录最后一页进行 pagestyle 的处理
+    \int_compare:nNnF { \g__ccnu_thesis_type_int } = {3}
+      { \__ccnu_pagestyle_setting_before_tableofcontents: }
+    % 改变 chapter 的首页的 pagestyle
     \patchcmd { \chapter }
       { \thispagestyle { \CTEX@chapter@pagestyle } }
       { \pagestyle{plain} }
@@ -1173,6 +1152,24 @@
             \fancyhf { }
             \RenewDocumentCommand { \headrulewidth } { } { 0pt }
             \fancyfoot [ OR, EL ] { \zihao{5} \thepage }
+          }
+      }
+  }
+\cs_new:Npn \__ccnu_pagestyle_master_doctor_plain_withouthead_nopage:
+  {
+    \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
+      {
+        \fancypagestyle { plain }
+          {
+            \fancyhf { }
+            \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+          }
+      }
+      {
+        \fancypagestyle { plain }
+          {
+            \fancyhf { }
+            \RenewDocumentCommand { \headrulewidth } { } { 0pt }
           }
       }
   }
@@ -1368,7 +1365,6 @@
       }
       {}{}
   }
-
 \RenewDocumentCommand { \backmatter } { } {}
 
 % \patchcmd { \frontmatter }
@@ -1596,8 +1592,8 @@
               format = \zihao{3} \sffamily \bfseries \centering
             }
         }
-      \chapter*{致 \quad 谢}
-      \addcontentsline{toc}{chapter}{\zihao{-4} \bfseries 致谢}
+      \chapter {致 \quad 谢}
+      % \addcontentsline{toc}{chapter}{\zihao{-4} \bfseries 致谢}
     \group_end:
     % 致谢采用全角标点
     \keys_set:nn { ctex }
@@ -1619,8 +1615,8 @@
               format = \zihao{3} \sffamily \bfseries \centering
             }
         }
-      \chapter*{致 \quad 谢}
-      \addcontentsline{toc}{chapter}{\zihao{5} \bfseries 致谢}
+      \chapter {致 \quad 谢}
+      % \addcontentsline{toc}{chapter}{\zihao{5} \bfseries 致谢}
     \group_end:
     % 致谢采用全角标点
     \keys_set:nn { ctex }
@@ -3218,14 +3214,11 @@
                 \patchcmd { \tableofcontents }
                   { \@starttoc{toc} }
                   {
-                    \thispagestyle { masterplain-head-nopage } 
-                    \pagestyle { masterplain-head-nopage }
+                    \thispagestyle { plain } 
+                    \pagestyle { plain }
                     \@starttoc{toc} 
                   }
                   {}{\fail}
-                % \pretocomd { \tableofcontents }
-                %   { \__ccnu_line_spread:n { 1 } }
-                %   {}{\fail}
               }
             {1}
               {
@@ -3273,9 +3266,10 @@
               \thispagestyle { empty } 
             }
             {
-              \bool_lazy_and:nnF
+              \bool_lazy_and:nnTF
                 { \bool_if_p:N \g__ccnu_head_scope_all_bool }
                 { \bool_if_p:N \g__ccnu_showhead_bool }
+                { \thispagestyle { plain } }
                 { \thispagestyle { empty } }
             }
         \group_end:
@@ -3529,15 +3523,15 @@
       }
     % \show\chapter
     \chapter {摘 \quad 要}
-    \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
-      {
-        \addcontentsline { toc } { chapter }
-          { \bfseries \zihao{-4} 摘要 }
-      }
-      {
-        \addcontentsline { toc } { chapter }
-          { \bfseries \zihao{5} 摘要 }
-      }
+    % \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
+    %   {
+    %     \addcontentsline { toc } { chapter }
+    %       { \bfseries \zihao{-4} 摘要 }
+    %   }
+    %   {
+    %     \addcontentsline { toc } { chapter }
+    %       { \bfseries \zihao{5} 摘要 }
+    %   }
     \group_begin:
       \keys_set:nn { ctex }
         { punct = quanjiao }
@@ -3561,8 +3555,8 @@
   }
 \cs_new:Npn \__ccnu_abstract_en_begin_master_doctor:
   { 
-    \pagenumbering{ Roman }
     \newpage
+    \pagenumbering{ Roman }
     \bool_if:NTF \g__ccnu_head_scope_all_bool
       {
         \patchcmd{\chapter}{\pagestyle{plain}}{\thispagestyle{plain}}{}{}
@@ -3614,7 +3608,10 @@
     \BeforeBeginEnvironment { abstract }
       {
         % 目录
-        \tableofcontents
+        \group_begin:
+          \__ccnu_pagestyle_tableofcontents_bachelor:
+          \tableofcontents
+        \group_end:
         \bool_if:NT \g__ccnu_listoffigures_show_bool
           { \listoffigures }
         \bool_if:NT \g__ccnu_listoftables_show_bool
@@ -3626,7 +3623,10 @@
     \AfterEndEnvironment { abstract* }
       {
         % 目录
-        \tableofcontents
+        \group_begin:
+          \__ccnu_pagestyle_tableofcontents_master_doctor:
+          \tableofcontents
+        \group_end:
         \bool_if:NF \g__ccnu_head_scope_all_bool
           { \__ccnu_pagestyle_master_doctor_plain_withouthead: }
         \bool_if:NT \g__ccnu_listoffigures_show_bool
