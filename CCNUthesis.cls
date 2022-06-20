@@ -256,16 +256,21 @@
 % 正文字号
 \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {1}
   {
-    \PassOptionsToClass { zihao  = 5, oneside } { ctexbook }
+    \PassOptionsToClass { zihao  = 5, twoside } { ctexbook }
   }
   {
     \PassOptionsToClass { zihao  = -4, oneside } { ctexbook }
+  }
+\str_if_eq:VnT \g__ccnu_type_version_str { print-master-twoside }
+  {
+    \PassOptionsToClass { twoside } { ctexbook }
   }
 \PassOptionsToClass
   {
     UTF8,
     heading    = true,
     fontset    = none,
+    openany,
     \g__ccnu_to_ctexbook_clist
   }
   { ctexbook }
@@ -1331,10 +1336,11 @@
 
 \RenewDocumentCommand { \backmatter } { } {}
 
-\patchcmd { \frontmatter }
-  { \cleardoublepage }
-  { \clearpage }
-  {} {\fail}
+% \patchcmd { \frontmatter }
+%   { \cleardoublepage }
+%   {}
+%   {} {\fail}
+
 
 \int_compare:nNnT { \g__ccnu_thesis_type_int } = {3}
   {
