@@ -241,7 +241,11 @@
       { \bool_set_false:N    \g__ccnu_draft_bool },
     draft .default:n = true,
     draft .initial:n = false,
-    version .str_gset:N = \g__ccnu_type_version_str,
+    % version .str_gset:N = \g__ccnu_type_version_str,
+    version .code:n = 
+      {
+        \str_gset:Nn \g__ccnu_type_version_str {#1}
+      },
     version .value_required:n = true,
     version .initial:n = electronic,
     unknown .code:n = { \__ccnu_error:n { unknown-option } }

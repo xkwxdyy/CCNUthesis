@@ -10,6 +10,10 @@
 
 - 增加页眉 logo 和页眉线的统一控制接口
 
+### Changed
+
+- 将两个 `.str_gset:N` 的键值接口改为 `.code:n` 类型，增加对旧版本 expl3 的兼容（[#I5D7OT](https://gitee.com/xkwxdyy/CCNUthesis/issues/I5D7OT)）
+
 ### Removed
 
 - 去掉了本科的单双面打印类型接口
