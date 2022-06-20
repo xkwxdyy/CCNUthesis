@@ -1073,61 +1073,78 @@
     %   { \bool_if_p:N \g__ccnu_showheadlogo_bool }
     \bool_if:NTF \g__ccnu_showheadlogo_bool
       {
-        \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
+        \int_case:nn { \g__ccnu_thesis_type_int }
           {
-            \fancypagestyle { plain }
+            {2}
               {
-                \fancyhf { }
-                \RenewDocumentCommand { \headrulewidth } { } { 0pt }
-                % logo
-                \fancyhead [ L ] 
-                  { \includegraphics[width = 5cm]{ masterlogo.png } }
-                % 页眉线
-                \__ccnu_headline:
-                \fancyfoot [ C ] { \zihao{5} \thepage }
+                \fancypagestyle { plain }
+                  {
+                    \fancyhf { }
+                    \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+                    % logo
+                    \fancyhead [ L ] 
+                      { \includegraphics[width = 5cm]{ masterlogo.png } }
+                    % 页眉线
+                    \__ccnu_headline:
+                    \fancyfoot [ C ] { \zihao{5} \thepage }
+                  }
               }
-          }
-          {
-            \fancypagestyle { plain }
+            {1}
               {
-                \fancyhf { }
-                \RenewDocumentCommand { \headrulewidth } { } { 0pt }
-                % logo
-                \fancyhead [ L ] 
-                  { \includegraphics[width = 7cm]{ doctorlogo.png } }
-                % 页眉线
-                \__ccnu_headline:
-                \fancyfoot [ OR, EL ] { \zihao{5} \thepage }
+                \fancypagestyle { plain }
+                  {
+                    \fancyhf { }
+                    \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+                    % logo
+                    \fancyhead [ L ] 
+                      { \includegraphics[width = 7cm]{ doctorlogo.png } }
+                    % 页眉线
+                    \__ccnu_headline:
+                    \fancyfoot [ OR, EL ] { \zihao{5} \thepage }
+                  }
               }
           }
       }
       {
-        \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
+        \int_case:nn { \g__ccnu_thesis_type_int }
           {
-            \fancypagestyle { plain }
+            {3}
               {
-                \fancyhf { }
-                \RenewDocumentCommand { \headrulewidth } { } { 0pt }
-                \fancyfoot [ C ] { \zihao{5} \thepage }
+                \fancypagestyle { plain }
+                  {
+                    \fancyhf { }
+                    \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+                    \fancyfoot [ C ] { \small \thepage }
+                  }
               }
-          }
-          {
-            \fancypagestyle { plain }
+            {2}
               {
-                \fancyhf { }
-                \RenewDocumentCommand { \headrulewidth } { } { 0pt }
-                \fancyfoot [ OR, EL ] { \zihao{5} \thepage }
+                \fancypagestyle { plain }
+                  {
+                    \fancyhf { }
+                    \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+                    \fancyfoot [ C ] { \zihao{5} \thepage }
+                  }
+              }
+            {1}
+              {
+                \fancypagestyle { plain }
+                  {
+                    \fancyhf { }
+                    \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+                    \fancyfoot [ OR, EL ] { \zihao{5} \thepage }
+                  }
               }
           }
       }
     \patchcmd { \chapter }
-      { \thispagestyle{\CTEX@chapter@pagestyle} }
+      { \thispagestyle { \CTEX@chapter@pagestyle } }
       { \pagestyle{plain} }
       {}
       {\fail}
   }
 
-\cs_new:Npn \__ccnu_pagestyle_master_doctor_withouthead:
+\cs_new:Npn \__ccnu_pagestyle_master_doctor_plain_withouthead:
   {
     \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
       {
@@ -1147,7 +1164,7 @@
           }
       }
   }
-\cs_new:Npn \__ccnu_pagestyle_master_doctor_withhead:
+\cs_new:Npn \__ccnu_pagestyle_master_doctor_plain_withhead:
   {
     \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
       {
@@ -1174,6 +1191,35 @@
             % 页眉线
             \__ccnu_headline:
             \fancyfoot [ OR, EL ] { \zihao{5} \thepage }
+          }
+      }
+  }
+
+\cs_new:Npn \__ccnu_pagestyle_master_doctor_plain_withhead_nopage:
+  {
+    \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
+      {
+        \fancypagestyle { plain }
+          {
+            \fancyhf { }
+            \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+            % logo
+            \fancyhead [ L ] 
+              { \includegraphics[width = 5cm]{ masterlogo.png } }
+            % 页眉线
+            \__ccnu_headline:
+          }
+      }
+      {
+        \fancypagestyle { plain }
+          {
+            \fancyhf { }
+            \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+            % logo
+            \fancyhead [ L ] 
+              { \includegraphics[width = 7cm]{ doctorlogo.png } }
+            % 页眉线
+            \__ccnu_headline:
           }
       }
   }
@@ -3110,41 +3156,93 @@
 
 % 去掉目录的页码
 % https://tex.stackexchange.com/questions/38847/clear-tableofcontents-page-in-book-or-report
-\patchcmd { \tableofcontents }
-  { \@starttoc{toc} }
-  { \thispagestyle{empty} \pagestyle{empty} \@starttoc{toc} }
-  {}{}
-\cs_set_eq:NN \t@bleofcontents \tableofcontents
-\RenewDocumentCommand { \tableofcontents } { }
+
+\AtEndPreamble
   {
-    \newpage
-    \group_begin:
-      \keys_set:nn { ctex }
-        { chapter / indent = 0pt }
-      \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {3}
-        {
+    \bool_lazy_and:nnTF
+      { \bool_if_p:N \g__ccnu_head_scope_all_bool }
+      { \bool_if_p:N \g__ccnu_showheadlogo_bool }
+      {
+        \int_case:nn { \g__ccnu_thesis_type_int }
+          {
+            {2}
+              {
+                \patchcmd { \tableofcontents }
+                  { \@starttoc{toc} }
+                  {
+                    \thispagestyle { masterplain-head-nopage } 
+                    \pagestyle { masterplain-head-nopage }
+                    \@starttoc{toc} 
+                  }
+                  {}{\fail}
+                % \pretocomd { \tableofcontents }
+                %   { \__ccnu_line_spread:n { 1 } }
+                %   {}{\fail}
+              }
+            {1}
+              {
+                \patchcmd { \tableofcontents }
+                  { \@starttoc{toc} }
+                  {
+                    \thispagestyle { doctorplain-head-nopage } 
+                    \pagestyle { doctorplain-head-nopage }
+                    \@starttoc{toc} 
+                  }
+                  {}{\fail}
+              }
+          }
+      }
+      {
+        \patchcmd { \tableofcontents }
+          { \@starttoc{toc} }
+          { \thispagestyle{empty} \pagestyle{empty} \@starttoc{toc} }
+          {}{}
+      }
+    \cs_set_eq:NN \t@bleofcontents \tableofcontents
+    \RenewDocumentCommand { \tableofcontents } { }
+    % \def\tableofcontents
+      {
+        \newpage
+        \group_begin:
           \keys_set:nn { ctex }
+            { chapter / indent = 0pt }
+          \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {3}
             {
-              chapter = 
+              \keys_set:nn { ctex }
                 {
-                  format = \zihao{-2} \normalfont \bfseries \centering,
+                  chapter = 
+                    {
+                      format = \zihao{-2} \normalfont \bfseries \centering,
+                    }
                 }
+              \fontsize{12pt}{5bp}\selectfont
             }
-        }
-        {
-          \keys_set:nn { ctex }
             {
-              chapter = 
-                {
-                  format = \zihao{3} \sffamily \bfseries \centering,
-                }
+              \__ccnu_line_spread:n { 1 }
             }
-        }
-      \__ccnu_line_spread:n { 1 }
-      \t@bleofcontents
-      \thispagestyle { empty }
-    \group_end:
+          \t@bleofcontents
+          \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {3}
+            {
+              \thispagestyle { empty } 
+            }
+            {
+              \bool_lazy_and:nnF
+                { \bool_if_p:N \g__ccnu_head_scope_all_bool }
+                { \bool_if_p:N \g__ccnu_showheadlogo_bool }
+                { \thispagestyle { empty } }
+            }
+        \group_end:
+      }
   }
+
+% \int_compare:nNnT { \g__ccnu_thesis_type_int } = {3}
+%   {
+%     \patchcmd { \tableofcontents }
+%       { \@starttoc{toc} }
+%       { \thispagestyle{empty} \pagestyle{empty} \@starttoc{toc} }
+%       {}{}
+%   }
+
 
 
 % 设置目录样式
@@ -3261,7 +3359,15 @@
   { 
     \newpage
     % 实现超链接
-    \phantomsection
+    % \phantomsection
+    % \show\chapter
+    % \patchcmd
+    %   { \chapter }
+    %   { \pagestyle { plain } }
+    %   { \thispagestyle { plain } }
+    %   {} { \fail }
+    % \show\chapter
+    % \chapter*{}
     % 重调页码
     \setcounter{page}{1}
     % 把 内容摘要 写进目录
@@ -3294,6 +3400,7 @@
   { 
     \bigskip
     % 超链接 Title
+    \thispagestyle { bachelorplain }
     \phantomsection
     % 把 Title 写进目录
     \addcontentsline { toc } { chapter }
@@ -3329,32 +3436,52 @@
 \cs_new:Npn \__ccnu_abstract_begin_master_doctor:
   { 
     \newpage
-    \bool_lazy_and:nnTF
-      { \bool_if_p:N \g__ccnu_head_scope_all_bool }
-      { \bool_if_p:N \g__ccnu_showheadlogo_bool }
-      {
-        \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
-          % { \thispagestyle { masterplain-head } \pagestyle { masterplain-head } }
-          % { \pagestyle { doctorplain-head } }
-          {
-            % \patchcmd { \chapter }
-            %   { \thispagestyle{\CTEX@chapter@pagestyle} }
-            %   { \pagestyle { empty } }
-            %   {}
-            %   {\fail}
-          }
-          {
-          }
-      }
-      {
-        \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
-          % { \pagestyle { masterplain } }
-          % { \pagestyle { doctorplain } }
-          { \pagestyle { empty } }
-          { \pagestyle { empty } }
-      }
     \pagenumbering{ Roman }
-    \chapter*{摘 \quad 要}
+    % \__ccnu_chapter_master_doctor:n {摘 \quad 要}
+    \keys_set:nn { ctex }
+      {
+        chapter = 
+          {
+            numbering = false,
+            format = \zihao{3} \sffamily \bfseries \centering,
+            indent = 0pt
+          }
+      }
+    % https://github.com/CTeX-org/forum/issues/82#issuecomment-569498876
+    \bool_if:NTF \g__ccnu_head_scope_all_bool
+      {
+        \patchcmd
+          { \chapter }
+          { \pagestyle { plain } }
+          { \thispagestyle { plain } }
+          {} { \fail }
+      }
+      {
+        \int_case:nn { \g__ccnu_thesis_type_int }
+          {
+            {2} 
+              {
+                \patchcmd
+                  { \chapter }
+                  { \pagestyle { plain } }
+                  {\pagestyle { masterplain }
+                    \thispagestyle { masterplain }
+                    
+                  }
+                  {} { \fail }
+              }
+            {1}
+              {
+                \patchcmd
+                  { \chapter }
+                  { \pagestyle { plain } }
+                  { \thispagestyle { doctorplain } }
+                  {} { \fail }
+              }
+          }
+      }
+    % \show\chapter
+    \chapter {摘 \quad 要}
     \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
       {
         \addcontentsline { toc } { chapter }
@@ -3389,6 +3516,25 @@
   { 
     \pagenumbering{ Roman }
     \newpage
+    \bool_if:NTF \g__ccnu_head_scope_all_bool
+      {
+        \patchcmd{\chapter}{\pagestyle{plain}}{\thispagestyle{plain}}{}{}
+      }
+      {
+        \int_case:nn { \g__ccnu_thesis_type_int }
+          {
+            {2} 
+              {
+                \patchcmd{\chapter}{\pagestyle{plain}}
+                  {\thispagestyle{ masterplain }}{}{\fail}
+              }
+            {1}
+              {
+                \patchcmd{\chapter}{\pagestyle{plain}}
+                  {\thispagestyle{ doctorplain }}{}{\fail}
+              }
+          }
+      }
     \__ccnu_chapter_master_doctor_en:n { Abstract }
     \group_begin:
       \keys_set:nn { ctex }
@@ -3435,13 +3581,13 @@
         % 目录
         \tableofcontents
         \bool_if:NF \g__ccnu_head_scope_all_bool
-          { \__ccnu_pagestyle_master_doctor_withouthead: }
+          { \__ccnu_pagestyle_master_doctor_plain_withouthead: }
         \bool_if:NT \g__ccnu_listoffigures_show_bool
           { \listoffigures }
         \bool_if:NT \g__ccnu_listoftables_show_bool
           { \listoftables }
         \bool_if:NT \g__ccnu_showheadlogo_bool
-          { \__ccnu_pagestyle_master_doctor_withhead: }
+          { \__ccnu_pagestyle_master_doctor_plain_withhead: }
       }
   }
 
@@ -3513,6 +3659,11 @@
 \cs_new_protected:Npn \__ccnu_notation_begin_bachelor:
   {
     \group_begin:
+      \patchcmd
+        { \chapter }
+        { \pagestyle { plain } }
+        { \thispagestyle { bachelorplain } }
+        {} { \fail }
       \keys_set:nn { ctex }
         {
           chapter = 
