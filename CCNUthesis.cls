@@ -1069,11 +1069,25 @@
 
 
 % 页眉页脚设置
-% --页眉--
-% 有页眉有页码｜有页眉无页码
+% \chapter 要 patch 「\pagestyle { plain }」
+% \patchcmd
+%   { \chapter }
+%   { \pagestyle { plain } }
+%   { \thispagestyle { plain } }
+%   {} { \fail }
+% 见：https://github.com/CTeX-org/forum/issues/82#issuecomment-569498876
 
-% 把 plain 设置为空
-\cs_new:Npn \__ccnu_pagestyle_plain_setting_to_empty:
+
+\cs_new:Npn \__ccnu_pagestyle_bachelor_plain:
+  {
+    \fancypagestyle { plain }
+      {
+        \fancyhf { }
+        \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+        \fancyfoot [ C ] { \small \thepage }
+      }
+  }
+\cs_new:Npn \__ccnu_pagestyle_bachelor_plain_nopage:
   {
     \fancypagestyle { plain }
       {
@@ -1081,7 +1095,6 @@
         \RenewDocumentCommand { \headrulewidth } { } { 0pt }
       }
   }
-
 % 目录的 pagestyle 设置
 \cs_new:Npn \__ccnu_pagestyle_tableofcontents_bachelor:
   {
@@ -1107,6 +1120,20 @@
   }
 
 % 目录前的 pagestyle 设置
+% \cs_new:Npn \__ccnu_pagestyle_setting_before_tableofcontents:
+%   {
+%     \bool_lazy_and:nnTF
+%       { \bool_if_p:N \g__ccnu_head_scope_all_bool }
+%       { \bool_if_p:N \g__ccnu_showhead_bool }
+%       {
+%         % 有页眉，无页码
+%         \__ccnu_pagestyle_master_doctor_plain_withhead_nopage:
+%       }
+%       {
+%         % 无页眉，无页码
+%         \__ccnu_pagestyle_master_doctor_plain_withouthead_nopage:
+%       }
+%   }
 \cs_new:Npn \__ccnu_pagestyle_setting_before_tableofcontents:
   {
     \bool_lazy_and:nnTF
@@ -1114,25 +1141,76 @@
       { \bool_if_p:N \g__ccnu_showhead_bool }
       {
         % 有页眉，无页码
-        \__ccnu_pagestyle_master_doctor_plain_withhead_nopage:
+        \__ccnu_pagestyle_master_doctor_plain_withhead:
       }
       {
         % 无页眉，无页码
-        \__ccnu_pagestyle_master_doctor_plain_withouthead_nopage:
+        \__ccnu_pagestyle_master_doctor_plain_withouthead:
+      }
+  }
+
+\cs_new:Npn \__ccnu_pagestyle_setting_after_tableofcontents:
+  {
+    \bool_lazy_and:nnTF
+      { \bool_if_p:N \g__ccnu_head_scope_all_bool }
+      { \bool_if_p:N \g__ccnu_showhead_bool }
+      {
+        % 有页眉，有页码
+        \__ccnu_pagestyle_master_doctor_plain_withhead:
+      }
+      {
+        % 无页眉，有页码
+        \__ccnu_pagestyle_master_doctor_plain_withouthead:
+      }
+  }
+
+% 摘要的 pagestyle 设置
+\cs_new:Npn \__ccnu_pagestyle_setting_before_abstract:
+  {
+    \bool_lazy_and:nnTF
+      { \bool_if_p:N \g__ccnu_head_scope_all_bool }
+      { \bool_if_p:N \g__ccnu_showhead_bool }
+      {
+        % 有页眉，有页码
+        \__ccnu_pagestyle_master_doctor_plain_withhead:
+      }
+      {
+        % 无页眉，有页码
+        \__ccnu_pagestyle_master_doctor_plain_withouthead:
+      }
+  }
+\cs_new:Npn \__ccnu_pagestyle_setting_abstract_lastpage:
+  {
+    \bool_lazy_and:nnTF
+      { \bool_if_p:N \g__ccnu_head_scope_all_bool }
+      { \bool_if_p:N \g__ccnu_showhead_bool }
+      {
+        % 有页眉，有页码
+        \__ccnu_pagestyle_master_doctor_plain_withhead:
+      }
+      {
+        % 无页眉，有页码
+        \__ccnu_pagestyle_master_doctor_plain_withouthead:
       }
   }
 
 \AtEndPreamble
   {
-    % 对硕博目录最后一页进行 pagestyle 的处理
-    \int_compare:nNnF { \g__ccnu_thesis_type_int } = {3}
-      { \__ccnu_pagestyle_setting_before_tableofcontents: }
+    \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {3}
+      {
+        \__ccnu_pagestyle_bachelor_plain:
+      }
+      { 
+        % 对硕博目录最后一页进行 pagestyle 的处理
+        \__ccnu_pagestyle_setting_before_tableofcontents: 
+      }
     % 改变 chapter 的首页的 pagestyle
     \patchcmd { \chapter }
       { \thispagestyle { \CTEX@chapter@pagestyle } }
       { \pagestyle{plain} }
       {}
       {\fail}
+
   }
 
 \cs_new:Npn \__ccnu_pagestyle_master_doctor_plain_withouthead:
@@ -1243,12 +1321,6 @@
             \__ccnu_headline:
           }
       }
-  }
-\fancypagestyle { bachelorplain }
-  {
-    \fancyhf { }
-    \RenewDocumentCommand { \headrulewidth } { } { 0pt }
-    \fancyfoot [ C ] { \small \thepage }
   }
 \fancypagestyle { masterplain }
   {
@@ -1566,7 +1638,7 @@
           chapter = 
             {
               indent = 0pt,
-              format = \zihao{-3} \normalfont \bfseries \centering
+              format = \zihao{-2} \normalfont \bfseries \centering
             }
         }
       \chapter*{致 \quad 谢}
@@ -1814,14 +1886,14 @@
       { \__ccnu_ctex_format_master_doctor: }
   }
 
-\cs_new_protected:Npn \__ccnu_chapter_bachelor:n #1
+\cs_new_protected:Npn \__ccnu_chapter_without_number_bachelor:n #1
   {
     \group_begin:
       \keys_set:nn { ctex } { chapter / numbering = false }
       \chapter {#1}
     \group_end:
   }
-\cs_generate_variant:Nn \__ccnu_chapter_bachelor:n { V }
+\cs_generate_variant:Nn \__ccnu_chapter_without_number_bachelor:n { V }
 \cs_new_protected:Npn \__ccnu_chapter_master_doctor:n #1
   {
     \group_begin:
@@ -3273,17 +3345,9 @@
                 { \thispagestyle { empty } }
             }
         \group_end:
+        \newpage
       }
   }
-
-% \int_compare:nNnT { \g__ccnu_thesis_type_int } = {3}
-%   {
-%     \patchcmd { \tableofcontents }
-%       { \@starttoc{toc} }
-%       { \thispagestyle{empty} \pagestyle{empty} \@starttoc{toc} }
-%       {}{}
-%   }
-
 
 
 % 设置目录样式
@@ -3340,9 +3404,9 @@
     % chapter前的额外垂直间距
     \dim_set:Nn \cftbeforechapskip { 0.4\baselineskip }
     % section前的额外垂直间距
-    \dim_set:Nn \cftbeforesecskip { 0.4\baselineskip }
+    \dim_set:Nn \cftbeforesecskip { 0.3\baselineskip }
     % subsection前的额外垂直间距
-    \dim_set:Nn \cftbeforesubsecskip { 0.3\baselineskip }
+    \dim_set:Nn \cftbeforesubsecskip { 0.2\baselineskip }
     % 缩进
     \dim_set:Nn \cftchapindent { 0em }
     \dim_set:Nn \cftsecindent  { 1em }
@@ -3399,16 +3463,9 @@
 \cs_new:Npn \__ccnu_abstract_begin_bachelor:
   { 
     \newpage
+    \__ccnu_pagestyle_bachelor_plain:
     % 实现超链接
     \phantomsection
-    % \show\chapter
-    % \patchcmd
-    %   { \chapter }
-    %   { \pagestyle { plain } }
-    %   { \thispagestyle { plain } }
-    %   {} { \fail }
-    % \show\chapter
-    % \chapter*{}
     % 重调页码
     \setcounter{page}{1}
     % 把 内容摘要 写进目录
@@ -3441,7 +3498,7 @@
   { 
     \bigskip
     % 超链接 Title
-    \thispagestyle { bachelorplain }
+    % \thispagestyle { plain }
     \phantomsection
     % 把 Title 写进目录
     \addcontentsline { toc } { chapter }
@@ -3477,8 +3534,7 @@
 \cs_new:Npn \__ccnu_abstract_begin_master_doctor:
   { 
     \newpage
-    \pagenumbering{ Roman }
-    % \__ccnu_chapter_master_doctor:n {摘 \quad 要}
+    \pagenumbering { Roman }
     \keys_set:nn { ctex }
       {
         chapter = 
@@ -3488,39 +3544,7 @@
             indent = 0pt
           }
       }
-    % https://github.com/CTeX-org/forum/issues/82#issuecomment-569498876
-    \bool_if:NTF \g__ccnu_head_scope_all_bool
-      {
-        \patchcmd
-          { \chapter }
-          { \pagestyle { plain } }
-          { \thispagestyle { plain } }
-          {} { \fail }
-      }
-      {
-        \int_case:nn { \g__ccnu_thesis_type_int }
-          {
-            {2} 
-              {
-                \patchcmd
-                  { \chapter }
-                  { \pagestyle { plain } }
-                  {\pagestyle { masterplain }
-                    \thispagestyle { masterplain }
-                    
-                  }
-                  {} { \fail }
-              }
-            {1}
-              {
-                \patchcmd
-                  { \chapter }
-                  { \pagestyle { plain } }
-                  { \thispagestyle { doctorplain } }
-                  {} { \fail }
-              }
-          }
-      }
+    \__ccnu_pagestyle_setting_before_abstract:
     % \show\chapter
     \chapter {摘 \quad 要}
     % \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
@@ -3552,31 +3576,23 @@
       \clist_use:Nn \l__ccnu_info_keywords_clist 
         { ； }
     \group_end:
+    % newpage 是摘要最后一页产生正确页眉的关键
+    \newpage
   }
 \cs_new:Npn \__ccnu_abstract_en_begin_master_doctor:
   { 
-    \newpage
     \pagenumbering{ Roman }
-    \bool_if:NTF \g__ccnu_head_scope_all_bool
+    \keys_set:nn { ctex }
       {
-        \patchcmd{\chapter}{\pagestyle{plain}}{\thispagestyle{plain}}{}{}
-      }
-      {
-        \int_case:nn { \g__ccnu_thesis_type_int }
+        chapter = 
           {
-            {2} 
-              {
-                \patchcmd{\chapter}{\pagestyle{plain}}
-                  {\thispagestyle{ masterplain }}{}{\fail}
-              }
-            {1}
-              {
-                \patchcmd{\chapter}{\pagestyle{plain}}
-                  {\thispagestyle{ doctorplain }}{}{\fail}
-              }
+            numbering = false,
+            format = \zihao{3} \bfseries \centering,
+            indent = 0pt
           }
       }
-    \__ccnu_chapter_master_doctor_en:n { Abstract }
+    \__ccnu_pagestyle_setting_before_abstract:
+    \chapter { Abstract }
     \group_begin:
       \keys_set:nn { ctex }
         { punct = banjiao }
@@ -3597,6 +3613,8 @@
       \clist_use:Nn \l__ccnu_info_keywords_en_clist 
         { ;~ }
     \group_end:
+    % newpage 是摘要最后一页产生正确页眉的关键
+    \newpage
   }
 
 \bool_new:N \g__ccnu_listoftables_show_bool
@@ -3612,10 +3630,32 @@
           \__ccnu_pagestyle_tableofcontents_bachelor:
           \tableofcontents
         \group_end:
-        \bool_if:NT \g__ccnu_listoffigures_show_bool
-          { \listoffigures }
-        \bool_if:NT \g__ccnu_listoftables_show_bool
-          { \listoftables }
+        \__ccnu_pagestyle_bachelor_plain:
+        \int_set:Nn { \c@page } { 1 }
+        \group_begin:
+          \keys_set:nn { ctex }
+            {
+              chapter = 
+                {
+                  indent = 0pt,
+                  format = \zihao{-2} \normalfont \bfseries \centering
+                }
+            }
+          \patchcmd
+            { \chapter }
+            { \pagestyle { plain } }
+            { \thispagestyle { plain } }
+            {} { \fail }
+          \bool_if:NT \g__ccnu_listoffigures_show_bool
+            { 
+              \listoffigures 
+            }
+          \bool_if:NT \g__ccnu_listoftables_show_bool
+            { 
+              \listoftables
+            }
+        \group_end:
+        \newpage
       }
   }
   {
@@ -3627,14 +3667,12 @@
           \__ccnu_pagestyle_tableofcontents_master_doctor:
           \tableofcontents
         \group_end:
-        \bool_if:NF \g__ccnu_head_scope_all_bool
-          { \__ccnu_pagestyle_master_doctor_plain_withouthead: }
+        % 防止 \__ccnu_pagestyle_setting_before_tableofcontents: 对后面页面的干扰，需要还原设置
+        \__ccnu_pagestyle_setting_after_tableofcontents:
         \bool_if:NT \g__ccnu_listoffigures_show_bool
           { \listoffigures }
         \bool_if:NT \g__ccnu_listoftables_show_bool
           { \listoftables }
-        \bool_if:NT \g__ccnu_showhead_bool
-          { \__ccnu_pagestyle_master_doctor_plain_withhead: }
       }
   }
 
@@ -3709,7 +3747,7 @@
       \patchcmd
         { \chapter }
         { \pagestyle { plain } }
-        { \thispagestyle { bachelorplain } }
+        { \thispagestyle { plain } }
         {} { \fail }
       \keys_set:nn { ctex }
         {
@@ -3720,10 +3758,6 @@
               numbering = false
             }
         }
-      % \patchcmd { \chapter }
-      %   { \if@openright\cleardoublepage\else\clearpage\fi }
-      %   {}
-      %   {}{\fail}
       \chapter { 符号表 }
     \group_end:
   }
@@ -3783,7 +3817,7 @@
     \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {3}
       {
         \defbibheading { bibliography } [ \bibname ] 
-          { \__ccnu_chapter_bachelor:n {##1} }
+          { \__ccnu_chapter_without_number_bachelor:n {##1} }
       }
       {
         \defbibheading { bibliography } [ \bibname ] 
