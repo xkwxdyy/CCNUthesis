@@ -3465,9 +3465,9 @@
     \newpage
     \__ccnu_pagestyle_bachelor_plain:
     % 实现超链接
+    \chapter*{}
+    \vskip-3.2em
     \phantomsection
-    % 重调页码
-    \setcounter{page}{1}
     % 把 内容摘要 写进目录
     \addcontentsline { toc } { chapter }
       { \normalfont \tl_use:N \c__ccnu_name_abstract_tl }
@@ -3498,7 +3498,8 @@
   { 
     \bigskip
     % 超链接 Title
-    % \thispagestyle { plain }
+    \chapter*{}
+    \vskip-3.2em
     \phantomsection
     % 把 Title 写进目录
     \addcontentsline { toc } { chapter }
@@ -3529,6 +3530,7 @@
     \c_space_tl \c_space_tl
     \clist_use:Nn \l__ccnu_info_keywords_en_clist 
       { \qquad }
+    \newpage
   }
 % 硕博的摘要
 \cs_new:Npn \__ccnu_abstract_begin_master_doctor:
