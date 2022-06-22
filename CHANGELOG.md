@@ -4,7 +4,13 @@
 
 更多关于模版的内容和如何使用，请仔细阅读模版中的 `CCNUthesis.pdf` 用户手册和 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis)！
 
-## [v1.2.6] - 2022-06-20
+## [v1.2.7] - 2022-06-22
+
+### Changed
+
+- 修改博士模版的字号和行距代码
+
+## [v1.2.6] - 2022-06-21
 
 ### Added
 

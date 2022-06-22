@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-06-19}{v1.2.6}
+  {2022-06-22}{v1.2.7}
   {Thesis template for Central China Normal University}
 \RequirePackage { l3keys2e, xparse }
 
@@ -290,7 +290,9 @@
       { \PassOptionsToClass { linespread = \g__ccnu_doctor_linespread_ration_fp\c__ccnu_line_spread_fp } { ctexbook } }
     % 博士行距 19 磅
     {1} 
-      { \fontsize{10.5pt}{19bp} \selectfont }
+      { 
+        \PassOptionsToClass { linespread = 1 } { ctexbook } 
+      }
   }
 \clist_map_inline:nn
   {
@@ -379,6 +381,12 @@
   { \__ccnu_define_name:nnn #1 }
 
 
+% 博士字号和行距
+\int_compare:nNnT { \g__ccnu_thesis_type_int } = {1}
+  {
+    \AtBeginDocument 
+      { \fontsize{10.5pt}{19bp} \selectfont }
+  }
 
 % 字体设置
 \tl_new:N \g__ccnu_fontset_tl
@@ -3402,11 +3410,11 @@
 \cs_new:Npn \__ccnu_tableofcontents_format_doctor:
   {
     % chapter前的额外垂直间距
-    \dim_set:Nn \cftbeforechapskip { 0.4\baselineskip }
+    \dim_set:Nn \cftbeforechapskip { 0.3\baselineskip }
     % section前的额外垂直间距
-    \dim_set:Nn \cftbeforesecskip { 0.3\baselineskip }
+    \dim_set:Nn \cftbeforesecskip { 0.1\baselineskip }
     % subsection前的额外垂直间距
-    \dim_set:Nn \cftbeforesubsecskip { 0.2\baselineskip }
+    \dim_set:Nn \cftbeforesubsecskip { 0.05\baselineskip }
     % 缩进
     \dim_set:Nn \cftchapindent { 0em }
     \dim_set:Nn \cftsecindent  { 1em }
@@ -3563,7 +3571,7 @@
         { punct = quanjiao }
       \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
         { \zihao{-4} }
-        { \zihao{5} }
+        { \fontsize{10.5pt}{19bp} \selectfont }
   }
 \cs_new:Npn \__ccnu_abstract_end_master_doctor:
   {
@@ -3600,7 +3608,7 @@
         { punct = banjiao }
       \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
         { \zihao{-4} }
-        { \zihao{5} }
+        { \fontsize{10.5pt}{19bp} \selectfont }
   }
 \cs_new:Npn \__ccnu_abstract_en_end_master_doctor:
   {
