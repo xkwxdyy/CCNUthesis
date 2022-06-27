@@ -14,10 +14,10 @@
 %********************************************
 
 
-\documentclass[type = bachelor]{CCNUthesis}
+% \documentclass[type = bachelor]{CCNUthesis}
 % \documentclass[type = master]{CCNUthesis}
 % \documentclass[type = master, version = print-master-twoside]{CCNUthesis}
-% \documentclass[type = doctor]{CCNUthesis}
+\documentclass[type = doctor]{CCNUthesis}
 % \documentclass[type = doctor, version = print-doctor-twoside]{CCNUthesis}
 
 
@@ -37,7 +37,7 @@
 %     print-doctor-twoside：打印版，博士，有空白页，双面打印
 
 
-% 加载个人信息配置
+% 加载用户的个人信息和论文相关参数设置的配置文件
 \input{ccnu-setup.tex}
 
 
@@ -68,7 +68,7 @@
 % 主体采用多文件编译的方式
 % 即把每一章放进一个单独的 tex 文件里，并在这里用 \input 导入
 % 例如 \input{./body/chapter1.tex}
-% 表示插入 main 所在目录中的 body 目录下的 chapter1.tex 文件
+% 表示插入 main.tex 所在目录中的 body 目录下的 chapter1.tex 文件
 
 % 正文
 % 适用学位类型：【本｜硕｜博】
@@ -104,8 +104,8 @@
 
 
 % 附录
-% 【硕博】附录在致谢前
-% \include{./back/appendix.tex}
+% 【硕｜博】附录在致谢前
+\include{./back/appendix.tex}
 
 % 攻读学位期间取得的研究成果（博）
 % \include{./back/publications.tex}
@@ -116,8 +116,8 @@
 
 
 % 附录
-% 【本科】附录在致谢后
-\include{./back/appendix.tex}
+% 【本】附录在致谢后
+% \include{./back/appendix.tex}
 
 
 \end{document}
