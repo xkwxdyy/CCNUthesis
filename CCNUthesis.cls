@@ -436,6 +436,11 @@
       { adobe, fandol, founder, mac, sinotype, sourcehan, windows, none }
       { \tl_set_eq:NN \g__ccnu_cjk_fontset_tl \l_keys_choice_tl }
   }
+\keys_set:nn { ccnu / style }
+  {
+    font = times,
+    cjk-font = fandol
+  }
 \cs_new_protected:Npn \__ccnu_setmainfont:nn #1#2
   { \__fontspec_main_setmainfont:nn {#2} {#1} }
 \cs_new_protected:Npn \__ccnu_setsansfont:nn #1#2
@@ -802,7 +807,10 @@
     \char_set_catcode_active:N ^^^^3002
   }
 
-
+\keys_set:nn { ccnu / style }
+  {
+    fullwidth-stop = catcode
+  }
 
 % 脚注
 
@@ -837,6 +845,10 @@
           { \RequirePackage { pifont } }
       },
     footnote-style .value_required:n = true
+  }
+\keys_set:nn { ccnu / style }
+  {
+    footnote-style = xits
   }
 \cs_new:Npn \__ccnu_fn_symbol_libertinus:n #1
   {
@@ -1502,17 +1514,14 @@
   {
     show-head .bool_gset:N = \g__ccnu_showhead_bool,
     show-head .default:n = true,
-    show-head .initial:n = true,
     show-headlogo .bool_gset:N = \g__ccnu_showheadlogo_bool,
     show-headlogo .default:n = true,
-    show-headlogo .initial:n = true,
     % headline .str_gset:N = \g__ccnu_headline_str,
     headline .code:n = 
       {
         \str_gset:Nn \g__ccnu_headline_str {#1}
       },
     headline .value_required:n = true,
-    headline .initial:n = none,
     head-scope .choice:,
     head-scope / all .code:n = 
       {
@@ -1521,9 +1530,15 @@
     head-scope / main .code:n = 
       {
         \bool_gset_false:N \g__ccnu_head_scope_all_bool
-      },
+      }
   }
-
+\keys_set:nn { ccnu / style }
+  {
+    show-head = true,
+    show-headlogo = true,
+    headline = thick-thin,
+    head-scope = main
+  }
 % 定理类环境
 
 % 去掉.号，但只能通过新定义 style 的方式进行
@@ -2147,6 +2162,41 @@
     keywords*   .clist_set:N = \l__ccnu_info_keywords_en_clist,
   }
 
+\keys_set:nn { ccnu / info }
+  {
+    cover-type = math,
+    title = { 华中师范大学学位论文 \LaTeX{} 模版 },
+    title* = { CCNU thesis \LaTeX{} template }, 
+    author = {你的姓名},
+    author* = {Xing Ming},
+    supervisor = {教师姓名 \quad 职称},
+    supervisor*-name = {Jiao shi},
+    supervisor*-academic-title = {Professor},
+    level = {2018级},
+    student-id = {学号},
+    department = {数学与统计学学院},
+    department* = {School of Mathematics and Statistics},
+    major = {应用统计},
+    major* = {Mathematics},
+    research-area = {教育大数据},
+    research-area* = {Education big data},
+    degree-type = {应用统计硕士},
+    degree-type* = {M.S.},
+    keywords = 
+      {
+        关键词1,
+        关键词2,
+        关键词3
+      },
+    keywords* = 
+      {
+        keyword1,
+        keyword2,
+        keyword3
+      },
+    year  = { \int_use:N \c_sys_year_int },
+    month = { \int_use:N \c_sys_month_int }
+  }
 
 
 % 处理封面
@@ -3770,8 +3820,8 @@
 
 \keys_set:nn { ctex }
   {
-    listfigurename = {\g__ccnu_listoffigures_name_tl},
-    listtablename = {\g__ccnu_listoftables_name_tl}
+    listfigurename = { \g__ccnu_listoffigures_name_tl },
+    listtablename = { \g__ccnu_listoftables_name_tl }
   }
 \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {3}
   {
@@ -3950,6 +4000,11 @@
       },
     bib-resource .clist_set:N = \l__ccnu_bib_resource_clist
   }
+\keys_set:nn { ccnu / style }
+  {
+    bib-style = ccnu-bachelor-numerical,
+    bib-resource = {CCNUthesis-main.bib}
+  }
 \cs_new:Npn \__ccnu_biblatex_allow_url_break:
   {
     \int_set_eq:NN \c@biburlucpenalty  \c_one_int
@@ -4016,6 +4071,11 @@
         { prl,       2D3092, 2D3092, 2D3092 }
       }
       \__ccnu_set_hyperlink_color_key:n
+  }
+\keys_set:nn { ccnu / style }
+  {
+    hyperlink = none,
+    hyperlink-color = default
   }
 \cs_new:Npn \ccnu_allow_url_break:
   {
@@ -4458,271 +4518,3 @@
   { Invalid~ circled~ number~ #1. }
 
 \AddChoicesCounter \circlednumber \__ccnu_choices_circled_number:n {1}
-
-
-
-% 设置默认值
-\keys_set:nn { ccnu }
-  {
-    % 个人信息
-    %   注意：\ccnusetup 中不能出现空行
-    info = {
-      % cover-type = word,
-      cover-type = math,
-        % 封面的类型
-        %   适用学位类型：【本｜硕｜博】
-        %   可选选项：word|math
-        %     word：教务处的 word 封面格式
-        %     math：数学与统计学学院的封面格式
-        %     默认：math
-        %
-      title = {
-        华中师范大学学位论文 \LaTeX{} 模版
-      },
-        % 中文-标题
-        %   适用学位类型：【本｜硕｜博】
-        %   会自动换行，如果换行点不满意，可以用 \\ 手动换行
-        %   能概括整个学位论文的中心内容，简明、扼要
-        %   论文题目一般不超过25个字，必要时可加副标题（在题目下一行以“——”打头）
-        %
-      title* = {
-        CCNU thesis \LaTeX{} template 
-      }, 
-        % 英文-标题
-        %   适用学位类型：【本｜硕｜博】
-        %
-      author = {你的姓名},
-        % 中文-作者姓名
-        %   适用学位类型：【本｜硕｜博】
-        %
-      author* = {Xing Ming},
-        % 拼音-作者姓名
-        %   适用学位类型：【硕｜博】
-        %
-      supervisor = {教师姓名 \quad 职称},
-        % 中文-指导老师姓名+职称
-        %   适用学位类型：【本｜硕｜博】
-        %   职称：讲师｜副教授｜教授｜副研究员｜研究员
-        %
-      supervisor*-name = {Jiao shi},
-        % 拼音-指导老师姓名
-        %   适用学位类型：【硕｜博】
-        %
-      supervisor*-academic-title = {Professor},
-        % 英文-指导老师职称
-        %   适用学位类型：【硕｜博】
-        %
-      level = {2018级},
-        % 年级
-        %   适用学位类型：【本】
-        %
-      student-id = {学号},
-        % 学号
-        %   适用学位类型：【本】
-        %
-      department = {数学与统计学学院},
-        % 中文-学院名称
-        %   适用学位类型：【本｜硕｜博】
-        %
-      department* = {School of Mathematics and Statistics},
-        % 英文-学院名称
-        %   适用学位类型：【硕｜博】
-        %
-      major = {应用统计},
-        % 中文-专业
-        %   适用学位类型：【本｜硕｜博】
-        %   选项参考：
-        %     本：数学与应用数学（试验）｜数学与应用数学（师范）｜统计学
-        %     硕：应用统计
-        %   【硕博】「学术型学位学科专业」填写《授予博士、硕士学位和培养研究生的学科、专业目录》中的二级学科或我校自主设置专业；「专业型学位学科专业」填写「专业学位领域」，无领域学科不填
-        %
-      major* = {Mathematics},
-        % 英文-专业
-        %   适用学位类型：【硕｜博】
-        %   选项参考：
-        %     硕：Mathematics|Applied Statistics
-        %
-      research-area = {教育大数据},
-        % 中文-研究方向
-        %   适用学位类型：【硕｜博】
-        %   选项参考：
-        %     硕：教育大数据
-        %
-      research-area* = {Education big data},
-        % 英文-研究方向
-        %   适用学位类型：【硕｜博】
-        %   选项参考：
-        %     硕：Mathematics|Applied Statistics
-        %
-      degree-type = {应用统计硕士},
-        % 中文-申请学位学生类别
-        %   适用学位类型：【硕｜博】
-        %   选项参考：
-        %     硕：教育硕士｜应用统计硕士｜全日制硕士｜同等学力人员｜
-        %        高校教师在职攻读硕士学位人员｜专业学位人员
-        %     博：博士
-        %
-      degree-type* = {M.S.},
-        % 英文-申请学位学生类别，缩写
-        %   适用学位类型：【硕｜博】
-        %   选项参考：
-        %     硕：M.S.
-        %
-      keywords = {
-        关键词1,
-        关键词2,
-        关键词3
-      },
-        % 中文-论文关键词
-        %   适用学位类型：【本｜硕｜博】
-        %   关键词之间用西文逗号 “,” 隔开
-        %
-      keywords* = {
-        keyword1,
-        keyword2,
-        keyword3
-      },
-        % 英文-论文关键词
-        %   适用学位类型：【本｜硕｜博】
-        %   关键词之间用西文逗号 “,” 隔开
-        %
-      year  = { \int_use:N \c_sys_year_int },
-        % 年份
-        %   适用学位类型：【本｜硕｜博】
-        %   如果不手动调整，则默认是「编译时」的年份
-        %
-      month = { \int_use:N \c_sys_month_int },
-        % 月份
-        %   适用学位类型：【本｜硕｜博】
-        %   如果不手动调整，则默认是「编译时」的月份
-    },
-    style = {
-      font = times,
-        % 西文字体
-        %   适用学位类型：【本｜硕｜博】
-        %   可选选项：newtx|times|stixtwo|xits|tg|none
-        %     目前的字体配置为: (TG = TeX Gyre, 默认值为 times)
-        %     *******************************************************************
-        %     选项名   : serif,            sans,     mono,         math
-        %     *******************************************************************
-        %     stixtwo : STIX Two Text,    TG Heros, TG Cursor,    STIX Two Math
-        %     xits    : XITS,             TG Heros, TG Cursor,    XITS Math
-        %     times   : Times New Roman,  Arial,    Courier New,  newtxmath
-        %     newtx   : TG Termes,        TG Heros, TG Cursor,    newtxmath
-        %     tg      : TG Termes,        TG Heros, TG Cursor,    TG Termes Math
-        %     *******************************************************************
-      footnote-style = xits,
-        % 脚注编号样式
-        %   可选选项：plain|libertinus|libertinus*|libertinus-sans|
-        %           pifont|pifont*|pifont-sans|pifont-sans*|
-        %           xits|xits-sans|xits-sans*
-        %   默认与西文字体保持一致
-        %
-      cjk-font = fandol,
-        % 中文字体
-        %   适用学位类型：【本｜硕｜博】
-        %   可选选项：adobe|fandol|founder|mac|sinotype|sourcehan|windows|none
-        %   默认：fandol
-        %   注意：
-        %     1. 中文字体设置高度依赖于系统。各系统建议方案：
-        %          windows：cjk-font = windows
-        %          mac：    cjk-font = mac
-        %          linux：  cjk-font = fandol（默认值）
-        %     2. 除 fandol 和 sourcehan 外，其余字体均为商用字体，请注意版权问题
-        %     3. 但 fandol 字体缺字比较严重，而 sourcehan 没有配备楷体和仿宋体
-        %
-      % chapter-breakstyle = continuous,
-        % chapter 是否要新起一页开始
-        %   适用学位类型：【本】
-        %   可选选项：continuous|newpage
-        %   默认：continuous
-        %     continuous：chapter 不新起一页开始
-        %     newpage：chapter 新起一页开始
-        %
-      caption-labelstyle = hyphen,
-        % 图表标题 label 计数样式
-        %   适用学位类型：【本｜硕｜博】
-        %     【硕｜博】应选择 dot （根据研究生学位论文规范）
-        %   可选选项：arabic|hyphen|dot
-        %     arabic：样式为图1，图2，表1，表2...，并且跨 chapter 连续编号，即 上一个 chapter 的图编号若为4，下一个 chapter 的第一个图编号为 5
-        %     hyphen：样式为图1-1，图2-1，表1-1...
-        %       x-y 的 x 为 chapter 值，y 为图表的计数器值，新的 chapter 中 y 会清零重新计数
-        %     dot：样式为图1.1，图2.1，表1.1...
-        %       x.y 的 x 为 chapter 值，y 为图表的计数器值，新的 chapter 中 y 会清零重新计数
-        %     默认：hyphen
-        %
-      caption-labelseperator = colon,
-        % 图表标题 label 和 标题内容 之内的分隔符
-        %   适用学位类型：【本｜硕｜博】
-        %   可选选项：colon|space
-        %     colon 表示 「:␣」，即一个西文冒号加一个空格
-        %     space 表示 「␣␣」，即两个空格
-        %     默认：colon
-        %
-      show-headlogo = false,
-        % 是否显示页眉 logo
-        %   适用学位类型：【硕｜博】
-        %   可选选项：true|false
-        %     默认：false
-        %   logo 内容：华中师范大学校徽 + 硕士/博士学位论文中英文字样
-        %
-      headline = none,
-        % 页眉的线的类型
-        %   适用学位类型：【硕｜博】
-        %   可选选项：single|double|thin-thick|thick-thin|none
-        %     single：一条线
-        %     double：两条线，一样粗细
-        %     thin-thick：两条线，上细下粗
-        %     thick-thin：两条线，上粗下细
-        %     none：页眉没有线
-        %     默认：none
-        %
-      head-scope = main,
-        % 页眉的作用范围
-        %   适用学位类型：【硕｜博】
-        %   可选选项：all|main
-        %     all：除了封面外所有
-        %     main：在正文开始才有页眉
-        % 
-      fullwidth-stop = catcode,
-        % 标点的自动替换
-        %   适用学位类型：【本｜硕｜博】
-        %   可选选项：catcode|mapping|false
-        %     catcode：显式的 “。” 会被替换为 “．”（e.g. 不包括用宏定义保存的 “。”）
-        %     mapping：所有的 “。” 会被替换为 “．”（使用 LuaLaTeX 编译则无效）
-        %     false：不进行替换
-        %     默认：catcode
-        %   作用：是否把全角实心句点 “．” 作为默认的句号形状，即正文中输入“。” 最终编译效果为“. ”
-        %   说明：一般科技类文章需要替换，防止“. ”与“。”混淆
-        %
-      bib-style = ccnu-bachelor-numerical,
-        % bib-style 表示参考文献的格式
-        %   适用学位类型：【本｜硕｜博】
-        %   可选选项：
-        %     ccnu-bachelor-numerical|ccnu-bachelor-author-year
-        %     ccnu-master|ccnu-doctor|gb7714-2015
-        %       ccnu-bachelor-numerical：【本】学校标准，顺序编码制
-        %       ccnu-bachelor-author-year：【本】学校标准，著者—出版年制
-        %       ccnu-master：【硕】国标，顺序编码制
-        %       ccnu-doctor：【博】国标，顺序编码制
-        %       gb7714-2015：国标，顺序编码制
-        %     默认：ccnu-bachelor-numerical
-        %
-      bib-resource = {CCNUthesis-main.bib},
-        % 参考文献数据源
-        %   适用学位类型：【本｜硕｜博】
-        %   注意：需要加 bib 后缀
-        %   默认：CCNUthesis-main.bib
-        %
-      hyperlink = none,
-        % 超链接样式
-        %   可选选项：color|none
-        %   默认：none
-        %
-      hyperlink-color = default,
-        % 超链接颜色
-        %   可选选项：default|classic|material|graylevel|prl
-        %   默认：default
-        %
-    }
-  }
