@@ -1,6 +1,6 @@
 # 更新日志
 
-配套的 b 站讲解视频：<https://www.bilibili.com/video/bv1vS4y1D7hF>
+配套的 b 站讲解视频：<www.bilibili.com/video/BV1FT41137eq>
 
 更多关于模版的内容和如何使用，请仔细阅读模版中的 `CCNUthesis.pdf` 用户手册和 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis)！
 
