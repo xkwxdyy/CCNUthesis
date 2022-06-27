@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{CCNUthesis}
-  {2022-06-22}{v1.2.7}
+  {2022-06-27}{v1.2.8}
   {Thesis template for Central China Normal University}
 \RequirePackage { l3keys2e, xparse }
 
@@ -1032,6 +1032,16 @@
 \NewDocumentCommand { \publication } { }
   {
     \newpage
+    \RenewDocumentCommand{ \chapter }{ s o m }
+      {
+        \IfBooleanTF {##1}
+          { \__ccnu_chapter_star:n {##3} }
+          {
+            \IfNoValueTF {##2}
+              { \__cchu_chapter:nn {##3} }
+              { \__cchu_chapter:nn [##2] {##3} }
+          }
+      }
     \group_begin:
       \keys_set:nn { ctex }
         {
@@ -1042,8 +1052,8 @@
               format = \zihao{3} \sffamily \bfseries \centering
             }
         }
-      \chapter*{攻读学位期间发表的学术论文}
-      \addcontentsline{toc}{chapter}{\zihao{5} \bfseries 攻读学位期间发表的学术论文}
+      \chapter{攻读学位期间发表的学术论文}
+      % \addcontentsline{toc}{chapter}{\zihao{5} \bfseries 攻读学位期间发表的学术论文}
     \group_end:
     \keys_set:nn { ctex }
       {
@@ -1629,6 +1639,16 @@
 % 致谢
 \NewDocumentCommand { \acknowledgements } { }
   {
+    \RenewDocumentCommand{ \chapter }{ s o m }
+      {
+        \IfBooleanTF {##1}
+          { \__ccnu_chapter_star:n {##3} }
+          {
+            \IfNoValueTF {##2}
+              { \__cchu_chapter:nn {##3} }
+              { \__cchu_chapter:nn [##2] {##3} }
+          }
+      }
     \int_case:nn { \g__ccnu_thesis_type_int }
       {
         {3} { \__ccnu_acknowlegements_bachelor: }
@@ -1649,6 +1669,11 @@
               format = \zihao{-2} \normalfont \bfseries \centering
             }
         }
+      \patchcmd { \chapter }
+        {
+          \int_gincr:N \g__ccnu_appendix_index_aux_int
+        }
+        {}{}{}
       \chapter*{致 \quad 谢}
       \addcontentsline{toc}{chapter}{\normalfont 致谢}
     \group_end:
@@ -1672,6 +1697,11 @@
               format = \zihao{3} \sffamily \bfseries \centering
             }
         }
+      \patchcmd { \chapter }
+        {
+          \int_gincr:N \g__ccnu_appendix_index_aux_int
+        }
+        {}{}{}
       \chapter {致 \quad 谢}
       % \addcontentsline{toc}{chapter}{\zihao{-4} \bfseries 致谢}
     \group_end:
@@ -1722,6 +1752,13 @@
 \int_new:N \g__ccnu_appendix_index_int
 \int_gzero_new:N \g__ccnu_appendix_index_aux_int
 
+\cs_set_eq:NN \__cchu_chapter:nn \chapter
+\cs_new:Npn \__ccnu_chapter_star:n #1
+  {
+    \__cchu_chapter:nn * {#1}
+  }
+
+
 \cs_gset_protected:Npn \appendix
   {
     \newpage
@@ -1742,6 +1779,20 @@
             chapter / indent = 0pt
           }
       }
+    % 调整附录的目录层级为 1 层
+    \addtocontents { toc } { \protect \value{tocdepth} = 0 }
+    \RenewDocumentCommand{ \chapter }{ s o m }
+      {
+        \IfBooleanTF {##1}
+          { \__ccnu_chapter_star:n {##3} }
+          {
+            \IfNoValueTF {##2}
+              { \__cchu_chapter:nn {##3} }
+              { \__cchu_chapter:nn [##2] {##3} }
+          }
+        \int_gincr:N \g__ccnu_appendix_index_aux_int
+      }
+    % ctexbook.cls, line 1077
     \CTEX@save@appendix
     \gdef \CTEX@prechapter { \CTEX@preappendix }
     \int_compare:nNnTF { \g__ccnu_appendix_index_int } = {1}
@@ -1753,12 +1804,6 @@
       }
     \gdef \CTEX@postchapter { \CTEX@postappendix }
     \gdef \CTEX@chapter@numbering { \CTEX@appendix@numbering }
-    % 调整附录的目录层级为 1 层
-    \addtocontents { toc } { \protect \value{tocdepth} = 0 }
-    \__ccnu_preto_cmd:Nn \chapter
-      {
-        \int_gincr:N \g__ccnu_appendix_index_aux_int
-      }
   }
 
 \AtEndDocument
