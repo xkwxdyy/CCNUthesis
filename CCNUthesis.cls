@@ -1228,7 +1228,6 @@
       { \pagestyle{plain} }
       {}
       {\fail}
-
   }
 
 \cs_new:Npn \__ccnu_pagestyle_master_doctor_plain_withouthead:
@@ -1463,18 +1462,37 @@
 %   {} {\fail}
 
 
-\int_compare:nNnT { \g__ccnu_thesis_type_int } = {3}
+\AtEndPreamble
   {
-    % 重新设置 frontmatter 的计数器的样式
-    \patchcmd { \frontmatter }
-    { \pagenumbering { roman } }
-    { \pagenumbering { arabic } }
-    {}{ \fail }
-    % 重新设置 mainmatter 的计数器，使得页码接着前面的(本科)
-    \patchcmd { \mainmatter }
-      { \pagenumbering { arabic } }
-      { \renewcommand { \thepage }{ \arabic{ page } } }
-      {}{ \fail }
+    \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {3}
+      {
+        % 重新设置 frontmatter 的计数器的样式
+        \patchcmd { \frontmatter }
+        { \pagenumbering { roman } }
+        { \pagenumbering { arabic } }
+        {}{ \fail }
+        % 重新设置 mainmatter 的计数器，使得页码接着前面的(本科)
+        \patchcmd { \mainmatter }
+          { \pagenumbering { arabic } }
+          { \renewcommand { \thepage }{ \arabic{ page } } }
+          {}{ \fail }
+      }
+      {
+        % 处理正文的页眉
+        \apptocmd { \mainmatter }
+          {
+            \bool_if:NTF \g__ccnu_showhead_bool
+              {
+                % 有页眉，有页码
+                \__ccnu_pagestyle_master_doctor_plain_withhead:
+              }
+              {
+                % 无页眉，有页码
+                \__ccnu_pagestyle_master_doctor_plain_withouthead:
+              }
+          }
+          {}{\fail}
+      }
   }
 
 % 控制页眉的全局与否
