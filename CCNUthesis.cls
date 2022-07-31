@@ -1240,6 +1240,8 @@
     %   { \pagestyle{plain} }
     %   {}
     %   {\fail}
+    % \pagestyle{plain}
+    \AddToHook { cmd / chapter / before } { \pagestyle{plain} }
   }
 
 \cs_new:Npn \__ccnu_pagestyle_master_doctor_plain_withouthead:

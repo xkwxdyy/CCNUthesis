@@ -13,6 +13,7 @@
 ### Fixed
 
 - 修复本科模版 `chapter-breakstyle = newpage` 对摘要的影响问题
+- 修复 `\chapter` 的 `patchcmd` 失效问题
 
 ## [v1.2.8] - 2022-06-27
 ### Changed
