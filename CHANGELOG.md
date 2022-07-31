@@ -4,6 +4,23 @@
 
 更多关于模版的内容和如何使用，请仔细阅读模版中的 `CCNUthesis.pdf` 用户手册和 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis)！
 
+## [v1.2.8] - 2022-07-31
+
+### Added
+
+- 增加 `lguide-ch1.pdf` 文件
+
+## [v1.2.8] - 2022-06-27
+### Changed
+
+- 个人信息配置变成分文件
+
+
+### Fixed
+
+- 修复附录的编号 bug
+- 修复页眉的范围控制 `scope = main` 的失效问题
+
 ## [v1.2.7] - 2022-06-22
 
 ### Changed
