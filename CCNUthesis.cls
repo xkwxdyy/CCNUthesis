@@ -282,15 +282,29 @@
 % 行距
 \int_case:nn { \g__ccnu_thesis_type_int }
   {
-    % 本科
+    % 本科采用默认效果
     {3}
-      { \PassOptionsToClass { linespread = \c__ccnu_line_spread_fp } { ctexbook } }
-    % 硕士行距 1.25 倍
+      {
+        \PassOptionsToPackage  { restoremathleading } { zhlineskip }
+      }
+    %   { \PassOptionsToClass { linespread = \c__ccnu_line_spread_fp } { ctexbook } }
+    % 硕士行距：多倍1.25 倍
     {2} 
-      { \PassOptionsToClass { linespread = \g__ccnu_doctor_linespread_ration_fp\c__ccnu_line_spread_fp } { ctexbook } }
+      {
+        % \PassOptionsToClass { linespread = \g__ccnu_doctor_linespread_ration_fp\c__ccnu_line_spread_fp } { ctexbook } 
+        \PassOptionsToPackage 
+          {
+            restoremathleading,
+            UseMSWordMultipleLineSpacing,
+            MSWordLineSpacingMultiple   = 1.25
+          }
+          { zhlineskip }
+
+      }
     % 博士行距 19 磅
     {1} 
       { 
+        \PassOptionsToPackage  { restoremathleading } { zhlineskip }
         \PassOptionsToClass { linespread = 1 } { ctexbook } 
       }
   }
@@ -320,7 +334,8 @@
     etoolbox,          % 补丁
     amsthm,            % 定理类环境
     thmtools,          % 定理类环境
-    xeCJKfntef         % 下划线
+    xeCJKfntef,         % 下划线
+    zhlineskip         % 行距
   }
 \RequirePackage[shortlabels]{enumitem}   % 列表环境
 \RequirePackage[titles]{tocloft}         % 目录修改
@@ -385,7 +400,7 @@
 \int_compare:nNnT { \g__ccnu_thesis_type_int } = {1}
   {
     \AtBeginDocument 
-      { \fontsize{10.5pt}{19bp} \selectfont }
+      { \linespread{1} \fontsize{10.5pt}{19bp} \selectfont }
   }
 
 % 字体设置
@@ -3686,9 +3701,9 @@
     \group_begin:
       \keys_set:nn { ctex }
         { punct = quanjiao }
-      \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
-        { \zihao{-4} }
-        { \fontsize{10.5pt}{19bp} \selectfont }
+      % \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
+      %   { \zihao{-4} }
+      %   { \linespread{1}\fontsize{10.5pt}{19bp} \selectfont }
   }
 \cs_new:Npn \__ccnu_abstract_end_master_doctor:
   {
@@ -3723,9 +3738,9 @@
     \group_begin:
       \keys_set:nn { ctex }
         { punct = banjiao }
-      \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
-        { \zihao{-4} }
-        { \fontsize{10.5pt}{19bp} \selectfont }
+      % \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
+      %   { \zihao{-4} }
+      %   { \linespread{1}\fontsize{10.5pt}{19bp} \selectfont }
   }
 \cs_new:Npn \__ccnu_abstract_en_end_master_doctor:
   {

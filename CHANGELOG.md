@@ -8,7 +8,12 @@
 
 ### Added
 
-- 增加 `lguide-ch1.pdf` 文件
+- 增加 `lguide-ch1.pdf` 文件（https://github.com/AlphaZTX/LaTeX-tutorials-opensource）
+
+### Changed
+
+- 修改行距代码
+
 
 ### Fixed
 
