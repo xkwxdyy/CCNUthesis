@@ -4,7 +4,7 @@
 
 更多关于模版的内容和如何使用，请仔细阅读模版中的 `CCNUthesis.pdf` 用户手册和 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis)！
 
-## [v1.2.8] - 2022-07-31
+## [v1.2.9] - 2022-07-31
 
 ### Added
 
