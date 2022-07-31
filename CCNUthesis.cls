@@ -1235,11 +1235,11 @@
         \__ccnu_pagestyle_setting_before_tableofcontents: 
       }
     % 改变 chapter 的首页的 pagestyle
-    \patchcmd { \chapter }
-      { \thispagestyle { \CTEX@chapter@pagestyle } }
-      { \pagestyle{plain} }
-      {}
-      {\fail}
+    % \patchcmd { \chapter }
+    %   { \thispagestyle { \CTEX@chapter@pagestyle } }
+    %   { \pagestyle{plain} }
+    %   {}
+    %   {\fail}
   }
 
 \cs_new:Npn \__ccnu_pagestyle_master_doctor_plain_withouthead:
@@ -3618,6 +3618,8 @@
 \cs_new:Npn \__ccnu_abstract_en_begin_bachelor:
   { 
     \bigskip
+    \keys_set:nn { ctex }
+      { chapter/break = { \addpenalty { \@secpenalty } } }
     % 超链接 Title
     \chapter*{}
     \vskip-3.2em
@@ -3764,11 +3766,11 @@
                   format = \zihao{-2} \normalfont \bfseries \centering
                 }
             }
-          \patchcmd
-            { \chapter }
-            { \pagestyle { plain } }
-            { \thispagestyle { plain } }
-            {} { \fail }
+          % \patchcmd
+          %   { \chapter }
+          %   { \pagestyle { plain } }
+          %   { \thispagestyle { plain } }
+          %   {} { \fail }
           \bool_if:NT \g__ccnu_listoffigures_show_bool
             { 
               \listoffigures 
@@ -3867,11 +3869,11 @@
 \cs_new_protected:Npn \__ccnu_notation_begin_bachelor:
   {
     \group_begin:
-      \patchcmd
-        { \chapter }
-        { \pagestyle { plain } }
-        { \thispagestyle { plain } }
-        {} { \fail }
+      % \patchcmd
+      %   { \chapter }
+      %   { \pagestyle { plain } }
+      %   { \thispagestyle { plain } }
+      %   {} { \fail }
       \keys_set:nn { ctex }
         {
           chapter = 

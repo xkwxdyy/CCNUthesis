@@ -10,6 +10,10 @@
 
 - 增加 `lguide-ch1.pdf` 文件
 
+### Fixed
+
+- 修复本科模版 `chapter-breakstyle = newpage` 对摘要的影响问题
+
 ## [v1.2.8] - 2022-06-27
 ### Changed
 
