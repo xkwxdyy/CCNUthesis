@@ -4,6 +4,16 @@
 
 更多关于模版的内容和如何使用，请仔细阅读模版中的 `CCNUthesis.pdf` 用户手册和 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis)！
 
+## [v1.2.10] - 2022-08-09
+
+### Changed
+
+- 重新调整模版封面位置
+
+### Fixed
+
+- 修复本科的标题行距问题
+
 ## [v1.2.9] - 2022-07-31
 
 ### Added

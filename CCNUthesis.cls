@@ -2298,7 +2298,7 @@
             % 排版文本
             \parbox [t] 
               { \l__ccnu_title_tmp_max_width_dim }
-              { \linespread{1.8}\selectfont \centering #1 }
+              { \linespread{1.6}\selectfont \centering #1 }
           }
           {
             % 排版一行
@@ -2576,7 +2576,7 @@
       {
         \node ( type ) at 
           (
-            [ shift = { (0em , - 0.35\paperheight) } ] 
+            [ shift = { (0em , - 0.36\paperheight) } ] 
               current~page.north
           )
           { \zihao{-0} \sffamily 本科毕业论文（设计）};
@@ -2600,7 +2600,7 @@
       {
         \node[] ( titlelabel ) at
           (
-            [ shift = { ( -4.5cm, -1.5em ) } ] current~page.center
+            [ shift = { ( -4.5cm, 0em ) } ] current~page.center
           ) 
           {
             \zihao{-1} \bfseries
@@ -2633,7 +2633,7 @@
   {
     \node[] (information) at
         (
-          [shift = {(0, -0.3\textheight)}]
+          [shift = {(0, -0.27\textheight)}]
           current~page.center
         )
         {
@@ -2672,7 +2672,7 @@
                 \__ccnu_cover_infomation_center_underline_box:Vn 
                   \l__ccnu_tmpb_dim 
                   { \l__ccnu_tmpb_tl }
-                \skip_vertical:n { 1 ex }
+                \skip_vertical:n { 1.3 ex }
               }
           \end{minipage}
         };
@@ -2686,7 +2686,7 @@
       {
         \node [ anchor = north ] ( top ) at 
           ( 
-            [ shift = { (0em, 0em) } ] 
+            [ shift = { (0em, 3em) } ] 
             current~page~text~area.north 
           ) 
           {
@@ -2733,7 +2733,7 @@
     \bool_if:NTF \g__ccnu_cover_word_version_bool
       {
         \dim_set:Nn \l__ccnu_tmpa_dim 
-          { -0.29\paperheight }
+          { -0.25\paperheight }
       }
       {
         \dim_set:Nn \l__ccnu_tmpa_dim 
@@ -2752,12 +2752,14 @@
   }
 
 % 论文类型
+\dim_const:Nn \c__ccnu_cover_i_master_doctor_type_sep_dim { 2em }
+
 \cs_new:Npn \__ccnu_cover_i_master_doctor_degree_type:
   {
     \bool_if:NTF \g__ccnu_cover_word_version_bool
       {
         \dim_set:Nn \l__ccnu_tmpa_dim 
-          { -0.39\paperheight }
+          { -0.35\paperheight }
       }
       {
         \dim_set:Nn \l__ccnu_tmpa_dim 
@@ -2773,11 +2775,15 @@
                 current~page.north
             )
             {
-              \scalebox{1}[1.5]
+              \scalebox{1}[1.7]
                 {
                   \zihao{1}
                   \normalfont \bfseries 
-                  硕 \hspace*{0.5em} 士 \hspace*{0.5em} 学 \hspace*{0.5em} 位 \hspace*{0.5em} 论 \hspace*{0.5em} 文
+                  \tl_map_inline:nn { 硕士学位论文 }
+                    {
+                      ##1 \hspace{ \c__ccnu_cover_i_master_doctor_type_sep_dim }
+                    } \unskip
+                  % 硕 \hspace*{0.5em} 士 \hspace*{0.5em} 学 \hspace*{0.5em} 位 \hspace*{0.5em} 论 \hspace*{0.5em} 文
                 }
             };
         }
@@ -2789,9 +2795,16 @@
                 current~page.north
             )
             {
-              \scalebox{1}[1.5]
+              \scalebox{1}[1.7]
                 {
-                  \zihao{1} \normalfont \bfseries 博 \hspace*{0.5em} 士 \hspace*{0.5em} 学 \hspace*{0.5em} 位 \hspace*{0.5em} 论 \hspace*{0.5em} 文
+                  \zihao{1}
+                  \normalfont \bfseries 
+                  \tl_map_inline:nn { 博士学位论文 }
+                    {
+                      ##1 \hspace{ \c__ccnu_cover_i_master_doctor_type_sep_dim }
+                    } \unskip
+                  % \zihao{1} \normalfont \bfseries 
+                  % 博 \hspace*{0.5em} 士 \hspace*{0.5em} 学 \hspace*{0.5em} 位 \hspace*{0.5em} 论 \hspace*{0.5em} 文
                 }
             };
         }
@@ -2810,7 +2823,7 @@
       {
         \node[] ( titlecontent ) at 
           (
-            [ shift = { ( 0cm, -4.5em ) } ] current~page.center
+            [ shift = { ( 0cm, -2em ) } ] current~page.center
           ) 
           {
             \zihao{1} \bfseries
@@ -2826,7 +2839,7 @@
       {
         \node[] ( titlecontent ) at 
           (
-            [ shift = { ( 0, -3em ) } ] current~page.center
+            [ shift = { ( 0, -1em ) } ] current~page.center
           ) 
           {
             \zihao{1} \bfseries
@@ -2843,7 +2856,7 @@
   {
     \node[anchor = south] (information) at
         (
-          [shift = {(0, 0)}]
+          [shift = {(0, 0.08\textheight)}]
           current~page~text~area.south
         )
         {
@@ -2886,8 +2899,9 @@
                       \l__ccnu_tmpb_dim 
                       { \l__ccnu_tmpb_tl }
                   }
-                \skip_vertical:n { 0.3 ex }
+                \skip_vertical:n { 2 ex }
               }
+              \unskip
           \end{minipage}
         };
   }
