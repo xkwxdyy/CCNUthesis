@@ -1,7 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\ProvidesExplClass{CCNUthesis}
-  {2022-08-09}{v1.2.10}
+\ProvidesExplClass {CCNUthesis} {2022-9-17} {v1.2.11}
   {Thesis template for Central China Normal University}
 \RequirePackage { l3keys2e, xparse }
 
@@ -3900,11 +3899,6 @@
 \cs_new_protected:Npn \__ccnu_notation_begin_bachelor:
   {
     \group_begin:
-      % \patchcmd
-      %   { \chapter }
-      %   { \pagestyle { plain } }
-      %   { \thispagestyle { plain } }
-      %   {} { \fail }
       \keys_set:nn { ctex }
         {
           chapter = 
