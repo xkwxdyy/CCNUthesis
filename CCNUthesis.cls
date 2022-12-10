@@ -1859,11 +1859,11 @@
   {
     \iow_now:cx { @auxout }
       {
-      \token_to_str:N \ExplSyntaxOn   % 要加一个token_to_str
-      ^^J
-      \int_gset:Nn \exp_not:N \g__ccnu_appendix_index_int { \int_use:N \g__ccnu_appendix_index_aux_int }
-      ^^J
-      \token_to_str:N \ExplSyntaxOff  % 要加一个token_to_str
+        \token_to_str:N \ExplSyntaxOn   % 要加一个token_to_str
+        ^^J
+        \int_gset:Nn \exp_not:N \g__ccnu_appendix_index_int { \int_use:N \g__ccnu_appendix_index_aux_int }
+        ^^J
+        \token_to_str:N \ExplSyntaxOff  % 要加一个token_to_str
       }
   }
 
@@ -2212,6 +2212,19 @@
       },
     year  = { \int_use:N \c_sys_year_int },
     month = { \int_use:N \c_sys_month_int }
+  }
+
+% 标题下划线是否恒定长度
+\bool_new:N \g__ccnu_title_line_type_constant_bool
+
+\keys_define:nn { ccnu / info }
+  {
+    title-line-type .choice:,
+    title-line-type / constant .code:n = 
+      { \bool_gset_true:N \g__ccnu_title_line_type_constant_bool },
+    title-line-type / variable .code:n = 
+      { \bool_gset_false:N \g__ccnu_title_line_type_constant_bool },
+    title-line-type .initial:n = constant
   }
 
 
@@ -2607,11 +2620,23 @@
           };
         \node[] ( titlecontent ) at 
           (
-            [ shift = { ( 2.5cm, -1.5em ) } ] current~page.center
+            [ shift = { ( 2.5cm, -1.2em ) } ] current~page.center
           ) 
           {
             \zihao{-2} \bfseries
-            \__ccnu_title_box:n { \tl_use:N \l__ccnu_info_title_tl }
+            \bool_if:NTF \g__ccnu_title_line_type_constant_bool
+              {
+                % 下划线恒定长度
+                \__ccnu_title_box:n { \tl_use:N \l__ccnu_info_title_tl }
+              }
+              {
+                % 文字下方才有下划线
+                \begin{minipage}{16em}
+                  \begin{center}
+                    \CJKunderline*{ \tl_use:N \l__ccnu_info_title_tl }
+                  \end{center}
+                \end{minipage}
+              }
           };
       }
       {
@@ -2621,7 +2646,20 @@
           ) 
           {
             \zihao{-2} \bfseries
-            \__ccnu_title_box:n { \tl_use:N \l__ccnu_info_title_tl }
+            \bool_if:NTF \g__ccnu_title_line_type_constant_bool
+              {
+                % 下划线恒定长度
+                \__ccnu_title_box:n { \tl_use:N \l__ccnu_info_title_tl }
+              }
+              {
+                % 文字下方才有下划线
+                \begin{minipage}{20em}
+                  \begin{center}
+                    \CJKunderline*{\tl_use:N \l__ccnu_info_title_tl}
+                    % \tl_use:N \l__ccnu_info_title_tl
+                  \end{center}
+                \end{minipage}
+              }
           };
       }
   }
@@ -2825,13 +2863,23 @@
             [ shift = { ( 0cm, -2em ) } ] current~page.center
           ) 
           {
-            \zihao{1} \bfseries
-            \__ccnu_title_box_master_doctor:n 
-              { 
-                % \fontsize{30bp}{28pt} \selectfont
-                % \ccnutitlefont
-                \ccnutitlefont
-                题目：\tl_use:N \l__ccnu_info_title_tl 
+            \linespread{1} \fontsize{26pt}{40bp} \selectfont \bfseries \ccnutitlefont
+            \bool_if:NTF \g__ccnu_title_line_type_constant_bool
+              {
+                % 下划线恒定长度
+                \__ccnu_title_box_master_doctor:n 
+                  { 
+                    % \fontsize{30bp}{28pt} \selectfont
+                    题目：\tl_use:N \l__ccnu_info_title_tl 
+                  }
+              }
+              {
+                % 文字下方才有下划线
+                \begin{minipage}{16em}
+                  \begin{center}
+                    \CJKunderline*{ \tl_use:N \l__ccnu_info_title_tl }
+                  \end{center}
+                \end{minipage}
               }
           };
       }
@@ -2841,9 +2889,26 @@
             [ shift = { ( 0, -1em ) } ] current~page.center
           ) 
           {
-            \zihao{1} \bfseries
-            \__ccnu_title_box_master_doctor:n 
-              { \sffamily \tl_use:N \l__ccnu_info_title_tl }
+            \bfseries \sffamily
+            \linespread{1} \fontsize{26pt}{40bp} \selectfont 
+            % \__ccnu_title_box_master_doctor:n 
+            %   { \sffamily \tl_use:N \l__ccnu_info_title_tl }
+            \bool_if:NTF \g__ccnu_title_line_type_constant_bool
+              {
+                % 下划线恒定长度
+                \__ccnu_title_box_master_doctor:n 
+                  { 
+                    \tl_use:N \l__ccnu_info_title_tl
+                  }
+              }
+              {
+                % 文字下方才有下划线
+                \begin{minipage}{16em}
+                  \begin{center}
+                    \CJKunderline*{ \tl_use:N \l__ccnu_info_title_tl }
+                  \end{center}
+                \end{minipage}
+              }
           };
       }
     \group_end:
@@ -2925,11 +2990,12 @@
   {
     \node at ([ shift = { (0em, 0.2\paperheight) } ]current~page~text~area.center)
       {
-        \zihao{2} \sffamily \bfseries 
+        \linespread{1} \fontsize{22pt}{35bp}
+        \sffamily \bfseries 
         \parbox [c] { \textwidth }
           {
             \centering
-            论文题目：\l__ccnu_info_title_tl
+            论文题目：\parbox[t]{15em}{ \l__ccnu_info_title_tl }
           }
       };
   }

@@ -600,6 +600,12 @@
   【本｜硕｜博】封面类型。\opt{word} 表示几乎完全按照教务处给的 word 版本模版处理；\opt{math} 表示华中师范大学数学与统计学学院在 word 版本模版基础上进行部分细节调整。
 \end{function}
 
+\begin{function}[added = 2022-12-10]{info/title-line-type}
+  \begin{ccnusyntax}[emph={[1]title-line-type}]
+    title-line-type  = (*<variable|(constant)>*)
+  \end{ccnusyntax}
+  【本｜硕｜博】封面中文标题下划线类型。\opt{variable} 表示下划线只有文字出现的地方才有，也就是不会出现空白处有下划线的情况；\opt{constant} 表示下划线是恒定长度，可能会出现空白处处有下划线。
+\end{function}
 
 \begin{function}{info/title,info/title*}
   \begin{ccnusyntax}[emph={[1]title,title*}]

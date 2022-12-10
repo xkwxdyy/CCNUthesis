@@ -4,6 +4,16 @@
 
 更多关于模版的内容和如何使用，请仔细阅读模版中的 `CCNUthesis.pdf` 用户手册和 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis)！
 
+## [v1.2.11] - 2022-08-09
+
+### Added
+
+- 增加 `title-line-type` 键值
+
+### Changed
+
+- 修改硕博的扉页的中文标题样式
+
 ## [v1.2.10] - 2022-08-09
 
 ### Changed
