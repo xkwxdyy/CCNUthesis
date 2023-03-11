@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\ProvidesExplClass {CCNUthesis} {2022-9-17} {v1.2.11}
+\ProvidesExplClass {CCNUthesis} {2023-02-19} {v1.2.12}
   {Thesis template for Central China Normal University}
 \RequirePackage { l3keys2e, xparse }
 
@@ -823,7 +823,7 @@
 
 \keys_set:nn { ccnu / style }
   {
-    fullwidth-stop = catcode
+    fullwidth-stop = false
   }
 
 % 脚注

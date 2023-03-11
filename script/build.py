@@ -46,7 +46,12 @@ except IndexError:
 
 # 时间
 dateNow = datetime.datetime.now()
-date = str(dateNow.year) + '-' + str(dateNow.month) + '-' + str(dateNow.day)
+# 将月份和日期都变成两位数，否则编译会报错
+month = dateNow.month
+month = f"{month:02d}"
+day = dateNow.day
+day = f"{day:02d}"
+date = str(dateNow.year) + '-' + str(month) + '-' + str(day)
 
 # 压缩包名称
 releaseZipName = 'CCNUthesis-v' + version + '.zip'
@@ -54,10 +59,10 @@ releaseZipName = 'CCNUthesis-v' + version + '.zip'
 # 更新 cls 和 main.tex 的版本
 
 # 正则表达式
-clsDateRegex = re.compile(r'\\ProvidesExplClass\s\{.*\}\s\{(\d{4}-\d{1,2}-\d{2})\}\s\{v(\d+\.\d+\.?\d*)\}')
-texDateRegex = re.compile(r'% update date: \d{4}-\d{1,2}-\d{2}')
-texVersionRegex = re.compile(r'% version: v\d+\.\d+\.?\d*')
-docDateRegex = re.compile(r'\\newcommand\{\\DocDate\}\{(\d{4}-\d{1,2}-\d{2})\}')
+clsDateRegex = re.compile(r'\\ProvidesExplClass\s\{.*\}\s\{(\d{4}-\d{1,2}-\d{1,2})\}\s\{v(\d+\.\d+\.?\d*)\}')
+texDateRegex = re.compile(r'% update date: \d{4}-\d{1,2}-\d{1,2}')
+texVersionRegex = re.compile(r'% version: v\d{1}\.\d{1,2}\.\d{1,2}')
+docDateRegex = re.compile(r'\\newcommand\{\\DocDate\}\{(\d{4}-\d{1,2}-\d{1,2})\}')
 docVersionRegex = re.compile(r'\\newcommand\{\\DocVersion\}\{v(\d+\.\d+\.?\d*)\}')
 
 
@@ -79,7 +84,7 @@ with open(originPath / clsFile, 'r') as file:
 with open(originPath / exampleFiles[1], 'r') as file:
     content = file.read()
     content = texDateRegex.sub(f'% update date: {date}', content)
-    content = texVersionRegex.sub(f'% version: {version}', content)
+    content = texVersionRegex.sub(f'% version: v{version}', content)
     with open(originPath / exampleFiles[1], 'w') as newFile:
         newFile.write(content)
 
@@ -97,13 +102,17 @@ with open(docPath / 'CCNUthesis-doc.tex', 'r') as file:
 
 # 先将 working directory 改到 doc 再编译，这样可以使得一些相对路径不依赖 py 的位置
 # （其实就是相对路径要相对 tex 文件，所以要到那个目录下）
-os.chdir(originPath)
-subprocess.run(['latexmk', '-xelatex', exampleFiles[1]])  # 编译示例文件
 
-os.chdir(docPath)
-LaTeXcompile = subprocess.run(['latexmk', '-xelatex', 'CCNUthesis-doc.tex'], capture_output=True)
+# 编译示例文件
+os.chdir(originPath)
+LaTeXcompile = subprocess.run(['latexmk', '-xelatex', exampleFiles[1]], capture_output=True)  
 
 out = LaTeXcompile.stdout
+
+if out != '':
+    os.chdir(docPath)
+    LaTeXcompile = subprocess.run(['latexmk', '-xelatex', 'CCNUthesis-doc.tex'], capture_output=True)
+    out = LaTeXcompile.stdout
 
 # 复制文件到 release 并压缩
 

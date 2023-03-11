@@ -549,9 +549,9 @@
 %   将使用 \biber{} 处理文献，样式则由 \pkg{biblatex} 宏包负责。
 % \end{function}
 
-\begin{function}{style/bib-style}
+\begin{function}[updated = 2023-03-11]{style/bib-style}
   \begin{ccnusyntax}[emph={[1]bib-style}]
-    bib-style = (*<(ccnu-bachelor-numerical)|ccnu-bachelor-author-year|ccnu-master|ccnu-doctor|gb7714-2015>*)
+    bib-style = (*<(ccnu-bachelor-numerical)|ccnu-bachelor-author-year|ccnu-master|ccnu-doctor|gb7714-2015|gb7714-2015ay>*)
   \end{ccnusyntax}
   【本｜硕｜博】设置参考文献样式。
   \begin{itemize}
@@ -560,6 +560,7 @@
     \item \opt{ccnu-master}：国家标准 GB/T 7714--2015 的顺序编码制
     \item \opt{ccnu-doctor}：国家标准 GB/T 7714--2015 的顺序编码制
     \item \opt{gb7714-2015}：国家标准 GB/T 7714--2015 的顺序编码制
+    \item \opt{gb7714-2015ay}：国家标准 GB/T 7714--2015 的作者-年制
   \end{itemize}
   % \opt{author-year} 和 \opt{numerical} 分别对应国家标准 GB/T 7714--2015 \cite{gb-t-7714-2015} 中的著者—出版年制和顺序编码制。
   % 选择 \meta{其他样式} 时，如果 \kvopt{bib-backend}{bibtex}，需保证相应的 \file{.bst} 格式文件能被调用；而如果\kvopt{bib-backend}{biblatex}，则需保证相应的 \file{.bbx} 格式文件能被调用。
