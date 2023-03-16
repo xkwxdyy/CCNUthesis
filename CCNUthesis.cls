@@ -281,13 +281,20 @@
 % 行距
 \int_case:nn { \g__ccnu_thesis_type_int }
   {
-    % 本科采用默认效果
+    % 本科 1.5 倍行距
     {3}
       {
-        \PassOptionsToPackage  { restoremathleading } { zhlineskip }
+        % \PassOptionsToPackage  { restoremathleading } { zhlineskip }
+        \PassOptionsToPackage 
+          {
+            restoremathleading,
+            UseMSWordMultipleLineSpacing,
+            MSWordLineSpacingMultiple   = 1.5
+          }
+          { zhlineskip }
       }
     %   { \PassOptionsToClass { linespread = \c__ccnu_line_spread_fp } { ctexbook } }
-    % 硕士行距：多倍1.25 倍
+    % 硕士行距：多倍 1.25 倍
     {2} 
       {
         % \PassOptionsToClass { linespread = \g__ccnu_doctor_linespread_ration_fp\c__ccnu_line_spread_fp } { ctexbook } 
@@ -2294,7 +2301,7 @@
                         \dim_while_do:nNnn { \l__ccnu_title_tmp_height_dim } > { 0pt }
                           {
                             \mode_leave_vertical:
-                            \rlap { \__ccnu_title_underline_multiline: }\\[0.5em]
+                            \rlap { \__ccnu_title_underline_multiline: }\\
                             \dim_sub:Nn \l__ccnu_title_tmp_height_dim { \normalbaselineskip }
                             % 手动居中下划线
                           }
@@ -3545,6 +3552,7 @@
                       format = \zihao{-2} \normalfont \bfseries \centering,
                     }
                 }
+              \__ccnu_line_spread:n { 1.25 }
             }
             {
               \__ccnu_line_spread:n { 1 }
@@ -3710,6 +3718,7 @@
     \c_space_tl \c_space_tl
     \clist_use:Nn \l__ccnu_info_keywords_clist 
       { \qquad }
+    \par
   }
 \cs_new:Npn \__ccnu_abstract_en_begin_bachelor:
   { 
@@ -3718,13 +3727,13 @@
       { chapter/break = { \addpenalty { \@secpenalty } } }
     % 超链接 Title
     \chapter*{}
-    \vskip-3.2em
+    \vskip-1.5em
     \phantomsection
     % 把 Title 写进目录
     \addcontentsline { toc } { chapter }
       { \normalfont Title }
     \textbf{ Title: } \c_space_tl \l__ccnu_info_title_en_tl \par
-    \medskip
+    % \medskip
     \phantomsection
     \textbf { \c__ccnu_name_abstract_en_tl : }
     \c_space_tl \c_space_tl

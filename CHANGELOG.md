@@ -5,6 +5,14 @@
 更多关于模版的内容和如何使用，请仔细阅读模版中的 `CCNUthesis.pdf` 用户手册和 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis)！
 
 
+## [v1.2.13] - 2023-03-16
+
+### Changed
+
+- 修改本科生的行间距为1.5倍并调整一些细节
+
+
+
 ## [v1.2.13] - 2023-03-11
 
 ### Added
