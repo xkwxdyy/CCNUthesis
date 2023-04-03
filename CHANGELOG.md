@@ -5,6 +5,13 @@
 更多关于模版的内容和如何使用，请仔细阅读模版中的 `CCNUthesis.pdf` 用户手册和 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis)！
 
 
+## [v1.2.14] - 2023-04-03
+
+### Changed
+
+- 调节硕博 `head-scope` 不同值时，扉页的内容垂直间距
+
+
 ## [v1.2.13] - 2023-03-16
 
 ### Changed

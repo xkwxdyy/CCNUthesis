@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\ProvidesExplClass {CCNUthesis} {2023-02-19} {v1.2.12}
+\ProvidesExplClass {CCNUthesis} {2023-03-28} {v1.2.13}
   {Thesis template for Central China Normal University}
 \RequirePackage { l3keys2e, xparse }
 
@@ -2980,31 +2980,63 @@
 % 论文类型
 \cs_new:Npn \__ccnu_cover_ii_master_doctor_degree_type:
   {
-    \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
+    \bool_if:NTF \g__ccnu_head_scope_all_bool
       {
-        \node [ anchor = north ] at 
-          ( [ shift = { (0em, 0em) } ] current~page~text~area.north ) 
-          { \zihao{1} \sffamily \bfseries 硕士学位论文 };
+        \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
+          {
+            \node [ anchor = north ] at 
+              ( [ shift = { (0em, -3em) } ] current~page~text~area.north ) 
+              { \zihao{1} \sffamily \bfseries 硕士学位论文 };
+          }
+          {
+            \node [ anchor = north ] at 
+              ( [ shift = { (0em, -5em) } ] current~page~text~area.north ) 
+              { \zihao{1} \sffamily \bfseries 博士学位论文 };
+          }
       }
       {
-        \node [ anchor = north ] at 
-          ( [ shift = { (0em, 0em) } ] current~page~text~area.north ) 
-          { \zihao{1} \sffamily \bfseries 博士学位论文 };
+        \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
+          {
+            \node [ anchor = north ] at 
+              ( [ shift = { (0em, -1em) } ] current~page~text~area.north ) 
+              { \zihao{1} \sffamily \bfseries 硕士学位论文 };
+          }
+          {
+            \node [ anchor = north ] at 
+              ( [ shift = { (0em, -1em) } ] current~page~text~area.north ) 
+              { \zihao{1} \sffamily \bfseries 博士学位论文 };
+          }
       }
   }
 % 标题
 \cs_new:Npn \__ccnu_cover_ii_master_doctor_title:
   {
-    \node at ([ shift = { (0em, 0.2\paperheight) } ]current~page~text~area.center)
+    \bool_if:NTF \g__ccnu_head_scope_all_bool
       {
-        \linespread{1} \fontsize{22pt}{35bp}
-        \sffamily \bfseries 
-        \parbox [c] { \textwidth }
+        \node at ([ shift = { (0em, 0.15\paperheight) } ]current~page~text~area.center)
           {
-            \centering
-            论文题目：\parbox[t]{15em}{ \l__ccnu_info_title_tl }
-          }
-      };
+            \linespread{1} \fontsize{22pt}{35bp}
+            \sffamily \bfseries 
+            \parbox [c] { \textwidth }
+              {
+                \centering
+                论文题目：\parbox[t]{15em}{ \l__ccnu_info_title_tl }
+              }
+          };
+      }
+      {
+        \node at ([ shift = { (0em, 0.18\paperheight) } ]current~page~text~area.center)
+          {
+            \linespread{1} \fontsize{22pt}{35bp}
+            \sffamily \bfseries 
+            \parbox [c] { \textwidth }
+              {
+                \centering
+                论文题目：\parbox[t]{15em}{ \l__ccnu_info_title_tl }
+              }
+          };
+      }
+    
   }
 % 个人信息
 \cs_new:Npn \__ccnu_cover_ii_master_doctor_infomation:
@@ -3083,43 +3115,89 @@
   {
     \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
       {
-        \node [anchor = north] (title) at
-          (
-            [ shift = { (0em, 0em) } ]
-            current~page~text~area.north
-          )
+        \bool_if:NTF \g__ccnu_head_scope_all_bool
           {
-            \parbox { \textwidth }
+            \node [anchor = north] (title) at
+              (
+                [ shift = { (0em, -4em) } ]
+                current~page~text~area.north
+              )
               {
-                \bfseries \centering
-                \fontsize{30bp}{35pt}\selectfont
-                \l__ccnu_info_title_en_tl
-              }
-          };
+                \parbox { \textwidth }
+                  {
+                    \bfseries \centering
+                    \fontsize{30bp}{35pt}\selectfont
+                    \l__ccnu_info_title_en_tl
+                  }
+              };
+          }
+          {
+            \node [anchor = north] (title) at
+              (
+                [ shift = { (0em, -2em) } ]
+                current~page~text~area.north
+              )
+              {
+                \parbox { \textwidth }
+                  {
+                    \bfseries \centering
+                    \fontsize{30bp}{35pt}\selectfont
+                    \l__ccnu_info_title_en_tl
+                  }
+              };
+          }
       }
       {
-        \node [anchor = north] (title) at
-          (
-            [ shift = { (0em, 0em) } ]
-            current~page~text~area.north
-          )
+        \bool_if:NTF \g__ccnu_head_scope_all_bool
           {
-            \bfseries \zihao{-0}
-            Dissertation
-          };
-        \node [anchor = north] (title) at
-          (
-            [ shift = { (0em, -0.1\paperheight) } ]
-            current~page~text~area.north
-          )
-          {
-            \parbox { \textwidth }
+            \node [anchor = north] (dissertation) at
+              (
+                [ shift = { (0em, -4em) } ]
+                current~page~text~area.north
+              )
               {
-                \bfseries \centering
-                \fontsize{30bp}{35pt}\selectfont
-                \l__ccnu_info_title_en_tl
-              }
-          };
+                \bfseries \zihao{-0}
+                Dissertation
+              };
+            \node [anchor = north] (title) at
+              (
+                [ shift = { (0em, -0.1\paperheight) } ]
+                dissertation.north
+              )
+              {
+                \parbox { \textwidth }
+                  {
+                    \bfseries \centering
+                    \fontsize{30bp}{35pt}\selectfont
+                    \l__ccnu_info_title_en_tl
+                  }
+              };
+          }
+          {
+            \node [anchor = north] (dissertation) at
+              (
+                [ shift = { (0em, -2em) } ]
+                current~page~text~area.north
+              )
+              {
+                \bfseries \zihao{-0}
+                Dissertation
+              };
+            \node [anchor = north] (title) at
+              (
+                [ shift = { (0em, -0.1\paperheight) } ]
+                dissertation.north
+              )
+              {
+                \parbox { \textwidth }
+                  {
+                    \bfseries \centering
+                    \fontsize{30bp}{35pt}\selectfont
+                    \l__ccnu_info_title_en_tl
+                  }
+              };
+          }
+        
       }
   }
 % 学位申请
