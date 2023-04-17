@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\ProvidesExplClass {CCNUthesis} {2023-03-28} {v1.2.13}
+\ProvidesExplClass {CCNUthesis} {2023-04-16} {v1.2.14}
   {Thesis template for Central China Normal University}
 \RequirePackage { l3keys2e, xparse }
 
@@ -247,12 +247,24 @@
       },
     version .value_required:n = true,
     version .initial:n = electronic,
+    blind-version .bool_set:N = \g__ccnu_blind_version_bool,
+    blind-version .initial:n = false,
+    blind-version .default:n = true,
     unknown .code:n = { \__ccnu_error:n { unknown-option } }
   }
 \__ccnu_msg_new:nn { unknown-option }
   { Class~ option~ "\l_keys_key_str"~ is~ unknown. }
 \ProcessKeysOptions { ccnu / option }
 
+
+\AtBeginDocument
+  {
+    \bool_if:NT \g__ccnu_blind_version_bool
+      {
+        \keys_set:nn { ccnu / style }
+          { show-head = false }
+      }
+  }
 
 
 % ctexbook 选项处理
@@ -340,7 +352,7 @@
     etoolbox,          % 补丁
     amsthm,            % 定理类环境
     thmtools,          % 定理类环境
-    xeCJKfntef,         % 下划线
+    xeCJKfntef,        % 下划线
     zhlineskip         % 行距
   }
 \RequirePackage[shortlabels]{enumitem}   % 列表环境
@@ -2576,16 +2588,19 @@
       {
         \dim_set:Nn \l__ccnu_tmpa_dim { -0.29\paperheight }
       }
-    \node ( logo ) at 
-      (
-        [ shift = { ( 0em , \l__ccnu_tmpa_dim ) } ]
-          current~page.north
-      )
+    \bool_if:NF \g__ccnu_blind_version_bool
       {
-        \includegraphics
-          [ height = 3.5em, width = 0.4\textwidth ]
-          { ccnulogo.png } 
-      };
+        \node ( logo ) at 
+          (
+            [ shift = { ( 0em , \l__ccnu_tmpa_dim ) } ]
+              current~page.north
+          )
+          {
+            \includegraphics
+              [ height = 3.5em, width = 0.4\textwidth ]
+              { ccnulogo.png } 
+          };
+      }
   }
 
 % 论文类型
@@ -2783,16 +2798,20 @@
         \dim_set:Nn \l__ccnu_tmpa_dim 
           { -0.25\paperheight }
       }
-    \node ( logo ) at 
-      (
-        [ shift = { ( 0em , \l__ccnu_tmpa_dim ) } ]
-          current~page.north
-      )
+    \bool_if:NF \g__ccnu_blind_version_bool
       {
-        \includegraphics
-          [ height = 3.5em, width = 0.4\textwidth ]
-          { logo / ccnulogo.png } 
-      };
+        \node ( logo ) at 
+          (
+            [ shift = { ( 0em , \l__ccnu_tmpa_dim ) } ]
+              current~page.north
+          )
+          {
+            \includegraphics
+              [ height = 3.5em, width = 0.4\textwidth ]
+              { logo / ccnulogo.png } 
+          };
+      }
+    
   }
 
 % 论文类型
@@ -2931,6 +2950,13 @@
           current~page~text~area.south
         )
         {
+          % \tl_set:Nx \l__ccnu_tmpa_tl { \hphantom{\l__ccnu_info_author_tl} }
+          % \tl_set:Nx \l__ccnu_tmpb_tl { \hphantom{\l__ccnu_info_supervisor_tl} }
+          \bool_if:NT \g__ccnu_blind_version_bool
+            {
+              \tl_set:Nn \l__ccnu_info_author_tl {\mbox{}}
+              \tl_set:Nn \l__ccnu_info_supervisor_tl {\mbox{}}
+            }
           \begin{minipage} [ c ] { \textwidth }
             \centering \zihao {3}  \bfseries
             \clist_set:Nx \l__ccnu_tmpa_clist
@@ -3043,6 +3069,11 @@
   {
     \node [] at ([ shift = { (3em, -5em) } ]current~page~text~area.center)
       {
+        \bool_if:NT \g__ccnu_blind_version_bool
+          {
+            \tl_set:Nn \l__ccnu_info_author_tl {\mbox{}}
+            \tl_set:Nn \l__ccnu_info_supervisor_tl {\mbox{}}
+          }
         \begin{minipage} [ c ] { \textwidth }
           \centering \zihao {-2} \sffamily \bfseries
           \clist_set:Nx \l__ccnu_tmpa_clist
@@ -3083,15 +3114,19 @@
 % 学院
 \cs_new:Npn \__ccnu_cover_ii_master_doctor_department:
   {
-    \node [anchor = south] (department) at
-      (
-        [ shift = { (0em, 4em) } ]
-        current~page~text~area.south
-      )
+    \bool_if:NF \g__ccnu_blind_version_bool
       {
-        \sffamily \bfseries \zihao{-2}
-        华中师范大学 \l__ccnu_info_department_tl
-      };
+        \node [anchor = south] (department) at
+          (
+            [ shift = { (0em, 4em) } ]
+            current~page~text~area.south
+          )
+          {
+            \sffamily \bfseries \zihao{-2}
+            华中师范大学 \l__ccnu_info_department_tl
+          };
+      }
+    
   }
 % 时间
 \cs_new:Npn \__ccnu_cover_ii_master_doctor_time:
@@ -3224,6 +3259,12 @@
 % 个人信息
 \cs_new:Npn \__ccnu_cover_iii_master_doctor_author_infomation:
   {
+    \bool_if:NT \g__ccnu_blind_version_bool
+      {
+        \tl_set:Nn \l__ccnu_info_author_en_tl {\mbox{}}
+        \tl_set:Nn \l__ccnu_info_supervisor_name_en_tl {\mbox{}}
+        \tl_set:Nn \l__ccnu_info_supervisor_academic_title_name_en_tl {\mbox{}}
+      }
     \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
       {
         \node [anchor = north] (author_infomation)  
@@ -3235,8 +3276,12 @@
                 By \\
                 \l__ccnu_info_author_en_tl \\
                 Postgraduate~Program \\
-                \l__ccnu_info_department_en_tl \\
-                Central~China~Normal~University
+                \bool_if:NF \g__ccnu_blind_version_bool
+                  {
+                    \l__ccnu_info_department_en_tl \\
+                    Central~China~Normal~University
+                  }
+                
               }
           };
       }
@@ -3261,19 +3306,22 @@
   {
     \int_compare:nNnT { \g__ccnu_thesis_type_int } = {1}
       {
-        \node [anchor = south]  at
-          (
-            [ shift = { (0em, 0.1\paperheight) } ]
-            current~page~text~area.south
-          )
+        \bool_if:NF \g__ccnu_blind_version_bool
           {
-            \parbox { \textwidth }
+            \node [anchor = south]  at
+              (
+                [ shift = { (0em, 0.1\paperheight) } ]
+                current~page~text~area.south
+              )
               {
-                \centering \zihao{3} \bfseries
-                \l__ccnu_info_department_en_tl \\
-                Central~China~Normal~University
-              }
-          };
+                \parbox { \textwidth }
+                  {
+                    \centering \zihao{3} \bfseries
+                    \l__ccnu_info_department_en_tl \\
+                    Central~China~Normal~University
+                  }
+              };
+          }
       }
   }
 % 导师信息
@@ -3460,27 +3508,32 @@
               { print-doctor-twoside } {}
             }
             { \__ccnu_new_blank_page: }
+            % {}
             { \newpage }
           \__ccnu_cover_ii_master_doctor:
           \newpage
           \__ccnu_cover_iii_master_doctor:
-          \newpage
-          % 版权页
-          \begin{tikzpicture} [remember~picture, overlay]
-            \node at (current~page.center) 
-              {
-                \includegraphics
-                  [ width = \Gm@layoutwidth, height = \Gm@layoutheight ]
-                    { Originality_Copyright_master_doctor.pdf }
-              };
-          \end{tikzpicture}
+          \bool_if:NF \g__ccnu_blind_version_bool
+            {
+              \newpage
+              % 版权页
+              \begin{tikzpicture} [remember~picture, overlay]
+                \node at (current~page.center) 
+                  {
+                    \includegraphics
+                      [ width = \Gm@layoutwidth, height = \Gm@layoutheight ]
+                        { Originality_Copyright_master_doctor.pdf }
+                  };
+              \end{tikzpicture}
+            }
           \str_case:VnTF \g__ccnu_type_version_str
             {
               { print-master-twoside } {}
               { print-doctor-twoside } {}
             }
             { \__ccnu_new_blank_page: }
-            { \newpage }
+            { \newpage \thispagestyle{empty} }
+            % {}
         }
     \end{titlepage}
   }
@@ -3521,21 +3574,6 @@
         tocdepth = 2 ,
         % 目录标题
         contentsname   = \c__ccnu_name_toc_tl,
-        chapter / tocline =
-          {
-            \normalfont \bfseries \texorpdfstring{ \zihao{-4} }{ zihao -4 }
-            \CTEXnumberline {##1} ##2
-          },
-        section / tocline =
-          {
-            \normalfont \texorpdfstring{ \zihao{-4} }{ zihao -4 }
-            \CTEXnumberline {##1} ##2
-          },
-        subsection / tocline =
-          {
-            \normalfont \texorpdfstring{ \zihao{-4} }{ zihao -4 }
-            \CTEXnumberline {##1} ##2
-          }
       }
   }
 \cs_new:Npn \__ccnu_tocline_doctor:
@@ -3546,21 +3584,6 @@
         tocdepth = 2 ,
         % 目录标题
         contentsname   = \c__ccnu_name_toc_tl,
-        chapter / tocline =
-          {
-            \normalfont \bfseries \texorpdfstring{ \zihao{5} }{ zihao 5 }
-            \CTEXnumberline {##1} ##2
-          },
-        section / tocline =
-          {
-            \normalfont \texorpdfstring{ \zihao{5} }{ zihao 5 }
-            \CTEXnumberline {##1} ##2
-          },
-        subsection / tocline =
-          {
-            \normalfont \texorpdfstring{ \zihao{5} }{ zihao 5 }
-            \CTEXnumberline {##1} ##2
-          }
       }
   }
 \int_case:nn { \g__ccnu_thesis_type_int }
@@ -3692,7 +3715,12 @@
     \dim_set:Nn \cftchapnumwidth { 1em }
     \dim_set:Nn \cftsecnumwidth { 1em }
     \dim_set:Nn \cftsubsecnumwidth { 1em }
-    % 页码字体
+    \RenewDocumentCommand { \cftchapfont } { }
+      { \zihao{-4} \normalfont \bfseries }
+    \RenewDocumentCommand { \cftsecfont } { }
+      { \zihao{-4} \normalfont }
+    \RenewDocumentCommand { \cftsubsecfont } { }
+      { \zihao{-4} \normalfont }
     \RenewDocumentCommand { \cftchappagefont } { }
       { \zihao{5} \normalfont }
     \RenewDocumentCommand { \cftsecpagefont } { }
@@ -3718,6 +3746,12 @@
     \dim_set:Nn \cftchapnumwidth { 1em }
     \dim_set:Nn \cftsecnumwidth { 1em }
     \dim_set:Nn \cftsubsecnumwidth { 1em }
+    \RenewDocumentCommand { \cftchapfont } { }
+      { \zihao{5} \normalfont \bfseries }
+    \RenewDocumentCommand { \cftsecfont } { }
+      { \zihao{5} \normalfont }
+    \RenewDocumentCommand { \cftsubsecfont } { }
+      { \zihao{5} \normalfont }
     % 页码字体
     \RenewDocumentCommand { \cftchappagefont } { }
       { \zihao{5} \normalfont }
@@ -3814,7 +3848,7 @@
     % \medskip
     \phantomsection
     \textbf { \c__ccnu_name_abstract_en_tl : }
-    \c_space_tl \c_space_tl
+    % \c_space_tl \c_space_tl
     % 把 abstract 写进目录
     \addcontentsline { toc } { chapter }
       { \normalfont \tl_use:N \c__ccnu_name_abstract_en_tl}
@@ -3841,7 +3875,7 @@
 % 硕博的摘要
 \cs_new:Npn \__ccnu_abstract_begin_master_doctor:
   { 
-    \newpage
+    % \newpage
     \pagenumbering { Roman }
     \keys_set:nn { ctex }
       {

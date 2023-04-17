@@ -5,6 +5,34 @@
 更多关于模版的内容和如何使用，请仔细阅读模版中的 `CCNUthesis.pdf` 用户手册和 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis)！
 
 
+## [v1.2.15] - 2023-04-17
+
+### Changed
+
+- 修改 `choices` 环境的缩进
+
+
+## [v1.2.14] - 2023-04-13
+
+### Fixed
+
+- 修复书签的“zihao”问题（#8）
+
+
+## [v1.2.14] - 2023-04-07
+
+
+### Added
+
+- 增加盲审的信息去除接口
+
+
+### Changed
+
+- 去掉 "Abstract:" 后面的空格
+
+
+
 ## [v1.2.14] - 2023-04-03
 
 ### Changed

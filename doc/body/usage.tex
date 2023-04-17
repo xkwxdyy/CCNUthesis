@@ -100,6 +100,14 @@
 注意：对于硕博的模版，\parencite{研究生院研究生学位论文规范} 中提到的“封面、原创性声明和使用授权书采用单面印刷，中英文扉页、摘要及后续内容采用双面印刷（硕士学位论文可以单面印刷）。” 实现方式即为在所需要单面印刷的后面加一页空白页，然后全部双面打印即可，这个就是上面键值的设计想法，用户不需要自己手动加空白页，只需要选择自己对应所需版本就会对应自动判断是否添加空白页。
 
 
+\begin{function}[added = 2023-04-07]{blind-version}
+  \begin{ccnusyntax}[emph={[1]blind-version}]
+    blind-version = (*<\TFF>*)
+  \end{ccnusyntax}
+  【硕｜博】盲审版本。\kvopt{blind-version}{true} 或省略 \kvopt{}{true} 都表示开启盲审版本。\kvopt{blind-version}{false} 表示不开启。开启后，校徽、姓名、导师姓名、职称、版权声明页会去掉，并且去掉页眉。注意致谢、参考文献等的盲审处理需要用户自行处理，一切以学院的要求为准。
+\end{function}
+
+
 % \begin{function}{oneside,twoside}
 %   指明论文的单双面模式，默认为 \opt{twoside}。该选项会影响每章
 %   的开始位置，还会影响页眉样式。

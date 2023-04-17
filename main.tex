@@ -4,8 +4,8 @@
 
 %********************************************
 % CCNUthesis: 华中师范大学论文模板
-% update date: 2023-02-19
-% version: v1.2.12
+% update date: 2023-04-16
+% version: v1.2.14
 %
 % 重要提示：
 %   1. 请确保使用 UTF-8 编码保存
@@ -15,10 +15,13 @@
 %********************************************
 
 
-\documentclass[type = bachelor]{CCNUthesis}
+% \documentclass[type = bachelor]{CCNUthesis}
+% \documentclass[type = bachelor, blind-version]{CCNUthesis}
 % \documentclass[type = master]{CCNUthesis}
+% \documentclass[type = master, blind-version]{CCNUthesis}
 % \documentclass[type = master, version = print-master-twoside]{CCNUthesis}
 % \documentclass[type = doctor]{CCNUthesis}
+\documentclass[type = doctor,blind-version]{CCNUthesis}
 % \documentclass[type = doctor, version = print-doctor-twoside]{CCNUthesis}
 
 
@@ -36,6 +39,13 @@
 %     print-master-oneside：打印版，硕士，无空白页，单面打印
 %     print-master-twoside：打印版，硕士，有空白页，双面打印
 %     print-doctor-twoside：打印版，博士，有空白页，双面打印
+
+% blind-version
+% 盲审版本
+%    可选选项：true|false
+%    默认：false
+%    blind-version 或 blind-version = true：开启盲审版本，校徽、姓名、导师姓名、声明页等会去掉
+%    blind-version = false：正常编译
 
 
 % 加载用户的个人信息和论文相关参数设置的配置文件
