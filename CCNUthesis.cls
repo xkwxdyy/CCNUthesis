@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\ProvidesExplClass {CCNUthesis} {2023-04-16} {v1.2.14}
+\ProvidesExplClass {CCNUthesis} {2023-04-18} {v1.2.15}
   {Thesis template for Central China Normal University}
 \RequirePackage { l3keys2e, xparse }
 
@@ -4107,7 +4107,7 @@
 
 % 参考文献
 
-\bool_new:N \l__ccnu_bibtex_bool
+% \bool_new:N \l__ccnu_bibtex_bool
 \tl_new:N \l__ccnu_bib_style_tl
 \tl_new:N \l__ccnu_biblatex_bibstyle_tl
 \tl_new:N \l__ccnu_bib_gb_style_tl
@@ -4319,7 +4319,7 @@
       }
     \exp_args:NV \hypersetup \g__ccnu_to_hyperref_clist
     \ccnu_allow_url_break:
-    \bool_if:NF \l__ccnu_bibtex_bool { \BiblatexManualHyperrefOn }
+    % \bool_if:NF \l__ccnu_bibtex_bool { \BiblatexManualHyperrefOn }
   }
 \ctex_at_end_package:nn { hyperref }
   {
