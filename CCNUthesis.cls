@@ -4417,7 +4417,6 @@
     % 计算每个选项内容的宽度 \l__ccnu_choices_item_width_dim
     \__ccnu_choices_calc_item_width:
     % 输出选项
-    \indent
     \__ccnu_print_choices:N \l__ccnu_choices_seq
   }
 

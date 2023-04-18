@@ -1,0 +1,28 @@
+\documentclass{CCNUthesis}
+\ccnusetup{
+  % 统一设置 choices 环境
+  choices = {
+    label = \Alph*.,  % label 的样式
+    max-columns = 2   % 设置每行最多 2 个选项
+  }
+}
+
+\begin{document}
+
+\begin{enumerate}[itemindent=2em, leftmargin = 2em]
+  \item 您的性别是?
+  \begin{choices}
+    \item 男
+    \item 女
+  \end{choices}
+  \item 您的年龄所在区间是?
+  \begin{choices}
+    \item [0, 18]
+    \item [19, 30]
+    \item [31, 50]
+    \item 大于50
+  \end{choices}
+\end{enumerate}
+
+
+\end{document}
