@@ -4,12 +4,11 @@
 
 更多关于模版的内容和如何使用，请仔细阅读模版中的 `CCNUthesis.pdf` 用户手册和 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis)！
 
+## [v1.2.15] - 2023-04-20
 
-## [v1.2.15] - 2023-04-17
+### Fixed
 
-### Changed
-
-- 修改 `choices` 环境的缩进
+- 修复编译参考文献的 `undefined control sequence` 问题
 
 
 ## [v1.2.14] - 2023-04-13
