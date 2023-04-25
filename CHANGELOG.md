@@ -4,6 +4,14 @@
 
 更多关于模版的内容和如何使用，请仔细阅读模版中的 `CCNUthesis.pdf` 用户手册和 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis)！
 
+
+## [v1.2.16] - 2023-04-26
+
+### Fixed
+
+- 修复博士模版盲审时多一页空白页的问题
+  
+
 ## [v1.2.15] - 2023-04-20
 
 ### Fixed

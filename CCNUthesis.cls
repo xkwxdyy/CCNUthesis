@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\ProvidesExplClass {CCNUthesis} {2023-04-18} {v1.2.14}
+\ProvidesExplClass {CCNUthesis} {2023-04-20} {v1.2.15}
   {Thesis template for Central China Normal University}
 \RequirePackage { l3keys2e, xparse }
 
@@ -272,7 +272,7 @@
 % 正文字号
 \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {1}
   {
-    \PassOptionsToClass { zihao  = 5, twoside } { ctexbook }
+    \PassOptionsToClass { zihao  = 5, oneside } { ctexbook }
   }
   {
     \PassOptionsToClass { zihao  = -4, oneside } { ctexbook }
@@ -1327,7 +1327,7 @@
               {
                 % logo
                 \fancyhead [ L ] 
-                  { \includegraphics[width = 5cm]{ masterlogo.png } }
+                  { \includegraphics[width = 5cm]{ logo / masterlogo.png } }
               }
             % 页眉线
             \__ccnu_headline:
@@ -1343,7 +1343,7 @@
               {
                 % logo
                 \fancyhead [ L ] 
-                  { \includegraphics[width = 7cm]{ doctorlogo.png } }
+                  { \includegraphics[width = 7cm]{ logo / doctorlogo.png } }
               }
             % 页眉线
             \__ccnu_headline:
@@ -1364,7 +1364,7 @@
               {
                 % logo
                 \fancyhead [ L ] 
-                  { \includegraphics[width = 5cm]{ masterlogo.png } }
+                  { \includegraphics[width = 5cm]{ logo / masterlogo.png } }
               }
             % 页眉线
             \__ccnu_headline:
@@ -1379,7 +1379,7 @@
               {
                 % logo
                 \fancyhead [ L ] 
-                  { \includegraphics[width = 7cm]{ doctorlogo.png } }                
+                  { \includegraphics[width = 7cm]{ logo / doctorlogo.png } }                
               }
             % 页眉线
             \__ccnu_headline:
@@ -1400,7 +1400,7 @@
       {
         % logo
         \fancyhead [ L ] 
-          { \includegraphics[width = 5cm]{ masterlogo.png } }        
+          { \includegraphics[ width = 5cm ]{ logo / masterlogo.png } }        
       }
     % 页眉线
     \__ccnu_headline:
@@ -1414,7 +1414,7 @@
       {
         % logo
         \fancyhead [ L ] 
-          { \includegraphics[width = 5cm]{ masterlogo.png } }
+          { \includegraphics[width = 5cm]{ logo / masterlogo.png } }
       }
     % 页眉线
     \__ccnu_headline:
@@ -1433,7 +1433,7 @@
       {
         % logo
         \fancyhead [ L ] 
-          { \includegraphics[width = 7cm]{ doctorlogo.png } }
+          { \includegraphics[width = 7cm]{ logo/ doctorlogo.png } }
       }
     % 页眉线
     \__ccnu_headline:
@@ -1447,7 +1447,7 @@
       {
         % logo
         \fancyhead [ L ] 
-          { \includegraphics[width = 7cm]{ doctorlogo.png } }
+          { \includegraphics[width = 7cm]{ logo / doctorlogo.png } }
       }
     % 页眉线
     \__ccnu_headline:
@@ -2598,7 +2598,7 @@
           {
             \includegraphics
               [ height = 3.5em, width = 0.4\textwidth ]
-              { ccnulogo.png } 
+              { logo / ccnulogo.png } 
           };
       }
   }
@@ -3485,7 +3485,7 @@
               {
                 \includegraphics
                   [ width = \Gm@layoutwidth, height = \Gm@layoutheight ]
-                    { Originality_Copyright.pdf }
+                    { copyright / Originality_Copyright.pdf }
               };
           \end{tikzpicture}
         }
@@ -3522,7 +3522,7 @@
                   {
                     \includegraphics
                       [ width = \Gm@layoutwidth, height = \Gm@layoutheight ]
-                        { Originality_Copyright_master_doctor.pdf }
+                        { copyright / Originality_Copyright_master_doctor.pdf }
                   };
               \end{tikzpicture}
             }
