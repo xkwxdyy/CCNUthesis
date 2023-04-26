@@ -3887,23 +3887,10 @@
           }
       }
     \__ccnu_pagestyle_setting_before_abstract:
-    % \show\chapter
     \chapter {摘 \quad 要}
-    % \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
-    %   {
-    %     \addcontentsline { toc } { chapter }
-    %       { \bfseries \zihao{-4} 摘要 }
-    %   }
-    %   {
-    %     \addcontentsline { toc } { chapter }
-    %       { \bfseries \zihao{5} 摘要 }
-    %   }
     \group_begin:
       \keys_set:nn { ctex }
         { punct = quanjiao }
-      % \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
-      %   { \zihao{-4} }
-      %   { \linespread{1}\fontsize{10.5pt}{19bp} \selectfont }
   }
 \cs_new:Npn \__ccnu_abstract_end_master_doctor:
   {
@@ -3938,9 +3925,6 @@
     \group_begin:
       \keys_set:nn { ctex }
         { punct = banjiao }
-      % \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
-      %   { \zihao{-4} }
-      %   { \linespread{1}\fontsize{10.5pt}{19bp} \selectfont }
   }
 \cs_new:Npn \__ccnu_abstract_en_end_master_doctor:
   {
@@ -3983,11 +3967,6 @@
                   format = \zihao{-2} \normalfont \bfseries \centering
                 }
             }
-          % \patchcmd
-          %   { \chapter }
-          %   { \pagestyle { plain } }
-          %   { \thispagestyle { plain } }
-          %   {} { \fail }
           \bool_if:NT \g__ccnu_listoffigures_show_bool
             { 
               \listoffigures 
@@ -4732,3 +4711,14 @@
   { Invalid~ circled~ number~ #1. }
 
 \AddChoicesCounter \circlednumber \__ccnu_choices_circled_number:n {1}
+
+
+% 公式相关处理
+
+% 硕博的公式编号没有括号
+% 研究生学位论文规范：http://gs.ccnu.edu.cn/info/1049/1398.htm
+% “公式在文中应该另起一行居中横排，分章节用阿拉伯数字连续编排，如：公式1.3、公式5.7，其标注应于该公式所在行的最右侧。”
+\int_compare:nNnF { \g__ccnu_thesis_type_int } = {3}
+  {
+    \def\tagform@#1{\maketag@@@{\ignorespaces#1\unskip\@@italiccorr}}
+  }
