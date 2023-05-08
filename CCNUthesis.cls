@@ -4722,3 +4722,11 @@
   {
     \def\tagform@#1{\maketag@@@{\ignorespaces#1\unskip\@@italiccorr}}
   }
+
+
+% word版本的 “Keywords” 中间有空格
+\AtEndPreamble
+  {
+    \bool_if:NT \g__ccnu_cover_word_version_bool
+      { \tl_set:Nn \c__ccnu_name_keywords_en_tl { Key~words } }
+  }
