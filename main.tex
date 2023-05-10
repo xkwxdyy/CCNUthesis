@@ -4,8 +4,8 @@
 
 %********************************************
 % CCNUthesis: 华中师范大学论文模板
-% update date: 2023-04-18
-% version: v1.2.15
+% update date: 2023-05-10
+% version: v1.2.17
 %
 % 重要提示：
 %   1. 请确保使用 UTF-8 编码保存
@@ -16,6 +16,7 @@
 
 
 \documentclass[type = bachelor]{CCNUthesis}
+% \documentclass[type = bachelor, blind-version=remove-partial-schoolname]{CCNUthesis}
 % \documentclass[type = master]{CCNUthesis}
 % \documentclass[type = master, blind-version]{CCNUthesis}
 % \documentclass[type = master, version = print-master-twoside]{CCNUthesis}
@@ -41,10 +42,12 @@
 
 % blind-version
 % 盲审版本
-%    可选选项：true|false
+%    可选选项：true|false|remove-partial-schoolname|remove-all-schoolname|remove-all-schoolname-and-copyright
 %    默认：false
-%    blind-version 或 blind-version = true：开启盲审版本，校徽、姓名、导师姓名、声明页等会去掉
-%    blind-version = false：正常编译
+%    【本|硕|博】blind-version 或 blind-version = true：开启盲审版本，姓名、导师姓名等个人信息会去掉，去掉校名和版权声明页
+%    【本|硕|博】blind-version = false 或者不填"blind-version"：正常编译
+%    【本】blind-version = remove-partial-schoolname：去掉个人信息，保留校名和版权声明页，但是去掉校名和版权声明页中的“华中师范”四个字（此为邓国泰老师在旧模版中的做法）
+%    【本】blind-version = remove-all-schoolname：去掉个人信息和校名，保留版权声明页，但是去掉版权声明页中出现的“华中师范大学”六个字
 
 
 % 加载用户的个人信息和论文相关参数设置的配置文件
