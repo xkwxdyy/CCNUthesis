@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\ProvidesExplClass {CCNUthesis} {2023-04-20} {v1.2.15}
+\ProvidesExplClass {CCNUthesis} {2023-05-10} {v1.2.17}
   {Thesis template for Central China Normal University}
 \RequirePackage { l3keys2e, xparse }
 

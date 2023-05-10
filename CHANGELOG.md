@@ -4,6 +4,19 @@
 
 更多关于模版的内容和如何使用，请仔细阅读模版中的 `CCNUthesis.pdf` 用户手册和 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis)！
 
+## [v1.2.17] - 2023-05-10
+
+### Added
+
+- 增加本科生的盲审 `blind-version` 处理和 `\blind` 命令
+- 增加 `enumerate` 环境带圈数字的样式
+
+### Changed
+
+- 修改本科封面 “本科毕业论文（设计）” 的字号
+- word 版本的 “Keywords” 之间添加空格
+
+
 
 ## [v1.2.16] - 2023-04-26
 
