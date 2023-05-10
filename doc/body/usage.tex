@@ -60,7 +60,7 @@
 \end{shellexample}
 
 
-\subsection{模板选项}
+\subsection{模板选项} \label{subsec:模版选项}
 
 所谓“模板选项”，指需要在引入文档类的时候指定的选项：
 \begin{latexexample}[deletetexcs={\documentclass},
@@ -100,11 +100,18 @@
 注意：对于硕博的模版，\parencite{研究生院研究生学位论文规范} 中提到的“封面、原创性声明和使用授权书采用单面印刷，中英文扉页、摘要及后续内容采用双面印刷（硕士学位论文可以单面印刷）。” 实现方式即为在所需要单面印刷的后面加一页空白页，然后全部双面打印即可，这个就是上面键值的设计想法，用户不需要自己手动加空白页，只需要选择自己对应所需版本就会对应自动判断是否添加空白页。
 
 
-\begin{function}[added = 2023-04-07]{blind-version}
+\begin{function}[added = 2023-04-07,updated = 2023-05-10]{blind-version}
   \begin{ccnusyntax}[emph={[1]blind-version}]
-    blind-version = (*<\TFF>*)
+    blind-version = (*<true|false|remove-partial-schoolname|remove-all-schoolname>*)
   \end{ccnusyntax}
-  【硕｜博】盲审版本。\kvopt{blind-version}{true} 或省略 \kvopt{}{true} 都表示开启盲审版本。\kvopt{blind-version}{false} 表示不开启。开启后，校徽、姓名、导师姓名、职称、版权声明页会去掉，并且去掉页眉。注意致谢、参考文献等的盲审处理需要用户自行处理，一切以学院的要求为准。
+  【本｜硕｜博】盲审版本。
+  \begin{itemize}
+    \item 【本｜硕｜博】\kvopt{blind-version}{true} 或省略 \opt{true} （即只写 \opt{blind-version}） 都表示开启盲审版本，校名、姓名、导师姓名、职称、版权声明页会去掉，并且去掉页眉。
+    \item 【本｜硕｜博】\kvopt{blind-version}{false} 或者不写 \opt{blind-version} 键值表示不开启。
+    \item 【本】\kvopt{blind-version}{remove-partial-schoolname}：去掉封面和版权声明页第一行中“华中师范”四个字（此键值只是为了实现邓国泰老师在旧模版中的做法）
+    \item 【本】\kvopt{blind-version}{remove-all-schoolname}：去掉封面的“华中师范大学”校名以及版权声明页第一行中“华中师范大学”但保留版权声明页
+  \end{itemize}
+  \emph{注意致谢、参考文献等的盲审处理需要用户自行处理，本模版提供了 \tn{blind} 命令（见 \ref{subsubsec:豹尾}节）来处理致谢中的人名，不过一切以学院的要求为准。}
 \end{function}
 
 
@@ -987,7 +994,7 @@
 
 
 
-\subsubsection{豹尾}
+\subsubsection{豹尾}  \label{subsubsec:豹尾}
 
 \begin{function}{\backmatter}
   【本｜硕｜博】声明后置部分开始。
@@ -1010,6 +1017,29 @@
   \acknowledgements
   
   <致谢内容>
+\end{latexexample}
+\end{function}
+
+\begin{function}[added = 2023-05-10]{\blind}
+  【本｜硕｜博】在致谢或研究成果中需要去掉姓名、信息等的命令。
+
+\begin{latexexample}
+  我要感谢 CCNUthesis 的模版开发者 \blind{夏康玮}。
+\end{latexexample}
+如果开启盲审选项（见 \ref{subsec:模版选项} 节的 \opt{blind-version} 键值），即当文档类选项中（\tn{documentclass} 的可选参数中）是以下四种情况之一：
+\begin{enumerate}
+  \item \opt{blind-version}
+  \item \kvopt{blind-version}{true}
+  \item \kvopt{blind-version}{remove-partial-schoolname}
+  \item \kvopt{blind-version}{remove-all-schoolname}
+\end{enumerate}
+则编译效果为
+\begin{latexexample}
+  我要感谢 CCNUthesis 的模版开发者***。
+\end{latexexample}
+否则就原封不动输出
+\begin{latexexample}
+  我要感谢 CCNUthesis 的模版开发者夏康玮。
 \end{latexexample}
 \end{function}
 
