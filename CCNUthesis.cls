@@ -3533,7 +3533,7 @@
           \newpage
           \bool_if:NTF \g__ccnu_blind_version_bool
             {
-              \str_case:NnF \g__ccnu_blind_version_remove_content_str
+              \str_case:VnF \g__ccnu_blind_version_remove_content_str
                 {
                   { partial-schoolname }
                     {
