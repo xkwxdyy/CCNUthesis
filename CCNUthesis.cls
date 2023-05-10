@@ -377,7 +377,7 @@
     xeCJKfntef,        % 下划线
     zhlineskip         % 行距
   }
-\RequirePackage[shortlabels]{enumitem}   % 列表环境
+\RequirePackage[shortlabels,inline]{enumitem}   % 列表环境
 \RequirePackage[titles]{tocloft}         % 目录修改
 
 
@@ -4799,6 +4799,7 @@
   { Invalid~ circled~ number~ #1. }
 
 \AddChoicesCounter \circlednumber \__ccnu_choices_circled_number:n {1}
+\AddEnumerateCounter \circlednumber \circlednumber {1}
 
 
 % 公式相关处理
