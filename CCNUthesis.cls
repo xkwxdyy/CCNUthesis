@@ -66,6 +66,8 @@
 \bool_new:N       \g__ccnu_showhead_bool           % 页眉控制
 \bool_new:N       \g__ccnu_showheadlogo_bool        % 页眉 logo 控制
 \bool_new:N       \g__ccnu_chapter_newpage_bool    % chapter 是否新起一页
+\bool_new:N       \g__ccnu_blind_version_bool    % 盲审
+\str_new:N       \g__ccnu_blind_version_remove_content_str    % 【本】盲审对声明页的处理
 \str_new:N        \g__ccnu_headline_str                % 页眉 阴阳线
 \str_new:N        \g__ccnu_type_version_str      % 打印、电子版本控制
 \fp_new:N         \g__ccnu_doctor_linespread_ration_fp
@@ -247,7 +249,27 @@
       },
     version .value_required:n = true,
     version .initial:n = electronic,
-    blind-version .bool_set:N = \g__ccnu_blind_version_bool,
+    blind-version .choice:,
+    blind-version / true .code:n =
+      {
+        \bool_set_true:N \g__ccnu_blind_version_bool
+      },
+    blind-version / false .code:n =
+      {
+        \bool_set_false:N \g__ccnu_blind_version_bool
+      },
+    % 【本】和邓的一样，只去掉logo和版权页的“华中师范”四个字
+    blind-version / remove-partial-schoolname .code:n =
+      {
+        \bool_set_true:N \g__ccnu_blind_version_bool
+        \str_gset:Nn \g__ccnu_blind_version_remove_content_str { partial-schoolname }
+      },
+    % 【本】去掉logo和版权页的“华中师范大学”六个字
+    blind-version / remove-all-schoolname .code:n =
+      {
+        \bool_set_true:N \g__ccnu_blind_version_bool
+        \str_gset:Nn \g__ccnu_blind_version_remove_content_str { all-schoolname }
+      },
     blind-version .initial:n = false,
     blind-version .default:n = true,
     unknown .code:n = { \__ccnu_error:n { unknown-option } }
@@ -2588,7 +2610,22 @@
       {
         \dim_set:Nn \l__ccnu_tmpa_dim { -0.29\paperheight }
       }
-    \bool_if:NF \g__ccnu_blind_version_bool
+    \bool_if:NTF \g__ccnu_blind_version_bool
+      {
+        \str_if_eq:VnT \g__ccnu_blind_version_remove_content_str { partial-schoolname }
+          {
+            \node ( logo ) at 
+              (
+                [ shift = { ( 0em , \l__ccnu_tmpa_dim ) } ]
+                  current~page.north
+              )
+              {
+                \includegraphics
+                  [ height = 3.5em, width = 0.4\textwidth ]
+                  { logo / ccnulogo_blind.png } 
+              };
+          }
+      }
       {
         \node ( logo ) at 
           (
@@ -2634,7 +2671,7 @@
       {
         \node[] ( titlelabel ) at
           (
-            [ shift = { ( -4.5cm, 0em ) } ] current~page.center
+            [ shift = { ( -5cm, 1em ) } ] current~page.center
           ) 
           {
             \zihao{-1} \bfseries
@@ -2642,7 +2679,7 @@
           };
         \node[] ( titlecontent ) at 
           (
-            [ shift = { ( 2.5cm, -1.2em ) } ] current~page.center
+            [ shift = { ( 1.5cm, -0.2em ) } ] current~page.center
           ) 
           {
             \zihao{-2} \bfseries
@@ -2719,6 +2756,22 @@
             % 获得个人信息的内容最大宽度
             \__ccnu_get_max_text_width:NN 
               \l__ccnu_tmpb_dim \l__ccnu_tmpb_clist
+            \bool_if:NT \g__ccnu_blind_version_bool
+              {
+                \tl_set:Nn \l__ccnu_info_department_tl {\mbox{}}
+                \tl_set:Nn \l__ccnu_info_student_id_tl {\mbox{}}
+                \tl_set:Nn \l__ccnu_info_author_tl {\mbox{}}
+                \tl_set:Nn \l__ccnu_info_supervisor_tl {\mbox{}}
+                \clist_set:Nx \l__ccnu_tmpb_clist
+                  {
+                    \l__ccnu_info_department_tl ,
+                    \l__ccnu_info_major_tl      ,
+                    \l__ccnu_info_level_tl      ,
+                    \l__ccnu_info_author_tl     ,
+                    \l__ccnu_info_student_id_tl ,
+                    \l__ccnu_info_supervisor_tl ,
+                  }
+              }
             \bool_until_do:nn
               { \clist_if_empty_p:N \l__ccnu_tmpa_clist }
               {
@@ -3478,16 +3531,51 @@
         {
           \__ccnu_cover_bachelor:
           \newpage
-          \pagestyle { empty }
-          % 版权页
-          \begin{tikzpicture} [remember~picture, overlay]
-            \node at (current~page.center) 
-              {
-                \includegraphics
-                  [ width = \Gm@layoutwidth, height = \Gm@layoutheight ]
-                    { copyright / Originality_Copyright.pdf }
-              };
-          \end{tikzpicture}
+          \bool_if:NTF \g__ccnu_blind_version_bool
+            {
+              \str_case:NnF \g__ccnu_blind_version_remove_content_str
+                {
+                  { partial-schoolname }
+                    {
+                      \pagestyle { empty }
+                      % 版权页
+                      \begin{tikzpicture} [remember~picture, overlay]
+                        \node at (current~page.center) 
+                          {
+                            \includegraphics
+                              [ width = \Gm@layoutwidth, height = \Gm@layoutheight ]
+                                { copyright / Originality_Copyright_bachelor_remove_partial_schoolname.pdf }
+                          };
+                      \end{tikzpicture}
+                    }
+                  { all-schoolname }
+                    {
+                      \pagestyle { empty }
+                      % 版权页
+                      \begin{tikzpicture} [remember~picture, overlay]
+                        \node at (current~page.center) 
+                          {
+                            \includegraphics
+                              [ width = \Gm@layoutwidth, height = \Gm@layoutheight ]
+                                { copyright / Originality_Copyright_bachelor_remove_all_schoolname.pdf }
+                          };
+                      \end{tikzpicture}
+                    }
+                }
+                {}  % 都不是的话就默认去掉整个版权页
+            }
+            {
+              \pagestyle { empty }
+              % 版权页
+              \begin{tikzpicture} [remember~picture, overlay]
+                \node at (current~page.center) 
+                  {
+                    \includegraphics
+                      [ width = \Gm@layoutwidth, height = \Gm@layoutheight ]
+                        { copyright / Originality_Copyright_bachelor.pdf }
+                  };
+              \end{tikzpicture}
+            }
         }
         {
           \bool_lazy_and:nnTF
@@ -4729,4 +4817,11 @@
   {
     \bool_if:NT \g__ccnu_cover_word_version_bool
       { \tl_set:Nn \c__ccnu_name_keywords_en_tl { Key~words } }
+  }
+
+% 盲审的匿名命令
+\NewDocumentCommand { \blind }{ m }
+  {
+    \bool_if:NTF \g__ccnu_blind_version_bool
+      { *** } { #1 }
   }
