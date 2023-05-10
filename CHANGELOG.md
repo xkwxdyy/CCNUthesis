@@ -4,6 +4,9 @@
 
 更多关于模版的内容和如何使用，请仔细阅读模版中的 `CCNUthesis.pdf` 用户手册和 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis)！
 
+QQ 1群：435903068（若满了请加2群）
+QQ 2群：685329998
+
 ## [v1.2.17] - 2023-05-10
 
 ### Added
