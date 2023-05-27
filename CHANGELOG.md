@@ -7,6 +7,14 @@
 QQ 1群：435903068（若满了请加2群）
 QQ 2群：685329998
 
+## [v1.2.18] - 2023-05-27
+
+### Changed
+
+- `version` 的 `print-master-oneside|print-master-twoside|print-doctor-twoside` 选项下封面的 logo 和页眉 logo 变成黑色
+
+
+
 ## [v1.2.17] - 2023-05-10
 
 ### Added

@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\ProvidesExplClass {CCNUthesis} {2023-05-10} {v1.2.17}
+\ProvidesExplClass {CCNUthesis} {2023-05-11} {v1.2.17}
   {Thesis template for Central China Normal University}
 \RequirePackage { l3keys2e, xparse }
 
@@ -286,6 +286,17 @@
         \keys_set:nn { ccnu / style }
           { show-head = false }
       }
+  }
+
+
+% 消除 CJK 警告
+\RequirePackage { filehook }
+\AtEndOfPackageFile* { fontspec }
+  { \msg_redirect_name:nnn { fontspec } { no-script } { none } }
+\AtEndOfPackageFile* { xeCJK }
+  {
+    \msg_redirect_name:nnn { xeCJK } { CJKfamily-redef } { none }
+    \defaultCJKfontfeatures { Script  = CJK }
   }
 
 
@@ -867,6 +878,8 @@
     fullwidth-stop = false
   }
 
+
+
 % 脚注
 
 \clist_map_inline:nn
@@ -1341,35 +1354,80 @@
   {
     \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
       {
-        \fancypagestyle { plain }
+        \str_case:VnTF \g__ccnu_type_version_str
           {
-            \fancyhf { }
-            \RenewDocumentCommand { \headrulewidth } { } { 0pt }
-            \bool_if:NT \g__ccnu_showheadlogo_bool
+            { print-master-oneside } {}
+            { print-master-twoside } {}
+          }
+          {
+            \fancypagestyle { plain }
               {
-                % logo
-                \fancyhead [ L ] 
-                  { \includegraphics[width = 5cm]{ logo / masterlogo.png } }
+                \fancyhf { }
+                \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+                \bool_if:NT \g__ccnu_showheadlogo_bool
+                  {
+                    % logo
+                    \fancyhead [ L ] 
+                      { \includegraphics[width = 5cm]{ logo / masterlogo_black.png } }
+                  }
+                % 页眉线
+                \__ccnu_headline:
+                \fancyfoot [ C ] { \zihao{5} \thepage }
               }
-            % 页眉线
-            \__ccnu_headline:
-            \fancyfoot [ C ] { \zihao{5} \thepage }
+          }
+          {
+            \fancypagestyle { plain }
+              {
+                \fancyhf { }
+                \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+                \bool_if:NT \g__ccnu_showheadlogo_bool
+                  {
+                    % logo
+                    \fancyhead [ L ] 
+                      { \includegraphics[width = 5cm]{ logo / masterlogo.png } }
+                  }
+                % 页眉线
+                \__ccnu_headline:
+                \fancyfoot [ C ] { \zihao{5} \thepage }
+              }
           }
       }
       {
-        \fancypagestyle { plain }
+        \str_case:VnTF \g__ccnu_type_version_str
           {
-            \fancyhf { }
-            \RenewDocumentCommand { \headrulewidth } { } { 0pt }
-            \bool_if:NT \g__ccnu_showheadlogo_bool
+            { print-doctor-twoside } {}
+          }
+          {
+            \fancypagestyle { plain }
               {
-                % logo
-                \fancyhead [ L ] 
-                  { \includegraphics[width = 7cm]{ logo / doctorlogo.png } }
+                \fancyhf { }
+                \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+                \bool_if:NT \g__ccnu_showheadlogo_bool
+                  {
+                    % logo
+                    \fancyhead [ L ] 
+                      { \includegraphics[width = 7cm]{ logo / doctorlogo_black.png } }
+                  }
+                % 页眉线
+                \__ccnu_headline:
+                \fancyfoot [ OR, EL ] { \zihao{5} \thepage }
               }
-            % 页眉线
-            \__ccnu_headline:
-            \fancyfoot [ OR, EL ] { \zihao{5} \thepage }
+          }
+          {
+            \fancypagestyle { plain }
+              {
+                \fancyhf { }
+                \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+                \bool_if:NT \g__ccnu_showheadlogo_bool
+                  {
+                    % logo
+                    \fancyhead [ L ] 
+                      { \includegraphics[width = 7cm]{ logo / doctorlogo.png } }
+                  }
+                % 页眉线
+                \__ccnu_headline:
+                \fancyfoot [ OR, EL ] { \zihao{5} \thepage }
+              }
           }
       }
   }
@@ -1378,34 +1436,78 @@
   {
     \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
       {
-        \fancypagestyle { plain }
+        \str_case:VnTF \g__ccnu_type_version_str
           {
-            \fancyhf { }
-            \RenewDocumentCommand { \headrulewidth } { } { 0pt }
-            \bool_if:NT \g__ccnu_showheadlogo_bool
+            { print-master-oneside } {}
+            { print-master-twoside } {}
+          }
+          {
+            \fancypagestyle { plain }
               {
-                % logo
-                \fancyhead [ L ] 
-                  { \includegraphics[width = 5cm]{ logo / masterlogo.png } }
+                \fancyhf { }
+                \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+                \bool_if:NT \g__ccnu_showheadlogo_bool
+                  {
+                    % logo
+                    \fancyhead [ L ] 
+                      { \includegraphics[width = 5cm]{ logo / masterlogo_black.png } }
+                  }
+                % 页眉线
+                \__ccnu_headline:
               }
-            % 页眉线
-            \__ccnu_headline:
+          }
+          {
+            \fancypagestyle { plain }
+            {
+              \fancyhf { }
+              \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+              \bool_if:NT \g__ccnu_showheadlogo_bool
+                {
+                  % logo
+                  \fancyhead [ L ] 
+                    { \includegraphics[width = 5cm]{ logo / masterlogo_black.png } }
+                }
+              % 页眉线
+              \__ccnu_headline:
+            }
           }
       }
       {
-        \fancypagestyle { plain }
+        \str_case:VnTF \g__ccnu_type_version_str
           {
-            \fancyhf { }
-            \RenewDocumentCommand { \headrulewidth } { } { 0pt }
-            \bool_if:NT \g__ccnu_showheadlogo_bool
-              {
-                % logo
-                \fancyhead [ L ] 
-                  { \includegraphics[width = 7cm]{ logo / doctorlogo.png } }                
-              }
-            % 页眉线
-            \__ccnu_headline:
+            { print-doctor-twoside } {}
           }
+          {
+            \fancypagestyle { plain }
+              {
+                \fancyhf { }
+                \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+                \bool_if:NT \g__ccnu_showheadlogo_bool
+                  {
+                    % logo
+                    \fancyhead [ L ] 
+                      { \includegraphics[width = 7cm]{ logo / doctorlogo_black.png } }                
+                  }
+                % 页眉线
+                \__ccnu_headline:
+              }
+          }
+          {
+            \fancypagestyle { plain }
+              {
+                \fancyhf { }
+                \RenewDocumentCommand { \headrulewidth } { } { 0pt }
+                \bool_if:NT \g__ccnu_showheadlogo_bool
+                  {
+                    % logo
+                    \fancyhead [ L ] 
+                      { \includegraphics[width = 7cm]{ logo / doctorlogo.png } }                
+                  }
+                % 页眉线
+                \__ccnu_headline:
+              }
+          }
+        
       }
   }
 \fancypagestyle { masterplain }
@@ -1418,11 +1520,26 @@
   {
     \fancyhf { }
     \RenewDocumentCommand { \headrulewidth } { } { 0pt }
-    \bool_if:NT \g__ccnu_showheadlogo_bool
+    \str_case:VnTF \g__ccnu_type_version_str
       {
-        % logo
-        \fancyhead [ L ] 
-          { \includegraphics[ width = 5cm ]{ logo / masterlogo.png } }        
+        { print-master-oneside } {}
+        { print-master-twoside } {}
+      }
+      {
+        \bool_if:NT \g__ccnu_showheadlogo_bool
+          {
+            % logo
+            \fancyhead [ L ] 
+              { \includegraphics[ width = 5cm ]{ logo / masterlogo_black.png } }        
+          }
+      }
+      {
+        \bool_if:NT \g__ccnu_showheadlogo_bool
+          {
+            % logo
+            \fancyhead [ L ] 
+              { \includegraphics[ width = 5cm ]{ logo / masterlogo.png } }        
+          }
       }
     % 页眉线
     \__ccnu_headline:
@@ -1432,11 +1549,26 @@
   {
     \fancyhf { }
     \RenewDocumentCommand { \headrulewidth } { } { 0pt }
-    \bool_if:NT \g__ccnu_showheadlogo_bool
+    \str_case:VnTF \g__ccnu_type_version_str
       {
-        % logo
-        \fancyhead [ L ] 
-          { \includegraphics[width = 5cm]{ logo / masterlogo.png } }
+        { print-master-oneside } {}
+        { print-master-twoside } {}
+      }
+      {
+        \bool_if:NT \g__ccnu_showheadlogo_bool
+          {
+            % logo
+            \fancyhead [ L ] 
+              { \includegraphics[ width = 5cm ]{ logo / masterlogo_black.png } }        
+          }
+      }
+      {
+        \bool_if:NT \g__ccnu_showheadlogo_bool
+          {
+            % logo
+            \fancyhead [ L ] 
+              { \includegraphics[ width = 5cm ]{ logo / masterlogo.png } }        
+          }
       }
     % 页眉线
     \__ccnu_headline:
@@ -1451,11 +1583,25 @@
   {
     \fancyhf { }
     \RenewDocumentCommand { \headrulewidth } { } { 0pt }
-    \bool_if:NT \g__ccnu_showheadlogo_bool
+    \str_case:VnTF \g__ccnu_type_version_str
       {
-        % logo
-        \fancyhead [ L ] 
-          { \includegraphics[width = 7cm]{ logo/ doctorlogo.png } }
+        { print-doctor-twoside } {}
+      }
+      {
+        \bool_if:NT \g__ccnu_showheadlogo_bool
+          {
+            % logo
+            \fancyhead [ L ] 
+              { \includegraphics[width = 7cm]{ logo/ doctorlogo_black.png } }
+          }
+      }
+      {
+        \bool_if:NT \g__ccnu_showheadlogo_bool
+          {
+            % logo
+            \fancyhead [ L ] 
+              { \includegraphics[width = 7cm]{ logo/ doctorlogo.png } }
+          }
       }
     % 页眉线
     \__ccnu_headline:
@@ -1465,11 +1611,25 @@
   {
     \fancyhf { }
     \RenewDocumentCommand { \headrulewidth } { } { 0pt }
-    \bool_if:NT \g__ccnu_showheadlogo_bool
+    \str_case:VnTF \g__ccnu_type_version_str
       {
-        % logo
-        \fancyhead [ L ] 
-          { \includegraphics[width = 7cm]{ logo / doctorlogo.png } }
+        { print-doctor-twoside } {}
+      }
+      {
+        \bool_if:NT \g__ccnu_showheadlogo_bool
+          {
+            % logo
+            \fancyhead [ L ] 
+              { \includegraphics[width = 7cm]{ logo/ doctorlogo_black.png } }
+          }
+      }
+      {
+        \bool_if:NT \g__ccnu_showheadlogo_bool
+          {
+            % logo
+            \fancyhead [ L ] 
+              { \includegraphics[width = 7cm]{ logo/ doctorlogo.png } }
+          }
       }
     % 页眉线
     \__ccnu_headline:
@@ -1525,10 +1685,6 @@
   }
 \RenewDocumentCommand { \backmatter } { } {}
 
-% \patchcmd { \frontmatter }
-%   { \cleardoublepage }
-%   {}
-%   {} {\fail}
 
 
 \AtEndPreamble
@@ -1922,7 +2078,7 @@
               {
                 format      = \zihao{-3} \normalfont \bfseries,
                 name        = {},
-                indent      = 2\ccwd,
+                % indent      = 2\ccwd,
                 number      = \__ccnu_arabic:n { chapter },
                 beforeskip  = 5 ex plus 0.5 ex,
                 afterskip   = 2.7 ex plus 0.5 ex,
@@ -1938,7 +2094,7 @@
               {
                 format      = \zihao{-3} \normalfont \bfseries,
                 name        = {},
-                indent      = 2\ccwd,
+                % indent      = 2\ccwd,
                 number      = \__ccnu_arabic:n { chapter },
                 beforeskip  = 5 ex plus 0.5 ex,
                 afterskip   = 2.7 ex plus 0.5 ex,
@@ -1958,7 +2114,7 @@
             beforeskip  = 4.5 ex plus 1.0 ex minus 0.2 ex,
             afterskip   = 2.7 ex plus 0.5 ex,
             fixskip     = true,
-            indent      = 2\ccwd
+            % indent      = 2\ccwd
           },
         subsection =
           {
@@ -1966,7 +2122,7 @@
             beforeskip  = 4 ex plus 1.0 ex minus 0.2 ex,
             afterskip   = 2.5 ex plus 0.3 ex,
             fixskip     = true,
-            indent      = 2\ccwd
+            % indent      = 2\ccwd
           },
         subsubsection =
           {
@@ -1974,7 +2130,7 @@
             beforeskip  = 1.5 ex plus 0.5 ex minus 0.2 ex,
             afterskip   = 1.5 ex plus 0.3 ex,
             fixskip     = true,
-            indent      = 2\ccwd
+            % indent      = 2\ccwd
           }
       }
   }
@@ -2842,31 +2998,99 @@
 % logo
 \cs_new:Npn \__ccnu_cover_i_master_doctor_logo:
   {
-    \bool_if:NTF \g__ccnu_cover_word_version_bool
+    \str_case:VnTF \g__ccnu_type_version_str
       {
-        \dim_set:Nn \l__ccnu_tmpa_dim 
-          { -0.25\paperheight }
+        { print-master-oneside } {}
+        { print-master-twoside } {}
+        { print-doctor-twoside } {}
       }
       {
-        \dim_set:Nn \l__ccnu_tmpa_dim 
-          { -0.25\paperheight }
+        % 打印版本 logo 黑白
+        \bool_if:NTF \g__ccnu_cover_word_version_bool
+          {
+            \__ccnu_cover_i_master_doctor_logo_word_black:
+          }
+          {
+            \__ccnu_cover_i_master_doctor_logo_math_black:
+          }
       }
+      {
+        \bool_if:NTF \g__ccnu_cover_word_version_bool
+          {
+            \__ccnu_cover_i_master_doctor_logo_word:
+          }
+          {
+            \__ccnu_cover_i_master_doctor_logo_math:
+          }
+      }
+  }
+
+% 教务处版本
+\cs_new:Npn \__ccnu_cover_i_master_doctor_logo_word:
+  {
     \bool_if:NF \g__ccnu_blind_version_bool
       {
         \node ( logo ) at 
           (
-            [ shift = { ( 0em , \l__ccnu_tmpa_dim ) } ]
+            [ shift = { ( 0em , -0.25\paperheight ) } ]
               current~page.north
           )
           {
             \includegraphics
-              [ height = 3.5em, width = 0.4\textwidth ]
+              [ height = 2.16cm, width = 8.15cm ]
               { logo / ccnulogo.png } 
           };
       }
-    
   }
-
+\cs_new:Npn \__ccnu_cover_i_master_doctor_logo_word_black:
+  {
+    \bool_if:NF \g__ccnu_blind_version_bool
+      {
+        \node ( logo ) at 
+          (
+            [ shift = { ( 0em , -0.25\paperheight ) } ]
+              current~page.north
+          )
+          {
+            \includegraphics
+              [ height = 2.16cm, width = 8.15cm ]
+              { logo / ccnulogo_black.png } 
+          };
+      }
+  }
+% 数统版本
+\cs_new:Npn \__ccnu_cover_i_master_doctor_logo_math:
+  {
+    \bool_if:NF \g__ccnu_blind_version_bool
+      {
+        \node ( logo ) at 
+          (
+            [ shift = { ( 0em , -0.25\paperheight ) } ]
+              current~page.north
+          )
+          {
+            \includegraphics
+              [ height = 4.8em ]
+              { logo / ccnulogo.png } 
+          };
+      }
+  }
+\cs_new:Npn \__ccnu_cover_i_master_doctor_logo_math_black:
+  {
+    \bool_if:NF \g__ccnu_blind_version_bool
+      {
+        \node ( logo ) at 
+          (
+            [ shift = { ( 0em , -0.25\paperheight ) } ]
+              current~page.north
+          )
+          {
+            \includegraphics
+              [ height = 4.8em ]
+              { logo / ccnulogo_black.png } 
+          };
+      }
+  }
 % 论文类型
 \dim_const:Nn \c__ccnu_cover_i_master_doctor_type_sep_dim { 2em }
 
@@ -2874,20 +3098,54 @@
   {
     \bool_if:NTF \g__ccnu_cover_word_version_bool
       {
-        \dim_set:Nn \l__ccnu_tmpa_dim 
-          { -0.35\paperheight }
+        \__ccnu_cover_i_master_doctor_degree_type_word_version:
       }
       {
-        \dim_set:Nn \l__ccnu_tmpa_dim 
-          { -0.35\paperheight }
+        \__ccnu_cover_i_master_doctor_degree_type_math_version:
       }
+
+  }
+
+\cs_new:Npn \__ccnu_cover_i_master_doctor_degree_type_word_version:
+  {
     \int_case:nn { \g__ccnu_thesis_type_int }
       {
         {2} 
         {
           \node ( type ) at 
             (
-              [ shift = { (0em , \l__ccnu_tmpa_dim) } ] 
+              [ shift = { (0em , -0.47\textheight) } ] 
+                current~page.north
+            )
+            {
+              \zihao{0}
+              \normalfont  \fontsize{44bp}{0pt} \selectfont 硕士学位论文
+            };
+        }
+        {1}
+        {
+          \node ( type ) at 
+            (
+              [ shift = { (0em , -0.47\textheight) } ] 
+                current~page.north
+            )
+            {
+              \zihao{1}
+              \normalfont \fontsize{44bp}{0pt} \selectfont 博士学位论文
+            };
+        }
+      }
+  }
+
+\cs_new:Npn \__ccnu_cover_i_master_doctor_degree_type_math_version:
+  {
+    \int_case:nn { \g__ccnu_thesis_type_int }
+      {
+        {2} 
+        {
+          \node ( type ) at 
+            (
+              [ shift = { (0em , -0.5\textheight) } ] 
                 current~page.north
             )
             {
@@ -2899,7 +3157,6 @@
                     {
                       ##1 \hspace{ \c__ccnu_cover_i_master_doctor_type_sep_dim }
                     } \unskip
-                  % 硕 \hspace*{0.5em} 士 \hspace*{0.5em} 学 \hspace*{0.5em} 位 \hspace*{0.5em} 论 \hspace*{0.5em} 文
                 }
             };
         }
@@ -2907,7 +3164,7 @@
         {
           \node ( type ) at 
             (
-              [ shift = { (0em , \l__ccnu_tmpa_dim) } ] 
+              [ shift = { (0em ,  -0.5\textheight) } ] 
                 current~page.north
             )
             {
@@ -2919,14 +3176,11 @@
                     {
                       ##1 \hspace{ \c__ccnu_cover_i_master_doctor_type_sep_dim }
                     } \unskip
-                  % \zihao{1} \normalfont \bfseries 
-                  % 博 \hspace*{0.5em} 士 \hspace*{0.5em} 学 \hspace*{0.5em} 位 \hspace*{0.5em} 论 \hspace*{0.5em} 文
                 }
             };
         }
       }
   }
-
 
 
 % 标题
@@ -2939,7 +3193,7 @@
       {
         \node[] ( titlecontent ) at 
           (
-            [ shift = { ( 0cm, -2em ) } ] current~page.center
+            [ shift = { ( 0cm, -1em ) } ] current~page.center
           ) 
           {
             \linespread{1} \fontsize{26pt}{40bp} \selectfont \bfseries \ccnutitlefont
@@ -3739,6 +3993,7 @@
                   chapter = 
                     {
                       format = \zihao{-2} \normalfont \bfseries \centering,
+                      beforeskip = 0pt
                     }
                 }
               \__ccnu_line_spread:n { 1.25 }
