@@ -5062,10 +5062,10 @@
 % 硕博的公式编号没有括号
 % 研究生学位论文规范：http://gs.ccnu.edu.cn/info/1049/1398.htm
 % “公式在文中应该另起一行居中横排，分章节用阿拉伯数字连续编排，如：公式1.3、公式5.7，其标注应于该公式所在行的最右侧。”
-\int_compare:nNnF { \g__ccnu_thesis_type_int } = {3}
-  {
-    \def\tagform@#1{\maketag@@@{\ignorespaces#1\unskip\@@italiccorr}}
-  }
+% \int_compare:nNnF { \g__ccnu_thesis_type_int } = {3}
+%   {
+%     \def\tagform@#1{\maketag@@@{\ignorespaces#1\unskip\@@italiccorr}}
+%   }
 
 
 % word版本的 “Keywords” 中间有空格
