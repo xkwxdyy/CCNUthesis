@@ -4,8 +4,8 @@
 
 %********************************************
 % CCNUthesis: 华中师范大学论文模板
-% update date: 2023-05-11
-% version: v1.2.17
+% update date: 2024-01-18
+% version: v1.2.18
 %
 % 重要提示：
 %   1. 请确保使用 UTF-8 编码保存
@@ -15,11 +15,11 @@
 %********************************************
 
 
-% \documentclass[type = bachelor]{CCNUthesis}
+\documentclass[type = bachelor]{CCNUthesis}
 % \documentclass[type = bachelor, blind-version=remove-partial-schoolname]{CCNUthesis}
 % \documentclass[type = master]{CCNUthesis}
 % \documentclass[type = master, blind-version]{CCNUthesis}
-\documentclass[type = master, version = print-master-oneside]{CCNUthesis}
+% \documentclass[type = master, version = print-master-oneside]{CCNUthesis}
 % \documentclass[type = master, version = print-master-twoside]{CCNUthesis}
 % \documentclass[type = doctor]{CCNUthesis}
 % \documentclass[type = doctor, blind-version]{CCNUthesis}
@@ -90,6 +90,7 @@
 \mainmatter
 
 
+
 % 主体采用多文件编译的方式
 % 即把每一章放进一个单独的 tex 文件里，并在这里用 \input 导入
 % 例如 \input{./body/chapter1.tex}
@@ -97,6 +98,8 @@
 
 % 正文
 % 适用学位类型：【本｜硕｜博】
+% \input{./body/chapter0.tex}  % 代码示例文件，不需要的话注释掉或者删掉即可
+
 \input{./body/chapter1.tex}
 \input{./body/chapter2.tex}
 \input{./body/chapter3.tex}
