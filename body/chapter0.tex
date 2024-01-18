@@ -2,7 +2,7 @@
 
 \chapter{常用命令环境示例}
 
-此章用于展示一些常用的命令环境的效果，用户在具体写论文过程中可以用来参考效果，如果不需要此章出现在正文中，只需要将主文件 \verb|main.tex| 文件中的 \verb|\include{./body/chapter0.tex}| 代码注释掉即可（不建议删除，因为随时可以取消注释查看效果）。
+此章用于展示一些常用的命令环境的效果，用户在具体写论文过程中可以用来参考效果，如果不需要此章出现在正文中，只需要将主文件 \verb|main.tex| 文件中的 \verb|\input{./body/chapter0.tex}| 代码注释掉即可（不建议删除，因为随时可以取消注释查看效果）。
 
 
 \section{列表环境}
@@ -132,11 +132,11 @@ test
 \begin{theorem}[Cauchy]\label{thm:test}
   这是一个定理
   \begin{equation}\label{eq:test1}
-    \int_{0}^{1} x^2 \dd{x} \geq 0
+    a^2 + b^2 = c^2 \geq 0
   \end{equation}
 
   \begin{equation}\label{eq:test2}
-    \int_{0}^{1} x^2 \dd{x} \geq 0
+    a^2 + b^2 = c^2 \geq 0
   \end{equation}
 \end{theorem}
 
@@ -159,14 +159,14 @@ test
 \begin{proof}
   test
   \[
-    \int_{0}^{1} x^2 \dd{x}
+    a^2 + b^2 = c^2
   \]
 \end{proof}
 
 \begin{proof}
   test
   \[
-    \int_{0}^{1} x^2 \dd{x}  \qedhere
+    a^2 + b^2 = c^2  \qedhere
   \]
 \end{proof}
 
@@ -212,89 +212,6 @@ test
     \item 直立的 e ：\verb|\upe| $\to \upe$
     \item 直立的 i ：\verb|\upi| $\to \upi$
   \end{itemize}
-
-
-\subsubsection{直体符号}
-
-  科技类论文中，建议一些数学符号使用直体（“up”前缀表示直体）
-    \begin{itemize}
-      \item 直立的 pi ：\verb|\uppi| $\to \uppi$
-      \item 直立的 e ：\verb|\upe| $\to \upe$
-      \item 直立的 i ：\verb|\upi| $\to \upi$
-    \end{itemize}
-
-  
-\subsubsection{直体符号}
-
-科技类论文中，建议一些数学符号使用直体（“up”前缀表示直体）
-  \begin{itemize}
-    \item 直立的 pi ：\verb|\uppi| $\to \uppi$
-    \item 直立的 e ：\verb|\upe| $\to \upe$
-    \item 直立的 i ：\verb|\upi| $\to \upi$
-  \end{itemize}
-
-\subsection{physics 宏包的一些命令}
-
-\verb|CCNUthesis.cls| 已经默认加载了 \verb|physics| 宏包，提供了很多很方便的命令，本小节介绍部分，更多的命令请阅读宏包文档（命令行输入 \verb|texdoc physics|）
-
-\begin{itemize}
-  \item 向量 $\vb{a}, \vb*{a}, \va{a}, \va*{a}, \vu{a}, \vu*{a}$
-  \item 积分
-    \[
-      \int_{0}^{1} x \dd{x},
-      \dd[3]{x}, \dd(\cos\theta),
-    \]
-    \[
-      \int xyz \dd{x} \dd{y} \dd{z}
-    \]
-    \[
-      % \␣产生空格，使被积函数和dxdydz之前产生一个空格
-      % 注意\dd{x}的dx左右各有一个空格 \dd x则没有
-      % 对于重积分，自己根据规范使用
-      \int xyz \ \dd x \dd y \dd z    
-    \]
-  \item 微分
-    \[
-      \dv{x}, \dv{f}{x}, \dv[n]{f}{x}, \dv*{f}{x}
-    \]
-  \item 偏微分
-    \[
-      \pdv{x}, \pdv{f}{x}, \pdv[n]{f}{x}
-    \]
-  \item 绝对值 $\abs{x^3}, \abs{\frac{1}{2}}$
-  \item 范数 $\norm{f}, \norm{f_n}_{2}^{2}$
-\end{itemize}
-
-
-
-\subsection{physicx 宏包的一些命令}
-
-\verb|physicx| 宏包是对 \verb|physics| 宏包的优化（已默认载入）。介绍几个常用的：
-
-\begin{itemize}
-  \item 绝对值 $\abs{x^3}, \abs{\frac{1}{2}}$
-  \item 范数 $\norm{f}, \norm{f_n}_{2}^{2}$
-  \item \verb|\qxqty|: 统一可变长度括号类命令
-    \begin{itemize}
-      \item $\qxqty{\frac{1}{2}}$
-      \item $\qxqty[p]{\frac{1}{2}}$
-      \item $\qxqty[v]{\frac{1}{2}}$
-      \item $\qxqty[V]{\frac{1}{2}}$
-      \item $\qxqty[b]{\frac{1}{2}}$
-      \item $\qxqty[B]{\frac{1}{2}}$
-      \item $\qxqty[a]{\frac{1}{2}}$
-    \end{itemize}
-  \item \verb|\qxqty| 还可以用来排版一些简单矩阵：
-    \[
-      \qxqty[pm]{ ABC & dec \\ hij & HJK } \quad
-      \qxqty[bm]{ ABC & dec \\ hij & HJK } \quad
-      \qxqty[Bm]{ ABC & dec \\ hij & HJK } \quad 
-      \qxqty[vm]{ ABC & dec \\ hij & HJK } \quad
-      \qxqty[Vm]{ ABC & dec \\ hij & HJK }
-    \]
-\end{itemize}
-
-\verb|physicx| 宏包也可以排版一些更复杂的矩阵，功能非常强大，更多使用细节参看目录中的“physicx.pdf”手册进行查看（该宏包未收录于CTAN，所以无法使用 texdoc 查看文档）
 
 
 \section{参考文献引用}

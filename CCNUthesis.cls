@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\ProvidesExplClass {CCNUthesis} {2023-05-11} {v1.2.17}
+\ProvidesExplClass {CCNUthesis} {2024-01-18} {v1.2.18}
   {Thesis template for Central China Normal University}
 \RequirePackage { l3keys2e, xparse }
 
@@ -1762,7 +1762,7 @@
     headindent    = 2\ccwd
   ]
   { ccnustyle }
-\cs_new:Npn \__xdyymath_declare_theorem_with_counter_within:n #1
+\cs_new:Npn \__ccnu_declare_theorem_with_counter_within:n #1
   {
     \declaretheorem
       [
@@ -1773,7 +1773,7 @@
       ]
       { \clist_item:nn {#1} {4} }
   }
-\cs_new:Npn \__xdyymath_declare_theorem_with_counter_sibling:n #1
+\cs_new:Npn \__ccnu_declare_theorem_with_counter_sibling:n #1
   {
     \declaretheorem
       [
@@ -1794,7 +1794,7 @@
     { 例, 例, chapter, example },
     { 问题, 问题, chapter, question },
   }
-  \__xdyymath_declare_theorem_with_counter_within:n
+  \__ccnu_declare_theorem_with_counter_within:n
 
 \clist_map_function:nN
   {
@@ -1808,7 +1808,7 @@
     { 猜想, 猜想, theorem, conjecture },
     { 断言, 断言, theorem, claim },
     { 注, 注, theorem, remark },
-  }\__xdyymath_declare_theorem_with_counter_sibling:n
+  }\__ccnu_declare_theorem_with_counter_sibling:n
 
 \NewDocumentCommand { \ccnunewtheorem } { s O{} m m }
   {
