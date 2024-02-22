@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\ProvidesExplClass {CCNUthesis} {2024-01-18} {v1.2.19}
+\ProvidesExplClass {CCNUthesis} {2024-02-22} {v1.2.20}
   {Thesis template for Central China Normal University}
 \RequirePackage { l3keys2e, xparse }
 
@@ -4442,14 +4442,13 @@
     \RequirePackage { biblatex }
     \__ccnu_biblatex_post_setup:
   }
-
+\clist_if_exist:NF \l__ccnu_biblatex_options_clist
+  {
+    \clist_new:N \l__ccnu_biblatex_options_clist
+  }
 \cs_new_protected:Npn \__ccnu_biblatex_pre_setup:
   {
     \cs_undefine:N \addbibresource
-    \clist_if_exist:NF \l__ccnu_biblatex_options_clist
-      {
-        \clist_new:N \l__ccnu_biblatex_options_clist
-      }
     \clist_put_right:Nn \l__ccnu_biblatex_options_clist 
       { hyperref = manual }
     \clist_put_right:Nn \l__ccnu_biblatex_options_clist
@@ -4534,7 +4533,11 @@
       {
         \tl_set_eq:NN \l__ccnu_biblatex_bibstyle_tl \l_keys_value_tl
       },
-    bib-resource .clist_set:N = \l__ccnu_bib_resource_clist
+    bib-resource .clist_set:N = \l__ccnu_bib_resource_clist,
+    bib-keyval .code:n = 
+      {
+        \clist_put_right:Nn \l__ccnu_biblatex_options_clist {#1}
+      }
   }
 \keys_set:nn { ccnu / style }
   {
