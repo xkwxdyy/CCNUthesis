@@ -20,33 +20,17 @@
   - `gb7714-CCNU.cbx`
 - 参考文献数据库
   - `CCNUthesis-main.bib`
+- 配置文件
+  - `ccnu-setup.tex`
 - 使用示例
   - `main.tex`
 
 ### 使用示例
 
 ```latex
-% \documentclass[type = bachelor]{CCNUthesis}
+\documentclass[type = bachelor]{CCNUthesis}
 % \documentclass[type = master]{CCNUthesis}
-% \documentclass[type = master, version = print-master-twoside]{CCNUthesis}
-\documentclass[type = doctor]{CCNUthesis}
-% \documentclass[type = doctor, version = print-doctor-twoside]{CCNUthesis}
-
-
-% type
-% 学术类型
-%   可选选项：bachelor|master|doctor
-%     默认：bachelor
-
-% version
-% 文档版本
-%   可选选项：electronic|print-master-oneside|print-master-twoside|
-%           print-doctor-twoside
-%     默认：electronic
-%     electronic：电子版，无空白页
-%     print-master-oneside：打印版，硕士，无空白页，单面打印
-%     print-master-twoside：打印版，硕士，有空白页，双面打印
-%     print-doctor-twoside：打印版，博士，有空白页，双面打印
+% \documentclass[type = doctor]{CCNUthesis}
 
 
 % 加载用户的个人信息和论文相关参数设置的配置文件
@@ -71,15 +55,10 @@
 % 前置部分包含目录、中英文摘要以及符号表等
 \frontmatter
 
-
-% 摘要
-%   适用学位类型：【本｜硕｜博】
 \input{./front/abstract.tex}
 
 
 % 符号表
-%   适用学位类型：【本｜硕｜博】
-%   不需要的话将 \input{./front/notation.tex} 注释掉或删除
 \input{./front/notation.tex}
 
 
@@ -87,14 +66,7 @@
 % \mainmatter 进入论文主体部分
 \mainmatter
 
-
-% 主体采用多文件编译的方式
-% 即把每一章放进一个单独的 tex 文件里，并在这里用 \input 导入
-% 例如 \input{./body/chapter1.tex}
-% 表示插入 main.tex 所在目录中的 body 目录下的 chapter1.tex 文件
-
 % 正文
-% 适用学位类型：【本｜硕｜博】
 \input{./body/chapter1.tex}
 \input{./body/chapter2.tex}
 \input{./body/chapter3.tex}
@@ -105,43 +77,11 @@
 % 论文后文部分，参考文献、致谢、附录等
 \backmatter
 
-
-% 参考文献
-%********************************************
-% 行内引用：\parencite{} or \parencite[]{}，下面两个情况要用行内引用
-%    - 去掉这个引用句子结构不完整，比如“定理证明可参看[1]”
-%    - 英文文献的引用
-% 上标引用：\cite{} or \cite[]{}，下面情况要用上标引用
-%    - 去掉这个引用，句子结构完整，比如“作者提到，‘CCNUthesis 真是一个好模版。’^[1]”
-%      其中“^[1]” 表示上标引用
-%********************************************
-
-% 输出参考文献
-%   适用学位类型：【本｜硕｜博】
-%   无须用户进行任何操作
-%   用户要想正确输出参考文献：
-%     1. 在 bib 文件中输入正确的参考文献条目信息
-%     2. 在正文中正确地使用 \parencite 或 \cite 引用
-%     3. 使用 xelatex-biber-xelatex*2 编译链或 latexmk 方式编译 main.tex 文件
 \printbibliography
 
-
-% 附录
-% 【硕｜博】附录在致谢前
 \include{./back/appendix.tex}
 
-% 攻读学位期间取得的研究成果（博）
-% \include{./back/publications.tex}
-
-
-% 致谢
 \include{./back/acknowledgements.tex}
-
-
-% 附录
-% 【本】附录在致谢后
-% \include{./back/appendix.tex}
-
 
 \end{document}
 ```
