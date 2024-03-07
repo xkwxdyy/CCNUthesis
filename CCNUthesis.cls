@@ -3342,32 +3342,69 @@
       }
   }
 % 标题
+\keys_define:nn { ccnu / style }
+  {
+    cover_ii_only_title_content .bool_gset:N = \g__ccnu_cover_ii_only_title_content_bool,
+    cover_ii_only_title_content .initial:n = false,
+  }
 \cs_new:Npn \__ccnu_cover_ii_master_doctor_title:
   {
     \bool_if:NTF \g__ccnu_head_scope_all_bool
       {
-        \node at ([ shift = { (0em, 0.15\paperheight) } ]current~page~text~area.center)
+        \bool_if:NTF \g__ccnu_cover_ii_only_title_content_bool
           {
-            \linespread{1} \fontsize{22pt}{35bp}
-            \sffamily \bfseries 
-            \parbox [c] { \textwidth }
-              {
-                \centering
-                论文题目：\parbox[t]{15em}{ \l__ccnu_info_title_tl }
-              }
-          };
+            % 标题居中
+            \node at ([ shift = { (0em, 0.15\paperheight) } ]current~page~text~area.center)
+            {
+              \linespread{1} \fontsize{22pt}{35bp}
+              \sffamily \bfseries 
+              \parbox [c] { 15em }
+                {
+                  \centering
+                  \l__ccnu_info_title_tl
+                }
+            };
+          }
+          {
+            \node at ([ shift = { (0em, 0.15\paperheight) } ]current~page~text~area.center)
+            {
+              \linespread{1} \fontsize{22pt}{35bp}
+              \sffamily \bfseries 
+              \parbox [c] { \textwidth }
+                {
+                  \centering
+                  论文题目：\parbox[t]{15em}{ \l__ccnu_info_title_tl }
+                }
+            };
+          }
       }
       {
-        \node at ([ shift = { (0em, 0.18\paperheight) } ]current~page~text~area.center)
+        \bool_if:NTF \g__ccnu_cover_ii_only_title_content_bool
           {
-            \linespread{1} \fontsize{22pt}{35bp}
-            \sffamily \bfseries 
-            \parbox [c] { \textwidth + 2em }
-              {
-                \centering
-                论文题目：\parbox[t]{15em}{ \l__ccnu_info_title_tl }
-              }
-          };
+            % 标题居中
+            \node at ([ shift = { (0em, 0.18\paperheight) } ]current~page~text~area.center)
+            {
+              \linespread{1} \fontsize{22pt}{35bp}
+              \sffamily \bfseries 
+              \parbox [c] { 15em }
+                {
+                  \centering
+                  \l__ccnu_info_title_tl
+                }
+            };
+          }
+          {
+            \node at ([ shift = { (0em, 0.18\paperheight) } ]current~page~text~area.center)
+            {
+              \linespread{1} \fontsize{22pt}{35bp}
+              \sffamily \bfseries 
+              \parbox [c] { \textwidth + 2em }
+                {
+                  \centering
+                  论文题目：\parbox[t]{15em}{ \l__ccnu_info_title_tl }
+                }
+            };
+          }
       }
     
   }

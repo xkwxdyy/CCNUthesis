@@ -9,6 +9,10 @@ QQ 2群：685329998
 
 ## [v1.2.21] - 2024-03-07
 
+### Added
+
+- 增加封面二的标题控制接口：`cover_ii_only_title_content`
+
 ### Fixed
 
 - 修复 `fullwidth-stop=false` 造成硕博的第二个封面的标题换行问题

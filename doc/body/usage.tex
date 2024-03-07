@@ -604,6 +604,13 @@
   【本｜硕｜博】用于接入 \pkg{biblatex} 宏包的选项，内容为键值对，键值对之间用西文逗号隔开。比如 |bib-keyval={doi=false}| 表示去掉参考文献中的 DOI 信息。 具体可输入的选项请参考 \pkg{biblatex-gb7714-2015} 宏包的文档（命令行输入 |texdoc biblatex-gb7714-2015|）。
 \end{function}
 
+\begin{function}[added = 2024-03-07]{style/cover_ii_only_title_content}
+  \begin{ccnusyntax}[emph={[1]cover_ii_only_title_content}]
+    cover_ii_only_title_content = (*\TFF*)
+  \end{ccnusyntax}
+  【硕｜博】第二个封面的标题是否去掉“论文标题：”并且将标题居中。默认为 |false|，即保留“论文标题：”并且标题左对齐。
+\end{function}
+
 
 
 \subsubsection{信息录入} \label{subsubsec:信息录入}
