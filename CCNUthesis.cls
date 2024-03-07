@@ -3362,7 +3362,7 @@
           {
             \linespread{1} \fontsize{22pt}{35bp}
             \sffamily \bfseries 
-            \parbox [c] { \textwidth }
+            \parbox [c] { \textwidth + 2em }
               {
                 \centering
                 论文题目：\parbox[t]{15em}{ \l__ccnu_info_title_tl }
