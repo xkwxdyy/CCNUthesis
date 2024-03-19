@@ -6,9 +6,9 @@
 
 本模板目前支持 XeTeX ，仅支持 UTF-8 编码。
 
-本模版支持在 Windows、Mac、Linux 系统上运行。
+请注意本模板为开发者独立开发，与学校官方部门并不存在合作关系，作者不对使用本模板产生的格式审查问题负责，请用户谨慎使用。
 
-在使用 `CCNUthesis` 之前，请阅读 「[lshort-zh-cn](https://ctan.math.illinois.edu/info/lshort/chinese/lshort-zh-cn.pdf)」 学习 LaTeX 基本知识，并仔细阅读模版中的用户手册 `CCNUthesis-doc.pdf` 和 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis/%E7%94%A8%E6%88%B7%E5%BF%85%E8%AF%BB)
+遇到本文档没有覆盖的问题属于正常情况，因为不同学院可能会对教务处的模板进行细节的修改，欢迎提交反馈意见。
 
 ## 模版的核心组成
 
