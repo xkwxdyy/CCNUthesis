@@ -22,6 +22,7 @@ QQ 2群：685329998
 - 本科数院封面去掉 `（设计）`
 - 博士打印选项 `print-doctor-twoside` 改为 `print-doctor`
 - 博士 `chapter` 改为 `第...章`样式
+- 修改硕博的 `section` 和 `subsection` 的缩进
 
 
 
