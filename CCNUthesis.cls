@@ -310,7 +310,19 @@
   {
     \PassOptionsToClass { zihao  = -4, oneside } { ctexbook }
   }
-\str_if_eq:VnT \g__ccnu_type_version_str { print-master-twoside }
+\int_case:nn { \g__ccnu_thesis_type_int }
+  {
+    % 本科
+    {3} { \PassOptionsToClass { zihao  = -4, oneside } { ctexbook } }
+    % 硕士
+    {2} { \PassOptionsToClass { zihao  = -4, oneside } { ctexbook } }
+    % 博士
+    {1} { \PassOptionsToClass { zihao  = 5, twoside } { ctexbook } }
+  }
+\str_case:VnT \g__ccnu_type_version_str
+  {
+    { print-master-twoside } {}
+  }
   {
     \PassOptionsToClass { twoside } { ctexbook }
   }
@@ -451,7 +463,9 @@
 \int_compare:nNnT { \g__ccnu_thesis_type_int } = {1}
   {
     \AtBeginDocument 
-      { \linespread{1} \fontsize{10.5pt}{19bp} \selectfont }
+      % { \linespread{1} \fontsize{10.5pt}{19pt} \selectfont }
+      % 用户反馈 19 还是大了，改成 15 差不多
+      { \linespread{1} \fontsize{10.5pt}{15pt} \selectfont }
   }
 
 % 字体设置
@@ -1395,7 +1409,7 @@
       {
         \str_case:VnTF \g__ccnu_type_version_str
           {
-            { print-doctor-twoside } {}
+            { print-doctor } {}
           }
           {
             \fancypagestyle { plain }
@@ -1475,7 +1489,7 @@
       {
         \str_case:VnTF \g__ccnu_type_version_str
           {
-            { print-doctor-twoside } {}
+            { print-doctor } {}
           }
           {
             \fancypagestyle { plain }
@@ -1585,7 +1599,7 @@
     \RenewDocumentCommand { \headrulewidth } { } { 0pt }
     \str_case:VnTF \g__ccnu_type_version_str
       {
-        { print-doctor-twoside } {}
+        { print-doctor } {}
       }
       {
         \bool_if:NT \g__ccnu_showheadlogo_bool
@@ -1613,7 +1627,7 @@
     \RenewDocumentCommand { \headrulewidth } { } { 0pt }
     \str_case:VnTF \g__ccnu_type_version_str
       {
-        { print-doctor-twoside } {}
+        { print-doctor } {}
       }
       {
         \bool_if:NT \g__ccnu_showheadlogo_bool
@@ -2156,7 +2170,7 @@
             beforeskip  = 4.5 ex plus 1.0 ex minus 0.2 ex,
             afterskip   = 2.7 ex plus 0.5 ex,
             fixskip     = true,
-            indent      = 2\ccwd
+            indent      = 21.07874pt
           },
         subsection =
           {
@@ -2164,7 +2178,7 @@
             beforeskip  = 4 ex plus 1.0 ex minus 0.2 ex,
             afterskip   = 2.5 ex plus 0.3 ex,
             fixskip     = true,
-            indent      = 2\ccwd
+            indent      = 21.07874pt
           },
         subsubsection =
           {
@@ -2172,7 +2186,7 @@
             beforeskip  = 1.5 ex plus 0.5 ex minus 0.2 ex,
             afterskip   = 1.5 ex plus 0.3 ex,
             fixskip     = true,
-            indent      = 2\ccwd
+            indent      = 21.07874pt
           }
       }
   }
@@ -2193,23 +2207,7 @@
     \group_end:
   }
 \cs_generate_variant:Nn \__ccnu_chapter_without_number_bachelor:n { V }
-\cs_new_protected:Npn \__ccnu_chapter_master_doctor:n #1
-  {
-    \group_begin:
-      \keys_set:nn { ctex }
-        {
-          chapter = 
-            {
-              numbering = false,
-              format = \zihao{3} \sffamily \bfseries \centering,
-              indent = 0pt
-            }
-        }
-      \chapter {#1}
-    \group_end:
-  }
-\cs_generate_variant:Nn \__ccnu_chapter_master_doctor:n { V }
-\cs_new_protected:Npn \__ccnu_chapter_master_doctor_en:n #1
+\cs_new_protected:Npn \__ccnu_chapter_master_doctor_no_number:n #1
   {
     \group_begin:
       \keys_set:nn { ctex }
@@ -2224,6 +2222,7 @@
       \chapter {#1}
     \group_end:
   }
+\cs_generate_variant:Nn \__ccnu_chapter_master_doctor_no_number:n { V }
 \cs_new_protected:Npn \__ccnu_chapter_no_toc:n #1
   {
     \chapter * {#1}
@@ -2378,7 +2377,7 @@
 \keys_set:nn { ccnu / info }
   {
     cover-type = math,
-    title = { 华中师范大学学位论文 \LaTeX{} 模版 },
+    title = { 华中师范大学学位论文 \LaTeX{} 模板 },
     title* = { CCNU thesis \LaTeX{} template }, 
     author = {你的姓名},
     author* = {Xing Ming},
@@ -3002,7 +3001,7 @@
       {
         { print-master-oneside } {}
         { print-master-twoside } {}
-        { print-doctor-twoside } {}
+        { print-doctor } {}
       }
       {
         % 打印版本 logo 黑白
@@ -3884,7 +3883,7 @@
           \str_case:VnTF \g__ccnu_type_version_str
             {
               { print-master-twoside } {}
-              { print-doctor-twoside } {}
+              { print-doctor } {}
             }
             { \__ccnu_new_blank_page: }
             % {}
@@ -3908,7 +3907,7 @@
           \str_case:VnTF \g__ccnu_type_version_str
             {
               { print-master-twoside } {}
-              { print-doctor-twoside } {}
+              { print-doctor } {}
             }
             { \__ccnu_new_blank_page: }
             { \newpage \thispagestyle{empty} }
@@ -4460,7 +4459,7 @@
 \cs_new_protected:Npn \__ccnu_notation_begin_master_doctor:
   {
     \group_begin:
-      \__ccnu_chapter_master_doctor:V \c__ccnu_name_notation_tl
+    \__ccnu_chapter_master_doctor_no_number:V \c__ccnu_name_notation_tl
     \group_end:
   }
 
@@ -4516,7 +4515,7 @@
       }
       {
         \defbibheading { bibliography } [ \bibname ] 
-          { \__ccnu_chapter_master_doctor:n {##1} }
+          { \__ccnu_chapter_master_doctor_no_number:n {##1} }
       }
     % 修改 \printbibliography
     \cs_set_eq:NN \__ccnu_printbibliography_old \printbibliography
