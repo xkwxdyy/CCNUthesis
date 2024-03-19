@@ -2157,7 +2157,7 @@
         chapter =
           {
             format      = \zihao{3} \sffamily \bfseries \centering,
-            name        = {},
+            name        = {第, 章},
             number      = \__ccnu_arabic:n { chapter },
             beforeskip  = 5 ex plus 0.5 ex,
             afterskip   = 2.7 ex plus 0.5 ex,
