@@ -1,5 +1,5 @@
 ---
-name: issue提问模版
+name: issue提问模板
 about: 更高效地提issue
 title: ''
 labels: ''

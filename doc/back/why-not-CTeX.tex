@@ -23,7 +23,7 @@
       \item 提问不易收到回答（因为社区活跃用户中 \CTeX 套装的比例极低，帮忙解答时复现问题的成本高），
       \item 与 \CTeX 套装有关的正确有效的网络资源少（英文资源几乎为零）等等弊端。
     \end{itemize}
-  \item 乱码问题，2017 届使用 \CTeX 套装模版的同学毕业论文查重结果普遍出现乱码现象
+  \item 乱码问题，2017 届使用 \CTeX 套装模板的同学毕业论文查重结果普遍出现乱码现象
   \item 中英文混排问题、数学式和中文混排的空格处理比较麻烦
   \item 系统问题。不支持 mac 系统，虚拟机的安装配置或更换电脑增加了用户的学习成本。
 \end{itemize}
@@ -40,7 +40,7 @@
       —— 2018年，为什么不推荐使用 CTeX 套装了(https://zhuanlan.zhihu.com/p/45174503)
     \end{latexexample}
   
-    \CTeX 套装的很多使用方式在现代 \LaTeX 使用观点看是不推荐甚至是错误的，例子就是邓国泰老师在模版培训提到的一些使用，我列举了部分和现代 \LaTeX 使用有较大出入的部分进行讲解：
+    \CTeX 套装的很多使用方式在现代 \LaTeX 使用观点看是不推荐甚至是错误的，例子就是邓国泰老师在模板培训提到的一些使用，我列举了部分和现代 \LaTeX 使用有较大出入的部分进行讲解：
   
   \item 如果因为某些不可抗力的原因一定要安装 \CTeX 套装
     \begin{itemize}
@@ -69,9 +69,9 @@
 
 \subsubsection{如果安装了 \CTeX 套装怎么办？}
 
-先明确你要使用哪个模版，旧模版还是 \cls{CCNUthesis}，二者可以兼容，但需要处理环境变量，具体看 ljguo 的博客 \href{https://ljguo1020.github.io/2022/06/09/texlive-and-ctex/}{Windows 系统下 \TeXLive 与 \CTeX 套装共存}。
+先明确你要使用哪个模板，旧模板还是 \cls{CCNUthesis}，二者可以兼容，但需要处理环境变量，具体看 ljguo 的博客 \href{https://ljguo1020.github.io/2022/06/09/texlive-and-ctex/}{Windows 系统下 \TeXLive 与 \CTeX 套装共存}。
 
-如果要用旧模版，那么一切使用和问题请找邓国泰老师。
+如果要用旧模板，那么一切使用和问题请找邓国泰老师。
 
 如果确定要使用 \cls{CCNUthesis}，卸载掉 \CTeX 套装（除非你要投稿中文核心期刊），然后跟着 \href{https://gitee.com/OsbertWang/install-latex-guide-zh-cn/releases}{install-latex-guide-zh-cn} 文档正确安装 \TeXLive 。
 
@@ -80,17 +80,17 @@
 \href{https://gitee.com/xkwxdyy/CCNUthesis/wikis/%E5%8D%B8%E8%BD%BD%E4%BA%86CTeX%E5%A5%97%E8%A3%85%E5%AE%89%E8%A3%85%E4%BA%86TeXLive%E5%8D%B4%E6%97%A0%E6%B3%95%E7%BC%96%E8%AF%91%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE}{卸载了 CTeX 套装，安装了 TeX Live 却无法编译参考文献怎么办？}
 
 
-\subsubsection{\cls{CCNUthesis} 模版和 \CTeX 套装写的旧模版相比有什么优点}
+\subsubsection{\cls{CCNUthesis} 模板和 \CTeX 套装写的旧模板相比有什么优点}
 
-\CTeX 套装写的旧模版的问题除了上面 \CTeX 套装本身的问题外，还有
+\CTeX 套装写的旧模板的问题除了上面 \CTeX 套装本身的问题外，还有
 \begin{enumerate}
   \item 用户界面的接口设计的不好，有许多不该在正文出现的 \tn{def} 命令（\cls{CCNUthesis} 的用户接口见 \file{main.tex}）
-  \item 如果去读旧模版的源码会发现一些处理并不当，这些讨论均在 \href{https://gitee.com/xkwxdyy/CCNUthesis/wikis/%E6%97%A7%E6%A8%A1%E7%89%88%E7%9A%84%E9%97%AE%E9%A2%98%E5%92%8C%E6%96%B0%E6%A8%A1%E7%89%88%E7%9A%84%E5%A4%84%E7%90%86}{旧模版的问题和新模版的处理}
+  \item 如果去读旧模板的源码会发现一些处理并不当，这些讨论均在 \href{https://gitee.com/xkwxdyy/CCNUthesis/wikis/%E6%97%A7%E6%A8%A1%E7%89%88%E7%9A%84%E9%97%AE%E9%A2%98%E5%92%8C%E6%96%B0%E6%A8%A1%E7%89%88%E7%9A%84%E5%A4%84%E7%90%86}{旧模板的问题和新模板的处理}
 \end{enumerate}
 
-\cls{CCNUthesis} 模版的优点概括起来主要有
+\cls{CCNUthesis} 模板的优点概括起来主要有
 \begin{enumerate}
   \item Windows, Mac, Linux 平台均可使用
   \item 极大分离了内容和样式，提供了丰富且详细的接口，让用户更专注于内容创作本身，极大提高了用户使用 \LaTeX{} 撰写论文的效率。
-  \item 极大地优化了旧模版中的 bug 和一些使用问题，详细见 \href{https://gitee.com/xkwxdyy/CCNUthesis/wikis/%E6%97%A7%E6%A8%A1%E7%89%88%E7%9A%84%E9%97%AE%E9%A2%98%E5%92%8C%E6%96%B0%E6%A8%A1%E7%89%88%E7%9A%84%E5%A4%84%E7%90%86}{旧模版的问题和新模版的处理}
+  \item 极大地优化了旧模板中的 bug 和一些使用问题，详细见 \href{https://gitee.com/xkwxdyy/CCNUthesis/wikis/%E6%97%A7%E6%A8%A1%E7%89%88%E7%9A%84%E9%97%AE%E9%A2%98%E5%92%8C%E6%96%B0%E6%A8%A1%E7%89%88%E7%9A%84%E5%A4%84%E7%90%86}{旧模板的问题和新模板的处理}
 \end{enumerate}

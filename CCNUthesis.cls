@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\ProvidesExplClass {CCNUthesis} {2024-02-22} {v1.2.20}
+\ProvidesExplClass {CCNUthesis} {2024-03-19} {v1.3.0}
   {Thesis template for Central China Normal University}
 \RequirePackage { l3keys2e, xparse }
 
@@ -1800,7 +1800,7 @@
   }
 
 
-% 和旧模版一样的计数器依赖
+% 和旧模板一样的计数器依赖
 
 \clist_map_function:nN
   {

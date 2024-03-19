@@ -1,16 +1,18 @@
 # CCNUthesis
 
-## 欢迎使用CCNUthesis（华中师范大学论文模版）
+## 欢迎使用CCNUthesis（华中师范大学论文模板）
 
-本模版支持华中师范大学数学与统计学学院本硕博毕业论文撰写，基于 [fduthesis](https://github.com/stone-zeng/fduthesis) 编写而成，借助现代 LaTeX 技术，希望达到用户接口简明、内容格式规范和模板样式可定制的统一。
+本模板支持华中师范大学数学与统计学学院本硕博毕业论文撰写，基于 [fduthesis](https://github.com/stone-zeng/fduthesis) 编写而成，借助现代 LaTeX 技术，希望达到用户接口简明、内容格式规范和模板样式可定制的统一。
 
-本模板目前支持 XeTeX ，仅支持 UTF-8 编码。
+本模板目前支持 XeTeX ，仅支持 UTF-8 编码。本模板支持在 Windows、Mac、Linux 系统上运行。
+
+在使用 `CCNUthesis` 之前，请阅读 「[lshort-zh-cn](https://ctan.math.illinois.edu/info/lshort/chinese/lshort-zh-cn.pdf)」 学习 LaTeX 基本知识，并仔细阅读模板中的用户手册 `CCNUthesis-doc.pdf` 和 [wiki](https://gitee.com/xkwxdyy/CCNUthesis/wikis/%E7%94%A8%E6%88%B7%E5%BF%85%E8%AF%BB)
 
 请注意本模板为开发者独立开发，与学校官方部门并不存在合作关系，作者不对使用本模板产生的格式审查问题负责，请用户谨慎使用。
 
 遇到本文档没有覆盖的问题属于正常情况，因为不同学院可能会对教务处的模板进行细节的修改，欢迎提交反馈意见。
 
-## 模版的核心组成
+## 模板的核心组成
 
 - 核心文档类
   - `CCNUthesis.cls`
@@ -38,7 +40,7 @@
 
 
 % 需要的额外宏包可以在此处自行调用
-%   关于模版已经载入的宏包请参看手册「宏包依赖情况」
+%   关于模板已经载入的宏包请参看手册「宏包依赖情况」
 \usepackage{mathtools}
 
 
@@ -113,5 +115,5 @@ Gitee：https://gitee.com/xkwxdyy/CCNUthesis
 ## 参考资料
 
 - 华中师范大学2018级理科毕业论文（设计）排版模式
-- 华中师范大学理科毕业论文（设计）LaTeX模版（邓国泰）
+- 华中师范大学理科毕业论文（设计）LaTeX模板（邓国泰）
 - [研究生学位论文规范](http://gs.ccnu.edu.cn/info/1049/1398.htm)

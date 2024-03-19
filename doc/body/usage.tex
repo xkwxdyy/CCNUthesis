@@ -60,7 +60,7 @@
 \end{shellexample}
 
 
-\subsection{模板选项} \label{subsec:模版选项}
+\subsection{模板选项} \label{subsec:模板选项}
 
 所谓“模板选项”，指需要在引入文档类的时候指定的选项：
 \begin{latexexample}[deletetexcs={\documentclass},
@@ -72,7 +72,7 @@
 中取值。对于这些选项，\kvopt{\meta{选项}}{true} 中的“|= true|”
 可以省略。
 
-下面用形如“【本｜硕｜博】”表示该命令或环境的适用范围，比如“【硕｜博】”表示输入之后仅对硕博模版起作用，对本科模版不起作用（作用范围的设置往往来源于格式规范的要求等），其余“【本】”等同理解释。
+下面用形如“【本｜硕｜博】”表示该命令或环境的适用范围，比如“【硕｜博】”表示输入之后仅对硕博模板起作用，对本科模板不起作用（作用范围的设置往往来源于格式规范的要求等），其余“【本】”等同理解释。
 
 
 \begin{function}{type}
@@ -108,10 +108,10 @@
   \begin{itemize}
     \item 【本｜硕｜博】\kvopt{blind-version}{true} 或省略 \opt{true} （即只写 \opt{blind-version}） 都表示开启盲审版本，校名、姓名、导师姓名、职称、版权声明页会去掉，并且去掉页眉。
     \item 【本｜硕｜博】\kvopt{blind-version}{false} 或者不写 \opt{blind-version} 键值表示不开启。
-    \item 【本】\kvopt{blind-version}{remove-partial-schoolname}：去掉封面和版权声明页第一行中“华中师范”四个字（此键值只是为了实现邓国泰老师在旧模版中的做法）
+    \item 【本】\kvopt{blind-version}{remove-partial-schoolname}：去掉封面和版权声明页第一行中“华中师范”四个字（此键值只是为了实现邓国泰老师在旧模板中的做法）
     \item 【本】\kvopt{blind-version}{remove-all-schoolname}：去掉封面的“华中师范大学”校名以及版权声明页第一行中“华中师范大学”但保留版权声明页
   \end{itemize}
-  \emph{注意致谢、参考文献等的盲审处理需要用户自行处理，本模版提供了 \tn{blind} 命令（见 \ref{subsubsec:豹尾}节）来处理致谢中的人名，不过一切以学院的要求为准。}
+  \emph{注意致谢、参考文献等的盲审处理需要用户自行处理，本模板提供了 \tn{blind} 命令（见 \ref{subsubsec:豹尾}节）来处理致谢中的人名，不过一切以学院的要求为准。}
 \end{function}
 
 
@@ -407,7 +407,7 @@
   \begin{ccnusyntax}[emph={[1]chapter-breakstyle}]
     caption-labelseperator = (*<(continuous)|newpage>*)
   \end{ccnusyntax}
-  【本】控制 \tn{chapter} 是否新起一页。根据 \parencite{研究生院研究生学位论文规范}，硕博模版的 \tn{chapter} 是新起一页的，故此键值设计仅对本科模版生效。
+  【本】控制 \tn{chapter} 是否新起一页。根据 \parencite{研究生院研究生学位论文规范}，硕博模板的 \tn{chapter} 是新起一页的，故此键值设计仅对本科模板生效。
 
   \begin{itemize}
     \item \opt{continuous}：不新起一页，接着上一个 \tn{chapter} 连续排版
@@ -627,7 +627,7 @@
   \begin{ccnusyntax}[emph={[1]cover-type}]
     cover-type  = (*<word|(math)>*)
   \end{ccnusyntax}
-  【本｜硕｜博】封面类型。\opt{word} 表示几乎完全按照教务处给的 word 版本模版处理；\opt{math} 表示华中师范大学数学与统计学学院在 word 版本模版基础上进行部分细节调整。
+  【本｜硕｜博】封面类型。\opt{word} 表示几乎完全按照教务处给的 word 版本模板处理；\opt{math} 表示华中师范大学数学与统计学学院在 word 版本模板基础上进行部分细节调整。
 \end{function}
 
 \begin{function}[added = 2022-12-10]{info/title-line-type}
@@ -645,7 +645,7 @@
   【本｜硕｜博】论文标题。默认会在约 21 个汉字（本科，硕博在 14 个汉字）字宽处自动断行，但为了语义的连贯以及排版的美观，如果您的标题长于一行，可以根据语义使用“|\\|”手动断行。如果您的标题中有副标题，使用“|\\|”手动断行并以“——”开头，如
 \begin{latexexample}
   title = {
-    如何使用 \LaTeX 编写论文模版 \\
+    如何使用 \LaTeX 编写论文模板 \\
     ——以华中师范大学为例
   }
 \end{latexexample}
@@ -755,7 +755,7 @@
   【本｜硕｜博】声明前置部分开始。
 \end{function}
 
-在本模板中，前置部分包含目录、中英文摘要以及符号表等。硕博模版的前置部分的页码采用小写罗马字母，并且与正文分开计数；本科模版采用阿拉伯数字，并与正文连续计数。本硕博模版目录均无页码。
+在本模板中，前置部分包含目录、中英文摘要以及符号表等。硕博模板的前置部分的页码采用小写罗马字母，并且与正文分开计数；本科模板采用阿拉伯数字，并与正文连续计数。本硕博模板目录均无页码。
 
 目录会自动生成，无需用户手动控制。
 
@@ -862,7 +862,7 @@
     \end{enumerate}
   \item 下面情况用上标引用 \tn{cite}：
     \begin{itemize}
-      \item 去掉这个引用后句子结构仍然完整，比如“作者提到，CCNUthesis 是一个非常好的好模版$^{[1]}$。”
+      \item 去掉这个引用后句子结构仍然完整，比如“作者提到，CCNUthesis 是一个非常好的好模板$^{[1]}$。”
     \end{itemize}
 \end{itemize}
 
@@ -958,7 +958,7 @@
   【本｜硕｜博】证明环境（\env{proof}）的最后会添加证毕符号“$\square$”。对于证明如果以公式结尾或其它某些情况时“$\square$”可能会出现在新的空白行的行尾，如果想要“$\square$”出现在“有内容的”行尾，可以在想要出现的地方使用 \tn{qedhere} 命令。
 \end{function}
 
-比如您可以在模版中测试下面代码查看效果：
+比如您可以在模板中测试下面代码查看效果：
 
 \begin{latexexample}
   \begin{proof}
@@ -1038,9 +1038,9 @@
   【本｜硕｜博】在致谢或研究成果中需要去掉姓名、信息等的命令。
 
 \begin{latexexample}
-  我要感谢 CCNUthesis 的模版开发者 \blind{夏康玮}。
+  我要感谢 CCNUthesis 的模板开发者 \blind{夏康玮}。
 \end{latexexample}
-如果开启盲审选项（见 \ref{subsec:模版选项} 节的 \opt{blind-version} 键值），即当文档类选项中（\tn{documentclass} 的可选参数中）是以下四种情况之一：
+如果开启盲审选项（见 \ref{subsec:模板选项} 节的 \opt{blind-version} 键值），即当文档类选项中（\tn{documentclass} 的可选参数中）是以下四种情况之一：
 \begin{enumerate}
   \item \opt{blind-version}
   \item \kvopt{blind-version}{true}
@@ -1049,11 +1049,11 @@
 \end{enumerate}
 则编译效果为
 \begin{latexexample}
-  我要感谢 CCNUthesis 的模版开发者***。
+  我要感谢 CCNUthesis 的模板开发者***。
 \end{latexexample}
 否则就原封不动输出
 \begin{latexexample}
-  我要感谢 CCNUthesis 的模版开发者夏康玮。
+  我要感谢 CCNUthesis 的模板开发者夏康玮。
 \end{latexexample}
 \end{function}
 
@@ -1087,9 +1087,9 @@
   <附录内容>
 \end{latexexample}
 
-  附录和正文的章节层级相同，也是 \tn{chapter} 开始。需注意：\emph{硕博模版的附录在致谢前，本科模版的附录在致谢后。}
+  附录和正文的章节层级相同，也是 \tn{chapter} 开始。需注意：\emph{硕博模板的附录在致谢前，本科模板的附录在致谢后。}
 
-  根据 \parencite{研究生院研究生学位论文规范} 的要求“附录另起一页，“附录”两字居中，中间空两格，三号黑体加粗。如有多个附录，可用附录1、附录2区别并加以排序。” 模版已经做了自动化处理，即
+  根据 \parencite{研究生院研究生学位论文规范} 的要求“附录另起一页，“附录”两字居中，中间空两格，三号黑体加粗。如有多个附录，可用附录1、附录2区别并加以排序。” 模板已经做了自动化处理，即
   \begin{itemize}
     \item 如果 \file{appendix.tex} 中只有一个 \tn{chapter}\marg{内容} 的话，章节标题和目录中显示“附录 \meta{内容}”
     \item 如果 \file{appendix.tex} 中有两个及两个以上的 \tn{chapter}\marg{内容} 的话，章节标题和目录中显示“附录A \meta{内容}”、“附录B \meta{内容}”
@@ -1113,7 +1113,7 @@
   【博】研究成果列表环境。研究成果的格式等需要用户自行输入，无法像参考文献一样自动化，具体的字体字样等命令请自行查阅 \href{https://ctan.math.illinois.edu/info/lshort/chinese/lshort-zh-cn.pdf}{lshort-zh-cn}。
 \end{function}
 
-博士模版使用只需要取消 \file{main.tex} 中的
+博士模板使用只需要取消 \file{main.tex} 中的
 \begin{latexexample}
   % \include{./back/publications.tex}
 \end{latexexample}
