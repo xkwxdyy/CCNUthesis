@@ -2814,7 +2814,7 @@
             [ shift = { (0em , - 0.39\paperheight) } ] 
               current~page.north
           )
-          { \zihao{-0} \sffamily 本科毕业论文（设计）};
+          { \zihao{-0} \sffamily 本科毕业论文};
       }
   }
 
