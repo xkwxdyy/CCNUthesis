@@ -83,9 +83,9 @@
   毕业论文。
 \end{function}
 
-\begin{function}[updated = 2022-06-20]{version}
+\begin{function}[updated = 2024-03-19]{version}
   \begin{ccnusyntax}[emph={[1]version}]
-    version = (*<(electronic)|print-master-oneside|print-master-twoside|print-doctor-twoside>*)
+    version = (*<(electronic)|print-master-oneside|print-master-twoside|print-doctor>*)
   \end{ccnusyntax}
   文档版本。
 \end{function}
@@ -94,10 +94,10 @@
   \item electronic：电子版，无空白页（本科选择这个即可，单双打印皆可，答辩时可以双面打印，纸质版终稿教务处要求单面打印）
   \item print-master-oneside：打印版，硕士，无空白页，单面打印，封面的 logo 和页眉的 logo 变成黑色
   \item print-master-twoside：打印版，硕士，有空白页，双面打印，封面的 logo 和页眉的 logo 变成黑色
-  \item print-doctor-twoside：打印版，博士，有空白页，双面打印，封面的 logo 和页眉的 logo 变成黑色
+  \item print-doctor：打印版，博士，有空白页，双面打印，封面的 logo 和页眉的 logo 变成黑色
 \end{itemize}
 
-注意：对于硕博的模版，\parencite{研究生院研究生学位论文规范} 中提到的“封面、原创性声明和使用授权书采用单面印刷，中英文扉页、摘要及后续内容采用双面印刷（硕士学位论文可以单面印刷）。” 实现方式即为在所需要单面印刷的后面加一页空白页，然后全部双面打印即可，这个就是上面键值的设计想法，用户不需要自己手动加空白页，只需要选择自己对应所需版本就会对应自动判断是否添加空白页。
+注意：对于硕博的模板，\parencite{研究生院研究生学位论文规范} 中提到的“封面、原创性声明和使用授权书采用单面印刷，中英文扉页、摘要及后续内容采用双面印刷（硕士学位论文可以单面印刷）。” 实现方式即为在所需要单面印刷的后面加一页空白页，然后全部双面打印即可，这个就是上面键值的设计想法，用户不需要自己手动加空白页，只需要选择自己对应所需版本就会对应自动判断是否添加空白页。
 
 
 \begin{function}[added = 2023-04-07,updated = 2023-05-10]{blind-version}
