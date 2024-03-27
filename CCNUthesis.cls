@@ -3735,7 +3735,7 @@
     2  = Feb.,
     3  = Mar.,
     4  = Apr.,
-    5  = May.,
+    5  = May,
     6  = Jun.,
     7  = Jul.,
     8  = Aug.,

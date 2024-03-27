@@ -7,6 +7,15 @@
 QQ 1群：435903068（若满了请加2群）
 QQ 2群：685329998
 
+## [v1.3.1] - 2024-03-27
+
+### Removed
+
+- 去掉英文月份中五月份 `May.` 的 `.`（[#I9C4W0](https://gitee.com/xkwxdyy/CCNUthesis/issues/I9C4W0)）
+
+
+
+
 ## [v1.3.0] - 2024-03-19
 
 ### Added
