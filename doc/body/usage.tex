@@ -100,9 +100,9 @@
 注意：对于硕博的模板，\parencite{研究生院研究生学位论文规范} 中提到的“封面、原创性声明和使用授权书采用单面印刷，中英文扉页、摘要及后续内容采用双面印刷（硕士学位论文可以单面印刷）。” 实现方式即为在所需要单面印刷的后面加一页空白页，然后全部双面打印即可，这个就是上面键值的设计想法，用户不需要自己手动加空白页，只需要选择自己对应所需版本就会对应自动判断是否添加空白页。
 
 
-\begin{function}[added = 2023-04-07,updated = 2023-05-10]{blind-version}
+\begin{function}[added = 2023-04-07,updated = 2024-04-03]{blind-version}
   \begin{ccnusyntax}[emph={[1]blind-version}]
-    blind-version = (*<true|false|remove-partial-schoolname|remove-all-schoolname>*)
+    blind-version = (*<true|false|remove-partial-schoolname|remove-all-schoolname|blind-schoolname>*)
   \end{ccnusyntax}
   【本｜硕｜博】盲审版本。
   \begin{itemize}
@@ -110,6 +110,7 @@
     \item 【本｜硕｜博】\kvopt{blind-version}{false} 或者不写 \opt{blind-version} 键值表示不开启。
     \item 【本】\kvopt{blind-version}{remove-partial-schoolname}：去掉封面和版权声明页第一行中“华中师范”四个字（此键值只是为了实现邓国泰老师在旧模板中的做法）
     \item 【本】\kvopt{blind-version}{remove-all-schoolname}：去掉封面的“华中师范大学”校名以及版权声明页第一行中“华中师范大学”但保留版权声明页
+    \item 【硕｜博】\kvopt{blind-version}{blind-schoolname}：去掉封面的“华中师范大学”校名，版权声明页第一行中“华中师范大学”变成“XXXXXX”
   \end{itemize}
   \emph{注意致谢、参考文献等的盲审处理需要用户自行处理，本模板提供了 \tn{blind} 命令（见 \ref{subsubsec:豹尾}节）来处理致谢中的人名，不过一切以学院的要求为准。}
 \end{function}
@@ -1040,12 +1041,13 @@
 \begin{latexexample}
   我要感谢 CCNUthesis 的模板开发者 \blind{夏康玮}。
 \end{latexexample}
-如果开启盲审选项（见 \ref{subsec:模板选项} 节的 \opt{blind-version} 键值），即当文档类选项中（\tn{documentclass} 的可选参数中）是以下四种情况之一：
+如果开启盲审选项（见 \ref{subsec:模板选项} 节的 \opt{blind-version} 键值），即当文档类选项中（\tn{documentclass} 的可选参数中）是以下几种情况之一：
 \begin{enumerate}
   \item \opt{blind-version}
   \item \kvopt{blind-version}{true}
   \item \kvopt{blind-version}{remove-partial-schoolname}
   \item \kvopt{blind-version}{remove-all-schoolname}
+  \item \kvopt{blind-version}{blind-schoolname}
 \end{enumerate}
 则编译效果为
 \begin{latexexample}

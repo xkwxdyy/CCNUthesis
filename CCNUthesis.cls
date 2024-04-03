@@ -67,6 +67,7 @@
 \bool_new:N       \g__ccnu_showheadlogo_bool        % 页眉 logo 控制
 \bool_new:N       \g__ccnu_chapter_newpage_bool    % chapter 是否新起一页
 \bool_new:N       \g__ccnu_blind_version_bool    % 盲审
+\bool_new:N       \g__ccnu_master_doctor_copyright_version_new_bool  % 是否用新版的版权页
 \str_new:N       \g__ccnu_blind_version_remove_content_str    % 【本】盲审对声明页的处理
 \str_new:N        \g__ccnu_headline_str                % 页眉 阴阳线
 \str_new:N        \g__ccnu_type_version_str      % 打印、电子版本控制
@@ -270,8 +271,25 @@
         \bool_set_true:N \g__ccnu_blind_version_bool
         \str_gset:Nn \g__ccnu_blind_version_remove_content_str { all-schoolname }
       },
+    % 【硕博】去掉logo，版权页的“华中师范大学”变成“XXXXXX”
+    blind-version / blind-schoolname .code:n =
+      {
+        \bool_set_true:N \g__ccnu_blind_version_bool
+        \str_gset:Nn \g__ccnu_blind_version_remove_content_str { blind-schoolname }
+      },
     blind-version .initial:n = false,
     blind-version .default:n = true,
+    % 【硕博】版权页是否用新版的
+    copyright-version .choice:,
+    copyright-version / new .code:n =
+      {
+        \bool_gset_true:N \g__ccnu_master_doctor_copyright_version_new_bool
+      },
+    copyright-version / old .code:n =
+      {
+        \bool_gset_false:N \g__ccnu_master_doctor_copyright_version_new_bool
+      },
+    copyright-version .initial:n = old,
     unknown .code:n = { \__ccnu_error:n { unknown-option } }
   }
 \__ccnu_msg_new:nn { unknown-option }
