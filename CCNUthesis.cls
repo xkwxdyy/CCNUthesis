@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\ProvidesExplClass {CCNUthesis} {2024-03-27} {v1.3.1}
+\ProvidesExplClass {CCNUthesis} {2024-04-03} {v1.4.0}
   {Thesis template for Central China Normal University}
 \RequirePackage { l3keys2e, xparse }
 
@@ -3835,105 +3835,227 @@
 \ctex_after_end_preamble:n
   {
     \begin{titlepage}
-      \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {3}
+      \int_case:nn { \g__ccnu_thesis_type_int }
         {
-          \__ccnu_cover_bachelor:
-          \newpage
-          \bool_if:NTF \g__ccnu_blind_version_bool
-            {
-              \str_case:VnF \g__ccnu_blind_version_remove_content_str
-                {
-                  { partial-schoolname }
-                    {
-                      \pagestyle { empty }
-                      % 版权页
-                      \begin{tikzpicture} [remember~picture, overlay]
-                        \node at (current~page.center) 
-                          {
-                            \includegraphics
-                              [ width = \Gm@layoutwidth, height = \Gm@layoutheight ]
-                                { copyright / Originality_Copyright_bachelor_remove_partial_schoolname.pdf }
-                          };
-                      \end{tikzpicture}
-                    }
-                  { all-schoolname }
-                    {
-                      \pagestyle { empty }
-                      % 版权页
-                      \begin{tikzpicture} [remember~picture, overlay]
-                        \node at (current~page.center) 
-                          {
-                            \includegraphics
-                              [ width = \Gm@layoutwidth, height = \Gm@layoutheight ]
-                                { copyright / Originality_Copyright_bachelor_remove_all_schoolname.pdf }
-                          };
-                      \end{tikzpicture}
-                    }
-                }
-                {}  % 都不是的话就默认去掉整个版权页
-            }
-            {
-              \pagestyle { empty }
-              % 版权页
-              \begin{tikzpicture} [remember~picture, overlay]
-                \node at (current~page.center) 
-                  {
-                    \includegraphics
-                      [ width = \Gm@layoutwidth, height = \Gm@layoutheight ]
-                        { copyright / Originality_Copyright_bachelor.pdf }
-                  };
-              \end{tikzpicture}
-            }
-        }
-        {
-          \bool_lazy_and:nnTF
-            { \bool_if_p:N \g__ccnu_head_scope_all_bool }
-            { \bool_if_p:N \g__ccnu_showhead_bool }
-            {
-              \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
-                { \pagestyle { masterplain-head-nopage } }
-                { \pagestyle { doctorplain-head-nopage } }
-            }
-            {
-              \pagestyle { empty }
-            }
-          \__ccnu_cover_i_master_doctor:
-          \str_case:VnTF \g__ccnu_type_version_str
-            {
-              { print-master-twoside } {}
-              { print-doctor } {}
-            }
-            { \__ccnu_new_blank_page: }
-            % {}
-            { \newpage }
-          \__ccnu_cover_ii_master_doctor:
-          \newpage
-          \__ccnu_cover_iii_master_doctor:
-          \bool_if:NF \g__ccnu_blind_version_bool
-            {
-              \newpage
-              % 版权页
-              \begin{tikzpicture} [remember~picture, overlay]
-                \node at (current~page.center) 
-                  {
-                    \includegraphics
-                      [ width = \Gm@layoutwidth, height = \Gm@layoutheight ]
-                        { copyright / Originality_Copyright_master_doctor.pdf }
-                  };
-              \end{tikzpicture}
-            }
-          \str_case:VnTF \g__ccnu_type_version_str
-            {
-              { print-master-twoside } {}
-              { print-doctor } {}
-            }
-            { \__ccnu_new_blank_page: }
-            { \newpage \thispagestyle{empty} }
-            % {}
+          {3} { \__ccnu_titlepage_bachelor: }
+          {2} { \__ccnu_titlepage_master: }
+          {1} { \__ccnu_titlepage_doctor: }
         }
     \end{titlepage}
   }
-
+\cs_new:Npn \__ccnu_titlepage_bachelor:
+  {
+    \__ccnu_cover_bachelor:
+    \newpage
+    \bool_if:NTF \g__ccnu_blind_version_bool
+      {
+        \str_case:VnF \g__ccnu_blind_version_remove_content_str
+          {
+            { partial-schoolname }
+              {
+                \pagestyle { empty }
+                % 版权页
+                \begin{tikzpicture} [remember~picture, overlay]
+                  \node at (current~page.center) 
+                    {
+                      \includegraphics
+                        [ width = \Gm@layoutwidth, height = \Gm@layoutheight ]
+                          { copyright / Originality_Copyright_bachelor_remove_partial_schoolname.pdf }
+                    };
+                \end{tikzpicture}
+              }
+            { all-schoolname }
+              {
+                \pagestyle { empty }
+                % 版权页
+                \begin{tikzpicture} [remember~picture, overlay]
+                  \node at (current~page.center) 
+                    {
+                      \includegraphics
+                        [ width = \Gm@layoutwidth, height = \Gm@layoutheight ]
+                          { copyright / Originality_Copyright_bachelor_remove_all_schoolname.pdf }
+                    };
+                \end{tikzpicture}
+              }
+          }
+          {}  % 都不是的话就默认去掉整个版权页
+      }
+      {
+        \pagestyle { empty }
+        % 版权页
+        \begin{tikzpicture} [remember~picture, overlay]
+          \node at (current~page.center) 
+            {
+              \includegraphics
+                [ width = \Gm@layoutwidth, height = \Gm@layoutheight ]
+                  { copyright / Originality_Copyright_bachelor.pdf }
+            };
+        \end{tikzpicture}
+      }
+  }
+\cs_new:Npn \__ccnu_titlepage_master:
+  {
+    \bool_lazy_and:nnTF
+      { \bool_if_p:N \g__ccnu_head_scope_all_bool }
+      { \bool_if_p:N \g__ccnu_showhead_bool }
+      {
+        \pagestyle { masterplain-head-nopage }
+      }
+      {
+        \pagestyle { empty }
+      }
+    \__ccnu_cover_i_master_doctor:
+    \str_case:VnTF \g__ccnu_type_version_str
+      {
+        { print-master-twoside } {}
+        { print-doctor } {}
+      }
+      { \__ccnu_new_blank_page: }
+      % {}
+      { \newpage }
+    \__ccnu_cover_ii_master_doctor:
+    \newpage
+    \__ccnu_cover_iii_master_doctor:
+    \bool_if:NTF \g__ccnu_blind_version_bool
+      {
+        \str_case:Vn \g__ccnu_blind_version_remove_content_str
+          {
+            { blind-schoolname }
+              {
+                \newpage
+                \pagestyle { empty }
+                % 版权页
+                \begin{tikzpicture} [remember~picture, overlay]
+                  \node at (current~page.center) 
+                    {
+                      \includegraphics
+                        [ width = \Gm@layoutwidth, height = \Gm@layoutheight ]
+                          { copyright / Originality_Copyright_master_doctor_blind.pdf }
+                    };
+                \end{tikzpicture}
+              }
+          }
+      }
+      {
+        \bool_if:NTF \g__ccnu_master_doctor_copyright_version_new_bool
+          {
+            \newpage
+            % 版权页
+            \begin{tikzpicture} [remember~picture, overlay]
+              % \begin{pgfonlayer}{background}
+                \node at (current~page.center) 
+                  {
+                    \includegraphics
+                      % [ width = \Gm@layoutwidth, height = \Gm@layoutheight ]
+                      [ width = \textwidth ]
+                        { copyright / Originality_Copyright_master_doctor_new.pdf }
+                  };
+              % \end{pgfonlayer}
+            \end{tikzpicture}
+          }
+          {
+            \newpage
+            % 版权页
+            \begin{tikzpicture} [remember~picture, overlay]
+              \node at (current~page.center) 
+                {
+                  \includegraphics
+                    [ width = \Gm@layoutwidth, height = \Gm@layoutheight ]
+                      { copyright / Originality_Copyright_master_doctor_old.pdf }
+                };
+            \end{tikzpicture}
+          }
+      }
+    \str_case:VnTF \g__ccnu_type_version_str
+      {
+        { print-master-twoside } {}
+        { print-doctor } {}
+      }
+      { \__ccnu_new_blank_page: }
+      { \newpage \thispagestyle{empty} }
+      % {}
+  }
+\cs_new:Npn \__ccnu_titlepage_doctor:
+  {
+    \bool_lazy_and:nnTF
+      { \bool_if_p:N \g__ccnu_head_scope_all_bool }
+      { \bool_if_p:N \g__ccnu_showhead_bool }
+      {
+        \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
+          { \pagestyle { masterplain-head-nopage } }
+          { \pagestyle { doctorplain-head-nopage } }
+      }
+      {
+        \pagestyle { empty }
+      }
+    \__ccnu_cover_i_master_doctor:
+    \str_case:VnTF \g__ccnu_type_version_str
+      {
+        { print-master-twoside } {}
+        { print-doctor } {}
+      }
+      { \__ccnu_new_blank_page: }
+      % {}
+      { \newpage }
+    \__ccnu_cover_ii_master_doctor:
+    \newpage
+    \__ccnu_cover_iii_master_doctor:
+    \bool_if:NTF \g__ccnu_blind_version_bool
+      {
+        \str_case:Vn \g__ccnu_blind_version_remove_content_str
+          {
+            { blind-schoolname }
+              {
+                \newpage
+                \pagestyle { empty }
+                % 版权页
+                \begin{tikzpicture} [remember~picture, overlay]
+                  \node at (current~page.center) 
+                    {
+                      \includegraphics
+                        [ width = \Gm@layoutwidth, height = \Gm@layoutheight ]
+                          { copyright / Originality_Copyright_master_doctor_blind.pdf }
+                    };
+                \end{tikzpicture}
+              }
+          }
+      }
+      {
+        \bool_if:NTF \g__ccnu_master_doctor_copyright_version_new_bool
+          {
+            \newpage
+            % 版权页
+            \begin{tikzpicture} [remember~picture, overlay]
+              \node at (current~page.center) 
+                {
+                  \includegraphics
+                    [ width = \textwidth ]
+                      { copyright / Originality_Copyright_master_doctor_new.pdf }
+                };
+            \end{tikzpicture}
+          }
+          {
+            \newpage
+            % 版权页
+            \begin{tikzpicture} [remember~picture, overlay]
+              \node at (current~page.center) 
+                {
+                  \includegraphics
+                    [ width = \Gm@layoutwidth, height = \Gm@layoutheight ]
+                      { copyright / Originality_Copyright_master_doctor_old.pdf }
+                };
+            \end{tikzpicture}
+          }
+      }
+    \str_case:VnTF \g__ccnu_type_version_str
+      {
+        { print-master-twoside } {}
+        { print-doctor } {}
+      }
+      { \__ccnu_new_blank_page: }
+      { \newpage \thispagestyle{empty} }
+      % {}
+  }
 \cs_new:Npn \__ccnu_new_blank_page:
   {
     \newpage \null \thispagestyle{empty} \newpage

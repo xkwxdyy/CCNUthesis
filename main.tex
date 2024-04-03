@@ -4,8 +4,8 @@
 
 %********************************************
 % CCNUthesis: 华中师范大学论文模板(非官方)
-% update date: 2024-03-27
-% version: v1.3.1
+% update date: 2024-04-03
+% version: v1.4.0
 %
 % 重要提示：
 %   1. 请确保使用 UTF-8 编码保存
@@ -16,15 +16,16 @@
 %********************************************
 
 
-\documentclass[type = bachelor]{CCNUthesis}
+% \documentclass[type = bachelor]{CCNUthesis}
 % \documentclass[type = bachelor, blind-version=remove-partial-schoolname]{CCNUthesis}
 % \documentclass[type = master]{CCNUthesis}
-% \documentclass[type = master, blind-version]{CCNUthesis}
-% \documentclass[type = master, version = print-master-oneside]{CCNUthesis}
-% \documentclass[type = master, version = print-master-twoside]{CCNUthesis}
+% \documentclass[type = master, copyright-version=new]{CCNUthesis}
+% \documentclass[type = master, blind-version=blind-schoolname]{CCNUthesis}
+% \documentclass[type = master,version = print-master-oneside]{CCNUthesis}
 % \documentclass[type = doctor]{CCNUthesis}
-% \documentclass[type = doctor, blind-version]{CCNUthesis}
-% \documentclass[type = doctor, version = print-doctor]{CCNUthesis}
+% \documentclass[type = doctor,  copyright-version=new]{CCNUthesis}
+% \documentclass[type = doctor, blind-version=blind-schoolname]{CCNUthesis}
+\documentclass[type = doctor, copyright-version=new, version = print-doctor]{CCNUthesis}
 
 
 % type
@@ -50,6 +51,14 @@
 %    【本｜硕｜博】blind-version = false 或者不填"blind-version"：正常编译
 %    【本】blind-version = remove-partial-schoolname：去掉个人信息，保留版权声明页，但是去掉校名和版权声明页中的“华中师范”四个字（此为邓国泰老师在旧模板中的做法）
 %    【本】blind-version = remove-all-schoolname：去掉个人信息和校名，保留版权声明页，但是去掉版权声明页中出现的“华中师范大学”六个字
+%    【硕｜博】blind-version = blind-schoolname：去掉个人信息和校名，保留版权声明页，但是版权声明页中出现的“华中师范大学”六个字变成“XXXXXX”
+
+% copyright-version
+% 【硕｜博】版权声明页版本，由于 2023 年后增加了新的版权页，故增加此键值让用户选择是否更新为最新的版本
+%    可选选项：old|new
+%    默认：old
+%    old：旧版版权声明页，对应 copyright 目录下的 Originality_Copyright_master_doctor_old.pdf
+%    new：新版版权声明页，对应 copyright 目录下的 Originality_Copyright_master_doctor_new.pdf
 
 
 % 加载用户的个人信息和论文相关参数设置的配置文件
