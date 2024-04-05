@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\ProvidesExplClass {CCNUthesis} {2024-04-03} {v1.4.0}
+\ProvidesExplClass {CCNUthesis} {2024-04-05} {v1.4.1}
   {Thesis template for Central China Normal University}
 \RequirePackage { l3keys2e, xparse }
 
@@ -1785,13 +1785,31 @@
     head-scope = main
   }
 % 定理类环境
-
+\tl_new:N \l__ccnu_theorem_body_tl
+\keys_define:nn { ccnu / style }
+  {
+    % theorem-bodyfont .tl_set:N = \l__ccnu_theorem_body_tl,
+    theorem-bodyfont .choice:,
+    theorem-bodyfont / kaishu .code:n = 
+      {
+        \tl_set:Nn \l__ccnu_theorem_body_tl { \ccnukaishu }
+      },
+    theorem-bodyfont / normal .code:n = 
+      {
+        \tl_set:Nn \l__ccnu_theorem_body_tl { \normalfont }
+      },
+  }
+\keys_set:nn { ccnu / style }
+  {
+    theorem-bodyfont = normal,
+  }
 % 去掉.号，但只能通过新定义 style 的方式进行
 \declaretheoremstyle
   [
     headpunct     = {},
     postheadspace = { 0.5em },
-    headindent    = 2\ccwd
+    headindent    = 2\ccwd,
+    bodyfont      = \l__ccnu_theorem_body_tl,
   ]
   { ccnustyle }
 \cs_new:Npn \__ccnu_declare_theorem_with_counter_within:n #1
