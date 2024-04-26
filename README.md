@@ -1,5 +1,15 @@
 # CCNUthesis
 
+> [!WARNING]
+> 由于 `CCNUthesis` 一直是开源项目，而开发者精力有限，且模板一直处于未扶正的状态，使用上存在风险，决定于 2024 年 04 月 26 日 开始无限期停止维护 `CCNUthesis`。未来可能会继续维护，但不保证时间，但也可能不再维护了。
+> 
+> GitHub 和 Gitee 的项目仓库不会关闭，也欢迎有能力的开发者继续维护。
+> GitHub：https://github.com/xkwxdyy/CCNUthesis
+> Gitee：https://gitee.com/xkwxdyy/CCNUthesis
+> 
+> 感谢曾经使用过此模板的同学的支持。
+
+
 ## 欢迎使用CCNUthesis（华中师范大学论文模板）
 
 本模板支持华中师范大学数学与统计学学院本硕博毕业论文撰写，基于 [fduthesis](https://github.com/stone-zeng/fduthesis) 编写而成，借助现代 LaTeX 技术，希望达到用户接口简明、内容格式规范和模板样式可定制的统一。
