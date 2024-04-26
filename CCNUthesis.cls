@@ -2710,7 +2710,7 @@
       % 标题
       \__ccnu_cover_bachelor_title:
       % 个人信息
-      \__ccnu_cover_bachelor_infomation:
+      \__ccnu_cover_bachelor_information:
       % 时间
       \__ccnu_cover_bachelor_time:
     \end{tikzpicture}
@@ -2729,7 +2729,7 @@
       % 标题
       \__ccnu_cover_i_master_doctor_title:
       % 个人信息
-      \__ccnu_cover_i_master_doctor_infomation:
+      \__ccnu_cover_i_master_doctor_information:
     \end{tikzpicture}
   }
 
@@ -2742,7 +2742,7 @@
       % 标题
       \__ccnu_cover_ii_master_doctor_title:
       % 个人信息
-      \__ccnu_cover_ii_master_doctor_infomation:
+      \__ccnu_cover_ii_master_doctor_information:
       % 学院
       \__ccnu_cover_ii_master_doctor_department:
       % 时间
@@ -2759,11 +2759,11 @@
       % 学位申请
       \__ccnu_cover_iii_master_doctor_degree_application:
       % 个人信息
-      \__ccnu_cover_iii_master_doctor_author_infomation:
+      \__ccnu_cover_iii_master_doctor_author_information:
       % 学院信息
-      \__ccnu_cover_iii_master_doctor_department_infomation:
+      \__ccnu_cover_iii_master_doctor_department_information:
       % 导师信息
-      \__ccnu_cover_iii_master_doctor_supervisor_infomation:
+      \__ccnu_cover_iii_master_doctor_supervisor_information:
       % 签名
       \__ccnu_cover_iii_master_doctor_signature:
       % 时间
@@ -2916,7 +2916,7 @@
 
 
 % 个人信息
-\cs_new:Npn \__ccnu_cover_bachelor_infomation:
+\cs_new:Npn \__ccnu_cover_bachelor_information:
   {
     \node[] (information) at
         (
@@ -2968,11 +2968,11 @@
               {
                 \clist_pop:NN \l__ccnu_tmpa_clist \l__ccnu_tmpa_tl
                 \clist_pop:NN \l__ccnu_tmpb_clist \l__ccnu_tmpb_tl
-                \__ccnu_cover_infomation_spread_box:nn
+                \__ccnu_cover_information_spread_box:nn
                   { 4em }
                   { \l__ccnu_tmpa_tl }
                 \hspace*{1em}
-                \__ccnu_cover_infomation_center_underline_box:Vn 
+                \__ccnu_cover_information_center_underline_box:Vn 
                   \l__ccnu_tmpb_dim 
                   { \l__ccnu_tmpb_tl }
                 \skip_vertical:n { 1.3 ex }
@@ -3284,7 +3284,7 @@
 
 
 % 个人信息
-\cs_new:Npn \__ccnu_cover_i_master_doctor_infomation:
+\cs_new:Npn \__ccnu_cover_i_master_doctor_information:
   {
     \node[anchor = south] (information) at
         (
@@ -3323,18 +3323,18 @@
               {
                 \clist_pop:NN \l__ccnu_tmpa_clist \l__ccnu_tmpa_tl
                 \clist_pop:NN \l__ccnu_tmpb_clist \l__ccnu_tmpb_tl
-                \__ccnu_cover_infomation_spread_box_master_doctor:nn
+                \__ccnu_cover_information_spread_box_master_doctor:nn
                   { 9em }
                   { \l__ccnu_tmpa_tl }
                 \hspace*{2pt}
                 \bool_if:NTF \g__ccnu_cover_word_version_bool
                   {
-                    \__ccnu_cover_infomation_center_underline_box:Vn 
+                    \__ccnu_cover_information_center_underline_box:Vn 
                       \l__ccnu_tmpb_dim 
                       { \zihao{2} \ccnutitlefont \l__ccnu_tmpb_tl }
                   }
                   {
-                    \__ccnu_cover_infomation_center_underline_box:Vn 
+                    \__ccnu_cover_information_center_underline_box:Vn 
                       \l__ccnu_tmpb_dim 
                       { \l__ccnu_tmpb_tl }
                   }
@@ -3444,7 +3444,7 @@
     
   }
 % 个人信息
-\cs_new:Npn \__ccnu_cover_ii_master_doctor_infomation:
+\cs_new:Npn \__ccnu_cover_ii_master_doctor_information:
   {
     \node [] at ([ shift = { (3em, -5em) } ]current~page~text~area.center)
       {
@@ -3477,11 +3477,11 @@
             {
               \clist_pop:NN \l__ccnu_tmpa_clist \l__ccnu_tmpa_tl
               \clist_pop:NN \l__ccnu_tmpb_clist \l__ccnu_tmpb_tl
-              \__ccnu_cover_infomation_spread_box_master_doctor:nn
+              \__ccnu_cover_information_spread_box_master_doctor:nn
                 { 4em }
                 { \l__ccnu_tmpa_tl }
               \hspace*{15pt}
-              \__ccnu_cover_infomation_center_nounderline_box:Vn 
+              \__ccnu_cover_information_center_nounderline_box:Vn 
                 \l__ccnu_tmpb_dim 
                 { \normalfont \l__ccnu_tmpb_tl }
               \skip_vertical:n { 0.3 ex }
@@ -3636,7 +3636,7 @@
       }
   }
 % 个人信息
-\cs_new:Npn \__ccnu_cover_iii_master_doctor_author_infomation:
+\cs_new:Npn \__ccnu_cover_iii_master_doctor_author_information:
   {
     \bool_if:NT \g__ccnu_blind_version_bool
       {
@@ -3646,7 +3646,7 @@
       }
     \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {2}
       {
-        \node [anchor = north] (author_infomation)  
+        \node [anchor = north] (author_information)  
           at ([shift = {(0em, -4em)}]application.south)
           {
             \parbox { \textwidth }
@@ -3681,7 +3681,7 @@
       }
   }
 % 学院信息
-\cs_new:Npn \__ccnu_cover_iii_master_doctor_department_infomation:
+\cs_new:Npn \__ccnu_cover_iii_master_doctor_department_information:
   {
     \int_compare:nNnT { \g__ccnu_thesis_type_int } = {1}
       {
@@ -3704,12 +3704,12 @@
       }
   }
 % 导师信息
-\cs_new:Npn \__ccnu_cover_iii_master_doctor_supervisor_infomation:
+\cs_new:Npn \__ccnu_cover_iii_master_doctor_supervisor_information:
   {
     \int_compare:nNnT { \g__ccnu_thesis_type_int } = {2}
       {
-        \node [anchor = north~east] (supervisor_infomation)  
-          at ([shift = {(2em, -4em)}]author_infomation.south)
+        \node [anchor = north~east] (supervisor_information)  
+          at ([shift = {(2em, -4em)}]author_information.south)
           {
             \parbox { 0.5\textwidth }
               {
@@ -3726,7 +3726,7 @@
     \int_compare:nNnT { \g__ccnu_thesis_type_int } = {2}
       {
         \node [ anchor = north~west ] (signature)  
-          at ([shift = {(3em, 4.5ex)}]supervisor_infomation.south~east)
+          at ([shift = {(3em, 4.5ex)}]supervisor_information.south~east)
           {
             \zihao{4}
             \begin{tabular}{r}
@@ -3786,19 +3786,19 @@
     \l__ccnu_tmpa_tl
   }
 \cs_generate_variant:Nn \__ccnu_month_cover_to_english_version:n { V }
-\cs_new_protected:Npn \__ccnu_cover_infomation_spread_box:nn #1#2
+\cs_new_protected:Npn \__ccnu_cover_information_spread_box:nn #1#2
   {
     \mode_leave_vertical:
     \hbox_to_wd:nn {#1}
       { \tl_map_inline:xn {#2} { ##1 \hfil } \unskip }
   }
-\cs_new_protected:Npn \__ccnu_cover_infomation_spread_box_master_doctor:nn #1#2
+\cs_new_protected:Npn \__ccnu_cover_information_spread_box_master_doctor:nn #1#2
   {
     \mode_leave_vertical:
     \hbox_to_wd:nn {#1}
       { \tl_map_inline:xn {#2} { ##1 \hfil } \unskip ：}
   }
-\cs_new_protected:Npn \__ccnu_cover_infomation_center_underline_box:nn #1#2
+\cs_new_protected:Npn \__ccnu_cover_information_center_underline_box:nn #1#2
   {
     \mode_leave_vertical:
     \CJKunderline*
@@ -3814,8 +3814,8 @@
           }
       }
   }
-\cs_generate_variant:Nn \__ccnu_cover_infomation_center_underline_box:nn  { Vn }
-\cs_new_protected:Npn \__ccnu_cover_infomation_center_nounderline_box:nn #1#2
+\cs_generate_variant:Nn \__ccnu_cover_information_center_underline_box:nn  { Vn }
+\cs_new_protected:Npn \__ccnu_cover_information_center_nounderline_box:nn #1#2
   {
     \mode_leave_vertical:
     \CJKunderline*
@@ -3833,7 +3833,7 @@
           }
       }
   }
-\cs_generate_variant:Nn \__ccnu_cover_infomation_center_nounderline_box:nn  { Vn }
+\cs_generate_variant:Nn \__ccnu_cover_information_center_nounderline_box:nn  { Vn }
 
 % 时间
 \cs_new:Npn \__ccnu_cover_bachelor_time:
@@ -3841,7 +3841,7 @@
     \node [ anchor = south ] ( date ) at ( current~page~text~area.south ) 
       {
         \zihao{3} \bfseries
-        \zhdigits { \int_use:N \l__ccnu_info_year_int}
+        \zhdigits { \int_use:N \l__ccnu_info_year_int }
         \, 年 \,
         \zhnumber { \int_use:N \l__ccnu_info_month_int }
         \, 月
