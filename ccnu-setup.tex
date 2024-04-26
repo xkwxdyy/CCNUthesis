@@ -190,7 +190,7 @@
       %     continuous：chapter 不新起一页开始
       %     newpage：chapter 新起一页开始
       %
-    caption-labelstyle = hyphen,
+    caption-labelstyle = dot,
       % 图表标题 label 计数样式
       %   适用学位类型：【本｜硕｜博】
       %     【硕｜博】应选择 dot （根据研究生学位论文规范）
@@ -200,15 +200,16 @@
       %       x-y 的 x 为 chapter 值，y 为图表的计数器值，新的 chapter 中 y 会清零重新计数
       %     dot：样式为图1.1，图2.1，表1.1...
       %       x.y 的 x 为 chapter 值，y 为图表的计数器值，新的 chapter 中 y 会清零重新计数
-      %     默认：hyphen
+      %     默认：dot
       %
-    caption-labelseperator = colon,
+    caption-labelseperator = space,
       % 图表标题 label 和 标题内容 之内的分隔符
       %   适用学位类型：【本｜硕｜博】
       %   可选选项：colon|space
       %     colon 表示 「:␣」，即一个西文冒号加一个空格
-      %     space 表示 「␣␣」，即两个空格
-      %     默认：colon
+      %     【硕｜博】space 表示 「␣␣」，即两个空格
+      %     【本】space 表示 1em 长的空格
+      %     默认：space
       %
     show-head = true,
     % show-head = false,
@@ -323,12 +324,3 @@
   %   说明：一般科技类文章需要替换，防止“. ”与“。”混淆
   %
 }
-
-% 如果选择 fullwidth-stop = catcode 或 fullwidth-stop = mapping，建议将下面的6行代码取消注释，这6行代码的作用是将输入的中文逗号、分号和冒号编译为西文对应版本
-
-% \catcode`\，=13
-% \def，{, }
-% \catcode`\；=13
-% \def；{; }
-% \catcode`\：=13
-% \def：{: }

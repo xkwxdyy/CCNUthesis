@@ -390,9 +390,9 @@
   \end{tabular}
 \end{table}
 
-\begin{function}{style/caption-labelstyle}
+\begin{function}[updated = 2024-04-26]{style/caption-labelstyle}
   \begin{ccnusyntax}[emph={[1]caption-labelstyle}]
-    caption-labelstyle = (*<arabic|(hyphen)|dot>*)
+    caption-labelstyle = (*<arabic|hyphen|(dot)>*)
   \end{ccnusyntax}
   【本｜硕｜博】图表标题 label 计数样式。
 
@@ -403,15 +403,16 @@
   \end{itemize}
 \end{function}
 
-\begin{function}{style/caption-labelseperator}
+\begin{function}[updated = 2024-04-26]{style/caption-labelseperator}
   \begin{ccnusyntax}[emph={[1]caption-labelseperator}]
-    caption-labelseperator = (*<(colon)|space>*)
+    caption-labelseperator = (*<colon|(space)>*)
   \end{ccnusyntax}
   【本｜硕｜博】图表标题 label 和标题内容之间的分隔符
 
   \begin{itemize}
     \item \opt{colon}：表示 「:␣」，即一个西文冒号加一个空格
-    \item \opt{space}：表示 「␣␣」，即两个空格
+    \item 【本】\opt{space}：表示一个长 |1em| 的空格
+    \item 【硕｜博】\opt{space}：表示「␣␣」，即两个空格
   \end{itemize}
 \end{function}
 

@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\ProvidesExplClass {CCNUthesis} {2024-04-05} {v1.4.1}
+\ProvidesExplClass {CCNUthesis} {2024-04-27} {v1.4.2}
   {Thesis template for Central China Normal University}
 \RequirePackage { l3keys2e, xparse }
 
@@ -472,7 +472,7 @@
 \clist_map_inline:nn
   {
     { abstract } { 内容摘要    } { Abstract        },
-    { keywords } { 关键词      } { Keywords        },
+    { keywords } { 关键词      } { Key~words        },
   }
   { \__ccnu_define_name:nnn #1 }
 
@@ -889,13 +889,13 @@
       { 
         \__ccnu_set_fullwidth_stop_catcode:
         % 设置标点为 kaiming 式
-        \keys_set:nn { ctex } { punct = kaiming }
+        % \keys_set:nn { ctex } { punct = kaiming }
       },
     fullwidth-stop / mapping .code:n =
       {
         \clist_gset:Nn \g__xeCJK_default_features_clist
           { Mapping = fullwidth-stop }
-        \keys_set:nn { ctex } { punct = kaiming }
+        % \keys_set:nn { ctex } { punct = kaiming }
       },
     fullwidth-stop / false .code:n = { }
   }
@@ -2128,7 +2128,7 @@
               {
                 format      = \zihao{-3} \normalfont \bfseries,
                 name        = {},
-                % indent      = 2\ccwd,
+                indent      = 1.4em,
                 number      = \__ccnu_arabic:n { chapter },
                 beforeskip  = 5 ex plus 0.5 ex,
                 afterskip   = 2.7 ex plus 0.5 ex,
@@ -2144,7 +2144,7 @@
               {
                 format      = \zihao{-3} \normalfont \bfseries,
                 name        = {},
-                % indent      = 2\ccwd,
+                indent      = 1.4em,
                 number      = \__ccnu_arabic:n { chapter },
                 beforeskip  = 5 ex plus 0.5 ex,
                 afterskip   = 2.7 ex plus 0.5 ex,
@@ -2164,7 +2164,7 @@
             beforeskip  = 4.5 ex plus 1.0 ex minus 0.2 ex,
             afterskip   = 2.7 ex plus 0.5 ex,
             fixskip     = true,
-            % indent      = 2\ccwd
+            indent      = 2em
           },
         subsection =
           {
@@ -2172,7 +2172,7 @@
             beforeskip  = 4 ex plus 1.0 ex minus 0.2 ex,
             afterskip   = 2.5 ex plus 0.3 ex,
             fixskip     = true,
-            % indent      = 2\ccwd
+            indent      = 3em
           },
         subsubsection =
           {
@@ -2180,7 +2180,7 @@
             beforeskip  = 1.5 ex plus 0.5 ex minus 0.2 ex,
             afterskip   = 1.5 ex plus 0.3 ex,
             fixskip     = true,
-            % indent      = 2\ccwd
+            indent      = 3em
           }
       }
   }
@@ -2285,7 +2285,7 @@
         \tl_set:Nn \l__ccnu_caption_label_seperator_tl
           { colon }
       },
-    caption-labelseperator .initial:n = colon
+    caption-labelseperator .initial:n = space
   }
 
 % 图表 caption 字体
@@ -2295,8 +2295,16 @@
   { \normalfont \zihao { -5 } }
 
 % 图表 label 和标题之间的分割符
-\DeclareCaptionLabelSeparator
-  { ccnuspace } { \space \space }
+\int_compare:nNnTF { \g__ccnu_thesis_type_int } = {3}
+  {
+    \DeclareCaptionLabelSeparator
+      { ccnuspace } { \quad }
+  }
+  {
+    \DeclareCaptionLabelSeparator
+      { ccnuspace } { \space \space }
+  }
+
 \captionsetup [ figure ]
   {
     font     = ccnufigurecap,
@@ -2337,7 +2345,7 @@
         \cs_set:Npn \thetable
           { \thechapter . \__ccnu_arabic:n { table  } }
       },
-    caption-labelstyle .initial:n = hyphen,
+    caption-labelstyle .initial:n = dot,
   }
 
 
@@ -3838,14 +3846,27 @@
 % 时间
 \cs_new:Npn \__ccnu_cover_bachelor_time:
   {
-    \node [ anchor = south ] ( date ) at ( current~page~text~area.south ) 
+    \bool_if:NTF \g__ccnu_cover_word_version_bool
       {
-        \zihao{3} \bfseries
-        \zhdigits { \int_use:N \l__ccnu_info_year_int }
-        \, 年 \,
-        \zhnumber { \int_use:N \l__ccnu_info_month_int }
-        \, 月
-      };
+        \node [ anchor = south ] ( date ) at ( current~page~text~area.south ) 
+          {
+            \zihao{3} \bfseries
+            \zhdigits { \int_use:N \l__ccnu_info_year_int }
+            年
+            \zhnumber { \int_use:N \l__ccnu_info_month_int }
+            月
+          };
+      }
+      {
+        \node [ anchor = south ] ( date ) at ( current~page~text~area.south ) 
+          {
+            \zihao{3} \bfseries
+            \zhdigits { \int_use:N \l__ccnu_info_year_int }
+            \, 年 \,
+            \zhnumber { \int_use:N \l__ccnu_info_month_int }
+            \, 月
+          };
+      }
   }
 
 
@@ -4087,7 +4108,7 @@
     \keys_set:nn { ctex }
       {
         % 目录深度：到 section
-        tocdepth = 1 ,
+        tocdepth = 2 ,
         % 目录标题
         contentsname   = \c__ccnu_name_toc_tl,
         chapter / tocline =
@@ -4235,6 +4256,8 @@
     \dim_set:Nn \cftchapnumwidth { 1.5em }
     \dim_set:Nn \cftsecnumwidth { 2em }
     \dim_set:Nn \cftsubsecnumwidth { 2em }
+    \dim_set:Nn \cftsecindent  { 2em }
+    \dim_set:Nn \cftsubsecindent { 4em }
   }
 \cs_new:Npn \__ccnu_tableofcontents_format_master:
   {
@@ -4347,8 +4370,6 @@
       { \normalfont \tl_use:N \c__ccnu_name_abstract_tl }
     % 「内容摘要：」
     { \bfseries \c__ccnu_name_abstract_tl : }
-    % 教务处要求缩进两格
-    \c_space_tl \c_space_tl
   }
 \cs_new:Npn \__ccnu_abstract_end_bachelor:
   {
@@ -4364,9 +4385,10 @@
         \par
       }
     \textbf { \c__ccnu_name_keywords_tl : }
-    \c_space_tl \c_space_tl
+    % \c_space_tl \c_space_tl
     \clist_use:Nn \l__ccnu_info_keywords_clist 
-      { \qquad }
+      { ； }
+    ； % 结尾的分号
     \par
   }
 \cs_new:Npn \__ccnu_abstract_en_begin_bachelor:
@@ -4381,7 +4403,13 @@
     % 把 Title 写进目录
     \addcontentsline { toc } { chapter }
       { \normalfont Title }
-    \textbf{ Title: } \c_space_tl \l__ccnu_info_title_en_tl \par
+    \group_begin:
+    \centering
+    \bfseries
+    Title:
+    \l__ccnu_info_title_en_tl
+    \par
+    \group_end:
     % \medskip
     \phantomsection
     \textbf { \c__ccnu_name_abstract_en_tl : }
@@ -4403,10 +4431,11 @@
       {
         \par
       }
-    \textbf { \c__ccnu_name_keywords_en_tl : }
-    \c_space_tl \c_space_tl
+    \textbf { \c__ccnu_name_keywords_en_tl : ~}
+    % \c_space_tl \c_space_tl
     \clist_use:Nn \l__ccnu_info_keywords_en_clist 
-      { \qquad }
+      { ;~}
+    ; % 结尾的分号
     \newpage
   }
 % 硕博的摘要
@@ -4649,7 +4678,7 @@
       {
         backend      = biber,
         bibstyle     = \tl_use:N \l__ccnu_biblatex_bibstyle_tl,
-        citestyle    = gb7714-CCNU
+        citestyle    = gb7714-CCNU,
       }
     \tl_if_in:NnT \l__ccnu_biblatex_bibstyle_tl { gb7714-CCNU }
       {
@@ -4687,7 +4716,18 @@
         \group_begin:
           \sloppy
           \keys_set:nn { ctex }
-            { punct = plain }
+            {
+              punct = plain,
+              chapter = 
+                {
+                  indent = 0pt
+                }
+            }
+          \setlength { \bibitemindent } { 0em }
+          \setlength { \bibhang } { 2em }
+          \setlength { \biblabelsep } { 0mm } 
+          \setlength { \biblabelextend } { 0pt }
+          \linespread { 1.25 } \selectfont
           \__ccnu_printbibliography:n { ##1 }
         \group_end:
       }
@@ -4916,7 +4956,7 @@
     \int_set:Nn \widowpenalty { 10000 }
     % 尽量避免在选项中间换行
     \int_set:Nn \interlinepenalty { 301 }
-    \noindent
+    \noindent \hspace*{-1em}
     \dim_set_eq:NN \l__ccnu_choices_total_width_dim \linewidth
     \int_zero:N \l__ccnu_choices_columns_int
     \dim_zero:N \l__ccnu_choices_label_width_dim
@@ -5277,4 +5317,23 @@
   {
     \bool_if:NTF \g__ccnu_blind_version_bool
       { *** } { #1 }
+  }
+
+
+\int_compare:nNnT { \g__ccnu_thesis_type_int } = {3}
+  { 
+    % 来自邓国泰的设置
+    \setlength { \abovecaptionskip } { 0cm } 
+    \setlength { \belowcaptionskip } { 0cm } 
+  }
+
+\int_compare:nNnT { \g__ccnu_thesis_type_int } = {3}
+  { 
+    \AddToHook { cmd / backmatter / after }
+      {
+        \setlist [enumerate, 1]
+          {
+            leftmargin = 2em,
+          }
+      }
   }
