@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\ProvidesExplClass {CCNUthesis} {2024-04-27} {v1.4.2}
+\ProvidesExplClass {CCNUthesis} {2024-04-27} {v1.4.3}
   {Thesis template for Central China Normal University}
 \RequirePackage { l3keys2e, xparse }
 
@@ -413,6 +413,7 @@
     tabularray,        % 表格
     calc,              % settototalheight 等命令
     etoolbox,          % 补丁
+    mathtools,         
     amsthm,            % 定理类环境
     thmtools,          % 定理类环境
     xeCJKfntef,        % 下划线
@@ -3895,12 +3896,23 @@
                 \pagestyle { empty }
                 % 版权页
                 \begin{tikzpicture} [remember~picture, overlay]
-                  \node at (current~page.center) 
+                  \bool_if:NTF \g__ccnu_cover_word_version_bool
                     {
-                      \includegraphics
-                        [ width = \Gm@layoutwidth, height = \Gm@layoutheight ]
-                          { copyright / Originality_Copyright_bachelor_remove_partial_schoolname.pdf }
-                    };
+                      \node at (current~page.center) 
+                        {
+                          \includegraphics
+                            [ width = \Gm@layoutwidth, height = \Gm@layoutheight ]
+                              { copyright / Originality_Copyright_bachelor_remove_partial_schoolname.pdf }
+                        };
+                    }
+                    {
+                      \node at (current~page.center) 
+                        {
+                          \includegraphics
+                            [ width = \Gm@layoutwidth, height = \Gm@layoutheight ]
+                              { copyright / Originality_Copyright_bachelor_remove_partial_schoolname_math.pdf }
+                        };
+                    }
                 \end{tikzpicture}
               }
             { all-schoolname }
@@ -3923,12 +3935,23 @@
         \pagestyle { empty }
         % 版权页
         \begin{tikzpicture} [remember~picture, overlay]
-          \node at (current~page.center) 
+          \bool_if:NTF \g__ccnu_cover_word_version_bool
             {
-              \includegraphics
-                [ width = \Gm@layoutwidth, height = \Gm@layoutheight ]
-                  { copyright / Originality_Copyright_bachelor.pdf }
-            };
+              \node at (current~page.center) 
+                {
+                  \includegraphics
+                    [ width = \Gm@layoutwidth, height = \Gm@layoutheight ]
+                      { copyright / Originality_Copyright_bachelor.pdf }
+                };
+            }
+            {
+              \node at (current~page.center) 
+                {
+                  \includegraphics
+                    [ width = \Gm@layoutwidth, height = \Gm@layoutheight ]
+                      { copyright / Originality_Copyright_bachelor_math.pdf }
+                };
+            }
         \end{tikzpicture}
       }
   }
@@ -4388,7 +4411,8 @@
     % \c_space_tl \c_space_tl
     \clist_use:Nn \l__ccnu_info_keywords_clist 
       { ； }
-    ； % 结尾的分号
+    \bool_if:NT \g__ccnu_cover_word_version_bool
+      {； } % 结尾的分号
     \par
   }
 \cs_new:Npn \__ccnu_abstract_en_begin_bachelor:
@@ -4435,7 +4459,8 @@
     % \c_space_tl \c_space_tl
     \clist_use:Nn \l__ccnu_info_keywords_en_clist 
       { ;~}
-    ; % 结尾的分号
+    \bool_if:NT \g__ccnu_cover_word_version_bool
+      {; } % 结尾的分号
     \newpage
   }
 % 硕博的摘要
