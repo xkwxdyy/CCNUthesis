@@ -4917,16 +4917,17 @@
 
 
 
-% 添加 ccnu 项目的 choices 环境
-% https://gitee.com/zepinglee/exam-zh/blob/main/exam-zh-choices.sty
 \dim_new:N \l__ccnu_choices_column_sep_dim
 \int_new:N \l__ccnu_choices_columns_int
 \tl_new:N \l__ccnu_choices_label_tl
 \tl_new:N \l__ccnu_choices_label_pos_tl
+\tl_new:N \l__ccnu_choices_label_align_tl
 \dim_new:N \l__ccnu_choices_label_sep_dim
 \dim_new:N \l__ccnu_choices_label_width_dim
 \int_new:N \l__ccnu_choices_max_columns_int
 
+\keys_define:nn { ccnu }
+  { choices .meta:nn = { ccnu / choices } {#1} }
 
 \keys_define:nn { ccnu / choices }
   {
@@ -4936,9 +4937,17 @@
     label-pos   .choices:nn =
       { auto , top-left , left , bottom }
       { \tl_set_eq:NN \l__ccnu_choices_label_pos_tl \l_keys_choice_tl } ,
+    label-align .tl_set:N = \l__ccnu_choices_label_align_tl ,
     label-sep   .dim_set:N = \l__ccnu_choices_label_sep_dim ,
     label-width .dim_set:N = \l__ccnu_choices_label_width_dim ,
     max-columns .int_set:N = \l__ccnu_choices_max_columns_int ,
+    index       .int_set:N = \l__ccnu_choices_item_index_int,
+    % 环境上方的额外距离
+    top-sep .skip_set:N = \l__ccnu_choices_top_sep_skip,
+    % 环境下方的额外距离
+    bottom-sep .skip_set:N = \l__ccnu_choices_bottom_sep_skip,
+    % 若不是单行排版，则可以控制行之间的额外间距
+    linesep .skip_set:N = \l__ccnu_choices_line_sep_skip
   }
 
 \keys_set:nn { ccnu / choices }
@@ -4947,27 +4956,40 @@
     columns     = 0 ,
     label       = \Alph*. ,
     label-pos   = auto ,
+    label-align = left ,
     label-sep   = .5em ,
     label-width = 0pt ,
     max-columns = 4 ,
+    index       = 1,
+    top-sep     = 0pt,
+    bottom-sep  = 0pt,
+    linesep     = 0pt plus .5ex
   }
+
+\NewDocumentCommand \setchoices { m }
+  { \keys_set:nn { ccnu / choices } {#1} }
 
 
 \tl_new:N \l__ccnu_choices_counters_tl
 
-\NewDocumentCommand \AddChoicesCounter { m m m }
+\NewDocumentCommand \AddChoicesCounter { m m }
+  % #1: \Alph（用户接口）
+  % #2: \@Alph（具体实现的命令或函数（开发层））
   {
+    % TODO 这一步的作用是什么，为什么要把函数放在 tl 变量里而不是直接在某处使用？
+    % 猜测：put_right 而不是 set，是为了保证操作 label 的输入值前
+    %      几个函数都被 set
     \tl_put_right:Nn \l__ccnu_choices_counters_tl
-      { \l__ccnu_process_counter:NN #1 #2 }
-    \cs_set_eq:cN { __ccnu_chioces_save_ \cs_to_str:N #1 : } #2
-    \cs_set_eq:cN { __ccnu_chioces_save_ \cs_to_str:N #2 : } #2
+      { \__ccnu_choices_process_counter:NN #1 #2 }
+    \cs_set_eq:cN { __ccnu_choices_save_ \cs_to_str:N #1 : } #2
+    \cs_set_eq:cN { __ccnu_choices_save_ \cs_to_str:N #2 : } #2
   }
 
-\AddChoicesCounter \arabic \@arabic { 0 }
-\AddChoicesCounter \alph   \@alph   { m }
-\AddChoicesCounter \Alph   \@Alph   { M }
-\AddChoicesCounter \roman  \@roman  { viii }
-\AddChoicesCounter \Roman  \@Roman  { VIII }
+\AddChoicesCounter \arabic \@arabic
+\AddChoicesCounter \alph   \@alph
+\AddChoicesCounter \Alph   \@Alph
+\AddChoicesCounter \roman  \@roman
+\AddChoicesCounter \Roman  \@Roman
 
 
 \dim_new:N \l__ccnu_choices_total_width_dim
@@ -4975,33 +4997,106 @@
 
 \NewDocumentEnvironment { choices } { O { } +b }
   {
+    \keys_set:nn { ccnu / choices } {#1}
     \par \nopagebreak
     % 严格禁止孤行和寡行
     \int_set:Nn \clubpenalty { 10000 }
     \int_set:Nn \widowpenalty { 10000 }
     % 尽量避免在选项中间换行
     \int_set:Nn \interlinepenalty { 301 }
-    \noindent \hspace*{-1em}
-    \dim_set_eq:NN \l__ccnu_choices_total_width_dim \linewidth
+    \vspace* { \l__ccnu_choices_top_sep_skip }
+    \noindent
+    % \dim_set_eq:NN \l__ccnu_choices_total_width_dim \linewidth
+    \dim_set:Nn \l__ccnu_choices_total_width_dim { \linewidth - \leftskip - \rightskip }
     \int_zero:N \l__ccnu_choices_columns_int
     \dim_zero:N \l__ccnu_choices_label_width_dim
-    \keys_set:nn { ccnu / choices } {#1}
   }
   {
+    % 用 \item 分割选项
     \seq_set_split:Nnn \l__ccnu_choices_seq { \item } {#2}
+    % 把第一个空项去掉
     \seq_if_empty:NF \l__ccnu_choices_seq
       { \seq_pop_left:NN \l__ccnu_choices_seq \l_tmpa_tl }
+    % 收集正确的选项
+    \__ccnu_choices_collect_correct_choices:N   
+      \l__ccnu_choices_seq
     % 计算标签和选项内容的最大自然宽度
     \__ccnu_choices_calc_max_width:N \l__ccnu_choices_seq
     % label-pos = auto 时自动选择标签位置
     \__ccnu_choices_set_auto_label_pos:
     % 如果用户没有声明列数，计算合适的列数
+    % 「学习点」从默认值是否被改变来测试用户是否输入
+    % 用户没有输入的话就采用自动计算列数
     \int_compare:nNnT { \l__ccnu_choices_columns_int } < {1}
       { \__ccnu_choices_calc_columns: }
+    % 解决 columns 无效的问题
+    \keys_set:nn { ccnu / choices } {#1}
     % 计算每个选项内容的宽度 \l__ccnu_choices_item_width_dim
     \__ccnu_choices_calc_item_width:
     % 输出选项
     \__ccnu_print_choices:N \l__ccnu_choices_seq
+    % 输出正确选项
+    % \__ccnu_print_correctchoice:
+    \vspace* { \l__ccnu_choices_bottom_sep_skip }
+  }
+
+% 用来存正确选项的序号（entry）
+\seq_new:N \l__ccnu_choices_correct_choices_label_seq
+% 用来存正确选项的内容
+\seq_new:N \l__ccnu_choices_correct_choices_item_seq
+
+% 收集正确的选项，保存在 \l__ccnu_choices_correct_choices_seq
+\cs_new:Npn \__ccnu_choices_collect_correct_choices:N #1
+  % #1: \l__ccnu_choices_seq
+  {
+    \seq_clear:N \l__ccnu_choices_correct_choices_label_seq
+    \seq_clear:N \l__ccnu_choices_correct_choices_item_seq
+    \seq_clear:N \l_tmpa_seq
+    \seq_map_indexed_inline:Nn #1
+      {
+        % ##1: 选项序号
+        % ##2: 选项内容
+        % 如果分割后，第一个字符是 * 的，表明这是一个正确选项
+        %（即用 \item* 来标记正确答案）
+        \tl_if_head_eq_meaning:nNTF {##2} *
+          {
+            \seq_put_right:Nn \l__ccnu_choices_correct_choices_label_seq 
+              { \__ccnu_choices_correct_choices_label_transfrom:n {##1} }
+            % 将去掉 * 号后的内容保存进 \l_tmpa_tl
+            \tl_set:Nx \l_tmpa_tl { \tl_tail:n {##2} }
+            % 去掉 * 和内容之间的空格
+            \tl_trim_spaces:N \l_tmpa_tl
+            \seq_put_right:NV \l__ccnu_choices_correct_choices_item_seq 
+              \l_tmpa_tl 
+            \seq_put_right:NV \l_tmpa_seq \l_tmpa_tl
+          }
+          {
+            \seq_put_right:Nn \l_tmpa_seq { ##2 }
+          }
+      }
+    \seq_set_eq:NN #1 \l_tmpa_seq
+  }
+
+% 根据 label 的样式 \l__ccnu_choices_label_tl 转化正确选项的样式
+\cs_new:Npn \__ccnu_choices_correct_choices_label_transfrom:n #1
+  {
+    \group_begin:
+      \int_set:Nn \l__ccnu_choices_index_int {#1}
+      % 定义计数器转换函数（如 \Alph 等）
+      \l__ccnu_choices_counters_tl
+      % 输出
+      \l__ccnu_choices_label_tl
+    \group_end:
+  }
+% 输出正确的选项
+\cs_new:Nn \__ccnu_print_correctchoice:
+  {
+    \seq_if_empty:NF \l__ccnu_choices_correct_choices_item_seq
+      {
+        \par
+        参考答案：
+        \seq_use:Nn \l__ccnu_choices_correct_choices_label_seq {,~}
+      }
   }
 
 
@@ -5013,27 +5108,41 @@
 % #1: \l__ccnu_choices_seq
 \cs_new:Npn \__ccnu_choices_calc_max_width:N #1
   {
+    % 下面这两个的想法是 xchoices 项目可以优化学习的地方
+    % 因为 xchoices 是把变量先设置为第一项的参数，然后让后面的和前面的比
+    % 这里相当于把“设置为第一项的参数”这一步，用默认的“端点量”来代替
+    % 比如取最大的，就和 0 比，这样的话其实也会产生变量会变成第一项的参数的结果
+    % 但是两者性质不同，此处处理让 第一项 「没有特殊性」
+    % 后面的计算最小高度的也是如此
     \dim_zero:N \l__ccnu_choices_item_width_dim
     \dim_set_eq:NN \l__ccnu_choices_item_min_height_dim \c_max_dim
     \seq_map_indexed_inline:Nn #1
       {
-        % 标签
-        \hbox_set:Nn \l_tmpa_box { \__ccnu_choices_make_label:n {##1} }
+        % -- 标签 --
+        % 把标签整体放进 \l_tmpa_box
+        \hbox_set:Nn \l_tmpa_box { \__ccnu_choices_the_label:n {##1} }
+        % 测量宽度
         \dim_set:Nn \l_tmpa_dim { \box_wd:N \l_tmpa_box }
+        % 与当前最大值比较，最后效果是 \l__ccnu_choices_label_width_dim 储存了所有标签中宽度最大的标签的宽度值
         \dim_compare:nNnT
           { \l_tmpa_dim } > { \l__ccnu_choices_label_width_dim }
           { \dim_set_eq:NN \l__ccnu_choices_label_width_dim \l_tmpa_dim }
-        % 选项内容
+        % -- 选项内容 --
+        % 把内容放进 \l_tmpa_box 中
         \hbox_set:Nn \l_tmpa_box {##2}
+        % 测量宽度
         \dim_set:Nn \l_tmpa_dim { \box_wd:N \l_tmpa_box }
+        % 与当前最大值比较，最后效果是 \l__ccnu_choices_item_width_dim 储存了所有选项内容中宽度最大的内容的宽度值
         \dim_compare:nNnT
           { \l_tmpa_dim } > { \l__ccnu_choices_item_width_dim }
           {
             \dim_set_eq:NN \l__ccnu_choices_item_width_dim
               \l_tmpa_dim
           }
-        % 找到最小高度
+        % -- 找到最小高度 --
+        % 把内容高度储存到 \l_tmpb_dim
         \dim_set:Nn \l_tmpb_dim { \box_ht:N \l_tmpa_box }
+        % 与当前最小值比较，最后效果是 \l__ccnu_choices_item_min_height_dim 储存了所有内容中高度最小的内容的高度值
         \dim_compare:nNnT
           { \l_tmpb_dim } < { \l__ccnu_choices_item_min_height_dim }
           { \dim_set_eq:NN \l__ccnu_choices_item_min_height_dim \l_tmpb_dim }
@@ -5041,40 +5150,54 @@
       }
   }
 
-
+% TODO 没看懂怎么实现的
 \int_new:N \l__ccnu_choices_index_int
 
-% \Alph* 生成正确的标签
-\cs_new:Npn \__ccnu_choices_make_label:n #1
+% \Alph* 形式生成正确的标签
+\cs_new:Npn \__ccnu_choices_the_label:n #1
   {
     \group_begin:
-      \int_set:Nn \l__ccnu_choices_index_int {#1}
+      \int_set:Nn \l__ccnu_choices_index_int 
+        {
+          \int_eval:n
+            {
+              \l__ccnu_choices_item_index_int + #1 - 1
+            }
+        }
       \l__ccnu_choices_counters_tl
       \l__ccnu_choices_label_tl
     \group_end:
   }
 
-\cs_new:Npn \l__ccnu_process_counter:NN #1#2
+\cs_new:Npn \__ccnu_choices_process_counter:NN #1#2
+  % #1: \Alph
+  % #2: \@Alph
   {
-    \cs_set:Npn #1 { \l__ccnu_process_counter_aux:Nn #2 }
-    \cs_set:Npn #2 { \l__ccnu_process_counter_aux:Nn #2 }
+    % 用户可以同时使用 #1 和 #2 两个函数（命令）作为 label 的操作函数
+    % #1 的内核原理函数是 #2
+    \cs_set:Npn #1 { \__ccnu_choices_process_counter_aux:Nn #2 }
+    \cs_set:Npn #2 { \__ccnu_choices_process_counter_aux:Nn #2 }
   }
 
-\cs_new:Npn \l__ccnu_process_counter_aux:Nn #1#2
+\cs_new:Npn \__ccnu_choices_process_counter_aux:Nn #1#2
+  % #1: \@Alph
   {
     \tl_if_eq:nnTF {#2} { * }
       {
-        \use:c { __ccnu_chioces_save_ \cs_to_str:N #1 : }
+        % 如果是 \alph* 类型的，效果为 \alph{ \l__ccnu_choices_index_int }
+        \use:c { __ccnu_choices_save_ \cs_to_str:N #1 : }
           { \l__ccnu_choices_index_int }
       }
       {
-        \use:c { __ccnu_chioces_save_ \cs_to_str:N #1 : } {#2}
+        % 否则就是 \alph{...} 效果
+        \use:c { __ccnu_choices_save_ \cs_to_str:N #1 : } {#2}
       }
   }
 
 
 % 超过这一高度阈值的选项视为插图模式
 % 注意使用 tl
+% TODO 为何要使用 tl 而不用 dim ？
 \tl_new:N \l__ccnu_choices_figure_mode_threshold_tl
 \tl_set:Nn \l__ccnu_choices_figure_mode_threshold_tl { 2 \baselineskip }
 
@@ -5097,21 +5220,27 @@
 % 计算选项的合适列数，存到 \l__ccnu_choices_columns_int
 \cs_new:Npn \__ccnu_choices_calc_columns:
   {
-    % 若标签不在底部，将 label-width 和 label-sep 算进来
+    % 若标签不在底部，将 label-width 和 label-sep 加到 \l__ccnu_choices_item_width_dim 里面
     \tl_if_eq:NnF \l__ccnu_choices_label_pos_tl { bottom }
       {
         \dim_add:Nn \l__ccnu_choices_item_width_dim
           { \l__ccnu_choices_label_width_dim + \l__ccnu_choices_label_sep_dim }
       }
+    % [总宽度 / 最大的选项宽度] = 列数 
+    % 这个计算出来是作为「算出来的、可以排的最大列数」
+    % 将要和下面的手动（或者默认的）最大列数进行比较，来确定最后排多少列
     \int_set:Nn \l__ccnu_choices_columns_int
       {
         \int_div_truncate:nn
           { \l__ccnu_choices_total_width_dim + \l__ccnu_choices_column_sep_dim }
           { \l__ccnu_choices_item_width_dim + \l__ccnu_choices_column_sep_dim }
       }
+    % 如果上面的计算算出来是 0 的话，就设置为 1
     \int_compare:nNnTF { \l__ccnu_choices_columns_int } = {0}
       { \int_set:Nn \l__ccnu_choices_columns_int {1} }
     % 从允许的最大列数开始，每次除以 2，直到行宽允许排下
+    % 比如设置了最大列数是 4 ， 但是算出来可以排 5 
+    % 那么就会将 [4 / 2] = 2 < 5 作为列数
     \int_set_eq:NN \l__ccnu_tmp_int \l__ccnu_choices_max_columns_int
     \int_while_do:nNnn
       { \l__ccnu_tmp_int } > { \l__ccnu_choices_columns_int }
@@ -5128,12 +5257,14 @@
   {
     \dim_set:Nn \l__ccnu_choices_item_width_dim
       {
+        % TODO 不是很理解这里的算法
         ( \l__ccnu_choices_total_width_dim
           - \l__ccnu_choices_columns_int \l__ccnu_choices_column_sep_dim
           + \l__ccnu_choices_column_sep_dim
         ) / \l__ccnu_choices_columns_int
       }
     % 若标签不在底部，将 label-width 和 label-sep 算进来
+    % TODO 算进来？那怎么还是 sub？
     \tl_if_eq:NnF \l__ccnu_choices_label_pos_tl { bottom }
       {
         \dim_sub:Nn \l__ccnu_choices_item_width_dim
@@ -5156,9 +5287,12 @@
           { \l__ccnu_choices_current_col_int } > { \l__ccnu_choices_columns_int }
           {
             % \par \noindent
-            \newline
+            \\[ \l__ccnu_choices_line_sep_skip ]
+            % \newline
+            % \skip_vertical:N \l__ccnu_choices_line_sep_skip
             \int_set:Nn \l__ccnu_choices_current_col_int {1}
           }
+        % TODO 为什么 > 1 才加呢？ 这样的话第 1 列和第 2 列之间就没有这个间距？
         \int_compare:nNnT { \l__ccnu_choices_current_col_int } > {1}
           {
             \skip_horizontal:N \l__ccnu_choices_column_sep_dim
@@ -5173,58 +5307,129 @@
 
 \coffin_new:N \l__ccnu_choices_item_coffin
 \coffin_new:N \l__ccnu_choices_label_coffin
-
+% \box_new:N \l__ccnu_choices_item_box
+% \box_new:N \l__ccnu_choices_label_box
 \cs_new:Npn \__ccnu_print_single_choice:nn #1#2
   {
     % 选项标签
     \__ccnu_choices_make_label_coffin:n {#1}
+    % \__ccnu_choices_make_label_box:n {#1}
     % 选项内容
     \__ccnu_choices_make_item_coffin:n {#2}
+    % \__ccnu_choices_make_item_box:n {#2}
     % 合并选项的标签和内容
     \str_case:Vn \l__ccnu_choices_label_pos_tl
       {
         { top-left }
           {
             \coffin_join:NnnNnnnn
-              \l__ccnu_choices_item_coffin  {l} {H}
               \l__ccnu_choices_label_coffin {r} {H}
-              { - \l__ccnu_choices_label_sep_dim }
+              \l__ccnu_choices_item_coffin  {l} {H}
+              { \l__ccnu_choices_label_sep_dim }
               { 0pt }
+            % \hbox_set:Nn \l__ccnu_choices_item_box
+            %   {
+            %     \box_use_drop:N \l__ccnu_choices_label_box
+            %     \kern \l__ccnu_choices_label_sep_dim
+            %     \box_use_drop:N \l__ccnu_choices_item_box
+            %   }
           }
         { left }
           {
             \coffin_join:NnnNnnnn
-              \l__ccnu_choices_item_coffin  {l} {vc}
               \l__ccnu_choices_label_coffin {r} {vc}
-              { - \l__ccnu_choices_label_sep_dim }
+              \l__ccnu_choices_item_coffin  {l} {vc}
+              { \l__ccnu_choices_label_sep_dim }
               { 0pt }
+            % \hbox_set:Nn \l__ccnu_choices_item_box
+            %   {
+            %     \box_move_down:nn
+            %       {
+            %         (
+            %           \box_ht:N \l__ccnu_choices_label_box -
+            %           \box_dp:N \l__ccnu_choices_label_box -
+            %           \box_ht:N \l__ccnu_choices_item_box +
+            %           \box_dp:N \l__ccnu_choices_item_box
+            %         ) / 2
+            %       }
+            %       { \box_use_drop:N \l__ccnu_choices_label_box }
+            %     \kern \l__ccnu_choices_label_sep_dim
+            %     \box_use_drop:N \l__ccnu_choices_item_box
+            %   }
           }
         { bottom }
           {
             \coffin_join:NnnNnnnn
-              \l__ccnu_choices_item_coffin  {hc} {b}
               \l__ccnu_choices_label_coffin {hc} {t}
+              \l__ccnu_choices_item_coffin  {hc} {b}
               { 0pt }
               % { - \l__ccnu_choices_label_sep_dim }
               { 0pt }
+            % \hbox_set:Nn \l__ccnu_choices_item_box
+            %   {
+            %     % \vbox_top:n
+            %     %   {
+            %     %     \box_use:N \l__ccnu_choices_item_box
+            %     %     \nointerlineskip
+            %     %     % \kern \l__ccnu_choices_label_sep_dim 
+            %     %     \box_move_left:nn
+            %     %       {
+            %     %         (
+            %     %           \box_wd:N \l__ccnu_choices_label_box -
+            %     %           \box_wd:N \l__ccnu_choices_item_box
+            %     %         ) / 2
+            %     %       }
+            %     %       { \box_use_drop:N \l__ccnu_choices_label_box }
+            %     %       \box_clear:N \l__ccnu_choices_item_box
+            %     %   }
+            %     \hbox_set:Nn \l__ccnu_choices_item_box
+            %       {
+            %         \box_use:N \l__ccnu_choices_item_box
+            %         \kern \dim_eval:n
+            %           {
+            %             ( - \box_wd:N \l__ccnu_choices_label_box
+            %               -  \box_wd:N \l__ccnu_choices_item_box ) / 2 
+            %           }
+            %         \box_move_down:nn
+            %           {
+            %             \box_ht:N \l__ccnu_choices_label_box +
+            %             \box_dp:N \l__ccnu_choices_item_box
+            %             % + \l__ccnu_choices_label_sep_dim 
+            %           }
+            %           { \box_use_drop:N \l__ccnu_choices_label_box }
+            %         \box_clear:N \l__ccnu_choices_item_box
+            %       }
+            %   }
           }
       }
     % 输出合并后
-    \coffin_typeset:Nnnnn \l__ccnu_choices_item_coffin {l} {H} {0pt} {0pt}
+    % \coffin_typeset:Nnnnn \l__ccnu_choices_item_coffin {l} {H} {0pt} {0pt}
+    \coffin_typeset:Nnnnn \l__ccnu_choices_label_coffin {l} {H} {0pt} {0pt}
     \coffin_clear:N \l__ccnu_choices_item_coffin
     \coffin_clear:N \l__ccnu_choices_label_coffin
+    % \box_use_drop:N \l__ccnu_choices_item_box
   }
 
 % 将标签内容存入 coffin
 \cs_new:Npn \__ccnu_choices_make_label_coffin:n #1
+% 将标签内容存入 box
+% \cs_new:Npn \__ccnu_choices_make_label_box:n #1
   {
     \hcoffin_set:Nn \l__ccnu_choices_label_coffin
+    % \hbox_set:Nn \l__ccnu_choices_label_box
       {
-        \vcoffin_set:Nnn \l_tmpa_coffin
-          { \l__ccnu_choices_label_width_dim }
-          { \noindent \hfill \__ccnu_choices_make_label:n {#1} \strut }
-        \coffin_typeset:Nnnnn \l_tmpa_coffin {l} {T} {0pt} {0pt}
-        \coffin_clear:N \l_tmpa_coffin
+        \hbox_to_wd:nn { \l__ccnu_choices_label_width_dim }
+          { \__ccnu_choices_make_label:n {#1} \strut }
+      }
+  }
+
+\cs_new:Npn \__ccnu_choices_make_label:n #1
+  {
+    \str_case:Vn \l__ccnu_choices_label_align_tl
+      {
+        { left   } { \rlap { \__ccnu_choices_the_label:n {#1} } \hss }
+        { center } { \hss \clap { \__ccnu_choices_the_label:n {#1} } \hss }
+        { right  } { \hss \llap { \__ccnu_choices_the_label:n {#1} } }
       }
   }
 
@@ -5232,10 +5437,13 @@
 
 % 将选项内容存入 coffin
 \cs_new:Npn \__ccnu_choices_make_item_coffin:n #1
+% 将选项内容存入 box
+% \cs_new:Npn \__ccnu_choices_make_item_box:n #1
   {
     \hcoffin_set:Nn \l__ccnu_choices_item_coffin
+    % \hbox_set:Nn \l__ccnu_choices_item_box
       {
-        % 优先尝试使用 bbox，这是因为在 \vcoffin_set 外部能保留原来的 \linewidth 和
+        % 优先尝试使用 hbox，这是因为在 \vbox_set 外部能保留原来的 \linewidth 和
         % \textwidth，方便用户在 \includegraphics 中使用
         \hbox_set:Nn \l_tmpa_box {#1}
         % 若盒子的自然高度大于 2 行，且深度为 0pt，设置为插图模式
@@ -5248,9 +5456,17 @@
           { \bool_set_true:N \l__ccnu_choices_figure_mode_bool }
         \vcoffin_set:Nnn \l_tmpa_coffin
           { \l__ccnu_choices_item_width_dim }
+        % \vbox_set:Nn \l_tmpa_box
           {
+            % \dim_set_eq:NN \parskip \c_zero_dim
+            % \dim_set_eq:NN \parindent \listparindent
+            \dim_set_eq:NN \hsize \l__ccnu_choices_item_width_dim
+            \dim_set_eq:NN \linewidth \hsize
+            \dim_set_eq:NN \columnwidth \hsize
             \dim_set_eq:NN \parskip \c_zero_dim
             \dim_set_eq:NN \parindent \listparindent
+            \dim_set:Nn \leftskip { 0pt }
+            \dim_set:Nn \rightskip { 0pt }
             \noindent
             % \strut
             % 若标签在底部，将图片居中对齐。
@@ -5265,9 +5481,15 @@
           }
         \dim_set:Nn \l_tmpa_dim { \coffin_ht:N \l_tmpa_coffin }
         \bool_if:NT \l__ccnu_choices_figure_mode_bool
+        % \dim_set:Nn \l_tmpa_dim { \box_ht:N \l_tmpa_box }
+        % \bool_if:NTF \l__ccnu_choices_figure_mode_bool
+        %   {
+        %     \box_move_up:nn { \l_tmpa_dim - 0.7 \baselineskip } { \box_use_drop:N \l_tmpa_box }
+        %   }
           {
             \coffin_set_horizontal_pole:Nnn \l_tmpa_coffin {T}
               { \l_tmpa_dim - 0.7 \baselineskip }
+            % \vbox_top:n { \vbox_unpack_drop:N \l_tmpa_box }
           }
         \coffin_typeset:Nnnnn \l_tmpa_coffin {l} {T} {0pt} {0pt}
         \coffin_clear:N \l_tmpa_coffin
@@ -5277,13 +5499,13 @@
 
 % 使用中文字体直接输出 unicode 带圈数字
 % \circlednumber 的参数既可以接受 LaTeX2e 的 <counter>，也可以直接接受 <intexpr>。
-\NewDocumentCommand \circlednumber { m }
-  {
-    \int_if_exist:cTF { c@ #1 }
-      { \int_set_eq:Nc \l_tmpa_int { c@#1 } }
-      { \int_set:Nn \l_tmpa_int { #1 } }
-    \exp_args:Nx \__ccnu_choices_circled_number:n { \int_use:N \l_tmpa_int }
-  }
+% \NewDocumentCommand \circlednumber { m }
+%   {
+%     \int_if_exist:cTF { c@ #1 }
+%       { \int_set_eq:Nc \l_tmpa_int { c@#1 } }
+%       { \int_set:Nn \l_tmpa_int { #1 } }
+%     \exp_args:Nx \__ccnu_choices_circled_number:n { \int_use:N \l_tmpa_int }
+%   }
 
 \cs_new:Npn \__ccnu_choices_circled_number:n #1
   {
@@ -5307,6 +5529,8 @@
           }
       }
     \group_begin:
+      % TODO 为何要用 \CJKfamily+ { }
+      % xeCJK 宏包文档：当 \CJKfamily+ 参数为空时，则使用当前的 CJK 字体族。
       \CJKfamily+ { }
       \symbol { \l_tmpa_int }
     \group_end:
@@ -5315,8 +5539,7 @@
 \msg_new:nnn { ccnu / choices } { invalid-circled-number }
   { Invalid~ circled~ number~ #1. }
 
-\AddChoicesCounter \circlednumber \__ccnu_choices_circled_number:n {1}
-\AddEnumerateCounter \circlednumber \circlednumber {1}
+\AddChoicesCounter \circlednumber \__ccnu_choices_circled_number:n
 
 
 % 公式相关处理
