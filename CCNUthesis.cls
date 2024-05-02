@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\ProvidesExplClass {CCNUthesis} {2024-04-27} {v1.4.3}
+\ProvidesExplClass {CCNUthesis} {2024-04-28} {v1.4.4}
   {Thesis template for Central China Normal University}
 \RequirePackage { l3keys2e, xparse }
 
@@ -4221,6 +4221,10 @@
     % \def\tableofcontents
       {
         \newpage
+        \int_compare:nNnT { \g__ccnu_thesis_type_int } = {3}
+          {
+            \pagestyle { empty } 
+          }
         \group_begin:
           \keys_set:nn { ctex }
             { chapter / indent = 0pt }
