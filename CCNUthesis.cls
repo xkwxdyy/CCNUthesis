@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\ProvidesExplClass {CCNUthesis} {2024-05-02} {v1.4.4}
+\ProvidesExplClass {CCNUthesis} {2025-02-08} {v1.4.5}
   {Thesis template for Central China Normal University}
 \RequirePackage { l3keys2e, xparse }
 
@@ -4728,37 +4728,53 @@
       {
         \defbibheading { bibliography } [ \bibname ] 
           { \__ccnu_chapter_without_number_bachelor:n {##1} }
+        % 修改 \printbibliography
+        \cs_set_eq:NN \__ccnu_printbibliography_old \printbibliography
+        \cs_new:Npn \__ccnu_printbibliography:n ##1 
+          {
+            \__ccnu_printbibliography_old [ ##1 ] 
+          }
+        \RenewDocumentCommand { \printbibliography } { O{} } 
+          {
+            \newpage
+            \group_begin:
+              \sloppy
+              \keys_set:nn { ctex }
+                {
+                  punct = plain,
+                  chapter = 
+                    {
+                      indent = 0pt
+                    }
+                }
+              \setlength { \bibitemindent } { 0em }
+              \setlength { \bibhang } { 2em }
+              \setlength { \biblabelsep } { 0mm } 
+              \setlength { \biblabelextend } { 0pt }
+              \linespread { 1.25 } \selectfont
+              \__ccnu_printbibliography:n { ##1 }
+            \group_end:
+          }
       }
       {
         \defbibheading { bibliography } [ \bibname ] 
           { \__ccnu_chapter_master_doctor_no_number:n {##1} }
-      }
-    % 修改 \printbibliography
-    \cs_set_eq:NN \__ccnu_printbibliography_old \printbibliography
-    \cs_new:Npn \__ccnu_printbibliography:n ##1 
-      {
-        \__ccnu_printbibliography_old [ ##1 ] 
-      }
-    \RenewDocumentCommand { \printbibliography } { O{} } 
-      {
-        \newpage
-        \group_begin:
-          \sloppy
-          \keys_set:nn { ctex }
+          % 修改 \printbibliography
+          \cs_set_eq:NN \__ccnu_printbibliography_old \printbibliography
+          \cs_new:Npn \__ccnu_printbibliography:n ##1 
             {
-              punct = plain,
-              chapter = 
-                {
-                  indent = 0pt
-                }
+              \__ccnu_printbibliography_old [ ##1 ] 
             }
-          \setlength { \bibitemindent } { 0em }
-          \setlength { \bibhang } { 2em }
-          \setlength { \biblabelsep } { 0mm } 
-          \setlength { \biblabelextend } { 0pt }
-          \linespread { 1.25 } \selectfont
-          \__ccnu_printbibliography:n { ##1 }
-        \group_end:
+          \RenewDocumentCommand { \printbibliography } { O{} } 
+            {
+              \newpage
+              \group_begin:
+                \sloppy
+                \keys_set:nn { ctex }
+                  { punct = plain }
+                \__ccnu_printbibliography:n { ##1 }
+              \group_end:
+            }
       }
   }
 
