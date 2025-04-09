@@ -35,10 +35,8 @@
   gbpunctin    = false,
   gbfieldtype  = true,          % 输出type域，主要处理学位论文
   gbnamefmt    = lowercase,
-  sorting      = multipinyin,   % 排序
-  gblanorder   = chineseahead,
+  sorting      = gb7714-2015,   % 排序
   sortlocale   = zh__pinyin,
-  mergedate    = none           % 年份不放在作者之后
 }
 
 % 根据《通知》调整间距和缩进
@@ -47,37 +45,6 @@
 \setlength{\bibhang}{1.2ex}
 \setlength{\bibparsep}{0em}
 
-% 根据多音字排序
-\DeclareSortingTemplate{multipinyin}{
-  \sort{
-    \field{presort}
-  }
-  \sort{
-    \field{lansortorder}%language
-  }
-  \sort{
-    \field{sortkey}
-  }
-  \sort{%[direction=descending]
-    \field{sortname}
-    \field{author}
-    \field{editor}
-    \field{translator}
-  }
-  \sort{
-    \field{sortyear}
-    \field{year}
-  }
-  \sort{
-    \field{sorttitle}
-    \field{title}
-  }
-  \sort{
-    \field{volume}
-    \literal{0}
-  }
-}
-
 %这里把\bibhang放外面设置的方式也有其优势
 %这里使用\bibhang+\labelnumberwidth来控制文献内容左边界与页边的间距
 %然后用\biblabelsep来设置标签域文献内容左边界的间距
@@ -85,10 +52,9 @@
 %这其实是两种控制方式，CCNU这里用下面重定义的方式
 \defbibenvironment{bibliography}
   {\list
-     {\printtext[labelnumberwidth]{%
-        \printfield{labelprefix}%
-        \printfield{labelnumber}}}
-     {\addtolength{\labelnumberwidth}{\biblabelextend}%
+     {\printtext[labelnumberwidth]{\arabic{refnumeric}}}
+     {\usecounter{refnumeric}%
+     \addtolength{\labelnumberwidth}{\biblabelextend}%
      \setlength{\labelwidth}{\labelnumberwidth}%
       \setlength{\labelsep}{\biblabelsep}%
       \setlength{\leftmargin}{\bibhang}%
@@ -137,8 +103,6 @@
 \DefineBibliographyStrings{english}{
     and           = {\addcomma\space},
     andcn         = {\gbpunctcomma},
-    andincitecn   = {和}, %将标注中的分开，便于与文献表中的区分
-    andincite     = {\&},
     andothers     = {et al.},
     andotherscn   = {等},
     bytranslator  = {\addcomma\ 译},
@@ -168,6 +132,7 @@
 \renewcommand{\aftertransdelim}{\iffieldequalstr{userd}{chinese}{\gbpunctcomma}{\gbpunctcommalanen}}
 \DeclareDelimFormat{multinamedelim}{\iffieldequalstr{userd}{chinese}{\gbpunctcomma}{\gbpunctcommalanen}}%\addcomma\addspace
 \DeclareDelimFormat{finalnamedelim}{%
+  \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
   \edef\userfieldabcde{userd}%
   \ifcurrentname{translator}{\edef\userfieldabcde{usere}}{}%
   \ifcurrentname{editor}{\edef\userfieldabcde{userc}}{}%
@@ -229,7 +194,6 @@
 \renewbibmacro*{bbx:ifmergeddate}{\@secondoftwo}%这一句用于3.12版本
 \renewbibmacro*{date}{\printdate}%这一句用于biblatex3.11以下版本
 \renewbibmacro*{issue+date}{%去掉括号
-\setunit{\iffieldequalstr{userd}{chinese}{\gbpunctcomma}{\gbpunctcommalanen}}%
   \printtext{%去掉了[parens]
     \iffieldundef{issue}
       {%\usebibmacro{date}
@@ -244,7 +208,8 @@
         {\iffieldequalstr{entrysubtype}{news}{\usebibmacro{newsdate}}%判断是否为报纸
                                      {\usebibmacro{date}}%
         }}}%
-  %\newunit
+  \ifboolexpr{ (test {\ifentrytype{article}} or test {\ifentrytype{periodical}}) and (not test {\iffieldundef{volume}}) }%
+        {\iffieldequalstr{userd}{chinese}{\setunit*{\gbpunctcomma}}{\setunit*{\gbpunctcommalanen}}}{}%
   }%
   }
 
@@ -255,20 +220,17 @@
 %   v1.0k,20180425,增加了字体控制命令，hzz
 \renewbibmacro*{journal+issuetitle}{\bibpubfont%源来自standard.bbx
   \usebibmacro{journal}%
-  \setunit*{\iffieldequalstr{userd}{chinese}{\gbpunctcomma}{\gbpunctcommalanen}}%修改为增加一个逗号
-    \iffieldundef{series}
+  \iffieldundef{journaltitle}{}{\setunit{\iffieldequalstr{userd}{chinese}{\gbpunctcomma}{\gbpunctcommalanen}}}%
+  \iffieldundef{series}
     {}
     {\newunit
      \printfield{series}%
      \setunit{\addspace}}%
-  \usebibmacro{issue+date}%
-  %\setunit{\addcolon\space}%
-  \iffieldundef{volume}{}{\iffieldequalstr{userd}{chinese}{\setunit{\gbpunctcomma}}{\setunit{\gbpunctcommalanen}}}%
-  %换成逗号和空格
-  \usebibmacro{issue}%
+  \printtext{\usebibmacro{issue+date}}%
   \usebibmacro{volume+number+eid}%把卷期放到年份后面
-  %\newunit
   }
+
+
 
 
 %
