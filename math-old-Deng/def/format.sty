@@ -1,0 +1,14 @@
+\input{def/package.def}  %加载宏包
+\input{def/page.def}     %页面设置
+\input{def/mytikz.def}   %绘图简化命令
+\newif\ifanonymous
+\DeclareOption{anon}{\anonymoustrue}
+\DeclareOption{norn}{\anonymousfalse}
+\DeclareOption*{\anonymousfalse}
+\ProcessOptions\relax
+\ifanonymous
+   \def\myccnucolor{white}
+   \else
+	   \def\myccnucolor{black}
+\fi
+%\input{def/config.tex}

@@ -1,0 +1,115 @@
+\documentclass[a4paper,12pt,twoside]{ctexart}
+\usepackage{def/format}
+%\setCJKfamilyfont{zhsong}[AutoFakeBold={2.17}]{SimSun}
+%\renewcommand{\song}{\CJKfamily{zhsong}}
+
+%%%%%%%%%%%%% 以下内容按需要进行修改
+\def\mytitlenum{16}           %单行题目长度
+\def\school{数学与统计学学院} %院系名字
+\def\major{数\!学\!与\!应\!用\!数\!学(师\!范)} %专业
+\def\grade{2017级}    %年级
+\def\authorname{作者} %作者
+\def\xuehao{2015123456} %学号
+\def\teacher{张三丰 教授 \quad 三丰 教授}%指导教师, 职称
+\def\title{浅谈我们的我们的大学的大大大学我们的大学的大大大大} % 文章题目
+%%%%%%%%%%%%%% 封面信息结束
+%%%%%%%%%%%%%%% 摘要和关键词
+%中文摘要
+\def\myabstract{摘要的字数控制在400个汉字左右. 尽量不要出现公式参考文献. 介绍本文的主要工作以及创新点.}
+%中文关键词
+\def\mykeywords{关键词1\qquad 关键词2\qquad关键词3}
+%英文题目
+\def\mytitle{Discuss}
+%英文摘要
+\def\myabstracten{For. }
+%英文关键词
+\def\mykeywordsen{keywords1\qquad keywords2\qquad keywords3}
+\begin{document}
+\def\refname{\songti 参考文献}
+\begin{CJK*}{GBK}{song}
+%%%%%%%% 所有自定义的命令请放到下面文件中
+\input{def/simplify.def} %加载简化命令
+%%%%%%%% 自定义命令加载完毕
+%以下内容不要做修改
+%以下内容不要做修改
+%以下内容不要做修改
+\input{def/firstpage} %封面
+\input{def/copyright} %版权页
+\newpage %目录新起一页
+\pagestyle{empty}
+\tableofcontents      %目录
+\newpage %摘要新起一页
+\input{def/abstract}  %摘要
+%以上内容不要做修改
+%以上内容不要做修改
+%以上内容不要做修改
+ % the package used to implement the pie charts
+
+
+%%% 以下代码是画饼图的, 取消注释编译即可.
+%\newcounter{mypie}\setcounter{mypie}{0}
+%\begin{tikzpicture}[scale=2]
+%    \foreach \i/\goods/\col in %%%%% 需要调整以下内容
+%        {20/东西/purple!20,26/Rice/blue!40, 32/Wheat/yellow, 22/Other/red!40} %输入格式: 百分比/物品名称/颜色
+%        { %以下内容不用修改
+%        \pgfmathsetmacro{\r}{(.8};
+%        \pgfmathsetmacro{\mydegst}{(\value{mypie}*3.6)};
+%        \pgfmathsetmacro{\mydegmid}{(\value{mypie}*3.6+\i*1.8)};
+%        \pgfmathsetmacro{\mydegtex}{(\value{mypie}*3.6+\i*1.9)};
+%        \pgfmathsetmacro{\mydegend}{(\value{mypie}*3.6+\i*3.8)};
+%
+%        \draw[fill=\col](0,0)--({cos(\mydegst)},{sin(\mydegst)}) arc(\mydegst:\mydegend:1)--cycle;
+%        \draw({\r*cos(\mydegmid)},{\r*sin(\mydegmid)})-- node[sloped,font=\tiny]{\goods}({\r*cos(\mydegtex)}, {\r*sin(\mydegtex)});
+%        \addtocounter{mypie}{\i};}
+%        % 以上内容不用修改
+%\end{tikzpicture}
+%\ed
+%饼图结束
+
+
+%正文开始
+%正文开始
+\newpage
+% 以下代码是调试选项题的, 取消注释编译看效果.
+%如果是5-7个选项, 如下输入.
+%
+%5个选项.\upcite[df]{a}
+%
+%我们是专业选的\hfill(\quad)
+%\chf 1234 \vspace*{-22pt}%
+%    \def\mychA{E}\def\mychB{}\def\mychC{}
+%\choice{我是第5个选项}{}{}
+%    \def\mychA{A}\def\mychB{B}\def\mychC{C}
+%
+%6个选项
+%
+%
+%我们是专业选的\hfill(\quad)
+%\chf 1234 \vspace*{-22pt}
+%    \def\mychA{E}\def\mychB{F}\def\mychC{}
+%\choice 12{}
+%    \def\mychA{A}\def\mychB{B}\def\mychC{C}
+%
+%7个选项
+%
+%我们是专业选的\hfill(\quad)
+%\chf {的浪费科技风}{哦IE根据嘎达李逵负荆}{的分量可分解}{三地方科技风} \vspace*{-15pt}
+%    \def\mychA{E}\def\mychB{F}\def\mychC{G}
+%\choice 12{的浪费科技风}
+%    \def\mychA{A}\def\mychB{B}\def\mychC{C}
+%% 选项调整结束
+\input{doc/introduction}
+\input{doc/section2}
+\input{doc/section3}
+\input{doc/section4}
+\input{doc/section5}
+%正文结束
+%%%附录开始
+\newpage
+\input{doc/references}  %参考文献
+\newpage
+\input{doc/acknowledge} %致谢
+\newpage
+\input{doc/aprodix}     %附录
+\end{CJK*}
+\end{document}
