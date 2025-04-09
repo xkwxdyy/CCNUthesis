@@ -172,7 +172,7 @@
 
 %%%%%% 证明环境
 \newenvironment{proof}[1][证明]
-    {\par\indent\textbf{#1}:~}
+    {\par\par\indent\textbf{#1}:~}
     {\hfill$\Box$}
 
 %%%%%% 居中
@@ -205,110 +205,97 @@
 
 
 %%%%%%% 问卷调查选项格式
-    \newlength\chfour\newlength\chtwo
-    \newlength\chthree\newlength\chone
-    \setlength\chfour{3.5cm}
-    \setlength\chthree{4.8cm}
-    \setlength\chtwo{7.5cm}
-    \setlength\chone{15.5cm}
+   \newlength\chfour\newlength\chtwo\newlength\chthree
+    \setlength\chfour{9\ccwd}
+    \setlength\chthree{12\ccwd}
+    \setlength\chtwo{18\ccwd}
+
+    %\show\chone\show\chtwo\show\chthree
+    %\ifthenelse{\chthree<\chtwo}{Yes}{No}
 
 \def\mychA{A}
 \def\mychB{B}
 \def\mychC{C}
-\def\mychD{D}\def\mychE{A}
-\def\myyback{-12pt}
-\def\my@choice@back{\vspace*{-8pt}}
-\newlength\chA\newlength\chB\newlength\chC\newlength\chD \newlength\chtest
-\newlength\chAB\newlength\chCD\newlength\chAD\newlength\chBC
-\newcommand{\choneintwoft}[2]{\ifx\mychA\mychE\relax\else\my@choice@back\fi%
-    \par\noindent\quad
-    \begin{tabular}{*{2}{@{}p{\chtwo}}}
-    \mychA.#1&\mychB.#2
-    \end{tabular}}
-\newcommand{\choneintwosd}[2]{\ifx\mychA\mychE\relax\else\my@choice@back\fi%
-    \par\noindent\quad
-    \begin{tabular}{@{}p{\chone}}
-         \mychA.#1\\[\myyback]
-         \mychB.#2
-    \end{tabular}}
-\newcommand{\choneinthreeft}[3]{\ifx\mychA\mychE\relax\else\my@choice@back\fi%
-    \par\noindent\quad
-    \begin{tabular}{*{3}{@{}p{\chthree}}}
-         \mychA.#1&\mychB.#2&\mychC.#3
-    \end{tabular}
-    }
-\newcommand{\choneinthreesd}[3]{\ifx\mychA\mychE\relax\else\my@choice@back\fi%
-    \par\noindent\quad
-    \begin{tabular}{*{2}{@{}p{\chtwo}}}
-         \mychA.#1&\mychB.#2\\[\myyback]
-        \multicolumn{2}{@{}p{\chone}}{\mychC.#3}
-    \end{tabular}}
-\newcommand{\choneinthreetd}[3]{\ifx\mychA\mychE\relax\else\my@choice@back\fi%
-    \par\noindent\quad
-    \begin{tabular}{*{2}{@{}p{\chtwo}}}
-        \multicolumn{2}{@{}p{\chone}}{
-            \mychA.#1} \\[\myyback]
-         \mychB.#2&\mychC.#3
-    \end{tabular}}
-\newcommand{\choneinthreefh}[3]{\ifx\mychA\mychE\relax\else\my@choice@back\fi%
-    \par\noindent\quad
-    \begin{tabular}{@{}p{\chone}}
-         \mychA.#1\\[\myyback]
-         \mychB.#2\\[\myyback]
-         \mychC.#3
-    \end{tabular}}
-\newcommand{\choneinfourft}[4]{\ifx\mychA\mychE\relax\else\my@choice@back\fi%
-    \par\noindent\quad
-    \begin{tabular}{*{4}{@{}p{\chfour}}}
-        \mychA.#1&\mychB.#2&\mychC.#3&\mychD.#4
-    \end{tabular}}
-\newcommand{\choneinfoursd}[4]{\ifx\mychA\mychE\relax\else\my@choice@back\fi%
-    \par\noindent\quad
-    \begin{tabular}{*{2}{@{}p{\chtwo}}}
-        \mychA.#1&\mychB.#2\\[\myyback]
-        \mychC.#3&\mychD.#4
-    \end{tabular}}
-\newcommand{\choneinfourtd}[4]{\ifx\mychA\mychE\relax\else\my@choice@back\fi%
-    \par\noindent\quad
-    \begin{tabular}{*{2}{@{}p{\chtwo}}}
-        \mychA.#1&\mychB.#2\\[\myyback]
-        \multicolumn{2}{@{}p{\chone}}{\mychC.#3}\\[\myyback]
-        \multicolumn{2}{@{}p{\chone}}{\mychD.#4}
-    \end{tabular}}
-\newcommand{\choneinfourfh}[4]{\ifx\mychA\mychE\relax\else\my@choice@back\fi%
-    \par\noindent\quad
-    \begin{tabular}{*{2}{@{}p{\chtwo}}}
-        \multicolumn{2}{@{}p{\chone}}{%
-            \mychA.#1}\\[\myyback]
-        \multicolumn{2}{@{}p{\chone}}{%
-            \mychB.#2}\\[\myyback]
-        \mychC.#3&\mychD.#4
-    \end{tabular}}
-\newcommand{\choneinfourff}[4]{\ifx\mychA\mychE\relax\else\my@choice@back\fi%
-    \par\noindent\quad
-    \begin{tabular}{*{2}{@{}p{\chtwo}}}
-        \multicolumn{2}{@{}p{\chone}}{%
-        \mychA.#1}\\[\myyback]
-        \mychB.#2&\mychC.#3\\[\myyback]
-        \multicolumn{2}{@{}p{\chone}}{\mychD.#4}
-    \end{tabular}}
-
-    \newcommand{\choneinfoursx}[4]{\ifx\mychA\mychE\relax\else\my@choice@back\fi%
-        \par\noindent\quad
-        \begin{tabular}{@{}p{\chone}}
-        \mychA.#1\\[\myyback]
-        \mychB.#2\\[\myyback]
-        \mychC.#3\\[\myyback]
-        \mychD.#4
+\def\mychD{D}
+    \def\myyback{-12pt}
+    \newlength\chA\newlength\chB\newlength\chC\newlength\chD \newlength\chtest
+    \newlength\chAB\newlength\chCD\newlength\chAD\newlength\chBC
+    \newcommand{\choneintwoft}[2]
+        {\par\noindent
+        \begin{tabular}{*{2}{@{}p{.5\textwidth}}}
+        \noindent \mychA.#1&\mychB.#2
+        \end{tabular}}
+    \newcommand{\choneintwosd}[2]
+        {\par\noindent
+        \begin{tabular}{@{}p{\textwidth}}
+        \noindent \mychA.#1\\[\myyback]
+        \noindent \mychB.#2
         \end{tabular}}
 
-    \newcommand{\choice}[4][]
-        {
-        \settowidth{\chD}{\zihao{-4}\mychD.#1;}
-        \settowidth{\chA}{\zihao{-4}\mychA.#2;}
-        \settowidth{\chB}{\zihao{-4}\mychB.#3;}
-        \settowidth{\chC}{\zihao{-4}\mychC.#4;}
-        \settowidth{\chtest}{\zihao{-4}D.;}
+    \newcommand{\choneinthreeft}[3]
+        {\par\noindent
+        \begin{tabular}{*{3}{@{}p{.33\textwidth}}}
+           \noindent \mychA.#1&\mychB.#2&\mychC.#3
+        \end{tabular}
+        }
+    \newcommand{\choneinthreesd}[3]{\par
+        \noindent\begin{tabular}{*{2}{@{}p{.49\textwidth}}}
+            \noindent \mychA.#1&\mychB.#2\\[\myyback]
+            \multicolumn{2}{@{}p{\textwidth}}{\noindent \mychC.#3}
+        \end{tabular}}
+    \newcommand{\choneinthreetd}[3]
+        {\par\noindent\begin{tabular}{*{2}{@{}p{.5\textwidth}}}
+            \multicolumn{2}{@{}p{\textwidth}}{\noindent \mychA.#1}\\[\myyback]
+            \noindent \mychB.#2&\mychC.#3
+        \end{tabular}}
+    \newcommand{\choneinthreefh}[3]
+        {\par\noindent\begin{tabular}{@{}p{\textwidth}}
+            \noindent \mychA.#1\\[\myyback] \noindent \mychB.#2\\[\myyback] \noindent \mychC.#3
+        \end{tabular}}
+    \newcommand{\choneinfourft}[4]
+        {\par\noindent
+        \begin{tabular}{*{4}{@{}p{.25\textwidth}}}
+                \mychA.#1&\mychB.#2&\mychC.#3&\mychD.#4
+            \end{tabular}}
+    \newcommand{\choneinfoursd}[4]{\par\noindent
+        \begin{tabular}{*{2}{@{}p{.5\textwidth}}}
+            \mychA.#1&\mychB.#2\\[\myyback]\mychC.#3&\mychD.#4
+        \end{tabular}}
+    \newcommand{\choneinfourtd}[4]{\par\noindent
+        \begin{tabular}{*{2}{@{}p{.5\textwidth}}}
+            \mychA.#1&\mychB.#2\\[\myyback]
+            \multicolumn{2}{@{}p{\textwidth}}{\mychC.#3}\\[\myyback]
+            \multicolumn{2}{@{}p{\textwidth}}{\mychD.#4}
+        \end{tabular}}
+    \newcommand{\choneinfourfh}[4]{\par\noindent
+        \begin{tabular}{*{2}{@{}p{.5\textwidth}}}
+            \multicolumn{2}{@{}p{\textwidth}}{\mychA.#1}\\[\myyback]
+            \multicolumn{2}{@{}p{\textwidth}}{\mychB.#2}\\[\myyback]
+            \mychC.#3&\mychD.#4
+        \end{tabular}}
+    \newcommand{\choneinfourff}[4]{\par\noindent
+        \begin{tabular}{*{2}{@{}p{.5\textwidth}}}
+            \multicolumn{2}{@{}p{\textwidth}}{\mychA.#1}\\[\myyback]
+            \mychB.#2&\mychC.#3\\[\myyback]
+            \multicolumn{2}{@{}p{\textwidth}}{\mychD.#4}
+        \end{tabular}}
+
+
+    \newcommand{\choneinfoursx}[4]{\par\noindent
+        \begin{tabular}{@{}p{\textwidth}}
+        \mychA.#1\\[\myyback]\mychB.#2\\[\myyback]\mychC.#3\\[\myyback]\mychD.#4
+        \end{tabular}}
+
+%\def\choice{\@ifnextchar[{\choicee}{\choicee[]}}
+
+
+\newcommand{\choice}[4][]
+        {%
+        \settowidth{\chD}{\mychD.#1}
+        \settowidth{\chA}{\mychA.#2}
+        \settowidth{\chB}{\mychB.#3}
+        \settowidth{\chC}{\mychC.#4}
+        \settowidth{\chtest}{D.}
         \ifthenelse{\chA>\chB}{\chAB=\chA}{\chAB=\chB}
         \ifthenelse{\chC>\chD}{\chCD=\chC}{\chCD=\chD}
         \ifthenelse{\chB>\chC}{\chBC=\chB}{\chBC=\chC}
@@ -352,27 +339,23 @@
     }
 
 \def\chf#1#2#3#4{\choice[#4]{#1}{#2}{#3}}
+
+\newcommand{\chsix}[7][20]{%
+    \choice{#2}{#3}{#4}\vspace*{-#1 pt}%%
+    \def\mychA{D}\def\mychB{E}\def\mychC{F}%
+    \choice{#5}{#6}{#7}%
+    \def\mychA{A}\def\mychB{B}\def\mychC{C}%
+    }
+\newcommand{\chfive}[6][20]{%
+    \choice{#2}{#3}{#4}\vspace*{-#1 pt}%
+    \def\mychA{D}\def\mychB{E}%
+    \choice{#4}{#5}{}%
+    \def\mychA{A}\def\mychB{B}%
+    }
+
 %%%% 调用格式 三个选项 \choice{选项1}{选项2}{选项3}
 %%%%          四个选项 \chf{选项1}{选项2}{选项3}{选项4}
-%5个选项, 但每个选项都不长, 直接使用表格生成,
-    \newcommand{\chfive}[5]{\vspace*{-5pt}\par\noindent\quad
-        \begin{tabular}{*{5}{@{}p{3cm}}}
-                \mychA.#1&\mychB.#2&\mychC.#3&\mychD.#4&E.#5
-        \end{tabular}}
-
 %%%%%% 参考文献上标命令
-\makeatletter
-\let\chfold\chf
-\let\choiceold\choice
-\def\chf{\par\vspace*{-3.5pt}\chfold}
-\def\choice{\par\vspace*{-3.5pt}\choiceold}
-
-\def\upcite{\@ifnextchar[{\upcitei}{\upciteii}}
-\def\upcitei[#1]#2{\textsuperscript{\textsuperscript{\cite[#1]{#2}}}}
-\def\upciteii#1{\textsuperscript{\textsuperscript{\cite{#1}}}}
-\makeatother
-%\newcommand{\upcite}[2][]
-%    {\textsuperscript{\textsuperscript{\cite[#1]{#2}}}}
+\newcommand{\upcite}[2][]
+    {\textsuperscript{\textsuperscript{\cite[#1]{#2}}}}
 %%%%%% 参考文献上标命令结束
-%%%% 匿名命令
-\def\anon#1{\ifanonymous***\else#1\fi}

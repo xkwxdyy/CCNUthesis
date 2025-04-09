@@ -1,8 +1,8 @@
 %%%%%%%%%% 以下内容为自动生成, 不需要修改.
-\CJKtilde
+%\CJKtilde
 \pagestyle{empty}\def\lnlen{8}
 \vspace*{5mm} {\zihao{4}\fangsong
-\MakeBox3{\textbf{分类号}}\underline{\MakeBox[c]\lnlen{}}\MakeBox{3}{}
+\MakeBox{3}{\textbf{分类号}}\underline{\MakeBox[c]\lnlen{}}\MakeBox{3}{}
 \MakeBox{6}{\textbf{论文选题类型}}\underline{\MakeBox{6}{}}
 \bigskip
 
@@ -19,9 +19,8 @@
     \insertjpg[.43\textwidth]{def/school.jpg}
 \fi
 
-
 \vspace*{18mm}
-{\heiti \zihao{-0} \quad本科毕业论文（设计）}
+{\heiti \zihao{-0} 本科毕业论文}
 \end{center}}
 
 \vspace*{15mm}\zihao{-3}\songti
@@ -41,7 +40,6 @@
 %%%%%%%%% 论文题目
 \settowidth\titlelength{\,\title\,}
 \setlength\testlength{\mytitlenum\ccwd+.5\ccwd}
-%\def\unlen{2.2*\mytitlenum/16} %16个汉字, 2.2
 
 \begin{center}
 \begin{tikzpicture}[scale=2]
@@ -49,9 +47,9 @@
     \pgfmathsetmacro{\v}{1}
     \ifthenelse{\titlelength>\testlength}
         {%
-        \draw(\h+1.4,\v/5)node[below]
+        \draw(\h+1.4,\v/5+.025)node[below]
             {\parbox[t][2cm][s]{.5\ccwd+\mytitlenum\ccwd}{%
-            \begin{spacing}{1.95}
+            \begin{spacing}{3.55}
             \centering\textbf{\song\zihao{-2}\title}
             \end{spacing}
             }};
@@ -60,9 +58,9 @@
                     \draw[thick](\h*1.5+1.2,-\v/5-\i*\v*.75) --++({\j*\testlength/3.8},0);
 
             }
-        {\draw(\h+1.4,\v/5-\v*.45)node[below]{\textbf{\song\zihao{-2}\title}};
+        {\draw(\h+1.4,\v/5-\v*.43)node[below]{\textbf{\song\zihao{-2}\title}};
         \foreach \j in {1,-1}
-        \draw[thick](\h*1.5+1.2,-\v/5-\v*.42) --++({\j*\testlength/3.8},0);
+        \draw[thick](\h*1.5+1.2,-\v/5-\v*.45) --++({\j*\testlength/3.35},0);
         }
     \foreach \i/\text/\tex in {%
             1/学院/{\color{\myccnucolor}{\school}},

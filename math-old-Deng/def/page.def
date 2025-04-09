@@ -1,12 +1,25 @@
 %页边距
 \oddsidemargin=0pt
 \evensidemargin=0pt
-\setlength{\parindent}{2em} %设置段首缩进量
+\setlength{\parindent}{2\ccwd} %设置段首缩进量
 
+%调整定理环境与上文的距离
+\setlength{\theorempreskipamount}{0.5pt plus0.5pt minus 1.5pt}
+%调整定理环境与下文的距离
+\setlength{\theorempostskipamount}{0.5pt plus0.5pt minus 1.5pt}
+
+%公式与正文间的额外间距
+\abovedisplayshortskip=0pt
+\belowdisplayshortskip=0pt
+\abovedisplayskip=0pt
+\belowdisplayskip=0pt
 %设置列表环境各种间距
 \setenumerate{itemsep=-2pt,partopsep=0pt,parsep=\parskip,topsep=0pt}
 \setitemize{itemsep=-2pt,partopsep=0pt,parsep=\parskip,topsep=0pt}
 \setdescription{itemsep=-2pt,partopsep=0pt,parsep=\parskip,topsep=0pt}
+%%%% 图表说明与正文的间距
+\setlength{\abovecaptionskip}{0.cm}
+\setlength{\belowcaptionskip}{-0.cm}
 
 \renewcommand\arraystretch{1.5}
 
@@ -23,27 +36,34 @@
 \renewcommand{\normalsize}{%
    \@setfontsize\normalsize\@xpt\@xiipt
    \abovedisplayskip 4\p@ \@plus2\p@ \@minus5\p@
-   \abovedisplayshortskip \z@ \@plus3\p@
-   \belowdisplayshortskip 4\p@ \@plus3\p@ \@minus3\p@
+   \abovedisplayshortskip \z@ \@plus 3\p@
+   \belowdisplayshortskip 4\p@ \@plus 3\p@ \@minus3\p@
    \belowdisplayskip \abovedisplayskip
    \let\@listi\@listI}
 
+%\setlength{\arraycolsep}{2pt}
  %一级标题格式
-  \renewcommand\section{%
-      \@startsection{section}{2}{0mm}{10pt}{8pt}%
-      {\noindent\zihao{-3}\song\textbf}%
+ \renewcommand\section{%
+      \@startsection{section}{0}{-2\ccwd}{10pt}{8pt}%
+      {\!\zihao{-3}\song\textbf}%
     }
+%\titleformat{\section}
+%  {\zihao{-3}\song\bfseries}
+%  {\thesection}{.75em}{}
+%  [\vspace*{-13pt}]
+%titleformat{command}[shape]{format}{label}{sep}{before}[after]
+
   % 二级标题格式
   \renewcommand\subsection{%
-      \@startsection{subsection}{2}{0mm}{0.1\baselineskip}{5pt}%
-      {\noindent\song\zihao{4}\textbf}%
+      \@startsection{subsection}{1}{-4pt}{5pt}{5pt}%
+      {\song\zihao{4}\textbf}%
     }
   % 三级标题格式
   \renewcommand\subsubsection{%
-      \@startsection{subsubsection}{0}{0mm}{0\baselineskip}{1pt}%
-      {\noindent\zihao{-4}\song\textbf}%
+      \@startsection{subsubsection}{2}{1\ccwd}{0pt}{1pt}%
+      {\song\zihao{-4}\textbf}%
     }
-  % 四级标题格式
+  % 四级标题格式, 此命令无效.
   \renewcommand\paragraph{%
       \@startsection{paragraph}{1}{0mm}{0.5\baselineskip}{0.5\baselineskip}%
       {\zihao{-4}\song\textbf}%
@@ -51,41 +71,56 @@
 \makeatother
 
 %%%%%%%% 目录格式
-\setcounter{tocdepth}{2}
-\renewcommand{\contentsname}{\centerline{\heiti\zihao{-2}%
-    目\quad 录}}
+\setcounter{tocdepth}{3}
+\renewcommand{\contentsname}{%
+    \centering\heiti\zihao{-2}目\quad{}录}
 
+
+%\titlecontents{标题名}[左间距]{标题格式}{标题标志}{无序号标题}
+    %{指引线与页码}[下间距]
+%标题名 设置所需修改的某一层次标题格式的标题名，如chapter、section
+%       等层次标题名，或是table和figure图表标题名
+%左间距 可选参数，不能省略
+%标题格式 设置标题的整体格式，如字体、字体尺寸、与上一个标题的
+%         垂直距离等。该参数可空置。
+%标题标志 设置标题标志的格式,如序号格式、序号宽度、序号与标题
+%         内容之间的间距等。该参数不能空置, 否则标题将无标题标志。
+%无序号标题 设置无序号标题的格式, 如字体、字体尺寸等。该参数可以空置
+%指引线与页码 设置标题与页码之间的指引线样式以及页码的格式,
+%           该参数如果空置, 标题将无指引线和页码。
+%下间距 可选参数, 用于设置标题排版后还需要执行的命令, 例如与下个标题的垂直间距等。该参数常被省略。
+%
+%作者：5john家安
+%链接：https://www.jianshu.com/p/ccd14653a128
+%来源：简书
+%著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
     % 一级标题
 \titlecontents{section}
               [0em]
-              {\zihao{-4} \song \addvspace{2bp minus 1bp}}
+              {\zihao{-4} \song}
               {\contentslabel{0em}\quad}
               {}
-              {\dotfill\textrm{\contentspage[\thecontentspage]}}
+              {\titlerule*[0.5pc]{$\cdot$}\textrm{\contentspage}}
     % 二级标题
 \titlecontents{subsection}
               [3.0em]
-              {\zihao{-4} \song \addvspace{1bp minus 1bp}}
-              {\contentslabel{2.0em}}
+              {\zihao{-4}\song}
+              {\contentslabel{1.5em}\quad\!\!}
               {}
-              {\dotfill\textrm{\contentspage[\thecontentspage]}}
+              {\titlerule*[0.5pc]{$\cdot$}\textrm{\contentspage}}
 
     % 三级标题, 此版本不显示此层次标题
     \titlecontents{subsubsection}
-              [3.0em]
-              {\zihao{-4} \song \addvspace{1bp minus 1bp}}
-              {\contentslabel{2.0em}}
+              [5.5em]
+              {\zihao{-4}\song}
+              {\contentslabel{2.5em}\quad\!\!}
               {}
-              {\dotfill\textrm{\contentspage[\thecontentspage]}}
+              {\titlerule*[0.5pc]{$\cdot$}\textrm{\contentspage}}
 
 \renewcommand{\figurename}{\zihao{-5}图}
 \renewcommand\tablename{\zihao{-5}表}
+\renewcommand\arraystretch{1.5}  %% 设置表格行高
 
-\setlength{\theorempreskipamount}{-1em}%调整定理环境与上文的距离
-\setlength{\theorempostskipamount}{-.35em}%调整定理环境与下文的距离
-
-
-%\renewcommand{\baselinestretch}{5.5}
 \zihao{-4}
 \linespread{1.5}  % 1.5倍行间距
 %\baselineskip=23pt

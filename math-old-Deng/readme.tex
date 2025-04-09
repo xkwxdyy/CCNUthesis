@@ -18,6 +18,10 @@
 \tableofcontents
 
 % 1.5倍行间距
+\begin{proof}[解]
+  dfelf
+\end{proof}
+
 \section{模板使用指南}
 \subsection{编写目的}
     当学者们使用Office书写数学论文时, 一个巨大的麻烦是数学公式的\red{输入与排版}. 一个是数学公式输入需要使用专门的软件(可以使用word自带的公式编辑器, 但强烈建议使用mathtype软件), 每个公式是作为图片插入到文档中, 所以查找替换公式里面的内容已成为一种不可能的事情. 另外一个是排版, 插入数学公式后, 文档的行间距就会产生变化, 无法做到全文一致, 失去美观性. 为此, 众多学术期刊杂志都使用Tex作为排版软件.
@@ -28,7 +32,6 @@
 \subsection{功能}
     本模板提供以下便利功能:
     \begin{itemize}
-      \item 提供一个匿名选项anon和一个匿名命令anon
       \item 根据系统时间, 自动确定论文写作年份;
       \item 根据题目的长度, 自动排成居中的两行或者一行;
       \item 正文前的页面不要额外排版, 只需要提供相应信息即可;
@@ -43,7 +46,7 @@
     本论文模板由一个主文件\red{main.tex}(以及简化版sim\_main.tex和范例版exam\_main.tex)和三个文件夹\red{def}, \red{doc}和\red{photo}组成. 文件夹def包含以下文件
     \begin{multicols}{2}
     \begin{itemize}
-      \item[1)] format.sty: 格式包, 引用\blue{package.def}, \blue{page.def}和\blue{config.tex}3个文档, 并定义匿名选项
+      \item[1)] format.sty: 格式包, 引用\blue{package.def}, \blue{page.def}和\blue{config.tex}3个文档
       \item[2)] package.def: 调用的各种宏包
       \item[3)] page.def: 页面设置文档
       \item[4)] mytikz.def: 绘图命令, 含坐标绘制
@@ -83,11 +86,11 @@
     \subsection{类和宏包文件}
     文档sim\_main.tex的前两行代码为
     \begin{enumerate}
-    \item $\backslash$documentclass[a4paper,12pt, twoside]$\{$ctexart$\}$
-    \item $\backslash$usepackage$\{$def/format$\}$ 或
-        $\backslash$usepackage[anon]$\{$def/format$\}$
+    \item
+    \textbf{$\backslash$documentclass[a4paper,12pt, twoside]$\{$ctexart$\}$
+    \item $\backslash$usepackage$\{$def/format$\}$}
     \end{enumerate}
-    第一行表示本模板使用\red{ctexart.cls}类文件, a4纸张, 字体放大到1.2倍, 允许奇偶页的页边距不同; 第二行调用文件夹def内的宏包\red{format.sty}, 加参数anon表示生成的论文属于匿名版本(隐去学校, 姓名, 指导教师信息的论文), 没有参数, 或者参数为norm的论文属于正常学位论文(包含所有信息).
+    第一行表示本模板使用\red{ctexart.cls}类文件, a4纸张, 字体放大到1.2倍, 允许奇偶页的页边距不同; 第二行调用文件夹def内的宏包\red{format.sty}.
 
     \subsection{用户信息}
     第3行到第23行是用来收录论文的基本信息, 如作者, 题目, 摘要等. 相应内容必须\red{修改为用户自身的信息}.
@@ -160,7 +163,7 @@
 %    以上内容生成了首页,版权页, 目录与摘要页. 如无必要, 不作任何修改.
 
     \subsection{论文主体}
-    从第45行到82行, 为论文的主体. section为一级标题, subsection为二级标题, subsubsection为三级标题, 四级标题请自行书写.
+    从第45行到82行, 为论文的主体. section为一级标题, subsection为二级标题, subsubsection为三级标题.
     \textbf{
     \begin{multicols}{2}
     \begin{enumerate} \setenum{44}
@@ -206,7 +209,7 @@
 \end{multicols}}
 
     值得指出的是, (1) 参考文献条目的格式为(以论文为例, 其他类型请参见后文\red{参考文献}小节.\\
-    $\backslash$bibitem$\{$引用名称$\}$ 作者1, 作者2. 文章题目. 杂志名称, 年份, \textbf{卷号}期号: 起码--止码.
+    $\backslash$bibitem$\{$引用名称$\}$ 作者1, 作者2. 文章题目. 杂志名称, 年份, \textbf{卷号}期号: 起码-止码.
 
     \indent (2) \red{当论文没有附录时, 就可以删除与附录有关的两行.}
 
@@ -337,6 +340,11 @@
       \@startsection{subsubsection}{0}{0mm}{0\baselineskip}{1pt}%
       {\heiti\sihao\bf\!\!}%
     }
+  % 四级标题格式
+  \renewcommand\paragraph{%
+      \@startsection{paragraph}{1}{0mm}{0.5\baselineskip}
+      {0.5\baselineskip}{\heiti\zihao{-4}\bf}%
+    }
 \makeatother %恢复@的特殊含义, 不在作为字母出现
     \end{verbatim}\vspace*{0pt}
 
@@ -346,7 +354,7 @@
     \begin{verbatim}
 %%%%%%%% 目录格式
 \setcounter{tocdepth}{2}  %目录中只显示一级和二级标题
-\renewcommand{\contentsname}{\centerline{\heiti\zihao{-2}%
+\renewcommand{\contentsname}{\centerline{\heiti\xiaoerhao
     目\quad 录}}
     % 一级标题
 \titlecontents{section}
@@ -608,10 +616,6 @@
 \end{verbatim}
 \end{multicols}\vspace{-10pt}
 
-(7) 匿名命令
-
-$\backslash$def$\backslash$anon\#1\{$\backslash$ifanonymous***%
-    $\backslash$else\#1$\backslash$fi\}
 
 \section{论文排版格式要求}
     \subsection{页面设置}
@@ -686,12 +690,13 @@ $\backslash$def$\backslash$anon\#1\{$\backslash$ifanonymous***%
     定理内容
     \end{theo}
     \begin{center}
-   \begin{table}[H] \caption{\label{tab1} 表格题头.}
-    \centering\zihao{-4}表格内容
+    \begin{table}[H]
+    表格内容
+    \caption{\label{tab1} 表格题头.}
     \end{table}
-
+    \end{center}
+    \begin{center}
     \begin{figure}[H]
-    \centering
     图形内容
     \caption{\label{fig1} 图形题头.}
     \end{figure}
@@ -704,18 +709,19 @@ $\backslash$def$\backslash$anon\#1\{$\backslash$ifanonymous***%
     定理内容
     \end{theo}}}\\[10pt]
     \framebox{
-    \parbox[h][1.75cm][s]{\textwidth}{%
-
-    \begin{table}[H]\caption{\label{tab1} 表格题头.}
-    \centering\zihao{-4}表格内容
+    \parbox[h][1.75cm][s]{\textwidth}{\begin{center}
+    \begin{table}[H]
+    表格内容
+    \caption{\label{tab1} 表格题头.}
     \end{table}
-    }
-    }\\[10pt]
+    \end{center}}}\\[10pt]
     \framebox{\parbox[h][1.75cm][s]{\textwidth}{
-    \begin{figure}[H]\centering
+    \begin{center}
+    \begin{figure}[H]
     图形内容
     \caption{\label{fig1} 图形题头.}
-    \end{figure}}}\bigskip
+    \end{figure}
+    \end{center}}}\bigskip
 
 \subsection{标点符号}
     从摘要到参考文献, 文中的符号, 都应该用西文的半角符号. 建议双引号使用中文的全角符号. 如果在书写的时候, 使用的是中文标点, 可以替换. 注意替换范围（不包括声明页和后记页）. 西文符号后要跟一个空格. 行文中, 应该加上标点, 包括数学公式. 如：`` .",``;",``,"等等.

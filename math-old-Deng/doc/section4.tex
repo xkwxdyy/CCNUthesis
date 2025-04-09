@@ -6,7 +6,7 @@
 \LaTeX{}中输入文本、命令和环境的结构排版, 一般分为两个区域, 第一个区域我们称为“导言区”, 第二区域就是我们所谓的正文部分了. 而更明确一点可以以命令$\backslash$begin$\{$document$\}$来区分, 这个命令之前的区域就是导言区, 而在命令$\backslash$begin$\{$documen\-t$\}$之后与命令$\backslash$end$\{$document$\}$之前的中间区域就是正文部分了. 在正文部分的输入时, 如果想要达到编辑者理想中的效果, 那就还需要在其中搭配其他相应的命令和环境. 同样, 制作课件时也是如此. 在导言区的第一行, 需要用$\backslash$documentclass[可省限制条件]$\{$文档类型$\}$这个命令说明所写文档的类型. 从第二行开始, 需要说明文档引用的宏包；对文本的排版, 其中包括页面尺寸、页边距、字距、行距、段落间距、首行缩进、页码等. 用下图以制作课件的一个简单示例进行说明. 另外, 此模板中\%后的文字为文字下面的说明, 若编写在\LaTeX{}中, 因为\%的存在, 是不会作为文本被输出的.
 
 \subsection{\LaTeX{}中制作课件的背景和主题}
-为了使得我们制作的课件看起来不单调, 我们可以对课件里的幻灯片的背景和主题进行添加和调整, 这样整个课件就会变得绚丽多彩, 具真正的可观性.
+为了使得我们制作的课件看起来不单调, 我们可以对课件里的幻灯片的背景和主题进行添加和调整, 这样整个课件就会变得绚丽多彩, 具真正的可观性.\vspace*{-10pt}
 
 \begin{multicols}{2}
 \begin{enumerate}
@@ -66,12 +66,11 @@
 \item$\backslash$end$\{$center$\}$
 \item$\backslash$end$\{$frame$\}$\ldots
 \item$\backslash$end$\{$document$\}$
-\end{enumerate}
+\end{enumerate}\vspace*{-10pt}
 \end{multicols}
-%\end{minipage}
+\vspace*{-30pt}
 
 \subsection{课件背景主题}
-
 通常在我们设置课件背景时, 一般有两种方式. 第一种就是改变原来背景的颜色搭配模式, 产生不一样的搭配方式, 来达到我们的目的, 使用的命令语法如下：
 \centerline{
 $\backslash$mode$<$presentation$>$
@@ -123,20 +122,17 @@ $\backslash\backslash$或$\backslash$newline}
 
 
 制作课件时, 如果想要在一张幻灯片的左边部分编辑文字, 右边部分插入图片或者其他, 亦或是将其结构反过来. 这个时候, 我们就需要将幻灯片分为左右两个部分或者多个部分, 使得一张幻灯片成为多栏结构. 而此时使用multicols环境即可, 它可以分为多栏, 其简要的语法如下：
-
  \begin{itemize}
   \item $\backslash$begin$\{$multicols$\}\{2\}$
   \item 文本或图片或其他内容
  \item$\backslash$end$\{$multicols$\}$
 \end{itemize}
 
-
-以上语法仅是将一张幻灯片分为两栏结构的简单写法, 若想增加分栏数, 将数字2 变成别的数字即可. 另外, 在需要使用分栏结构时, 也可使用环境$\backslash$begin$\{$columns$\}$, 可将页面分为两栏或者多栏, 多栏结构利用多个column环境即可. 其两栏的基本语法如下：
-
+以上语法仅是将一张幻灯片分为两栏结构的简单写法, 若想增加分栏数, 将数字2 变成别的数字即可. 另外, 在需要使用分栏结构时, 也可使用环境$\backslash$begin$\{$columns$\}$, 可将页面分为两栏或者多栏, 多栏结构利用多个column环境即可. 其两栏的基本语法如下： \vspace*{-10pt}
  \begin{multicols}{2}
  \begin{enumerate}
      \item$\backslash$begin$\{$columns$\}$
-     \item$\backslash$begin$\{$column$\}\{a\backslash$textwidth$\}$
+     \item$\backslash$begin$\{$column$\}\{$倍数$\backslash$textwidth$\}$
      \item 文本或图片或其他内容1
      \item$\backslash$end$\{$column$\}$
      \item$\backslash$begin$\{$column$\}\{b\backslash$textwidth$\}$
@@ -144,14 +140,16 @@ $\backslash\backslash$或$\backslash$newline}
      \item$\backslash$end$\{$column$\}$
      \item$\backslash$end$\{$columns$\}$
  \end{enumerate}
- \end{multicols}
+ \end{multicols}\vspace*{-10pt}
 
  此处值得说明的是, 环境column中每栏所占比例之和可以大于1.
 
 \subsection{目录、标题和小标题}
-
 目录一般处于课件中的第二张幻灯片上, 设置目录可以使用命令$\backslash$tableofcontents 来插入到想要放入的某张幻灯片上. 每一个小结的目录标题可以使用$\backslash$section$\{$章的标题1$\}$命令来设置. 其基本语法可如下所示：
+\vspace*{-10pt}
+\setlength{\topsep}{0pt} \setlength{\partopsep}{0pt}\setlength{\parsep}{0pt}%
 \begin{multicols}{2}
+%\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}\setlength{\parsep}{0pt}%
 \begin{enumerate}
   \item[1]$\backslash$section$\{$第一章\hspace{10pt}章的标题1$\}$
   \item[2]$\backslash$section$\{$第二章\hspace{10pt}章的标题2$\}$
@@ -164,7 +162,7 @@ $\backslash\backslash$或$\backslash$newline}
 \end{multicols}
 此处需要说明的一点是, $\backslash$section$\{$章的标题1$\}$可以写在环境frame 之外, 也可以写在环境frame之内的$\backslash$tableofcontents命令下面. 此外, 若是文本中的章后还有节和小节, 则只需在命令$\backslash$section$\{$章的标题1$\}$后接连使用命令$\backslash$subsection$\{$节的标题1$\}$与命令$\backslash$subsubsection$\{$小节的标题1$\}$即可.
 
-在课件中, 一般每张幻灯片上都会有一个标题乃至一个小标题, 若是想在一张幻灯片上设置标题, 其设置方法有两种, 则对应的语法及简单语言分别如下：\medskip
+在课件中, 一般每张幻灯片上都会有一个标题乃至一个小标题, 若是想在一张幻灯片上设置标题, 其设置方法有两种, 则对应的语法及简单语言分别如下：\vspace*{-10pt}
 
 \begin{multicols}{2}
 \begin{description}
@@ -180,13 +178,12 @@ $\backslash$framesubtitle$\{$小标题$\}$
    \item[9] 文本或其他内容内容
    \item[10]$\backslash$end$\{$frame$\}$
 \end{description}
- \end{multicols}
+ \end{multicols}\vspace*{-10pt}
 第二种设置方式比第一种设置方式要复杂一些, 但是两者的效果是相同的, 可以得出相同的结果. 但当我们使用第一种设置方式时, 由于\LaTeX{}系统中的某些兼容性问题, 有可能会出现一些预想不到的结果, 这时我们换用第二种方式即可.
 \subsection{列表的设置}
 
-多列同等地位的条目出现在幻灯片中是很常见的, 将这些条目从上到下的排列我们简称列表. 对于列表的设置, 有三个环境可以使用, 并且三个环境之间可以进行相互嵌套使用. 这三个环境分别为：Itemize、Enumerate 和Description, 三个环境使用效果基本上相同, 仅是列表中每个条目前面的标签不一样, 使用者可根据其需求进行相应类型的选择. 列表环境的使用基本语法为：\medskip
-
- \begin{multicols}{2}
+多列同等地位的条目出现在幻灯片中是很常见的, 将这些条目从上到下的排列我们简称列表. 对于列表的设置, 有三个环境可以使用, 并且三个环境之间可以进行相互嵌套使用. 这三个环境分别为：Itemize、Enumerate 和Description, 三个环境使用效果基本上相同, 仅是列表中每个条目前面的标签不一样, 使用者可根据其需求进行相应类型的选择. 列表环境的使用基本语法为：\vspace*{-10pt}
+\begin{multicols}{2}
 \begin{description}
   \item[1]$\backslash$begin$\{$环境名称$\}$
   \item[2]$\backslash$item$\{$条目内容一$\}$
@@ -194,7 +191,7 @@ $\backslash$framesubtitle$\{$小标题$\}$
   \item[4]$\backslash$item$\{$条目内容三$\}$
   \item[5] …………
   \item[6]$\backslash$end$\{$环境名称$\}$\end{description}
- \end{multicols}
+ \end{multicols}\vspace*{-10pt}
 如下是一个列表嵌套的示例.
 
 \centerline{原代码}\vspace*{-10pt}
@@ -247,7 +244,7 @@ $\backslash$framesubtitle$\{$小标题$\}$
 \end{itemize}
 \end{multicols}
 
-以上列表条目前的标签是可以自己定义的, 在自行定义之前需要在导言区使用宏包命令$\backslash$usepackage$\{$enumerate$\}$, 用于识别item 中的序号（1）、（2）等等, 还需要定义命令$\backslash$renewcommand$\{\backslash$labelitemi$\}\{\backslash$bullet$\}$,
+以上列表条目前的标签是可以自己定义的, 在自行定义之前需要在导言区使用宏包命令$\backslash$usepackage$\{$enumerate$\}$, 用于识别item中的序号（1）（2）等等, 还需要定义命令$\backslash$renewcommand$\{\backslash$labelitemi$\}\{\backslash$bullet$\}$,
 用于识别item中的-、*和大圆点等符号.
 
 
@@ -335,17 +332,18 @@ $\backslash$framesubtitle$\{$小标题$\}$
 $\{$r$|$cc$|$c$\}$中, 每个字母代表一列, 并且“r”代表表格该列的文本是右对齐, “c” 代表表格该列的文本是位置居中, 如果想设置为左对齐, 则用“l” 即可. 当表格中不需要某两列之间的竖线时, 只需去掉$\{$r$|$cc$|$c$\}$中指定的两列间的“$|$”即可. 此外, 若需要将表格整体向左右移动, 则在命令$\backslash$begin$\{$tabular$\}\{$r$|$cc$|$c$\}$前使用命令$\backslash$hspace$\{$移动距离$\}$即可. 移动距离为负, 则向左移；移动距离为正, 则向右移.
 
 
-在生成表格的过程中, 合并表格中的部分单元格是插入表格的重要内容. 表格单元格的合并分为“列的合并”与“行的合并”. 对于列的合并, 在表格编写的过程中使用命令$\backslash$multicolumn$\{$合并的单元格个数$\}\{$合并后表中列的分布$\}\{$合并后单元格中的文本内容$\}$就可以将某行中的相邻的几个列合并为一个单元格. 对于行的合并, 稍微要简单一些, 可以使用画线命令$\backslash$cline$\{$某列-某列$\}$来合并, 比如从要从第二列至第五列有横线, 那么可写为$\backslash$cline$\{$2-5$\}$, 即是给出画线的起始位置和终止位置即可. 在生成表格时, 命令$\backslash$hline是画出一条完整的横线, 命令$\backslash$cline是画一条不完整的横线. 但这样我们会发现在几行合并后的单元格中的文本内容没有居中的效果, 从而有时候会影响了表格的美观程度, 这个时候我们可以在导言区引用宏包, 即使用宏包命令$\backslash$usepackage$\{$multirow$\}$, 同样在表格编写的过程中使用命令$\backslash$multirow$\{$合并的单元格个数$\}\ast\{$合并后单元格中的文本内容$\}$.  如下给出示例：\medskip
-
+在生成表格的过程中, 合并表格中的部分单元格是插入表格的重要内容. 表格单元格的合并分为“列的合并”与“行的合并”. 对于列的合并, 在表格编写的过程中使用命令$\backslash$multicolumn$\{$合并的单元格个数$\}\{$合并后表中列的分布$\}\{$合并后单元格中的文本内容$\}$就可以将某行中的相邻的几个列合并为一个单元格. 对于行的合并, 稍微要简单一些, 可以使用画线命令$\backslash$cline$\{$某列-某列$\}$来合并, 比如从要从第二列至第五列有横线, 那么可写为$\backslash$cline$\{$2-5$\}$, 即是给出画线的起始位置和终止位置即可. 在生成表格时, 命令$\backslash$hline是画出一条完整的横线, 命令$\backslash$cline是画一条不完整的横线. 但这样我们会发现在几行合并后的单元格中的文本内容没有居中的效果, 从而有时候会影响了表格的美观程度, 这个时候我们可以在导言区引用宏包, 即使用宏包命令$\backslash$usepackage$\{$multirow$\}$, 同样在表格编写的过程中使用命令$\backslash$multirow$\{$合并的单元格个数$\}\ast\{$合并后单元格中的文本内容$\}$.  如下给出示例：\vspace*{-15pt}
  \begin{multicols}{2}
     \centerline{代码}
+\begin{spacing}{1.2}
 \begin{description}
-  \item[1]$\backslash$begin$\{$tabular$\}\{|$c$|$r$|$r$|$r$|\} \backslash$hline
-  \item[2]$\backslash$multirow$\{$2$\}\star\{$姓名$\}$\&$\backslash$multicolumn$\{$2$\}\{$c$|\}\{$成绩$\}$$\backslash\backslash$
-  \item[3]  $\backslash$cline$\{$2-4$\}$ \hspace{24pt}\&语文\&数学  \&  英语 $\backslash\backslash \backslash$hline
-  \item[4] 小王    \& 85    \&  95  \&  88$\backslash\backslash$ $\backslash$hline
-  \item[5]$\backslash$end$\{$tabular$\}$
+  \item[]$\backslash$begin$\{$tabular$\}\{|$c$|$r$|$r$|$r$|\} \backslash$hline
+  \item[]$\backslash$multirow$\{2\}*\{$姓名$\}\&\backslash$multicolumn$\{$2 $\}\{$c$|\}\{$成绩$\}$$\backslash\backslash$
+  \item[]$\backslash$cline$\{$2-4$\}\&$语文\&数学\&英语$\backslash\backslash \backslash$hline
+  \item[] 小王 \& 85    \&  95  \&  88$\backslash\backslash$ $\backslash$hline
+  \item[]$\backslash$end$\{$tabular$\}$
 \end{description}
+\end{spacing}
 
 \centerline{输出效果}\medskip
 \renewcommand\arraystretch{1}
@@ -366,42 +364,44 @@ displaymath等. 各个环境的使用方式以以下例子进行说明.
 
 例如将公式$a^x+a^y \ne a^{x+y}$输入到幻灯片上, 其语言及效果如下：
 
-\centerline{
+{\centering\zihao{-4}\renewcommand\arraystretch{1.2} 
 \begin{tabular}{c|c}
     输入代码 & 输出效果 \\\hline
-    \makecell[l]{$\backslash$begin$\{$equation$\}$\\[-5pt]
-    a\^{}x+a\^{}y$\backslash$ne a\^{}$\{$x+y$\}$\\[-5pt]
-    $\backslash$end$\{$equation$\}$}
+    $\backslash$begin$\{$equation$\}$
+    a\^{}x+a\^{}y$\backslash$ne a\^{}$\{$x+y$\}$
+    $\backslash$end$\{$equation$\}$
     &$a^x+a^y \ne a^{x+y}$
     \end{tabular}}
-\def\bs{\backslash}
 
-在带有多个等号的等式中, 为了美观, 我们常常需要将等号对齐排版, 如：
-\begin{center}
-\begin{tabular}{c|c}
-    \hline
-    输入代码 & 输出效果 \\\hline
-    \makecell[l]{$\bs$begin$\{$equation*$\}$\\[-5pt]
+\def\bbs{\backslash}\medskip
+在带有多个等号的等式中, 为了美观, 我们常常需要将等号对齐排版, 如：\vspace*{-10pt}
+
+\begin{multicols}{2}
+\begin{spacing}{1.5}\zihao{-4}
+    输入代码\\
+    \makecell[l]{$\bbs$begin$\{$equation*$\}$\\[-5pt]
               $\backslash$begin$\{$split$\}$\\[-5pt]
   $z$\&=(a+b)\^{}2 $\backslash\backslash$\\[-5pt]
     \hspace{6pt}\&=a\^{}2+2ab+b\^{}2$\backslash\backslash$\\[-5pt]
     \hspace{6pt}\&=b\^{}2+2ab+a\^{}2$\backslash\backslash$\\[-5pt]
     \hspace{6pt}\&=a\^{}2+b\^{}2+2ab$\backslash\backslash$\\[-5pt]
 $\backslash$end$\{$split$\}\backslash\backslash$\\[-5pt]
-$\backslash$end$\{$equation*$\}$}&
-   \makecell[l]{$z =(a+b)^2$\\
+$\backslash$end$\{$equation*$\}$}
+
+输出效果 \\
+   \makecell[l]{$z=(a+b)^2$\\
     \hspace{6pt}$=a^2+2ab+b^2$\\
     \hspace{6pt}$=b^2+2ab+a^2$\\
     \hspace{6pt}$=a^2+b^2+2ab$}
-    \\ \hline
-\end{tabular}
-\end{center}
+\end{spacing}
+\end{multicols}\vspace*{-10pt}
+
 在上述例子中, 值得注意的是split环境需要equation环境嵌套在外层才能够得出结果, 不然将会出错.
 
 
 另外, 有些公式或者方程需要插入到某一句话内, 或者说插入到某行之中, 那只需要将想要插入的公式或者方程在两边各自加上一个“\$”符号即可. 还有一种就是要将公式或者方程放入两行文本之间, 第一种方法我们可以使用上述三个插入数学公式的环境即可做到；第二种方法是在公式或者方程的两边各自加上“\$\$”即可. 示例如下：
 \def\parlen{180pt}
-\begin{center}
+\begin{center}\renewcommand\arraystretch{1.2} 
     \begin{tabular}{c|l|c}
     % after \\: \hline or \cline{col1-col2} \cline{col3-col4} ...
     插入情况& 输入代码 & 实际效果 \\\hline
@@ -423,30 +423,22 @@ $\backslash$end$\{$equation*$\}$}&
             =\frac{\pi^2}{6}$\\ \hline
     \end{tabular}
 \end{center}
-%若是将方程放入上述三个环境中任意之一, 以displaymath环境为例, 输入语言及输出效果如下,
-
-%输出效果：
-%\begin{displaymath}
-%\lim_{n\to\infty}
-%\sum_{k=1}^n\frac{1}{k^2}
-%=\frac{\pi^2}{6}
-%\end{displaymath}
+\medskip
 
 对于定理的设置, 在beamer中已定义了许多相关环境, 例如theorem、 corollary、definitions、example和block等. 大多数定理环境中, “定理”和“定义”都以英文名给出, 例如theorem环境中定理前面的名称就是``Theorem". 此外, 若是需要将定理定义的英文名换成中文, 那么使用命令$\backslash$newtheorem$\{$原定理英文名称$\}\{$新定义名称$\}$, 例如
-$\backslash$newtheorem$\{$theorem$\}\{$定理$\}$. 然而, block环境要特殊一些, 它是形成一个小板来显示突出定理的存在, 可以大大增强幻灯片的美观性. 将定理的环境运用的语言示例如下：
-
+$\backslash$newtheorem$\{$theorem$\}\{$定理$\}$. 然而, block环境要特殊一些, 它是形成一个小板来显示突出定理的存在, 可以大大增强幻灯片的美观性. 将定理的环境运用的语言示例如下：\vspace*{-10pt}
  \begin{multicols}{2}
 \begin{description}
-  \item[1]$\backslash$begin$\{$frame$\}$%\\[-30pt]
-  \item[2]$\backslash$begin$\{$block$\}\{$正弦定理$\}$%\\[-30pt]
-  \item[3] 在一个三角形中, 各边和它所对的正弦的比相等, 即：
-  \item[4]$\backslash$begin$\{$equation$\}$
- \item[5]$\backslash$frac$\{$a$\}\{$sinA$\}$=$\backslash$frac
+  \item[]$\backslash$begin$\{$frame$\}$%\\[-30pt]
+  \item[]$\backslash$begin$\{$block$\}\{$正弦定理$\}$%\\[-30pt]
+  \item[] 在一个三角形中, 各边和它所对的正弦的比相等, 即：
+  \item[]$\backslash$begin$\{$equation$\}$
+ \item[]$\backslash$frac$\{$a$\}\{$sinA$\}$=$\backslash$frac
     $\{$b$\}\{$sinB$\}$=$\backslash$frac$\{$c$\}\{$sinC$\}$
- \item[6]$\backslash$end$\{$equation$\}$
- \item[7]$\backslash$end$\{$block$\}$
- \item[8] 文本或其他内容
- \item[9]$\backslash$end$\{$frame$\}$
+ \item[]$\backslash$end$\{$equation$\}$
+ \item[]$\backslash$end$\{$block$\}$
+ \item[] 文本或其他内容
+ \item[]$\backslash$end$\{$frame$\}$
 \end{description}
  \end{multicols}
 
@@ -467,9 +459,8 @@ $\backslash$newtheorem$\{$theorem$\}\{$定理$\}$. 然而, block环境要特殊�
     \item[7]$\backslash$end$\{$tikzpicture$\}$
   \end{description}
   \noindent以上语法的输入所画图像如下：
-
   \begin{figure}[H]
-  \centerline{
+  \centering
     \begin{tikzpicture}[scale=1.2]
         \draw[->](-1.5,0)--(1.5,0)node[left,below, font=\tiny]{$x$};
         \draw[->](0,-0.2)--(0,2.5)node[right, font=\tiny]{$y$};
@@ -480,12 +471,9 @@ $\backslash$newtheorem$\{$theorem$\}\{$定理$\}$. 然而, block环境要特殊�
             \draw(0,\y)node[left,font=\tiny]{\y} --++(.05,0);
         \draw[color=red, thick,smooth,domain=-1.4:1.4]plot(\x,{\x*\x}) node[left]{$y=x^2$};
         \draw(0,0)node[ below left,font=\tiny]{$O$};
-    \end{tikzpicture}}
- % \centering
- % \includegraphics[scale=.8]{cccc.png}\\
-  \caption{二次函数}
+    \end{tikzpicture}\vspace*{-13pt}
+  \caption{二次函数}\vspace*{-13pt}
   \end{figure}
-
 
 在上述图像绘制的示例中, tikzpicture是绘图环境, draw是绘图命令, “[scale=1.2]”代表将绘制出来的图形放缩为所绘图形的1.2 倍, 此处与插入图片的类似, 在[]中除了放缩大小外还可填入高度、宽度和旋转角度等条件. 前两个$\backslash$draw命令是绘制x 轴与y轴, “[-$>$]”表示绘制x轴与y轴的箭头, (-1.5,0)$--$(1.5,0)与(0,-0.2)$--$(0,2.5)分别表示绘制x 轴与y 轴的线条及长度, 例如x轴即是绘制点(-1.5,0)到点(1.5,0)这一段；并且整个语法中的“node[]$\{\}$”都是对前面所绘图形进行命名, []中可填入所命名称的放置位置, 包括left、right、above和below, 还可填入所命名称的字体大小颜色等限制条件, 例如node[right,font=$\backslash$tiny]$\{$\$x\$$\}$代表将$x$放入x轴的右边, x为最小号. 后两个$\backslash$foreach都是对x轴和y轴进行取点, 画刻度线, 例如“$\{$-1,0,1$\}$”表示在x轴上取出-1、0、1三个点. 最后一个$\backslash$draw 命令是绘制二次函数$y=x^2$的图像,
 “[color=red, thick,smooth,domain=-1.4:1.4]”表示图像线条为红色, 厚实光滑, 定义域为-1.4到1.4. plot($\backslash$x,$\{\backslash$x$*\backslash$x$\}$) 表示画以x为变量的$x^2$的图像. 值得注意的是, 在绘制函数时, 变量前面必须加
@@ -558,7 +546,7 @@ $\{$red!60$\}\{$文本内容1$\}$\\
 \\\hline
  \makecell{显\\示\\说\\明} & \multicolumn{2}{c|}{每个$\backslash$item命令后的内容依次显示} &\makecell[l]{文本内容逐条显示\\但文本内容1在第一步、\\第三步变红, 文本内容2\\在第二步到第四步加粗}  \\\hline
  \end{tabular}
- \end{center}
+ \end{center}\medskip
  此外, 还有一种起重点突出作用的逐条显示效果, 是使用命令$\backslash$item$<$+-$|$alert$@$+$>$在列表环境中来执行. 其语法如下：
     \begin{description}
         \item[1]$\backslash$begin$\{$itemize$\}$[$<$+-$|$ alert$@$+$>$]
