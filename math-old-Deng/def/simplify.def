@@ -200,22 +200,22 @@
 
 %%%%%%%% 列表环境
 \renewcommand{\labelitemi}{$\bullet$}
-\def\myback{\vspace*{-25pt}}
-\def\myhalfback{\vspace*{-12.5pt}}
+\newcommand{\myback}[1][25]{\vspace*{-#1pt}}
+\def\myhalfback{\myback[12.5]}
 
 
 %%%%%%% 问卷调查选项格式
     \newlength\chfour\newlength\chtwo
     \newlength\chthree\newlength\chone
-    \setlength\chfour{3.5cm}
-    \setlength\chthree{4.8cm}
-    \setlength\chtwo{7.5cm}
+    \setlength\chfour{3.875cm}
+    \setlength\chthree{5.167cm}
+    \setlength\chtwo{7.75cm}
     \setlength\chone{15.5cm}
 
-\def\mychA{A}
-\def\mychB{B}
-\def\mychC{C}
-\def\mychD{D}\def\mychE{A}
+\def\mychA{\textup{A}}
+\def\mychB{\textup{B}}
+\def\mychC{\textup{C}}
+\def\mychD{\textup{D}}\def\mychE{\textup{A}}
 \def\myyback{-12pt}
 \def\my@choice@back{\vspace*{-8pt}}
 \newlength\chA\newlength\chB\newlength\chC\newlength\chD \newlength\chtest

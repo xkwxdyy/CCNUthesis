@@ -1,5 +1,5 @@
 \documentclass[a4paper, 12pt, twoside]{ctexart}
-\usepackage{def/format}
+\usepackage[norn]{def/format}
 \def\arraystretch{1.1}
 
 %%%%%%%%%%%%% 以下内容按需要进行修改
@@ -14,15 +14,16 @@
 %%%%%%%%%%%%%% 封面信息结束
 %%%%%%%%%%%%%%% 摘要和关键词
 %中文摘要
-\def\myabstract{摘要的字数控制在400个汉字左右. 尽量不要出现公式参考文献. 介绍本文的主要工作以及创新点.}
+\def\myabstract{摘要的字数控制在400个汉字左右. 尽量不要出现公式参考文献. 介绍本文的主要工作以及创新点, 不要将引言的大段文字放置此处. 三段式书写: 一本文写作原因和背景; 二本文的主要工作, 包括方法、措施和结论; 三本文的创新点和意义.}
 %中文关键词
-\def\mykeywords{关键词1\qquad 关键词2\qquad关键词3}
+\def\mykeywords{关键词1; 关键词2; 关键词3}
 %英文题目
 \def\mytitle{Discuss}
 %英文摘要
 \def\myabstracten{For. }
 %英文关键词
-\def\mykeywordsen{keywords1\qquad keywords2\qquad keywords3}
+\def\mykeywordsen{keywords1; keywords2; keywords3}
+
 \begin{document}
 \begin{CJK*}{GBK}{song}
 \input{def/simplify.def} %加载简化命令
@@ -68,7 +69,7 @@
 %    \end{center}
 %    \end{figure}
     \begin{theo}[椭圆切线方程]
-        如果~$P(x_0, y_0)$~是已知椭圆 $\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}=1(a>b>0)$~ 上任意一点, 那么过~$P$~点并与该椭圆相切的直线~$\ell$~的方程是
+        如果~$P(x_0, y_0)$~是已知椭圆 $\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}=1(a>b>0)$~ 上任意一点, 那么过~$P$~点并与该椭圆相切的直线~$\ell$~的方程是(\red{以下三种输入都可以})
             $$~\frac{x_0x}{a^2}+\frac{y_0y}{b^2}=1.$$
             \[
             \frac{x_0x}{a^2}+\frac{y_0y}{b^2}=1.
@@ -136,7 +137,7 @@
     (2) 当直线~$\ell$~与~$x$~轴垂直时, $OM$~为~$AB$~的垂直平分线, 故~$\angle O M A=\angle O M B$~;
 
     (3) 当直线~$\ell$~与~$x$~轴既不重合又不垂直时, 点~$M$~的坐标为 $(\frac{a^2}c,0)$, 直线~$\ell$~的方程为~$y=k(x-c)$. $A,B$~两点的坐标为 $A(x_1, y_1), B(x_2,y_2),$~ 则~$y_1=k(x_1-c)$, $ y_2=k(x_2-c)$. 所以
-    $$~k_{M A}+k_{MB} =\frac{y_{1}}{x_1-\frac{a^2}{c}} +\frac{y_{2}}{x_2-\frac{a^2}{c}}=\frac{2 k \alpha_{1} x_2-k\left(c+\frac{a^2}{c}\right)\left(x_1+x_2\right)+2 k a^2}{\left(x_1-\frac{a^2}{c}\right)\left(x_2-\frac{a^2}{c}\right)}~$$~
+    $$k_{M A}+k_{MB} =\frac{y_{1}}{x_1-\frac{a^2}{c}} +\frac{y_{2}}{x_2-\frac{a^2}{c}}=\frac{2 k \alpha_{1} x_2-k\left(c+\frac{a^2}{c}\right)\left(x_1+x_2\right)+2 k a^2}{\left(x_1-\frac{a^2}{c}\right)\left(x_2-\frac{a^2}{c}\right)}.$$
     联立方程
         $$~\left\{\!\!\!\begin{array}{l}
             y=k(x-c); \\
@@ -366,11 +367,7 @@
         上述推论\ref{coro3}在巴蜀中学2020届适西性月考五中有应用, 在本文应用部分有详细过程.
 \subsection{结论3应用}
     \begin{exa}[巴蜀中学2020届适应性月考五11题·改编]
-        已知抛物线 $y^2=4 x$~ 的焦点为 $F, $~ 过直线设点 $P(x_0, y_0)$~ 在直线 $y=x+2$~ 上任一点引抛物线的两条切线, 切点~$A,B$, 则~$F$~到直线 $AB$~的距离~\hfill(\quad).
-%        \begin{tabular}{*{2}{@{}p{.5\textwidth}}}
-%            A. 无题小值;&B. 无题大值;\\C. 有题小值,  最小值为1;&
-%            D. 有是大值,  最大值为 $\sqrt{5}$.
-%        \end{tabular}
+        已知抛物线 $y^2=4 x$~ 的焦点为 $F, $~ 过直线设点 $P(x_0, y_0)$~ 在直线 $y=x+2$~ 上任一点引抛物线的两条切线, 切点~$A,B$, 则~$F$~到直线 $AB$~的距离~\hfill(\quad).\smallskip
         \chf{无题小值}{无题大值}{有最小值1}{有最大值$\sqrt{5}$}
     \end{exa}
     \begin{proof}[解]
@@ -378,8 +375,9 @@
     \end{proof}
 
     \textbf{评析}: 巴蜀中学的这道月考题主要考察直线与抛物线的位置关系,  以及点到直线的位置关系,  综合性比较强. 应用结论3将点到直线的距离转化成点到点的距离, 可以简化解题步骤,  降低解题难度.
+
 \section{有关中点弦的一般性结论}
-\subsection{结论4}
+\subsection{结论4}\newpage
     \begin{propt}\label{propt10}
         已知椭圆~$C:$~  $\frac{x^2}{a^2}+\frac{y^2}{b^2}=1(a>b>0)$, 直线 $\ell$~ 不过原点~$O$~且不平行于坐标轴, $\ell$~与~$C$~ 有两个交点~$A,B$,   线段~$AB$~的中点为~$M$, 则~$k_1\cdot k_{\infty}=-\frac{b^2}{a^2}$.
     \end{propt}
@@ -400,8 +398,7 @@
 ~$$~\frac{b^2}{a^2}=-\frac{y_{x}\left(y_{1}-y_{2}\right)}{x_{x}\left(x_1-x_2\right)}=-k_{a x} \cdot k_{1}~$$~
 所以
 ~$$~
-k_{0 N} \cdot k_{1}=-\frac{b^2}{a^2}
-~$$
+k_{0 N} \cdot k_{1}=-\frac{b^2}{a^2}\myback$$
 \end{proof}
 
     我们可以试着将性质10推广到双曲线中, 是否可以得到同样的结论.
@@ -410,22 +407,20 @@ k_{0 N} \cdot k_{1}=-\frac{b^2}{a^2}
 
     性质 12: 已知~$C: y^2 =2px$,  直线~$\ell$~不过原点且不平行于坐标轴,   $\ell$~ 与C 有两个交点$A, B$,  线段$AB$的中点为~$M(x_0, y_0)$,  则直线$OM$的斜率与$\ell$~的斜率的乘积为 $\frac{p}{x_0}$~
 ~$k_{l}\cdot k_{O M}=\frac{p}{x_0} $~
- 
-    \begin{proof}
-        设 $A(x_1, y_1),  B(x_2,y_2),  \ A,  B$~ 所在的方程为 $y=k x+b, $~ 代抛物线方程中得 
-        $$~y^2-\frac{2 p y}{k}+\frac{2 p b}{k}=0~$$~
-        $$\frac{y_{1}+y_{2}}{2}=\frac{p}{k}=y_0$$
-    故
-        $$~y_{i}^{2}-\frac{2 p y_{1}}{k}+\frac{2 p b}{k}=0~$$~
-        $$~y_{z}^{2}-\frac{2 p y_{2}}{k}+\frac{2 p b}{k}=0~$$~
-    又
-        $$~k_{\mathrm{OM}}=\frac{y_0}{x_0}~$$~
-    所以
-        $$k_{1} \cdot k_{\mathrm{ov}}=\frac{p}{x_0}$$
 
+    \begin{proof}
+        设 $A(x_1, y_1),  B(x_2,y_2),  \ A,  B$~ 所在的方程为 $y=k x+b, $~ 代抛物线方程中得
+        $$y^2-\frac{2 p y}{k}+\frac{2 p b}{k}=0,
+        \frac{y_{1}+y_{2}}{2}=\frac{p}{k}=y_0.$$
+    故
+        $$~y_{i}^{2}-\frac{2 p y_{1}}{k}+\frac{2 p b}{k}=0,y_{z}^{2}-\frac{2 p y_{2}}{k}+\frac{2 p b}{k}=0.$$
+    又
+        $$k_{\mathrm{OM}}=\frac{y_0}{x_0},$$
+    所以
+        $$k_{1} \cdot k_{\mathrm{ov}}=\frac{p}{x_0}.$$
     综上可以得到圆锥曲线有关中点弦的一般性结论.
     \end{proof}
-    
+
     结论 4: 已知圓锥曲线C,  直线~$\ell$~不过原点O且不平行于坐标轴,  $\ell$~ 与C 有两个交点~$A,  B$~ 线段 $A B$~ 的中点为 $M(x_0, y_0),  k_{1} \cdot$~ $k_{\mathrm{OM}}=-\frac{b^2}{a^2}$~(椭圆),
  $k_{1} k_{\mathrm{OM}}=\frac{b^2}{a^2} $~(双曲线)
 ~$k_{1} \cdot k_{OM}=\frac{p}{x_0}$~ (抛物线).
@@ -433,14 +428,13 @@ k_{0 N} \cdot k_{1}=-\frac{b^2}{a^2}
 \subsection{结论4应用}
     \begin{exa}[2018年新课标全国卷Ⅲ理数第20题]
         已知斜率为~$k$~直线 $\ell$~与朗園~$C: \frac{x^2}{4}+\frac{y^2}{3}=1$~ 交于 $A,  B$~ 两点,  线段~$A B$~ 的中点为 $M(1, m)m>0$.
-        
-        (1) 证明:  $k<-\frac{1}{2}$~
-        \par (2) 略.
+
+        $(1)$ 证明:  $k<-\frac{1}{2}$;
+        \par $(2)$ 略.
     \end{exa}
     \begin{proof}由结论4得
  $k \cdot k_{\mathrm{OM}}=-\frac{b^2}{a^2}=-\frac{3}{4}$~
- 即- $\frac{3}{4 m}=k, $~ 因为 $M$~ 在椭圆内 ,   得 $0<m<\frac{3}{2}$~
-\par 所以 $0<-\frac{3}{4 k}<\frac{3}{2}, $~ 解得 $k<-\frac{1}{2}$.
+ 即- $\frac{3}{4 m}=k, $~ 因为 $M$~在椭圆内, 得$0<m<\frac{3}{2}$, 所以 $0<-\frac{3}{4 k}<\frac32$, 解得$k<-\frac12$.
 \end{proof}
 
     评析: 本题主要考察曲线方程,  中点弦以及取值范围有关的知识,  体现数学知识之间的内在联系. 而在本题中用结论4,
@@ -467,8 +461,13 @@ k_{0 N} \cdot k_{1}=-\frac{b^2}{a^2}
 \section*{\centering致\quad谢}
 \addcontentsline{toc}{section}{\protect致谢}
 感谢!
+
+    \bigskip
+    \mbox{}\hfill
+    \begin{tabular}{cp{1\ccwd}}
+        \authorname&\\
+        \number\year\,年\,\number\month\,月
+    \end{tabular}
 \thispagestyle{plain}
 \end{CJK*}
 \end{document}
-
-
