@@ -1,0 +1,63 @@
+\documentclass[a4paper,12pt,twoside]{ctexart}
+%\usepackage{def/format}  %正式版
+\usepackage[anon]{def/format}  %匿名版
+
+%%%%%%%%%%%%% 以下内容按需要进行修改
+\def\mytitlenum{16}           %单行题目长度
+\def\school{数学与统计学学院} %院系名字
+\def\major{数\!学\!与\!应\!用\!数\!学(师\!范)} %专业
+\def\grade{\the\numexpr\year-4\,级} %年级, 正常4年毕业生不用修改年级
+\def\authorname{张三} %作者
+\def\xuehao{2015123456} %学号
+\def\teacher{张三丰 教授}%指导教师, 职称
+\def\title{浅谈我们的我们的大学} % 文章题目
+%%%%%%%%%%%%%% 封面信息结束
+%%%%%%%%%%%%%%% 摘要和关键词
+%中文摘要
+\def\myabstract{摘要的字数控制在400个汉字左右. 尽量不要出现公式参考文献. 介绍本文的主要工作以及创新点.}
+%中文关键词
+\def\mykeywords{关键词1; 关键词2; 关键词3}
+%英文题目
+\def\mytitle{Discuss}
+%英文摘要
+\def\myabstracten{For. }
+%英文关键词
+\def\mykeywordsen{keywords1; keywords2; keywords3}
+\begin{document}
+%\def\refname{\songti 参考文献}
+%\begin{CJK*}{GBK}{song}
+%%%%%%%% 所有自定义的命令请放到下面文件中
+\input{def/simplify.def} %加载简化命令
+%%%%%%%% 自定义命令加载完毕
+%以下内容不要做修改
+%以下内容不要做修改
+%以下内容不要做修改
+\input{def/firstpage} %封面
+\input{def/copyright} %版权页
+\newpage %目录新起一页
+\pagestyle{empty}
+\tableofcontents      %目录
+\newpage %摘要新起一页
+\input{def/abstract}  %摘要
+%以上内容不要做修改
+%以上内容不要做修改
+%以上内容不要做修改
+
+%正文开始
+%正文开始
+\newpage
+\input{doc/introduction}
+\input{doc/section2}
+\input{doc/section3}
+\input{doc/section4}
+\input{doc/section5}
+%正文结束
+%%%附录开始
+\newpage
+\input{doc/references}  %参考文献
+\newpage
+\input{doc/acknowledge} %致谢
+\newpage
+\input{doc/aprodix}     %附录
+%\end{CJK*}
+\end{document}

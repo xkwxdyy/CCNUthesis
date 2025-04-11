@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\ProvidesExplClass {CCNUthesis} {2025-02-08} {v1.4.5}
+\ProvidesExplClass {CCNUthesis} {2025-04-11} {v1.4.6}
   {Thesis template for Central China Normal University}
 \RequirePackage { l3keys2e, xparse }
 
@@ -217,6 +217,7 @@
   {
     type .choice:,
     type .value_required:n = true,
+    % 1:博士，2:硕士，3:本科
     type .choices:nn =
       { doctor, master, bachelor }
       { \int_set_eq:NN \g__ccnu_thesis_type_int \l_keys_choice_int },
@@ -2058,23 +2059,26 @@
 
 \cs_gset_protected:Npn \appendix
   {
-    \newpage
     \int_compare:nNnTF { \g__ccnu_thesis_type_int } = {3}
       {
-        \keys_set:nn { ctex }
-          {
-            punct = quanjiao,
-            chapter / indent = 0pt,
-            section / indent = 0pt,
-            subsection / indent = 0pt
-          }
+        % 本科
+        \__ccnu_appendix_bachelor:
       }
       {
-        \keys_set:nn { ctex }
-          {
-            punct = quanjiao,
-            chapter / indent = 0pt
-          }
+        % 硕博
+        \__ccnu_appendix_master_doctor:
+      }
+  }
+
+\cs_gset_protected:Npn \__ccnu_appendix_bachelor:
+  {
+    \newpage
+    \keys_set:nn { ctex }
+      {
+        punct = quanjiao,
+        chapter / indent = 0pt,
+        section / indent = 0pt,
+        subsection / indent = 0pt
       }
     % 调整附录的目录层级为 1 层
     \addtocontents { toc } { \protect \value{tocdepth} = 0 }
@@ -2092,17 +2096,69 @@
     % ctexbook.cls, line 1077
     \CTEX@save@appendix
     \gdef \CTEX@prechapter { \CTEX@preappendix }
-    \int_compare:nNnTF { \g__ccnu_appendix_index_int } = {1}
+    \gdef \CTEX@postchapter { \CTEX@postappendix }
+    \gdef \CTEX@chapter@numbering { \CTEX@appendix@numbering }
+    \int_case:nnF { \g__ccnu_appendix_index_int }
       {
-        \gdef \CTEX@thechapter { \@gobble \CTEX@appendix@number }
+        {0} 
+          {
+            \chapter* {附 \quad 录}
+            \int_gdecr:N \g__ccnu_appendix_index_aux_int
+            \addcontentsline{toc}{chapter}{\normalfont 附录}
+          }
+        {1} 
+          {
+            \gdef \CTEX@thechapter { \@gobble \CTEX@appendix@number }
+          }
       }
       {
         \gdef \CTEX@thechapter { \CTEX@appendix@number }
       }
+  }
+\cs_gset_protected:Npn \__ccnu_appendix_master_doctor:
+  {
+    \newpage
+    \keys_set:nn { ctex }
+      {
+        punct = quanjiao,
+        chapter / indent = 0pt,
+        appendixname = {附 \quad 录}
+      }
+    % 调整附录的目录层级为 1 层
+    \addtocontents { toc } { \protect \value{tocdepth} = 0 }
+    \RenewDocumentCommand{ \chapter }{ s o m }
+      {
+        \IfBooleanTF {##1}
+          { \__ccnu_chapter_star:n {##3} }
+          {
+            \IfNoValueTF {##2}
+              { \__cchu_chapter:nn {##3} }
+              { \__cchu_chapter:nn [##2] {##3} }
+          }
+        \int_gincr:N \g__ccnu_appendix_index_aux_int
+      }
+    % ctexbook.cls, line 1077
+    \CTEX@save@appendix
+    \gdef \CTEX@prechapter { \CTEX@preappendix }
     \gdef \CTEX@postchapter { \CTEX@postappendix }
     \gdef \CTEX@chapter@numbering { \CTEX@appendix@numbering }
+    \int_case:nnF { \g__ccnu_appendix_index_int }
+      {
+        {0} 
+          {
+            \chapter* {附 \quad 录}
+            \int_gdecr:N \g__ccnu_appendix_index_aux_int
+            \addcontentsline{toc}{chapter}{附 \quad 录}
+          }
+        {1} 
+          {
+            \gdef \CTEX@thechapter { \@gobble \CTEX@appendix@number }
+          }
+      }
+      {
+        \gdef \CTEX@thechapter { \CTEX@appendix@number }
+      }
   }
-
 \AtEndDocument
   {
     \iow_now:cx { @auxout }
