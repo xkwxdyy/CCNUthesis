@@ -39,32 +39,13 @@
   sortlocale   = zh__pinyin,
 }
 
-% 根据《通知》调整间距和缩进
-\setlength{\biblabelsep}{0.5em}
-\setlength{\bibitemindent}{0em} % bibitemindent表示一条文献中第一行相对后面各行的缩进
-\setlength{\bibhang}{1.2ex}
-\setlength{\bibparsep}{0em}
+% 根据《通知》调整文献表间距和缩进
+%\setlength{\biblabelsep}{0.5em}
+%\setlength{\bibitemindent}{0em} % bibitemindent表示一条文献中第一行相对后面各行的缩进
+%\setlength{\bibhang}{1.2ex}
+%\setlength{\bibparsep}{0em}
 
-%这里把\bibhang放外面设置的方式也有其优势
-%这里使用\bibhang+\labelnumberwidth来控制文献内容左边界与页边的间距
-%然后用\biblabelsep来设置标签域文献内容左边界的间距
-%gb7714-2015中则直接用\bibhang=\biblabelsep+\labelnumberwidth来控制文献内容左边界与页边的间距
-%这其实是两种控制方式，CCNU这里用下面重定义的方式
-\defbibenvironment{bibliography}
-  {\list
-     {\printtext[labelnumberwidth]{\arabic{refnumeric}}}
-     {\usecounter{refnumeric}%
-     \addtolength{\labelnumberwidth}{\biblabelextend}%
-     \setlength{\labelwidth}{\labelnumberwidth}%
-      \setlength{\labelsep}{\biblabelsep}%
-      \setlength{\leftmargin}{\bibhang}%
-      \addtolength{\leftmargin}{\labelnumberwidth}%
-      \setlength{\itemindent}{\bibitemindent}%
-      \setlength{\itemsep}{\bibitemsep}%
-      \setlength{\parsep}{\bibparsep}}%
-      \renewcommand*{\makelabel}[1]{\hss##1}}
-  {\endlist}
-  {\item}
+
 
 %==================================================
 % 定义一些标点为中文全角标点
@@ -101,8 +82,8 @@
 %为标注和文献表中标点格式，重设and本地化字符串
 %==================================================
 \DefineBibliographyStrings{english}{
-    and           = {\addcomma\space},
-    andcn         = {\gbpunctcomma},
+    and           = { and },%\addcomma\space
+    andcn         = {\gbpunctcomma},%\gbpunctcomma
     andothers     = {et al.},
     andotherscn   = {等},
     bytranslator  = {\addcomma\ 译},
@@ -151,6 +132,7 @@
   \bibstring{andincite}%
   \fi}
 \DeclareDelimFormat[bib,biblist]{finalnamedelim}{%
+  \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
   \edef\userfieldabcde{userd}%
   \ifcurrentname{translator}{\edef\userfieldabcde{usere}}{}%
   \ifcurrentname{editor}{\edef\userfieldabcde{userc}}{}%
@@ -236,24 +218,58 @@
 %
 %   调整期刊卷和期的格式
 %
-\renewbibmacro*{volume+number+eid}{%源来自standard.bbx
-\iftoggle{bbx:gbfieldstd}{%
-  \printfield{volume}%
-  \setunit*{\adddot}%
-  \printfield{number}%
-  \setunit{\addcomma\space}%
-  \printfield{eid}}{%
-  \printfield{volume}%
-  %\setunit*{\adddot}%去掉点号
-  %\printfield{number}%
-  \iffieldundef{number}{}{%
-  \iffieldequalstr{entrysubtype}{news}{\printtext{\mkbibparens{\printfield{number}}}}{%
-  \iffieldequalstr{userd}{chinese}{\printtext{\gbpunctparenl\printfield{number}\gbpunctparenr}}%
-  {\printtext{\mkbibparens{\printfield{number}}}}}%
-  }%增加一个圆括号
-  \iffieldundef{eid}{}{%
-  \setunit{\addcomma\space}%
-  \printfield{eid}}}}
+% 重新定义 volume+number+eid 宏，原代码来自 standard.bbx
+\renewbibmacro*{volume+number+eid}{%
+  % 检查是否启用了 bbx:gbfieldstd 开关
+  \iftoggle{bbx:gbfieldstd}{%
+    % 如果启用了 bbx:gbfieldstd 开关
+    % 打印卷号
+    \printfield{volume}%
+    % 设置单位为点号
+    \setunit*{\adddot}%
+    % 打印期号
+    \printfield{number}%
+    % 设置单位为逗号和空格
+    \setunit{\addcomma\space}%
+    % 打印电子标识符
+    \printfield{eid}%
+  }{%
+    % 如果未启用 bbx:gbfieldstd 开关
+    % 打印卷号
+    \printfield{volume}%
+    % 注释掉设置点号的代码，即去掉点号
+    %\setunit*{\adddot}%
+    % 注释掉直接打印期号的代码
+    %\printfield{number}%
+    % 检查期号字段是否为空
+    \iffieldundef{number}{}{%
+      % 如果期号字段不为空
+      % 检查条目子类型是否为 "news"
+      \iffieldequalstr{entrysubtype}{news}{%
+        % 如果条目子类型为 "news"，将期号用圆括号包裹后打印
+        \printtext{\mkbibparens{\printfield{number}}}%
+      }{%
+        % 如果条目子类型不为 "news"
+        % 检查 userd 字段是否为 "chinese"
+        \iffieldequalstr{userd}{chinese}{%
+          % 如果 userd 字段为 "chinese"，使用自定义的括号样式包裹期号并打印
+          \printtext{\gbpunctparenl\printfield{number}\gbpunctparenr}%
+        }{%
+          % 如果 userd 字段不为 "chinese"，将期号用圆括号包裹后打印
+          \printtext{\mkbibparens{\printfield{number}}}%
+        }%
+      }%
+    }% 增加一个圆括号
+    % 检查电子标识符字段是否为空
+    \iffieldundef{eid}{}{%
+      % 如果电子标识符字段不为空
+      % 设置单位为逗号和空格
+      \setunit{\addcomma\space}%
+      % 打印电子标识符
+      \printfield{eid}%
+    }%
+  }%
+}
 
 
 %   新增一个样式用于输出连续出版物的地址，单位，时间，
