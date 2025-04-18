@@ -4487,13 +4487,26 @@
     % 把 Title 写进目录
     \addcontentsline { toc } { chapter }
       { \normalfont Title }
-    \group_begin:
-    \centering
-    \bfseries
-    Title:
-    \l__ccnu_info_title_en_tl
-    \par
-    \group_end:
+    \bool_if:NTF \g__ccnu_cover_word_version_bool
+      {
+        % 教务处居中
+        \group_begin:
+        \centering
+        \bfseries
+        Title:
+        \l__ccnu_info_title_en_tl
+        \par
+        \group_end:
+      }
+      {
+        \group_begin:
+        \par
+        \bfseries
+        Title:
+        \l__ccnu_info_title_en_tl
+        \par
+        \group_end:
+      }
     % \medskip
     \phantomsection
     \textbf { \c__ccnu_name_abstract_en_tl : }
