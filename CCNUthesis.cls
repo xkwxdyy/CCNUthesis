@@ -4781,7 +4781,7 @@
     \tl_if_in:NnT \l__ccnu_biblatex_bibstyle_tl { gb7714-CCNU }
       {
         \clist_put_right:Nn \l__ccnu_biblatex_options_clist
-          {  CCNUpunctcn  = false }
+          { CCNUpunctcn  = true }
       }
     \exp_args:NV \PassOptionsToPackage \l__ccnu_biblatex_options_clist
       { biblatex }
