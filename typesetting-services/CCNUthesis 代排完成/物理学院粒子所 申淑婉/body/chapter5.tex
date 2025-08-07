@@ -1,0 +1,249 @@
+% !TeX root = ../main.tex
+
+%------------------------------- 5
+\chapter{双喷注的压低和关联}
+
+  在实验中，双喷注产生是强子碰撞里占主导地位的QCD过程，并且受到基础背景的影响较小，它们在喷注物理中展现出了独特的优势。在真空中，部分子簇射效应和高阶QCD过程可能会破坏终态双喷注的对称性，导致背对背方位角的偏转以及领头和次领头喷注之间横向动量的不相等。
+	在~\ref{sec:shell}节介绍过重夸克质量很大。由于重夸克被预期不会完全热化，因此在重离子碰撞中它们携带着与介质相互作用的历史信息。
+
+在Pb和Xe核之间核子数量或核半径的减少可能通过降低整体能量密度和硬散射部分子在介质中穿越的路径长度来影响喷注淬火的程度。
+不同碰撞体系中对双喷注的测量应进一步限制路径长度、能量密度和涨落对喷注淬火的影响。
+
+	% From Xe-Xe 2023
+	近期，ATLAS合作组在XeXe碰撞中$\sqrt{s}=5.44$~TeV下，对双喷注的动量不平衡$x_J$做了测量~\parencite{ATLAS:2023xzy}。
+	然而，目前对这一理论研究还不够充分。由于Xe核的半径较铅核小，研究不同碰撞系统中双喷注产生将深化我们对喷注淬火效应以及系统尺寸依赖性的理解~\parencite{ATLAS:2017xfa,ATLAS:2022zbu}。
+	由于“死角效应”，质量较大的重夸克损失的能量比轻夸克的少~\parencite{Dokshitzer:2001zm,Armesto:2003jh,Djordjevic:2003qk}。 %ssw
+	因此通过在高能核碰撞中比较轻味（如$c\bar{c}$）和重味（如$b\bar{b}$）的双喷注来探索介质修正对双喷注衡$x_J$的质量依赖性，就显得非常有必要。
+
+\iffalse
+%------------------------------- 
+\section{高能重离子碰撞中的双喷注的产生}
+\subsection{三重微分散射截面}
+	在本节中，我们在LHC实验的能量下使用~\ref{sec:lbt}小结所介绍的线性玻尔兹曼输运模型来研究双喷注在热密 QGP 介质中喷注的传播，以探究在高能重离子碰撞中的压低效应。我们同时关注冷核物质效应对末态的热核物质效应的影响。其中热密介质的演化是通过3+1维相对论流体动力学模型来描述的。
+
+	\hspace*{\fill}
+	\begin{figure}[htbp]
+	\centering
+	\hspace{-0.5cm}\includegraphics[width=2.8in]{ybys}
+	\caption{在$y*$和$y_b$运动学平面上，对双喷注事件拓扑的说明~\parencite{CMS:2017jfq}。}
+	\label{fig:ybys}
+	\end{figure}
+
+% 根据双喷注的动量增强yb，双喷注系统可以被分类为同侧或异侧喷注事件，从而揭示夸克动力学的一些特征
+	\hspace*{\fill}
+	\begin{figure}[htbp]
+	\centering
+	\hspace{-0.5cm}\includegraphics[width=2.9in]{3_0}
+	\caption{在$y* \in [0,1 ]$和$y_b \in [0,1 ]$区间上，冷核物质效应对热核物质效应的影响。}
+	\label{fig:3_0}
+	\end{figure}
+\fi
+
+%-------------------------------
+%------------------------------- 5.1
+\section{双喷注的动量不对称性}
+
+\subsection{$pp$碰撞中双喷注的动量不对称性}
+
+	由动量不平衡量$x_J$的表达式\label{equ:x_J}可知，
+	$x_J$越大，则表示双喷注间越平衡。它可以通过介质内的相互作用而进一步变化，并对喷注淬火的路径长度依赖性~\parencite{Qin:2010mn}和喷注与介质相互作用的逐喷注波动性~\parencite{Milhano:2015mng}表现出不同的敏感性。
+	ATLAS合作组~\parencite{ATLAS:2010isq,ATLAS:2017xfa,ATLAS:2022zbu}和CMS合作组~\parencite{CMS:2012ulu,CMS:2018dqf}观察到在PbPb碰撞相对于$pp$碰撞中，双喷注的$x_J$分布更不平衡。
+	
+	本章的工作基于对双喷注事件中横动量$p_T$最高的喷注（领头喷注）和横动量$p_T$第二高的喷注（次领头喷注）之间的关联性做出研究。
+	我们利用POWHEG-BOX-V2程序~\parencite{Alioli:2010xa,Frixione:2007vw,Alioli:2010xd}来产生QCD双喷注次领头阶的矩阵元~\parencite{Nason:2004rx}，
+	随后用PYTHIA 8.309~\parencite{Bierlich:2022pfr}模拟部分子簇射来产生$pp$事件。
+	在计算中用到了CT18NLO部分子分布函数~\parencite{Hou:2019qau}。
+	在FastJet 程序包~\parencite{Cacciari:2011ma}中使用到了anti$-k_T$的喷注重建算法以及$R=0.4$的喷注半径参数。
+	双喷注的选取是事件中横动量$p_T$最高的两个喷注。
+	参照实验参数，选取领头喷注横的横动量 $p_{T,1} \l 100$ GeV，次领头喷注横动量 $p_{T,2} > 32$ GeV，而且两个喷注都需要在快速区域 $|y|<2.1$ 内。次领头喷注需要在方位角上与领头喷注相反，条件是 $\Delta \phi = |\phi_1 - \phi_2| < 7\pi/8$。
+
+	\hspace*{\fill}
+\begin{figure}[htbp]
+	\centering
+	\hspace{-0.5cm}
+	\includegraphics[width=4.6in]{pp5020}
+	\caption{在 $\sqrt{s}=5.02$~TeV 能量，从100 GeV 到200 GeV 分为6个不同$p_{T,1}$区间的 $p-p$ 碰撞中，以$x_J$为变量做归一化的双喷注产额的分布图。其中6个不同的$p_{T,1}$区间分别对应6个面板。折线是理论计算POWHEG$+$PYTHIA8的结果，并与ATLAS实验进行了对比~\parencite{ATLAS:2022zbu}。图中含点的块状为实验数据。}
+	\label{fig:pp5020}
+\end{figure}
+
+	我们计算了$pp$碰撞中的$x_J$的归一化分布，其由双喷注的数目（$N_{pair}$）进行归一化：
+\begin{equation}
+	\frac{1}{N_{pair}} \frac{\text{d}N_{pair}}{\text{d}x_J}
+\end{equation}
+	即由每对所归一化的动量不平衡的分布（per-pair normalized momentum-imbalance distribution）。
+	目前实验上的$pp$碰撞的了$x_J$分布没有 $\sqrt{s}=5.44$~TeV 的数据，但是有 $\sqrt{s}=5.02$~TeV 能量的数据，后者由ATLAS~\parencite{ATLAS:2022zbu}实验提供。
+	如图~\ref{pp5020}所示，我们计算的理论结果与ATLAS实验数据进行了对比。
+	可以发现，在与实验数据相应的6个不同的$p_{T,1}$区间内，由POWHEG+PYTHIA 8计算的$x_J$的分布在小的$x_J$值可以同符合较好除了$x_J$值接近1处的分布，理论计算偏高。
+	同时，$x_J$分布的峰值在$x_J \simeq 1$，这说明了在$pp$碰撞中，平衡的双喷注是最常见的配置。
+
+\subsection{XeXe碰撞中双喷注的动量不对称性}
+
+	笔者在~\ref{sec:shell}节中介绍的SHELL模型模拟轻味和重味双喷注的介质演化。
+	我们对于XeXe碰撞的动量不对称性的研究即使用了此模型来模拟双喷注在介质中的演化，对QGP介质的流体动力学时空演化的模拟使用了CLVisc程序~\parencite{Pang:2016igs,Pang:2018zzo}。
+	如图~\ref{fig:fig_3_multi}，我们计算了XeXe碰撞中$\sqrt{s}=5.44$~TeV 能量的双喷注$x_J$分布，结果分为三个不同的$ p_{T,1}$区间100 $ < p_{T,1} < $ 126 GeV，126  $ < p_{T,1} < $  158 GeV和158  $ < p_{T,1} < $ 199 GeV以及四个不同的对心度区间$0-10\%$，$10-20\%$，$20-40\%$和$40-80\%$。理论计算结果用红色折线表示，而实验数据用带点的误差棒表示。SHELL模型对这四个中心度区间和三个$p_{T,1}$ 区间的所有ATLAS数据都提供了良好的描述。
+	可以观察到，在ATLAS实验的每个对心度区间，较高的$ p_{T,1}$区间相对于较低的$ p_{T,1}$区间的结果来说，更平衡的双喷注的比例更高。这种情况除了最中心碰撞的结果，其中ATLAS数据在三个不同的$ p_{T,1}$区间给出了几乎相同的$x_J$分布。
+
+	\hspace*{\fill}
+\begin{figure}[htbp]
+	\centering
+	\hspace{-0.5cm}
+	\includegraphics[width=5.8in]{fig_3a_multi}
+	\includegraphics[width=5.8in]{fig_3b_multi}
+	\includegraphics[width=5.8in]{fig_3c_multi}
+	\caption{在 $\sqrt{s}=5.44$~TeV 能量的Xe+Xe 碰撞中，4个不同的中心度区间和3个不同领头喷注 $p_{T,1}$ 的区间中计算的的归一化$x_J$分布，同时与ATLAS实验进行了对比。图中每行分别对应100 $ < p_{T,1} < $ 126 GeV（上），126  $ < p_{T,1} < $  158 GeV（中）和158  $ < p_{T,1} < $ 199 GeV（下）3个不同的$ < p_{T,1} < $ 区间，每列分别对应$0-10\%$，$10-20\%$，$20-40\%$和$40-80\%$ 4个不同的中心度区间。其中，ATLAS的统计误差由绿色的误差棒表示，SHELL理论计算用红色折线表示。}
+	\label{fig:fig_3_multi}
+\end{figure}
+
+	为了更清晰的比较以上三个不同的$p_{T,1}$ 区间和四个不同的对心度区间，我们将图~\ref{fig:fig_3_multi}的每行分别合并，同时额外加入了$pp$碰撞的相应结果，如图~\ref{fig:fig_3_comb_multi1}所示。
+	此外，还计算了XeXe碰撞与pp碰撞的分布之比，如图~\ref{fig:fig_3_comb_multi2}所示。
+	从图中可以发现，XeXe碰撞的所有$x_J$分布相对于$pp$碰撞的结果，在小的$x_J$值处都为增强，而在小的$x_J$值处都为压低。
+	此外，在最中心碰撞（$0-10\%$）和最边缘碰撞（$40-80\%$）中，$x_J$分布的形状存在着显著差异。对于边缘碰撞，最常见的是平衡的双喷注；在中心碰撞中，不平衡双喷注的比例与平衡的双喷注的比例相同或更高。也就是说，随着对心度的提高（从边缘碰撞到中心碰撞），双喷注变得更加不平衡。这一现象同ATLAS在能量$\sqrt{s}=2.76$~TeV~\parencite{ATLAS:2017xfa}和$\sqrt{s}=5.02$~TeV~\parencite{ATLAS:2022zbu}下的PbPb碰撞的结果相一致。
+	平衡双喷注的压低可以与喷注淬火效应相关联，例如，介质中两个喷注的路径长度不相等，双喷注由于穿过演化中介质中路径长度不等而预计会经历不对称的能量损失，这是由重叠核团的几何形状和喷注轨迹在演化介质中的相对取向所导致的~\parencite{Qin:2010mn}，以及能量损失过程中的波动~\parencite{Milhano:2015mng}。此外，对于中心碰撞，较高 $p_{T,1}$ 区域的压低比例略低于较低的 $p_{T,1}$ 区域。
+	同时也可以发现，对所有的中心度区间，随着领头喷注横向动量$p_{T,1}$ 范围的增加，$x_J$的分布变得更集中。
+
+\hspace*{\fill}
+	\begin{figure}[htbp]
+		\centering
+		\hspace{-0.5cm}
+		\includegraphics[width=5.8in]{fig_3_comb_multi1}
+		\caption{对于图~\ref{fig:fig_3_multi}的结果，分别进行每行合并，用不同形状和颜色的虚线表示。此外，将$pp$碰撞的相应结果也额外加了进去，用黑色实线表示。其中左、中和右图分别对应不同3个不同的 $p_{T,1}$区间；每个图又包含不同的4个不同的中心度结果。}
+		\label{fig:fig_3_comb_multi1}
+	\end{figure}	
+
+\hspace*{\fill}
+	\begin{figure}[htbp]
+		\centering
+		\hspace{-0.5cm}
+		\includegraphics[width=5.8in]{fig_3_comb_multi2}
+		\caption{对于图~\ref{fig:fig_3_comb_multi1}里的结果，对每个中心度的区间进行处理：将Xe+Xe的结果与$pp$的结果相除得到此图纵坐标轴结果}
+		\label{fig:fig_3_comb_multi2}
+	\end{figure}
+	
+%----------------------------------------------------------------------------------------  <x_J>
+
+	%我们以$100 < p_{T,1} < 126 $GeV区间和$126 < p_{T,1} < 158 $GeV区间为例进行接下来研究。
+% gg
+	介质修正的双喷注动量平衡的味道依赖性也是重离子碰撞中的一个有趣主题。由于不同的色因子（对于胶子，$C_A = 3$；对于夸克，$C_F = 4/3$），预计胶子引发的喷注在穿过热密的核物质时将损失比夸克引发的喷注更多的能量，而“死角效应”也导致重夸克的能量损失比轻夸克更小~\parencite{Gyulassy:2003mc,Wang:1998bha,Dokshitzer:2001zm,Zhang:2003wk,Armesto:2003jh,Djordjevic:2003qk}。
+	在介质中，这些差异便会影响双喷注的不对称性。
+	我们选择一个最佳步骤，即使用红外安全和共线（infrared and collinear，简称IRC）安全的喷注算法来确定核-核碰撞中所选喷注的味道。
+	近年来，基于红外安全和共线安全喷注算法的四种方法已经被开发出来，用于确定最终状态重建喷注中底层硬部分子的味道，分别称为“flavor-$k_\text{T}$”~\parencite{Banfi:2006hf}、“flavor anti-$k_\text{T}$”~\parencite{Czakon:2022wam}、“flavor-dressing”~\parencite{Gauld:2022lem}和“Interleaved Flavor Neutralisation (IFN)”~\parencite{Caola:2023wpj}。
+	在本章的研究中，我们采用IFN算法来确定在质子-质子和核-核碰撞中，重建喷注的部分子级别上的胶子喷注、轻夸克喷注和重味喷注的味道。需要注意的是，由于在聚类序列的每个阶段都可以获取喷注的味道信息，IFN算法能够为整个喷注以及其子结构提供一致的味道识别。
+	
+	通过利用IFN算法，可以将非遍举双喷注事件分为三类：胶子-胶子（$gg$）双喷注、夸克-胶子（$qg$）双喷注和夸克-夸克（$qq$）双喷注。
+	
+	
+	通过对夸克-胶子双喷注中夸克主导或胶子主导进行区分，我们可以进一步对其进行分类，分别标记为$q_1g_2$双喷注和$g_1q_2$双喷注，其中下角标“1”表示领头喷注，而下角标“2”表示次领头喷注。因此，$qg$双喷注样本是$q_1g_2$双喷注和$g_1q_2$样本的总和。接下来，笔者将介绍对夸克和胶子之间喷注的部分子味道对介质中双喷注$x_J$分布的影响，以测试喷注-介质相互作用的味道依赖性的研究。
+	特别地，通过区分领头喷注的味道，夸克-胶子双喷注可以进一步分为$q_1g_2$和$g_1q_2$两类，分别表示夸克喷注作为领头喷注和胶子喷注作为领头喷注的夸克-胶子双喷注。
+	上述计算得到的非遍举双喷注的$x_J$分布结果为我们进一步研究Xe+Xe碰撞中这些子集的$x_J$分布提供了良好的基准。我们计算了它们的归一化$x_J$分布，如图~\ref{fig:xJ_gg_3}所示。在图中，我们可以观察到p+p碰撞中这些子集的平衡双喷注的不同比例。这可以归因于夸克和胶子在真空中具有不同的碎裂模式。
+	其中在左图中，夸克-胶子双喷注在的 $x_J \simeq 1$ 处通过XeXe与pp相比具有最大的压低率，而胶子-胶子和夸克-夸克双喷注在$x_J \simeq 1$处几乎具有相同的压低率，表明相对于其他两种类型的双喷注，更平衡的夸克-胶子双喷注被压低得更多。这可以解释为非对称淬火的夸克-胶子双喷注相对于对称淬火的胶子-胶子和夸克-夸克双喷注对动量平衡更为敏感，这是能量损失效应的结果。为了证明这一点，我们在图~\ref{fig:xJ_gg_3}的右列展示为$q_1g_2$双喷注和$g_1q_2$双喷注的$x_J$分布。
+	我们注意到，被淬火的$q_1g_2$双喷注和$g_1q_2$双喷注的$x_J$都向小区域移动，导致在小的的$x_J$处增强，在大的的$x_J$处压低。但是，在$x_J \simeq 1$处，平衡的$g_1q_2$双喷注的压低率比$q_1g_2$双喷注的压低率要弱得多，从XeXe相对于pp的值可以看出。这是因为在相同的平均喷注动量下，夸克喷注的淬火程度比胶子喷注要小，因此次要喷注在平衡的$g_1q_2$双喷注中淬火程度也比主导喷注要小。由于非对称的味道引起的这种非对称淬火效应会部分抵消由不等路径长度和喷注-介质相互作用的波动引起的不对称性。而$q_1g_2$双喷注的情况与$g_1q_2$双喷注相反。因此，在 $x_J \simeq 1$处，XeXe相对于pp中的$g_1q_2$双喷注和$q_1g_2$双喷注之间存在较大差距。$q_1g_2$双喷注和$g_1q_2$双喷注之间的这种偏差可以用来测试能量损失的味道依赖性。
+		\hspace*{\fill}
+	\begin{figure}[htbp]
+		\centering
+		\hspace{-0.5cm}
+		\includegraphics[width=4in]{xJ_gg_3}
+		\caption{计算了p+p碰撞和Xe+Xe 0-10\%碰撞中以下情况的归一化 $x_J$ 分布：
+			左侧：包含喷注、胶子-胶子双喷注、夸克-胶子双喷注和夸克-夸克双喷注
+			右侧：夸克-胶子双喷注中的夸克主导和胶子主导。右列中夸克-胶子双喷注的 $x_J$ 分布（虚线绿色线）与左列相同。}
+		\label{fig:xJ_gg_3}
+	\end{figure}
+	
+	以 $x_J$ 为函数计算包含喷注的各种子集双喷注的比例，对于进一步理解味道在喷注-介质相互作用中的作用将非常有用。我们将关注图~\ref{fig:xJ_gg_4}的底部面板，该面板显示了从p+p碰撞到Xe+Xe碰撞的比例变化。其中在左下图中，相对于p+p碰撞，Xe+Xe $0-10\%$碰撞中夸克-夸克双喷注的比例在每个 $x_J$ 区间都在增加，而胶子-胶子双喷注的比例则都在减少。
+	此外，夸克-胶子双喷注的比例在小的 $x_J$ 处增强，在大的$x_J$处压低。平均而言，胶子在穿过QGP介质时会失去比夸克更多的能量。因此，在选定的$p_{T,1}$区间内，夸克-夸克双喷注比胶子-胶子双喷注更容易存活，而平衡的夸克-胶子双喷注变得不平衡。对于更详细的调查，从右下图中我们发现，$g_1q_2$双喷注的比例在每个 $x_J$ 区间也纯粹减少。由于$g_1q_2$双喷注在p+p碰撞中的比例分布相对较低，所以这种减少并不像胶子-胶子双喷注那样明显。但是，在Xe+Xe 0-10\%碰撞中，$q_1g_2$双喷注的比例在小的$x_J$处得到了大幅增强，在大的$x_J$处略有压低。
+	在$x_J$分布的重整化过程中，小$x_J$处的比例增加会增加平衡双喷注的压低率。由于夸克-胶子双喷注的比例是$q_1g_2$和$g_1q_2$双喷注之和，$q_1g_2$双喷注在小 $x_J$ 处的比例增强会受到$g_1q_2$双喷注在该处的抑制影响。但是，夸克-胶子双喷注的总比例仍然呈下降曲线。与胶子-胶子和夸克-夸克双喷注略微上升的曲线相比，平衡的夸克-胶子双喷注 在$x_J$ 分布的重整化过程中会受到更强的压低，这在图~\ref{fig:xJ_gg_3}的左下图中显示出来。
+			\hspace*{\fill}
+	\begin{figure}[htbp]
+		\centering
+		\hspace{-0.5cm}
+		\includegraphics[width=4in]{xJ_gg_4}
+		\caption{计算了在p+p碰撞和Xe+Xe 0-10\%碰撞中，作为xJ函数的包含喷注中子集双喷注的比例：
+			左侧：胶子-胶子双喷注、夸克-胶子双喷注和夸克-夸克双喷注
+			右侧：夸克-胶子双喷注中的夸克主导和胶子主导。右列中夸克-胶子双喷注的比例分布（虚线绿色线）与左列相同。}
+		\label{fig:xJ_gg_4}
+	\end{figure}
+
+	为了比较非遍举双喷注和$c\bar{c}$双喷注和$b\bar{b}$双喷注之间介质修正效应的差异，引入$x_J$的平均值$\left\langle x_{\mathrm{J}}\right\rangle$
+\begin{equation}
+		\left\langle x_{\mathrm{J}}\right\rangle \equiv \int \frac{1}{N_{\text {pair }}} \frac{d N_{\text {pair }}}{d x_{\mathrm{J}}} x_{\mathrm{J}} d x_{\mathrm{J}}.
+\end{equation}	
+	同时，为了以$pp$碰撞为参照，引入其与AA碰撞之间的$\left\langle x_{\mathrm{J}}\right\rangle$的相应差异，定义为：
+	\begin{equation}
+		\Delta\left\langle x_{\mathrm{J}}\right\rangle=\left\langle x_{\mathrm{J}}\right\rangle_{\mathrm{pp}}-\left\langle x_{\mathrm{J}}\right\rangle_{\mathrm{AA}}
+		\end{equation}
+	图~\ref{fig:xJ_gg_5}展示了在Xe+Xe碰撞中，非遍举$c\bar{c}，b\bar{b}$，夸克-胶子、于$g_1q_2$双喷注和$q_1g_2$双喷注的$\left\langle x_{\mathrm{J}}\right\rangle$和$\Delta\left\langle x_{\mathrm{J}}\right\rangle$分布随着碰撞的中心度的变化。其中$q_1g_2$双喷注的$\Delta\left\langle x_{\mathrm{J}}\right\rangle$分布是中$g_1q_2$双喷注的两倍。
+	这一特征为未来测试胶子和夸克的不同能量损失模式提供了良好的机会。
+			\hspace*{\fill}
+	\begin{figure}[htbp]
+		\centering
+		\hspace{-0.5cm}
+		\includegraphics[width=4in]{xJ_gg_5}
+		\caption{Xe+Xe碰撞中$\left\langle x_{\mathrm{J}}\right\rangle$和$\Delta\left\langle x_{\mathrm{J}}\right\rangle$分布的中心度依赖性。}
+		\label{fig:xJ_gg_5}
+	\end{figure}
+
+	\hspace*{\fill}
+\begin{figure}[htbp]
+	\centering
+	\hspace{-0.5cm}
+	\includegraphics[width=2.7in]{Xe_cent1}
+	\includegraphics[width=2.7in]{Xe_cent2}
+	\caption{XeXe碰撞中，左右两图对应两个不同的 $p_{T,1}$区间：$100 < p_{T,1} < 126 $GeV区间和$126 < p_{T,1} < 158 $GeV；其中每个图的上面板为$\left\langle x_{\mathrm{J}}\right\rangle$对中心度的依赖，下面板为$\Delta\left\langle x_{\mathrm{J}}\right\rangle$的分布；每个面板都有三跳线，分别对应不同的三种不同类型的双喷注：非遍举双喷注、$c\bar{c}$双喷注和$b\bar{b}$双喷注。}
+	\label{fig:Xe_cent}
+\end{figure}
+
+	我们详细计算了XeXe碰撞中，以中心度为变量，非遍举双喷注、$c\bar{c}$双喷注和$b\bar{b}$双喷注的$\left\langle x_{\mathrm{J}}\right\rangle$和$\Delta\left\langle x_{\mathrm{J}}\right\rangle$分布，分别展示在图~\ref{fig:Xe_cent}中。
+	对于每种类型的双喷注，随着碰撞事件的中心度增加，我们可以观察到$\Delta\left\langle x_{\mathrm{J}}\right\rangle$的显著增加。同时在中心碰撞中有一个弱的层次结构，即 非遍举过程$ > c\bar{c} >b\bar{b}$，这表明在这个运动学区域内，双喷注的能量损失具有弱的质量依赖性。
+	
+	\hspace*{\fill}
+\begin{figure}[htbp]
+	\centering
+	\vspace{-0.5cm}
+	\includegraphics[width=5.8in]{fig_7_muti1}
+	\vspace{-0.5cm}
+	\includegraphics[width=5.8in]{fig_7_muti2}
+	\caption{分别以$p_{T,1}$（第一排）和$p_{T,2}$（第二排）为变量的XeXe和PbPb碰撞的核修正因子的比值$\rho_{\mathrm{Xe,Pb}}$（红色折线）；计算是在相同的中心度区间进行的；结果也与ATLAS实验数据（带点的绿色误差棒）做了对比。}
+	\label{fig:fig_7_muti}
+\end{figure}
+	
+	为了定量表征XeXe碰撞和PbPb碰撞双喷注压低效应之间的差异，我们可以针对领头喷注使用如下定义的这两种碰撞的核修正因子的比值$\rho_{\mathrm{Xe,Pb(p_{T,1})}}$，记作：
+\begin{equation}
+	R_{\mathrm{AA}}\left(p_{\mathrm{T}, 1}\right)=\frac{1}{\left\langle T_{\mathrm{AA}}\right\rangle} \frac{\left.\frac{d \sigma_{\mathrm{AA}}^{\text {pair }}}{d p_{\mathrm{T}, 1}}\right|_{x_{\mathrm{J}}>0.32}}{\left.\frac{d \sigma_{p p}^{\text {pair }}}{d p_{\mathrm{T}, 1}}\right|_{x_{\mathrm{J}}>0.32}},
+\end{equation}
+
+\begin{subequations}
+	\begin{align}
+	R_{\rm AA}(p_{\rm T,1}) &= \frac{1}{\langle T_{\rm AA} \rangle}
+	\frac{\frac{d\sigma^{\rm pair}_{\rm AA}}{dp_{\rm T,1}} \Big \vert_{x_{\rm J} > 0.32}}{
+	\frac{d\sigma^{\rm pair}_{pp}}{dp_{\rm T,1}} \Big \vert _{x_{\rm J} > 0.32}}.\\
+		\rho_{\rm Xe,Pb}(p_{\rm T,1}) &= \frac{R_{\rm XeXe}(p_{\rm T,1})}{R_{\rm PbPb}(p_{\rm T,1})}
+	= \frac{\langle T_{\rm PbPb} \rangle}{\langle T_{\rm XeXe} \rangle}
+	\notag\\
+	&\times
+	\frac{
+	\frac{d\sigma^{\rm pair}_{pp}(\rm {5.02\ TeV})}{dp_{\rm T,1}} \Big \vert _{x_{\rm J} > 0.32}}{
+	\frac{d\sigma^{\rm pair}_{pp}(\rm {5.44\ TeV})}{dp_{\rm T,1}} \Big \vert _{x_{\rm J} > 0.32}
+	}
+	\frac{
+	\frac{d\sigma^{\rm pair}_{\rm XeXe}}{dp_{\rm T,1}} \Big \vert_{x_{\rm J} > 0.32}}{
+	\frac{d\sigma^{\rm pair}_{\rm PbPb}}{dp_{\rm T,1}} \Big \vert_{x_{\rm J} > 0.32}}.
+	\label{eq:rho_XePb}
+	\end{align}	
+\end{subequations}
+
+	相似的，对次领头喷注核修正因子的比值$\rho_{\mathrm{Xe,Pb(p_{T,2})}}$也可以由公式~\ref{rho_XePb}来定义。
+	我们计算了在XeXe碰撞和PbPb碰撞的相同中心度中的$\rho_{\mathrm{Xe,Pb(p_{T,1})}}$和$\rho_{\mathrm{Xe,Pb(p_{T,2})}}$分布，见图~\ref{fig:fig_7_muti}。
+	在每个中心度区间，$\rho_{\mathrm{Xe,Pb}}$的值普遍大于1。这个结果符合理论预期，由于氙核的半径小于铅核，因此在相同中心度区间内，XeXe碰撞中形成的QGP系统尺寸预计会小于PbPb碰撞。因此，在相同的中心度区间内，XeXe碰撞的事件活动性较PbPb碰撞低。当在相同的事件活动性区间内进行评估时，它们趋于1~\parencite{ATLAS:2023xzy}。
+
+
+%-------------------------------
+%------------------------------- 5.2
+\section{本章小结}
+
+	最后作出总结。	我们SHELL模型来模拟轻味和重味的双喷注在介质中的演化。
+	我们在不同的运动学区域内和四个不同中心度区间中系统地计算了XeXe碰撞（$\sqrt{s}=5.44$~TeV）中双喷注的归一化$x_J$分布。双喷注的初始$x_J$分布由POWHEG+PYTHIA8提供。通过SHELL模型来模拟通过热密介质的高能部分子。SHELL模型对所有ATLAS数据都给出了不错的描述。从边缘到中心的XeXe碰撞中，双喷注的不平衡性逐渐增加，这与先前在ATLAS的2.76 TeV和5.02 TeV的PbPb碰撞中$x_J$测量结果一致。
+	我们计算了双喷注的$\left\langle x_{\mathrm{J}}\right\rangle$和$\Delta\left\langle x_{\mathrm{J}}\right\rangle$随中心度的变化，
+	并进一步以非遍举（主要由轻味构成）、$c\bar{c}$和$b\bar{b}$的双喷注的$\Delta x_J$研究了质量效应，发现在Xe+Xe碰撞中，三种类型的双喷注在高$p_T$区域的能量损失具有较弱的质量依赖性。	
+	最后，我们计算了XeXe和PbPb碰撞之间的核修正因子的比值，并且与ATLAS实验符合较好。在每个中心度区间，$\rho_{\mathrm{Xe,Pb}}$的值普遍大于1。
+	
+
+

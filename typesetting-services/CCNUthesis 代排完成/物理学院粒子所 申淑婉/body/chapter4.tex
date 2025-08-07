@@ -1,0 +1,554 @@
+% !TeX root = ../main.tex
+
+%------------------------------- 4
+% 开 \begin{figure}[b] [t]
+
+
+%\chapter{冷核物质效应}
+\chapter{双喷注的三重微分散射截面和对质子-铅核碰撞的核修正的研究}
+\label{sec:triple}
+
+
+
+% From Old chapter 3
+质子-质子（$pp$）和质子-核（$p$A）碰撞是实验室中研究双喷注产生的重要碰撞过程。在这些碰撞中，两个高能喷注同时产生，并且在探测器中被观测到。
+LHC里 $p$A 碰撞中双喷注的产生具有丰富的产额，这在微扰QCD内得到了很好的研究~\parencite{Ellis:1992en,Ellis:1994dg,Nagy:2001fj,Nagy:2003tz,Gehrmann-DeRidder:2019ibf,Kunszt:1992tn,Gao:2012he}。
+
+
+
+
+$p$A 碰撞中双喷注的产生过程的理论计算不依赖于碎裂函数，因此它是原子核中夸克和胶子分布的重要探针~\parencite{Eskola:2013aya,He:2011sg}。
+然而，由于双喷注产生的动力学通道比DIS和DY更加复杂，仅通过控制双喷注的两个运动学变量，可能无法实现对 $x$ 和 $Q^2$ 上的nPDF进行详细扫描的目的。相比之下，通过同时固定三个双喷注的变量，就可以建立与 $x$ 和 $Q^2$ 的更好的对应关系，这就促使我们提出了研究双喷注的三重微分散射截面~\parencite{Ellis:1994dg,CMS:2017jfq,Gehrmann-DeRidder:2019ibf} 而不是二重微分的散射截面的想法。
+到目前为止，这个想法已经被应用于质子-质子（$pp$）碰撞，用来研究质子的部分子分部函数~\parencite{Ellis:1994dg,CMS:2017jfq,Gehrmann-DeRidder:2019ibf}。
+我们将会讨论，三重微分的双喷注的散射截面在$p$A 碰撞中揭示PDF核修正方面具有更多优势。
+在本章的工作中，我们计算了在微扰QCD框架里次领头阶贡献下的三重微分散射截面。在$p$A碰撞的 计算中，我们使用了四组nPDF：EPPS16、nCTEQ15、TUJU19、和 nIMParton16。
+
+% PRD III
+正如在章节 ~\ref{sec:pp} 中所讨论的，双喷注的三重微分散射截面提供了 $f_i(x,Q^2)$ 对 $x$ 和 $Q^2$ 依赖性的更直接的分辨率,这个想法已经被应用到 $pp$ 碰撞中，以研究质子PDF，如图~\parencite{Ellis:1994dg,CMS:2017jfq,Gehrmann-DeRidder:2019ibf}。然而，在 $pp$ 碰撞中，即使使用三重微分散射截面，仍然涉及到两个初始部分子携带的两个不同的动量分数$ x_a $和$ x_b $~\parencite{Gehrmann-DeRidder:2019ibf}。
+此外，为了更充分地与可观测的截面进行比较，理论预测中可能需要进行次次领头阶修正。
+相比之下，在研究 $p$A 碰撞中的核修正时，这些问题就可以在很大程度上避免，并且三重微分散射截面会具有更多的优势。一方面，来自单个核靶的部分子仅涉及一个动量分数的变量，而来自质子的部分子可以被视为一种探针。另一方面，如果我们关注核修正因子 $r^A_i(x,Q^2)$ 而不是nPDF本身，那么理论和实验的不确定性都可以得到有效的降低。
+
+具体而言，我们研究的这种散射截面的传统核修正因子可以定义为在归一化到核质量数$A$后，$p$A 与 $pp$ 碰撞中的散射截面的比值：
+\begin{align}
+  R_{pA}(v_1,v_2,v_3)=\frac{1}{A}\frac{d\sigma^{pA}/dv_1dv_2dv_3}{d\sigma^{pp}/dv_1dv_2dv_3}.
+  \label{eq:rpa}
+\end{align}
+这个 $R_{pA}$ 可以在LO近似下表示为~\parencite{Ellis:1994dg}：
+\begin{align}
+R_{pA}(v_1,\!v_2,\!v_3)\!\approx\!\frac{\sum_{a,b}f_a^p(x_a,\mu^2)f_b^A(x_{b},\mu^2)H_{ab}(v_1,\!v_2,\!v_3)}
+{\sum_{a,b}f_a^p(x_a,\mu^2)f_b^{p}(x_b,\mu^2)H_{ab}(v_1,\!v_2,\!v_3)},
+\label{eq:rpa-pdf}
+\end{align}
+其中 $f_b^A$ 是原子核内平均每个核子的PDF，$H_{ab}$ 代表可以微扰计算的硬函数。
+显然，这个 $R_{pA}$ 提供了对定义在公式~(\ref{eq:ri})中的核修正因子 $r^A_i(x,Q^2)$ 的直接观察。
+需要注意的是，对于给定的 $\{v_1,v_2,v_3\}$ 集合，变量 $x_{a(b)}$、$M_{{\!J\!J}}$ 和 $p_{T,\textrm{avg}}$ 的值在领头阶下是唯一确定的。
+
+由于公式~(\ref{eq:rpa})中$R_{pA}$被定义为比值的形式，因此在理论和实验两方面上的总不确定度可以显著降低。在理论计算中，分子和分母的不确定度（例如来自质子PDF和高阶修正的不确定度）可能在一定程度上互相抵消。同样，在实验测量中，系统误差也可以得到有效降低。接下来，我们将研究LHC上 $p$Pb 碰撞中几种双喷注的三重微分散射截面的 $R_{p\textrm{Pb}}$ 。
+
+
+%------------------------------- 4.1
+
+\section{对$d^3\sigma/dp_{T,avg}dy_bdy^*$的核修正}
+\label{sec:ptavg}
+
+	CMS合作组在 $pp$ 碰撞中已经对双喷注三重微分散射截面  $\{v_1,v_2,v_3\}=\{p_{T,\textrm{avg}},y_b,y^*\}$ 进行了测量。它以平均横向动量$p_{T,\textrm{avg}}$、双喷注快度差的一半$y^*=|y_1-y_2|/2$ 和双喷注系统boost量$y_b=|y_1+y_2|/2$ 为函数，给出了结果~\parencite{CMS:2017jfq}。
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=3.2in]{CMS_triple_eta}
+	\caption{双喷注在快度相空间的拓扑结构示意图。其中分为15个范围从0到2.5的快度区域，彩色三角形表示实验室参考系下不同相空间区域中两个喷注的方向，束线假设水平布置~\parencite{CMS:2022wdi}。}
+	\label{fig:CMS_triple_eta}
+\end{figure}
+图~\ref{fig:CMS_triple}为双喷注在$y^*$和$y_b$运动学平面的示意图，其中根据两个领头喷注的$y_b$，双喷注系统可以被分类为同侧喷注事件或反侧喷注事件，以此提供有关部分子动力学的见解。
+
+
+
+	% PRD III A
+	首先我们研究了这个散射截面的的核修正，
+	为了方便起见，我们将领头阶下的运动学关系写成~\parencite{Gehrmann-DeRidder:2019ibf}：
+	\begin{align}
+	x_{a}=\frac{M_{{\!J\!J}}}{\sqrt{s}} e^{\pm y_b},~~~~x_{b}=\frac{M_{{\!J\!J}}}{\sqrt{s}} e^{\mp y_b},\cr
+	~~~ M_{{\!J\!J}}=2p_{T,\textrm{avg}}\cosh(y^*),~~
+	\label{eq:ptybys_LO}
+	\end{align}
+	其中符号 $\pm(\mp)$ 是由于 $y_b$ 被定义为绝对值。
+	在图~\ref{fig:ptavg_8_cms_pp} 中，我们绘制了在 $\sqrt{s}=8$~TeV 的 $pp$ 碰撞中，$y_b\in[0,1]$ and $y^*\in[0,1]$的情况下，以 $p_{T,\textrm{avg}}$ 为横坐标的 $d^3\sigma/dp_{T,\textrm{avg}}dy_bdy^*$ 的结果。
+	CMS实验数据可以较好地由微扰计算描述，其中因子化和重整化标度都取为 $\mu_0=p_{T1}e^{0.3y^*}$ ~\parencite{CMS:2017jfq}，这在文献 ~\parencite{Ellis:1992en} 中被首次研究，是取 $p_T$ 和 $M_{{\!J\!J}}/2$ 之间值的折衷方案。在文献~\parencite{Gehrmann-DeRidder:2019ibf}中发现，次次领头阶修正可导致 $\sim10\%$ 或更大的增强。接下来，我们会在相同的运动学区间内将这个截面应用于 $p$Pb 碰撞。
+	
+		\hspace*{\fill}
+		\begin{figure}[htbp]
+		  \centering
+		  \includegraphics[width=3.2in]{ptavg_8_cms_pp_ratio}
+		  \caption{在 $\sqrt{s}=8$~TeV 的 $pp$ 碰撞中，以$y_b\in[0,1]$和$y^\in[0,1]$为条件，测量双喷注的三重微分散射截面 $d^3\sigma/dp_{T,\textrm{avg}}dy_bdy^*$。理论结果在领头阶（虚线）和次领头阶（实线）下与用圆圈表示的CMS实验数据（垂直不确定度条很小）\parencite{CMS:2017jfq}进行比较。喷注的选择使用了 anti-$k_T$ 算法锥大小为 $R=0.7$ 且具有快度截断 $|y|<5$。对于领头喷注，施加的附加横向动量和快度的截断分别为 $p_{T1}>50$GeV 和 $|y_1|<3$ \parencite{CMS:2017jfq}。为了做参考，底部绘制了上部图所示结果与领头阶结果之间的比值。}
+		  \label{fig:ptavg_8_cms_pp}
+		\end{figure}
+		
+		\hspace*{\fill}
+		\begin{figure}[htbp]
+		  \centering
+		  \includegraphics[width=3.2in]{ptavg_cr_lo_grid}
+		  \caption{对于三重微分双喷注散射截面 $d^3\sigma/dp_{T,\textrm{avg}}dy_bdy^*$，每个$p_{T,\textrm{avg}}$区间与初始核部分子所携带的动量分数 $x_{\textrm{Pb}}$ 之间的相关性。对于每个$p_{T,\textrm{avg}}$区间，考虑在 $x_{\textrm{Pb}}\!\in\![5\!\times\!10^{-4}, 0.78]$ 区域内，来自各个 $x_{\textrm{Pb}}$ 量的总贡献被归一化为单位值 ~$100\%$）。关联的量用彩虹色表示~（0-100\%）。我们是通过领头阶下在$pp$碰撞~（不考虑核效应）中的$p_{T,\textrm{avg}}$和$x_b$区间内进行散射截面的计算。}
+		  \label{fig:ptavg_cr_lo_grid}
+		\end{figure}
+	
+	为了展示散射截面 $d^3\sigma/dp_{T,\textrm{avg}}dy_bdy^*$ 分辨初始部分子的动量分数数 $x_{\textrm{Pb}}$ 和探测铅核的核结构的能力，我们在图~\ref{fig:ptavg_cr_lo_grid} 中作出了一种形象化的表示，其中彩虹色表示领头阶计算得到的每个 $p_{T,\textrm{avg}}$ 区间和 $x_{\textrm{Pb}}$之间的关联。需要注意的是，对于某个 $p_{T,\textrm{avg}}$ 区间，由于测量中 $\Delta p_{T,\textrm{avg}}$、$\Delta y_b$和 $\Delta y^*$ 的大小有一定的限度，因此 $x_{\textrm{Pb}}$ 可能会分散一个数量级。尽管如此，从公式~(\ref{eq:ptybys_LO})可以预期，总体上依然观察到了线性的关系。
+
+		\hspace*{\fill}
+		\begin{figure}[htbp]
+		  \centering
+		  \includegraphics[width=3.2in]{ptavg_8_cms_rpa}
+		  \caption{上面板：与图~\ref{fig:ptavg_8_cms_pp} 中结果相对应的核修饰因子$R_{p\textrm{Pb}}$；下面板：与图~\ref{fig:ptavg_8_cms_pp} 中CMS 实的验 $pp$数据相关的相对统计不确定度。nIMP预测的$R_{p\textrm{Pb}}$在领头阶下计算，其他三个nPDF的集合的$R_{p\textrm{Pb}}$在次领头阶下计算。$R_{p\textrm{Pb}}$结果上的灰色带（非常细）对应于因子化/重整化标度（$\mu_0/2, \mu_0, 2\mu_0$）的变化。请注意，两个面板中的垂直轴设置为相同的比例，以进行直接比较。}
+		  \label{fig:ptavg_8_cms_rpa}
+		\end{figure}
+
+	图~\ref{fig:ptavg_8_cms_rpa} 的顶部面板中展示了 $p$Pb 碰撞的核修正因子 $R_{p\textrm{Pb}}$，这里我们使用的是次领头阶下三个nPDF的集合（EPPS16，nCTEQ15和TUJU19）和领头阶下 nIMP16 来计算的。
+	此图中可以看到四个预测之间存在着差异，并且结果对于 $p_{T,\textrm{avg}}$ 有一定的依赖性。由于图 ~\ref{fig:ptavg_cr_lo_grid} 所示的 $x_{\textrm{Pb}}$ 的基准值大约为 $0.1$，即接近反遮蔽（antishadowing）效应区域，因此我们可以看到这几个 nPDF 组合预测的是增强效应。同时，还可以观察到对应于 EMC 区域的 大$p_{T,\textrm{avg}}$ 处的压低。
+	目前，在 $p$Pb 碰撞中实验还没有对三重微分散射截面进行过测量。
+	为了对未来实验测量的约束能力进行大略估计，我们在图 ~\ref{fig:ptavg_8_cms_rpa} 的底部面板中展示CMS实验中  $pp$ 碰撞数据 ~\parencite{CMS:2017jfq} 的相对统计不确定性，一次来进行比较。我们发现，在广泛的 $p_{T,\textrm{avg}}$ 范围内，相对不确定性远小于不同nPDF的核修正之间的差异，这表明它对nPDFs有很强的约束力。我们还看到，大 $p_{T,\textrm{avg}}$ 区域的不确定性过大，而且这时双喷注的产额随着 $p_T$ 的增加而快速下降，那么几种nPDF的EMC效应就无法区分了。
+
+		\hspace*{\fill}
+		\begin{figure}[htbp]
+		  \centering
+		  \includegraphics[width=4.0in]{ptavg_rpa_rnpdf}
+		  \caption{每个nPDF的集合预测的 $R_{p\textrm{Pb}}$~(符号)与其基础核修正$r_i^{\textrm{Pb}}(x_{\textrm{Pb}}, Q^2)$ 的比较，对应于图~\ref{fig:ptavg_8_cms_rpa} 中的谷子（实线）和总夸克（虚线）分布。 $R_{p\textrm{Pb}}$ 和 $r_i^{\textrm{Pb}}$ 都显示为 $p_{T,\textrm{avg}}$ 的函数。为了绘制 $r_i^{\textrm{Pb}}$，使用方程~(\ref{eq:ptybys_LO})中的 $x_{\textrm{Pb}}$和 $p_{T,\textrm{avg}}$ 之间的领头阶关系，其中 $y_b=0$ 和 $y^*=0$ 被设置为常量，并且在$r_i^{\textrm{Pb}}(x_{\textrm{Pb}}, Q^2)$中，标度取 $Q=p_{T,\textrm{avg}}e^{0.3y^*}$。}
+		  \label{fig:ptavg_rpa_rnpdf}
+		\end{figure}
+	
+	在上文中我们关注的三重微分散射截面揭示了基础核修正因子 $r_i^{A}(x,Q^2)$~（如公式~(\ref{eq:rpa-pdf})所示）的优势，接下来我们对可观测的 $R_{p\textrm{Pb}}$ 和nPDF因子 $r_i^{\textrm{Pb}}$ 进行了比较，见图~\ref{fig:ptavg_rpa_rnpdf}。
+	需要注意此图中的胶子分布和夸克分布，因子 $r_i^{\textrm{Pb}}$ 是针对$p_{T,\textrm{avg}}$ 而非 $x_{\textrm{Pb}}$ 进行绘制的。而这种变量替换的方式，我们采用公式~(\ref{eq:ptybys_LO}) 中的领头阶的关系 $x_{\textrm{Pb}}\!\!=\!\!2p_{T,\textrm{avg}}\!/\!\sqrt{s}$，其中 $y_b$ 和 $y^*$ 的取值为 $0$。与此同时，在绘制$r_i^{\textrm{Pb}}(x,Q^2)$ 时，标度取值是 $Q\!=\!p_{T,\textrm{avg}}e^{0.3y^*}$ 。
+	可以发现，不同nPD的F集合预测的 $R_{p\textrm{Pb}}$ 与它们各自的 $r_i^{\textrm{Pb}}$ 相当。因为其中三个 nPDF 的集合（EPPS16、nCTEQ15和TUJU19）在次领头阶下计算，因此其中的线性关系可能会被某种程度地破坏。不同的 nPDF 集合给出了不同的 $R_{p\textrm{Pb}}$，而图~\ref{fig:ptavg_rpa_rnpdf} 中的比较则提供了一种直观的方式来理解这种差异。比如我们可以看到 TUJU19 中的胶子分布中有比较强的反遮蔽效应，这著增强了预测值 $R_{p\textrm{Pb}}$。
+	
+	在上一段的比较中，$p_{T,\textrm{avg}}$ 和 $x_{\textrm{Pb}}$ 之间的对应关系发挥了重要的作用。然而，在类似CMS实验测量中的单个 $p_{T,\textrm{avg}}$  区间里，来自各个 $x_{\textrm{Pb}}$ 值的贡献有很强的混合，从而无法对运动学上进行更精细的扫描，如图~\ref{fig:ptavg_cr_lo_grid} 所示。当然，我们可以通过缩小 $d\sigma/dp_{T,\textrm{avg}}dy_bdy^*$ 测量中的区间的大小，来减少这种混合，但代价就是统计精度会有所降低。另一方面，我们可以有其它不同的方式来定义三重微分散射截面，下一小节里我们会有所讨论。
+
+
+%------------------------------- 4.2
+
+\section{对$d^3\sigma/X_B X_A y^*$的核修正}
+\label{sec:XBXA}
+
+% PRD III B
+
+	另外一种定义三重微分散射截面的方式是选择双喷注的变量为 $\{v_1,v_2,v_3\}=\{X_A,X_B,y^*\}$，这由Ellis和Soper首次提出，并用以研究$pp(\bar{p})$ 碰撞中的部分子分布~\parencite{Ellis:1994dg}。首先，定义两个新变量：
+	\begin{align}
+	X_{A}\!=\!\sum_{n\in \textrm{dijet}}\!\frac{E_{Tn}}{\sqrt{s}}e^{+ y_n},\cr
+	X_{B}\!=\!\sum_{n\in \textrm{dijet}}\!\frac{E_{Tn}}{\sqrt{s}}e^{- y_n},
+	\label{eq:XAXB}
+	\end{align}
+	\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=2.7in]{XB}
+	\caption{$p$Pb碰撞中，由末态重建出的两个领头喷注示意图。}
+	\label{fig:XB}
+\end{figure}
+	这两个新变量与公式~(\ref{eq:inferx}) 中 $x_{a(b)}$ 的表达式相似。不同的是这里的求和是在双喷注锥角内的所有粒子上进行，见图~\ref{fig:XB}，展示了$p$Pb碰撞喷注中的双喷注产生，末态部分子1、2、3在喷注内部，而其它的部分子在双喷注的外部。显然，对于领头阶$2 \to 2$的过程，有关系式$X_{A(B)}=x_{a(b)}$，这提供了观测量与初始动量分数的直接联系。在次领头阶中，对于所有粒子都落入双喷注锥角内的情况，这个等式仍然成立，如果有粒子处于锥角外时，等式才会才会变为 $X_{A(B)}\leq x_{a(b)}$。在文献~\parencite{Ellis:1994dg}中，这表明对于散射截面 $d^3\sigma/dX_BdX_Ady^*$ 的次领头阶修正会很小。
+
+	\hspace*{\fill}
+	\begin{figure}[htbp]
+	  \centering
+	  \includegraphics[width=4.0in]{XB_pp}
+	  \caption{在 $\sqrt{s}=8.16$~TeV 能量的 $pp$ 碰撞中，测量三重微分散射截面 $d^3\sigma/dX_BdX_Ady^*$ 与 $X_B$ 的关系。左右两个面板分别对应于两个不同的 $X_A$ 区间：$X_A\in [0.08, 0.12]$和$X_A\in [0.005, 0.015]$。第三个变量 $y^*$ 的限制为$y^*\in [0,0.5]$。我们的理论结果在领头阶（虚线）和次领头阶（实线）下进行计算。我们使用 anti-$k_T$算法寻找锥角大小为$R=0.7$且具有快度截断 $|y|<2.5$ 的喷注。喷注对的相对方位角受到限制 $|\Delta\phi_{12}|>2\pi/3$。对于领头和次领头喷注，施加的横向动量截断分别为$p_{T1}>30$~GeV 和 $p_{T2}>20$~GeV。}
+	  \label{fig:XB_pp}
+	\end{figure}
+
+	\begin{figure}[htbp]
+		\centering
+		\includegraphics[width=4.0in]{ptavg_vs_XB}
+		\caption{双喷注的产额，其中左面板是对图~\ref{fig:ptavg_8_cms_pp} 中的散射截面 $d^3\sigma/dp_{T,\textrm{avg}}dy_bdy^*$ 进行积分，对应于每个$\Delta p_{T,\textrm{avg}} \Delta dy_b \Delta y^*$的产额；右面板是对图~\ref{fig:XB_pp}中区间$X_A\in [0.08, 0.12]$的散射截面 $d^3\sigma/dX_BdX_Ady^*$ 进行积分， 对应于每个$\Delta X_B\Delta X_A\Delta y^*$的产额。}
+		\label{fig:ptavg_vs_XB}
+	\end{figure}
+
+	在图\ref{fig:XB_pp}中，我们展示了能量 $\sqrt{s}=8.16$TeV 的 $pp$ 碰撞的散射截面，并将结果作为$X_B$的函数进行计算，其中左右两个面板分别对应于$X_{A}\sim0.1$ 和 $X_{A}\sim0.01$ 的区域。通过限制$X_A$的取值，实际上可以控制前向初始部分子所携带的$x_a$（在$p$A碰撞中的nPDFs“探针”）。我们发现，在$X_A\sim0.1$的情况下，双喷注的产生覆盖了广泛的$X_B$范围（从$10^{-3}$到0.8），同时领头阶和次领头阶的结果非常接近。
+	在对散射截面进行积分后，可以看到每个$\Delta X_B\Delta X_A\Delta y^*$ 区间中的双喷注产额，并发现这里的产额与图~\ref{fig:ptavg_8_cms_pp}中的产额类似，对于高$x$区域甚至可能更大（结果展示在图~\ref{fig:ptavg_vs_XB}中）。
+	%	\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+	当我们将$X_A$降低到$0.01$附近时，如图~\ref{fig:XB_pp}中的右面板所示，可以发现大$X_B$区域的双喷注产额可以增加约两个数量级，表明探测大$x$部分子分布具有更高的统计精度
+	% \footnote{作者感谢审稿人对这一点的指出。}
+	值得注意的是，在$p$A碰撞中，这种截面的测量可以扩展到$X_B>1$的区域，以提供对$x>1$的nPDFs的相对直接的探针，并为这个目前理解不足的运动学区域提供深入的见解，其中nPDFs可能由于核子内部的（费米）运动而非零~（参见文献~\parencite{Arrington:2021vuu,AtharSajjad:2022ipr}，可以了解最近的实验和理论进展）。
+	由于我们将喷注的横动量限制为 $p_{T1}>30$~GeV和$p_{T2}>20$GeV~\parencite{CMS:2018jpl}，因此对于较低的 $X_A$值来说，$X_B$ 的值不太可能非常小。
+
+	在我们的计算中，因子化/重整化标度取值 为$\mu_0=\sqrt{X_AX_Bs}/[4\cosh(0.7y^*)]$\parencite{Ellis:1994dg}。此外，限制两个喷注的相对方位角为$|\Delta\phi_{12}|>2\pi/3$\parencite{CMS:2018jpl}，如此来选择几乎背对背的喷注对。这个约束是为了减少粒子位于双喷注锥角外的情况的贡献（但对于由初始部分子共线发射的粒子则无用）。
+
+	\hspace*{\fill}
+	\begin{figure}[htbp]
+	  \centering
+	  \includegraphics[width=3.2in]{XB_8_eta25_ys05_XA01_cr_lo_grid}
+	  \caption{与图~\ref{fig:ptavg_cr_lo_grid}类似，此图对应于图~\ref{fig:XB_pp}左测面板中的$X_B$和$x_{\textrm{Pb}}$之间的相关性，该图显示的三重微分散射截面为 $d^3\sigma/dX_BdX_Ady^*$。$X_B$和$x_{\textrm{Pb}}$的区间大小设置是相同的。}
+	  \label{fig:XB_cr_lo_grid}
+	\end{figure}
+  
+	%-----------------------  pPb_XB
+	接下来，开始讨论$p$Pb的碰撞。在领头阶情况下，我们计算了双喷注变量 $X_B$ 和初态核部分子所携带的动量分数 $x_{\textrm{Pb}}$ 之间的相关性，如图~\ref{fig:XB_cr_lo_grid}所示。正如预期所言，两者显示了完美的线性关系。特别注意到，这种线性关系并不依赖 于$\Delta X_A$和$\Delta y^*$ 的区间大小。这种高分辨率因此可以对nPDF因子 $r_i^{\textrm{Pb}}(x_{\textrm{Pb}}, Q^2)$ 进行更详细地运动学扫描。
+
+	%-----------------------  图分开
+	\hspace*{\fill}
+	\begin{figure}[htbp]
+	  \centering
+	  \includegraphics[width=4.0in]{XB_pp_rpa}
+	  \caption{（A0）和（B0）分别对应于图~\ref{fig:XB_pp}的左和右两个面板，其中四种nPDF的集合预测的 $X_A\sim0.1$ 和 $X_A\sim0.01$ 的核修正因子 $R_{p\textrm{Pb}}$ 如图所示，右符号点加虚线表示。}
+	  \label{fig:XB_pp_rpa}
+	\end{figure}
+	
+	我们还利用四个核部分子分布函数的集合（在次领头阶的EPPS16，nCTEQ15和TUJU19，在领头阶的nIMP16）计算了三重微分散射截面$d^3\sigma/dX_BdX_Ady^*$上的核修正因子$R_{p\textrm{Pb}}$，结果在图~\ref{fig:XB_pp_rpa} 中展示，图（A0）和（B0）分别对应 于$X_A\sim0.1$ 和 $X_A\sim0.01$。可以观察到结果对 $X_B$ 有很明显地依赖关系，这里的结果类似于图~\ref{fig:ratio_nPDF} 中展示的$r_i^{\textrm{Pb}}(x_{\textrm{Pb}}, Q^2)$。在领头阶近似$X_B=x_{\textrm{Pb}}$的情况下，我们可以大致确定可观测的$R_{p\textrm{Pb}}$中的遮蔽效应、反遮蔽效应、EMC效应和费米运动效应。
+	
+	\hspace*{\fill}
+	\begin{figure}[hptb]
+		\centering
+	%	\vspace{0.4cm}\hspace{0cm}
+		\includegraphics[width=4.4in]{XB_XA_rpa_rnpdf}
+		\caption{图~\ref{fig:XB_pp_rpa} 的面板（A0）和（B0）的$R_{p\textrm{Pb}}$ 结果分别在（A1-A4）和（B1-B4）中用符号来显示，并与相应的 nPDF 因子 $r_i^{\textrm{Pb}}(x_{\textrm{Pb}}, Q^2)$ 进行比较。其中胶子分布用实线表示，总夸克分布用虚线表示。在这个比较中，可以注意到领头阶近似有 $X_B=x_{\textrm{Pb}}$。在绘制 $r_i^{\textrm{Pb}}(x_{\textrm{Pb}}, Q^2)$ 时，我们标度设置为 $Q=\sqrt{X_AX_Bs}/[4\cosh(0.7y^*)]$，其中 $X_A=0.1~(0.01)$ ， $y^*=0$。 $R_{p\textrm{Pb}}$ 结果上的灰色带对应于因子化或重整化标度 ($\mu_0/2, \mu_0, 2\mu_0$) 的变化。}
+		\label{fig:XB_XA_rpa_rnpdf}
+	\end{figure}
+	
+	为了更清晰地展示结果，我们将这四个核部分子分布函数的结果分别显示在图~\ref{fig:XB_XA_rpa_rnpdf} 中，并且与相应的核部分子分布函数的因子 $r_i^{\textrm{Pb}}(x_{\textrm{Pb}}, Q^2)$（针对胶子和夸克分布）进行比较。可以看到$R_{p\textrm{Pb}}$和$r_i^{\textrm{Pb}}$之间有非常好的一致性。
+	值得注意的是，在小 $X_B$（$\lesssim 0.01$）值时，$R_{p\textrm{Pb}}$ 趋近于胶子分布的$r_{\textrm{gluon}}^{\textrm{Pb}}$，而在大$X_B$（$\gtrsim 0.3$）时，$R_{p\textrm{Pb}}$ 接近于夸克分布的 $r_{\textrm{quark}}^{\textrm{Pb}}$。这是因为小 $X_B$ 值处的双喷注产生主要核中的胶子引发的过程主导，而在大$X_B$ 值处，核中（价）夸克发挥着主导作用。
+	我们还可以看到，在 $X_B$ 的中间值区域，$R_{p\textrm{Pb}}$ 结果来 自$r_{\textrm{gluon}}^{\textrm{Pb}}$和$r_{\textrm{quark}}^{\textrm{Pb}}$ 之间相互的作用。
+	从这个意义上讲，可观测层面上的 $R_{p\textrm{Pb}}(X_B)$ 可以作为部分子分布的核修正因子 $r_i^{\textrm{Pb}}$ 的影像，这是由于三重微分散射截面 $d^3\sigma/dX_BdX_Ady^*$对$x_{\textrm{Pb}}$ 具有很高的分辨率能力。
+	
+	另一方面，我们注意到，在这个截面中，物理标度将随着$X_B$的变化而变化，这意味着在不同的$X_B$值处探测到的核修正处于不同的标度下。例如，在领头阶情况下，有以下关系：
+	\begin{equation}
+	\begin{aligned}
+	  M_{{\!J\!J}}\! &=\!\sqrt{X_AX_Bs},\\      %~~~
+	  p_{T}\! &=\!\sqrt{X_AX_Bs}/[2\cosh(y^*)].
+	  \label{eq:XAXB_LO}
+	\end{aligned}
+	\end{equation}
+	% 因此，当$X_B$较小时，相应的$Q^2$标度也会变小，从而探测到的是较大的$x_{\textrm{Pb}}$区域的核修正。反之，当$X_B$较大时，相应的$Q^2$标度也会增大，从而探测到较小的$x_{\textrm{Pb}}$区域的核修正。这个变化标度的效应需要在计算和比较核修正因子时予以考虑。
+	对于给定的$X_A$和$y^*$值，$M_{{JJ}}$和$p_T$随着$X_B$的增加而增加。需要注意的是，在我们的计算中，因子化标度$\mu_0$的选择是$M_{{JJ}}/4$和$p_T/2$之间的折衷方案~\parencite{Ellis:1992en}。实际上，如果$M_{{JJ}}$和$p_T$的值都固定，则在领头阶情况下，双喷注的运动学只有剩下一个自由度，即双喷注的快度。
+	在接下来小结，我们将研究与双喷注快度相关的三重微分散射截面，其中物理标度不变。
+
+
+%------------------------------- 4.3
+
+\section{对$d^3\sigma/y_{dijet}E_T^{dijet}p_{T,avg}$和$d^3\sigma/X_BE_T^{dijet}p_{T,avg}$的核修正}
+\label{sec:XB_ET}
+
+	% PRD III C
+	
+	三重微分散射截面也可以由双喷注快度所定义。实际上，在第~\ref{sec:pp}$-$\ref{sec:CNM}节中，我们展示了由CMS实验测量的双喷注赝快度分布（见图~\ref{fig:eta_cms_pp}和图~\ref{fig:eta_cms_rpa_sep}）。正如所讨论的那样，测量得到的分布与双重微分散射截面$d^2\sigma/d\eta_{\textrm{dijet}}dp_{T,\textrm{avg}}$有关。在给定的$\{\eta_{\textrm{dijet}},p_{T,\textrm{avg}}\}$集合下，既不能完全控制$x_{a(b)}$，同样也不能完全控制$M_{{JJ}}$。
+	通过测量具有 $\{\eta_{\textrm{dijet}},M_{JJ},p_{T,\textrm{avg}}\}$ 的三重微分分布，可以对其进行改进。同时，我们注意到以下运动学关系：
+	\begin{align}
+	    X_B=\frac{1}{\sqrt{s}}E_T^{{\!J\!J}}\exp(-{y_{\textrm{dijet}}}).
+	\label{eq:XB_EY}
+	\end{align}
+	其中$X_B$由公式~(\ref{eq:XAXB})定义，$E_T^{{JJ}}$和$y_{\textrm{dijet}}$分别定义为：
+	%这个定义使得$E_T^{{JJ}}$和$y_{\textrm{dijet}}$不依赖于参考系的选择。
+	\begin{equation}
+	E_T^{{\!J\!J}}\! =\!\sqrt{M^2_{{\!J\!J}}\!+\!(\vec{p}_{T1}\!+\!\vec{p}_{T2})^2}.
+	\label{eq:EJJY}
+	\end{equation}
+
+	\begin{equation}
+		y_{\textrm{dijet}}\! =\!\frac{1}{2}\ln\frac{E^{\textrm{dijet}}\!+\!p_z^{\textrm{dijet}}}{E^{\textrm{dijet}}\!-\!p_z^{\textrm{dijet}}}.
+		\label{eq:ydijet}
+	\end{equation}
+	由于公式~(\ref{eq:XB_EY})在微扰计算的所有阶数中都成立，因此我们定义了一个与双喷注快度相关的散射截面$V^{(3)}=\{y_{\textrm{dijet}},E_T^{{JJ}},p_{T,\textrm{avg}}\}$，这个定于与变量$X_B$有更密切的关联。在领头阶情况下，因为$E_T^{{JJ}}=M_{{JJ}}$且$y_{\textrm{dijet}}=\eta_{\textrm{dijet}}$，所以这个散射截面的选择等价于$V^{(3)}=\{\eta_{\textrm{dijet}},M_{{JJ}},p_{T,\textrm{avg}}\}$。两种选择之间的差异仅来自高阶贡献。
+	
+	为了展示这些观测量在解析$p$Pb碰撞中$x_{\textrm{Pb}}$的能力，我们在图~\ref{fig:eta_cr_lo_grid_1}中比较了在双重微分散射截面$V^{(2)}=\{\eta_{\textrm{dijet}},p_{T,\textrm{avg}}\}$中$\eta_{\textrm{dijet}}$与$x_{\textrm{Pb}}$之间的相关性，在图~\ref{fig:eta_cr_lo_grid_2}中比较了新定义的三重微分散射截面$V^{(3)}=\{y_{\textrm{dijet}},E_T^{{JJ}},p_{T,\textrm{avg}}\}$中$y_{\textrm{dijet}}$与$x_{\textrm{Pb}}$之间的相关性。
+	对于双重微分散射截面，我们观察到$\eta_{\textrm{dijet}}$与$\log x_{\textrm{Pb}}$之间存在大致线性的对应关系，这是由于在领头阶中$\eta_{\textrm{dijet}}=\frac{1}{2}(\ln x_a-\ln x_{\textrm{Pb}})$。但是有一定的模糊度，这是因为自由度仍然存在，比如$x_a$未被固定。相比之下，我们在三重微分散射截面中看到了非常明显的线性相关性，这表明对$x_{\textrm{Pb}}$的分辨率更高。
+	同时可以看到 $y_{\textrm{dijet}}$与$x_{\textrm{Pb}}$之间的相关性并不完全是$100\%$，因为它们小区间的大小不完全匹配，例如，$\log x_{\textrm{Pb}}$的小区间是等距的，而$y_{\textrm{dijet}}$的小区间大小与CMS实验测量中的$\eta_{\textrm{dijet}}$相同，同时也因为$\Delta E_T^{{JJ}}$和$\Delta p_{T,\textrm{avg}}$的小区间有一定的范围。
+	
+	%---------------------- 彩图分开
+	\hspace*{\fill}
+	\begin{figure}[htbp]
+	  \centering
+	  \vspace{-0.5cm}\includegraphics[width=3.2in]{eta_cr_lo_grid_1}
+	  \caption{对应于CMS测量结果图~\ref{fig:eta_cms_pp}和图~\ref{fig:eta_cms_rpa_sep}中的双重微分散射截面$d^2\sigma/d\eta_{\textrm{dijet}}dp_{T,\textrm{avg}}$，每个$\eta_{\textrm{dijet}}$区间与$x_{\textrm{Pb}}$之间的相关性。}
+	  \label{fig:eta_cr_lo_grid_1}
+	\end{figure}
+
+	\hspace*{\fill}
+\begin{figure}[htbp]
+	\centering
+	\vspace{-0.5cm}\includegraphics[width=3.2in]{eta_cr_lo_grid_2}
+	\caption{对应于图~\ref{fig:mT_pp}中的第一个面板的三重微分散射截面$d^3\sigma/dy_{\textrm{dijet}}dE_T^{JJ}dp_{T,\textrm{avg}}$，每个$y_{\textrm{dijet}}$区间与$x_{\textrm{Pb}}$之间的相关性。$\eta_{\textrm{dijet}}$和$y_{\textrm{dijet}}$的区间大小相同。有关计算的更多详细信息，请参见图~\ref{fig:ptavg_cr_lo_grid}的说明。}
+	%Top panel: correlations between each $\eta_{\textrm{dijet}}$ bin and $x_{\textrm{Pb}}$ in double-differential cross section $d^2\sigma/d\eta_{\textrm{dijet}}dp_{T,\textrm{avg}}$ corresponding to CMS measurement in Figs.~\ref{fig:eta_cms_pp} and \ref{fig:eta_cms_rpa_sep}.
+	%Bottom panel: correlations between each $y_{\textrm{dijet}}$ bin and $x_{\textrm{Pb}}$ in triple-differential  cross section $d^3\sigma/dy_{\textrm{dijet}}dE_T^{JJ}dp_{T,\textrm{avg}}$ corresponding to first panel in Fig.~\ref{fig:mT_pp}. Bin sizes for $\eta_{\textrm{dijet}}$ and $y_{\textrm{dijet}}$ are set to be same. See also caption of Fig.~\ref{fig:ptavg_cr_lo_grid} for more details of calculations.
+	\label{fig:eta_cr_lo_grid_2}
+\end{figure}
+
+% appendixA：
+\hspace*{\fill}
+\begin{figure}[htbp]
+	\hspace{0.6cm}\includegraphics[width=2.7in]{XB_8_eta25_ys05_XA01_cv_ps_lo_grid_grey}
+	\hspace{0.8cm}\includegraphics[width=2.7in]{XB_8_eta25_ys05_XA01_cv_ps_nlo_grid_grey}
+	\caption{在领头阶（左图）和次领头阶（右图）的计算中，根据$X_B$和$x_{\textrm{Pb}}$的不同取值，对采样的双喷注事件进行了运动学覆盖。我们的结果与图~\ref{fig:XB_cr_lo_grid} 中的图示相对应。对于每个$X_B$区间，在我们考虑的区域$x_{\textrm{Pb}} \in [5!\times!10^{-4}, 0.78]$内，各种不同取值的$x_{\textrm{Pb}}$的双喷注事件的数量归一化为单位值（$100\%$）。}
+	\label{fig:XB_cv_grid}
+\end{figure}
+
+正如之前进行的讨论，一旦考虑到更高阶的贡献，$X_B$和$x_{\textrm{Pb}}$之间的线性对应关系将会有一定程度的模糊。
+尽管我们在图~\ref{fig:XB_cr_lo_grid} 中提供了直观的演示，以及图~\ref{fig:ptavg_cr_lo_grid}、图~\ref{fig:eta_cr_lo_grid_1}	和图~\ref{fig:eta_cr_lo_grid_2} 中的类似演示，但这些演示不能直接扩展到超出领头阶的其它固定阶数计算中。这是因为在计算双喷注的散射截面时，限制$x_{\textrm{Pb}}$的值会导致在以$X_B$和$x_{\textrm{Pb}}$定义的特定二维区间内出现未消除的奇异性。为了有效地展示高阶模糊效应，我们需要使用包含粒子簇射的事件发生器。对这部分内容，我们将留待未来的研究再进行探究。	
+
+为了在次领头阶中反映$X_B$和$x_{\textrm{Pb}}$之间的运动学对应关系，我们在当前框架内采用了一种替代的方法，即在计算中通过对采样的双喷注事件的发生频率进行计数来进行分析。通过图~\ref{fig:XB_cv_grid} 我们详细展示了在领头阶和次领头阶计算中的运动学覆盖范围。我们针对以$X_B$和$x_{\textrm{Pb}}$进行分区间的截面 $d^3\sigma/dX_BdX_Ady^*$ 所采样的双喷注事件进行了分析。由于$X_B$和$x_{\textrm{Pb}}$ 之间存在简单的线性对应关系，因此在领头阶下，我们观察到的运动学覆盖范围与图~\ref{fig:XB_cr_lo_grid} 中的形式是一致的。在次领头阶下，我们仍然观察到沿着 $X_B=x_{\textrm{Pb}}$ 对角线的运动学覆盖范围是显著的。这符合我们的预期，即双喷注事件可以扩展到$XB \le xPb$的区域。
+
+我们需要注意的是，虽然图~\ref{fig:XB_cv_grid} 所展示的运动学对应关系并未完全反映次领头阶贡献的影响，但是，在比较 $R_{p\textrm{Pb}}(X_B)$ 与核修正因子  $r_i^{\textrm{Pb}}(x_{\textrm{Pb}})$ 时，我们可以从图~\ref{fig:XB_XA_rpa_rnpdf} 和图~\ref{fig:mT_XB_rpa_rnpdf} 中呈现的次领头阶结果中发现，领头阶关系 $X_B=x_{\textrm{Pb}}$ 在这种比较中被证明是一个很好的近似。	  
+
+	\hspace*{\fill}
+	\begin{figure}[htbp]
+	  \centering
+	  \hspace{-0.5cm}
+	  \includegraphics[width=3.0in]{mT_pp}
+	  \includegraphics[width=3.0in]{mT_XB_pp}
+	  \caption{左面板：在$\sqrt{s}=5.02$TeV的$pp$碰撞中，计算领头阶（虚线）和次领头阶（实线）下的三重微分双喷注的散射截面$d^3\sigma/dy_{\textrm{dijet}}dE_T^{JJ}dp_{T,\textrm{avg}}$。结果分别显示在顶部、中部和底部的图中（有关详细信息，请参见每个图中的注释）。
+	  右面板：类似于左面板，但是对于$d^3\sigma/dX_BdE_T^{{JJ}}dp_{T,\textrm{avg}}$。左侧和右侧图的运动学限制设置为相同。与领头阶结果相比，次领头阶计算在三个区域中给出了更小的截面。使用反-$k_T$算法寻找锥大小为$R=0.7$的喷注。喷注对的相对方位角受到限制，$|\Delta\phi_{12}|>2\pi/3$。对于主导和次主喷注，施加的横向动量截断分别为$p_{T1}>30$GeV和$p_{T2}>20$GeV \parencite{CMS:2018jpl}。}
+	  %Left panel: triple-differential dijet cross sections $d^3\sigma/dy_{\textrm{dijet}}dE_T^{\!J\!J}dp_{T,\textrm{avg}}$ in $pp$ collisions at $\sqrt{s}=5.02$~TeV calculated at LO~(dashed) and NLO~(solid). Results are calculated for three $\{p_{T,\textrm{avg}},E_T^{{\!J\!J}}\}$ regions and shown in top, middle, and bottom plots, respectively~(see annotations in each plot for details).
+	  %Right panel: similar as left one, but for $d^3\sigma/dX_BdE_T^{{\!J\!J}}dp_{T,\textrm{avg}}$. Kinematic restrictions for left and right plots are set to be same.
+	  %Compared to LO results, smaller cross sections are given by NLO calculations in three regions.
+	  %Jets are found by anti-$k_T$ algorithm with cone size $R=0.7$. Relative azimuthal angle of jet pair is restricted with $|\Delta\phi_{12}|>2\pi/3$. Cuts imposed on transverse momenta of leading and sub-leading jets are $p_{T1}>30$~GeV and $p_{T2}>20$~GeV, respectively~\parencite{CMS:2018jpl}.
+	  \label{fig:mT_pp}
+	\end{figure}
+
+
+
+
+
+
+
+
+
+
+\hspace*{\fill}
+\begin{figure}[thbp]
+	\centering
+	%\vspace{-0.5cm}
+	%\vspace{-0.5cm} 
+	\includegraphics[width=3.2in]{eta_RA}
+	\includegraphics[width=3.2in]{eta_RB}
+	\includegraphics[width=3.2in]{eta_RC}
+	\caption{面板（A0）、（B0）和（C0）显示了与图~\ref{fig:mT_pp} 的左面板相对应的三重微分散射截面$d^3\sigma/dy_{\textrm{dijet}}dE_T^{JJ}dp_{T,\textrm{avg}}$的核修饰因子$R_{p\textrm{Pb}}$，由四种nPDF的集合所预测，并用符号加虚线表示。 $R_{p\textrm{Pb}}$ 结果上的灰色带对应于因子化或重整化标度 ($\mu_0/2, \mu_0, 2\mu_0$) 的变化。}
+	\label{fig:eta_R}
+\end{figure}
+
+\hspace*{\fill}
+\begin{figure}[thbp]
+	\centering
+	\vspace{-0.5cm}
+	\includegraphics[width=5.5in]{eta_R_rA}
+	\includegraphics[width=5.5in]{eta_R_rB}
+	\includegraphics[width=5.5in]{eta_R_rC}
+	\caption{图~\ref{fig:eta_R} 的面板（A0）、（B0）和（C0）的$R_{p\textrm{Pb}}$ 结果分别在（A1-A4）中用符号来显示，并与相应的 nPDF 因子 $r_i^{\textrm{Pb}}(x_{\textrm{Pb}}, Q^2)$ 进行比较。其中胶子分布用实线表示，总夸克分布用虚线表示。在绘制 $r_i^{\textrm{Pb}}(x_{\textrm{Pb}}, Q^2)$ 时，我们标度设置为 $Q=\sqrt{X_AX_Bs}/[4\cosh(0.7y^*)]$，其中 $X_A=0.1~(0.01)$ ， $y^*=0$。}
+	\label{fig:eta_R_r}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	在图~\ref{fig:mT_pp} 的左图中，我们展示了在$\sqrt{s}=5.02$~TeV的$pp$碰撞中，由 $\{p_{T,\textrm{avg}},E_T^{{JJ}}\}$区分的三个不同的的运动学区间中，计算在领头阶和次领头阶下的$d^3\sigma/dy_{\textrm{dijet}}dE_T^{{JJ}}dp_{T,\textrm{avg}}$与$y_{\textrm{dijet}}$的关系图。
+	我们注意到在领头阶情况下，两个喷注的快度相等，于是有关系式 $E_T^{{JJ}}=2p_{T,\textrm{avg}}$。因此，顶部和中间的两个图对应于$y_1\approx y_2$的情况，其中施加了$|y_{1,2}|<2.5$的截断。
+	底部的图使用公式：			$E_T^{{JJ}} / 2p_{T,\textrm{avg}} = \cosh y^*$ 从而估算得到 $|y_1-y_2|\sim4.5$，即对应于具有较大快度差的两个喷注的情况，因此选取了更宽的喷注快度范围 $|y_{1,2}|<4.5$。
+	此外，由于中间和底部的图共用一个$E_T^{{JJ}}$ 区间，它们实际上探测相同的$x_{\textrm{Pb}}$范围，但具有不同的$p_{T,\textrm{avg}}$。
+	在图~\ref{fig:mT_pp} 中，我们还可以看到次领头阶计算给出的截面略小于领头阶的截面。
+	计算中的因子化/重整化标度取为$\mu_0=E_T^{{JJ}}/[4\cosh(0.7y^*)]$~\parencite{Ellis:1992en}，这是领头阶运动关系里$M_{{JJ}}/4$和$p_T/2$之间的折衷。
+		
+	利用公式~\ref{eq:XB_EY} 中$y_{dijet}$ 和 $X_B$ 的关系，我们可以很容易的将双喷注变量 $^{(3)}$ 进行转变，由 $\{y_{dijet},E_T^{{JJ}},p_{T,\textrm{avg}}\}$ 到 $\{X_{B},E_T^{{JJ}},p_{T,\textrm{avg}}\}$。
+	转化后的截面作为$X_B$的函数绘制在图~\ref{fig:mT_pp} 的右图中。
+	由于顶部的图是针对较低的$E_T^{{JJ}}$ 范围进行计算的，因此与中间和底部的图相比，我们可以看到双喷注产生在更小的 $X_B$ 区域。
+	值得注意的是，在$p$Pb碰撞中，$X_B$和$x_{\textrm{Pb}}$之间的领头阶相关性应该与图~\ref{fig:XB_cr_lo_grid}中所示的相同，即有一对一的线性对应关系（与$\Delta E_T^{{JJ}}$和$\Delta p_{T,\textrm{avg}}$ 的区间大小无关）。
+
+	%-------------------------------图分开
+	\hspace*{\fill}
+	\begin{figure}[htbp]
+	  \centering
+	  %Requires \usepackage{graphicx}
+	  %\hspace{-0.1cm}
+	  \includegraphics[width=3.2in]{mT_XB_pp_rpa}
+	  \caption{面板（A0）、（B0）和（C0）显示了与图~\ref{fig:mT_pp} 右面板相对应的三重微分散射截面$d^3\sigma/dX_BdE_T^{{JJ}}dp_{T,\textrm{avg}}$的核修饰因子$R_{p\textrm{Pb}}$，由四种nPDF的集合预测，并用符号加虚线表示。}
+	  \label{fig:mT_XB_pp_rpa}
+	\end{figure}
+	
+	对应图~\ref{fig:mT_pp} ，我们在图~\ref{fig:mT_XB_pp_rpa} 中展示了次领头阶下计算下散射截面 $d^3\sigma/dX_BdE_T^{{JJ}}dp_{T,\textrm{avg}}$ 的核修正因子$R_{p\textrm{Pb}}$，并使用了4种nPDF（其中nIMP16在领头阶计算），结果与图~\ref{fig:XB_pp_rpa} 中的非常相似。
+	
+	\hspace*{\fill}
+	\begin{figure}[htbp]
+		\centering
+		%Requires \usepackage{graphicx}
+		\hspace{0.2cm}\includegraphics[width=5.7in]{mT_XB_rpa_rnpdf}
+		\caption{在图~\ref{fig:mT_XB_pp_rpa} 的面板（A0）、（B0）和（C0）中，$R_{p\textrm{Pb}}$ 的结果分别在（A1-4）、（B1-4）和（C1-4）中用符号单独显示，并与相应的 nPDF 因子$r_i^{\textrm{Pb}}(x_{\textrm{Pb}}, Q^2)$ 进行比较，其中有胶子（实线）分布和总夸克（虚线）分布。设置 $Q=p_{T,\textrm{avg}}/2$，在三个区域中分别为15、75和15GeV。}
+		 \label{fig:mT_XB_rpa_rnpdf}
+	  %Left panels (A0), (B0) and (C0) show nuclear modification factors $R_{p\textrm{Pb}}$ of cross sections $d^3\sigma/dX_BdE_T^{{\!J\!J}}dp_{T,\textrm{avg}}$, corresponding to Fig.~\ref{fig:mT_pp},  predicted by four nPDF sets and plotted with symbols plus dotted curves.  Results of $R_{p\textrm{Pb}}$ in panels (A0), (B0) and (C0) are separately shown in (A1-4), (B1-4) and (C1-4) with symbols,  and compared with corresponding nPDF factors $r_i^{\textrm{Pb}}(x_{\textrm{Pb}}, Q^2)$ for gluon~(solid) and total quark~(dashed) distributions.  One can note LO approximation $X_B=x_{\textrm{Pb}}$ in this comparison.  When plotting $r_i^{\textrm{Pb}}(x_{\textrm{Pb}}, Q^2)$, we have set $Q=p_{T,\textrm{avg}}/2$~(15, 75, and 15~GeV for three regions).  Another choice $Q=E_T^{{\!J\!J}}/[4\cosh(0.7y^*)]$~(15, 75, and 30~GeV for three regions) is also  tested but not shown, with which a slightly better agreement between $R_{p\textrm{Pb}}$ and $r_i^{\textrm{Pb}}$ in third region is found.  Grey bands on $R_{p\textrm{Pb}}$ results correspond to variations with factorization/renormalization scales($\mu_0/2, \mu_0, 2\mu_0$), which are seen to be small.
+	\end{figure}
+
+	类似与图~\ref{fig:XB_XA_rpa_rnpdf}，散射截面 $d^3\sigma/dX_BdE_T^{{JJ}}dp_{T,\textrm{avg}}$ 的核修正因子 $R_{p\textrm{Pb}}$ 也由以上四种nPDF的集合所预测，结果分别显示在图~\ref{fig:mT_XB_rpa_rnpdf} 的(A1-4)、(B1-4)和(C1-4)中，并与它们相应的部分子分布函数的核修正因子 $r_i^{\textrm{Pb}}(x_{\textrm{Pb}}, Q^2)$ 进行了比较，其中包括胶子和夸克的分布。
+	注意到领头阶近似下有关系式 $X_B=x_{\textrm{Pb}}$，我们再次看到$R_{p\textrm{Pb}}(X_B)$的结果提供了对$r_i^{\textrm{Pb}}(x_{\textrm{Pb}})$的整体良好的成像。
+	同时随着$X_B$的增加，我们观察到这个成像是从胶子主导区域向夸克主导区域过渡的。
+	%
+	在图~\ref{fig:mT_XB_rpa_rnpdf} 的(A1-3)中，我们可以看到，在小$X_B$值（遮蔽效应区域）时，$R_{p\textrm{Pb}}$略高于胶子的$r_{\textrm{gluon}}^{\textrm{Pb}}$。这种偏差部分归因于次领头阶过程中由初始核部分子发射的一个部分子是共线的。在这种情况下，$X_B<x_{\textrm{Pb}}$，这意味着来自较大$x_{\textrm{Pb}}$值（例如在反遮蔽区域）的核修正可能会进入$R_{p\textrm{Pb}}$。
+	而领头阶的结果，正如预期所示，在面板（A4）中显示的nIMP16的中就没有观察到这种效应。
+	在面板（B1-4）和（C1-4）中，这种效应就看起来较弱。
+	同时注意到，面板（B1-4）和（C1-4）中的物理标度$E_T^{{JJ}}~(M_{{JJ}})$和$p_{T,\textrm{avg}}$ 的值大于（A1-4）中的值。
+	也就是说在更高的探测标度下，核内部部分子倾向于携带较小的动量分数$x$，初态共线发散的贡献可能会被抑制。
+	%
+	其中，$R_{p\textrm{Pb}}$ 结果上的灰色带对应于因子化/重整化标度（$\mu_0/2, \mu_0, 2\mu_0$）的变化，可以发现这些变化非常小。
+	特别说明的是，我们考虑到物理标度能够得到很好的控制，在计算 $r_i^{\textrm{Pb}}(x_{\textrm{Pb}},Q^2)$ 时，此图中固定了 $Q^2$ 值，而不像图~\ref{fig:XB_XA_rpa_rnpdf} 中 $Q^2$ 随 $X_B$ 的增加而增加。
+
+	\hspace*{\fill}
+\begin{figure}[htbp]
+	\centering
+	%Requires \usepackage{graphicx}
+	\hspace{0.2cm}\includegraphics[width=5.7in]{mT_XB_rpa_rnpdf_2}
+	\caption{类似于图~\ref{fig:mT_XB_rpa_rnpdf} 的面板（C1-4）中，$R_{p\textrm{Pb}}$ 的结果分别在（C1$^\prime$-4$^\prime$）中用符号单独显示，并与相应的 nPDF 因子$r_i^{\textrm{Pb}}(x_{\textrm{Pb}}, Q^2)$ 进行比较。取值  $Q= 30$ GeV。其中有胶子（实线）和总夸克（虚线）分布。}
+	\label{fig:mT_XB_rpa_rnpdf_2}
+\end{figure}
+
+	对于图~\ref{fig:mT_XB_rpa_rnpdf}，我们也进行了其它 $Q$ 值的尝试，比如我们的另一个选择是 $Q=E_T^{{\!J\!J}}/[4\cosh(0.7y^*)]$，在三个区域分别为15、75和30GeV，即第三个区 域(C1-4) 的 $Q$ 取值不同。计算结果见图	~\ref{fig:mT_XB_rpa_rnpdf_2}。相比之下，发现这里的 $R_{p\textrm{Pb}}$ 和 $r_i^{\textrm{Pb}}$ 之间的一致性略好一些。
+	
+
+\hspace*{\fill}
+\begin{figure}[htbp]
+	\centering
+	\hspace{-0.5cm}\includegraphics[width=3.9in]{mT23_XB_rsc}
+	\caption{面板（A）：$p_{T,\textrm{avg}}\in[150,200]$GeV和$[30,40]$GeV两个区间内的$R_{p\textrm{Pb}}(X_B)$比值，对应于图\ref{fig:mT_XB_pp_rpa}中的面板（B0）和（C0）。面板（B）和（C）：两个$Q$值（$75$和$15$~GeV，取$Q\sim p_{T,\textrm{avg}}/2$），对于谷子（B）和总夸克（C）分布的$nPDFs$因子$r_i^{\textrm{Pb}}(x_{\textrm{Pb}},Q^2)$的比率。}
+	%Panel (A): ratio of $R_{p\textrm{Pb}}(X_B)$ in two regions of $p_{T,\textrm{avg}}$, i.e.,  $p_{T,\textrm{avg}}\in[150,200]$~GeV and $[30,40]$~GeV,  corresponding to panels (B0) and (C0) in Fig.~\ref{fig:mT_XB_pp_rpa}.  Panels (B) and (C): ratios of nPDFs factors $r_i^{\textrm{Pb}}(x_{\textrm{Pb}},Q^2)$  at two values of $Q$~($75$ and $15$~GeV, taken as $Q\sim p_{T,\textrm{avg}}/2$),  for gluon~(B) and total quark~(C) distributions, respectively.
+	\label{fig:mT23_XB_rsc}
+\end{figure}
+
+	$R_{p\textrm{Pb}}(X_B)$ 可以很好地反映在一 定$Q^2$ 值下的$r_i^{\textrm{Pb}}(x_{\textrm{Pb}},Q^2)$。接下来我们探讨另一个有趣的问题：在不同$p_{T,\textrm{avg}}$值下测量的 $R_{p\textrm{Pb}}(X_B)$ 是否能够揭示 $r_i^{\textrm{Pb}}(x_{\textrm{Pb}},Q^2)$ 随 $Q^2$ 变化的情况？
+	
+	我们可以通过利用图~\ref{fig:mT_XB_pp_rpa} 的面板（B0）和（C0）中的结果进行直接测试。这两个面板在相同的$X_B$范围内，但分别对应于两个不同的 $p_{T,\textrm{avg}}$ 区域。我们计算了高 $p_{T,\textrm{avg}}$ 区域（$\sim150$ GeV）的 $R_{p\textrm{Pb}}$ 与低 $p_{T,\textrm{avg}}$ 区域（$\sim30$ GeV）的比值，如图~\ref{fig:mT23_XB_rsc} （A）所示。
+	可以看到，由四种nPDF的集合给出的$R_{p\textrm{Pb}}$随$p_{T,\textrm{avg}}$的变化呈现出不相同的趋势。为了进一步了解这些差别，我们在$Q=75$ GeV和$Q=15$ GeV下，计算了胶子分布或夸克分布 的$r_i^{\textrm{Pb}}(x_{\textrm{Pb}},Q^2)$ 比值（此处简单地 取$p_{T,\textrm{avg}}/2$，并忽略了$E_T^{{JJ}}$的影响）见此图~\ref{fig:mT23_XB_rsc} 面板（B）和（C）。
+	我们观察到，对于夸克分布，四种nPDF的集合给出的$r_{\textrm{quark}}^{\textrm{Pb}}$变化的区别很小。相反，对于胶子分布，可以观察到结果有显著的差异，这与 $R_{p\textrm{Pb}}$ 随 $p_{T,\textrm{avg}}$ 的变化趋势相似。
+
+	这些结果与微扰QCD里共线因子化的理论预期一致~\parencite{Collins:1989gx}。
+	在这里，$r_i^{\textrm{Pb}}(x_{\textrm{Pb}},Q^2)$对$Q^2$的依赖是由原子核PDF（即EPPS16、nCTEQ15、TUJU19和nIMP16）的单独QCD演化和由Dokshitzer-Gribov-Lipatov-Altarelli-Parisi（DGLAP）方程控制的自由核子 PDF 演化所导致的。
+	这反映了一个事实，即在不同的分辨率标度下，对于部分子结构的核修正通常是不同的。
+% ----------------------- appendixB
+
+% ----------------------- appendixB
+%	\vspace*{\fill}
+\begin{figure}[htbp]
+	%\vspace{-0.8cm}
+	\centering
+	\includegraphics[width=4.2in]{npdf_sc_g}
+	\vspace{2.5cm}
+	\includegraphics[width=4.2in]{npdf_sc_q}
+	\caption{针对EPPS16、nCTEQ15、TUJU19和nIMP16这四种nPDF的集合，在 $Q=15$ 和 $75$~GeV 下，胶子（上面板）和总夸克（下面板）的核修正因子 $r^{\textrm{Pb}}_i(x,Q^2)$。}
+	\label{fig:npdf_sc}
+\end{figure}
+
+	核修正因子 $r^{A}_i(x,Q^2)$ 随着 $Q^2$ 的变化而变化，是因为在不同的分辨率标度 $Q^2$ 下自由核子以及原子核部分子分布函数都会发生变化，而核修正因子 $r^{A}_i(x,Q^2)$ 是这两者的比值。
+	为了将$r^{A}_i(x,Q^2)$ 随着$Q^2$的变化可视化，我们计算了在 $Q=15$ 和 $75$ GeV下，使用本研究所采取的四种原子核部分子分布函数的集合，$r^{\textrm{Pb}}_i(x,Q^2)$ 随着 $Q^2$ 变化的情况，其中包含了胶子分布和夸克分布，如图 ~\ref{fig:npdf_sc} 所示。
+% ----------------------- 继续上上一段
+
+	图~\ref{fig:mT23_XB_rsc} 中的结果表明，测量得到 的$R_{p\textrm{Pb}}(X_B)$ 在硬散射中不同的运动学标度（与$p_{T,\textrm{avg}}$有关）下有变化，在一定程度上与原子核修正的能量标度依赖性相关。
+	在QCD因子化的背景下~\parencite{Collins:1989gx}，这与硬散射截面$H_{ab}$的重整化群方程有关，该方程涉及运动学能量标度，与PDF的DGLAP方程中的演化核相同。
+	
+	接下来讨论与这个特征相关的情况。在计算$R_{p\textrm{Pb}}(X_B)$时，我们还选择了其它因子化/重整化标度 $\mu$ 进行计算，发现在次领头阶时，它们随$p_{T,\textrm{avg}}$的变化对$\mu$的选择相当不敏感。这是预料之中的，因为在有限阶的近似中，因子化散射截面对 $\mu$ 的依赖性在于未计算的更高阶贡献的大小。
+	对于定义为比值的$R_{p\textrm{Pb}}$，进一步抑制了对 $\mu$ 的依赖性。此外，在本节和前一节中比较$R_{p\textrm{Pb}}$和$r_i^{\textrm{Pb}}(x_{\textrm{Pb}},Q^2)$时，我们近似了$r_i^{\textrm{Pb}}$中$Q^2$的值为硬过程的运动学能量标度的数量级，以便进行合理的比较。在计算散射截面时，$\mu$ 取在同一能量标度上，以确保微扰理论的有效性。
+	
+	总之，本节的结果展示了使用$\{X_B,E_T^{{JJ}},p_{T,\textrm{avg}}\}$ 来分区间的三重微分测量优势，对象包括对部分子的核修正因子 $r_i^{\textrm{Pb}}(x_{\textrm{Pb}},Q^2)$ 进行的的运动学扫描以及对 $x_{\textrm{Pb}}$ 和 $Q^2$的依赖性。
+
+
+%-------------------------------
+%------------------------------- 4.4
+\section{固定靶对双喷注产生的影响}
+在高能物理的背景下，LHC实验的固定靶模式相对于对撞机模式有很多独特优势~\parencite{Brodsky:2012vg}。固定靶模式是通过将靶材放置在束流路径上，使束流与靶材相互作用。
+除了自由核子外，我们对原子核中的胶子和夸克组分在高动量份额$x$区域的理解非常有限。
+我们针对高动量份额, 继续研究了不同PDF的差异如何体现在双喷注的观测量上。我们希望我们的研究为LHC的固定靶实验提供更广泛的物理信息。
+在本章的工作中，我们计算了在微扰 QCD 框架里次领头阶贡献下的三重微分散射截面。
+在 $p$A 碰撞的计算中，考虑到初态冷核物质效应，我们使用了四组核部分子分布函数的参数化:EPPS21 ~\parencite{Eskola:2021nhw}、nCTEQ15WZ+SIH ~\parencite{Duwentaster:2021ioo,}、TUJU21 ~\parencite{Helenius:2021tof}和nIMParton16，其中前三种nPDF使用了最新版本。
+
+为了测试数值计算，我们首先在图\ref{fig:ratio_nPDF_fix}中展示了在质心系能量为 5.02 GeV 的质子-质子碰撞中测量得到的动量不平衡量$x_J$的分布。NLOJET++的计算结果与ATLAS实验数据进行了对比~\parencite{ATLAS:2022zbu}。
+领头喷注与次领头喷注之间的动量不平衡可以定量表示为比值~\parencite{ATLAS:2017xfa}：
+	\begin{equation}
+	x_J = \frac{p_{T,2}}{p_{T,1}}.
+	\label{equ:x_J}
+	\end{equation}
+
+	\hspace*{\fill}
+	\begin{figure}[htbp]
+		\centering
+		\hspace{-0.5cm}
+		\includegraphics[width=4.8in]{pp5020_fix}
+		\caption{在 $\sqrt{s}=5.02$~TeV 能量，从100 GeV 到126 GeV 分为2个不同$p_{T,1}$区间的 $p-p$ 碰撞中，以$x_J$为变量做归一化的双喷注产额的分布图。其中2个不同的$p_{T,1}$区间分别对应左右2个面板。折线是理论计算NLOJET++的结果，并与ATLAS实验进行了对比~\parencite{ATLAS:2022zbu}。图中含点的块状为实验数据。}
+		\label{fig:pp5020_fix}
+	\end{figure}
+
+	在图~\ref{fig:ratio_nPDF_fix} 中，我们绘制了这四种nPDF的集合中，标度为 $Q=100$~GeV时，铅核($^{208}$Pb)中胶子和夸克分布的因子$r^A_i(x,Q^2)$。可以观察到这些nPDF的集合之间存在显著差异，尤其是对于夸克分布。对于某些特定的$x$值，不同的nPDF给出了不同的效应，比如增强效应或压低效应。
+	%这些问题也促使我们对 $p$A 碰撞中 nPDF 的更细致的运动学扫描的研究。
+
+	在本章，为了统一 $pp$ 基准的结果，我们在 $p$A 碰撞双喷注的产生中使用了四种nPDF的集合中的 $r^{A}_i(x,Q^2)$ 因子，这些因子叠加在 CT18ANLO 质子 PDF 之上~\parencite{Hou:2019efy}。
+	在本章中，我们选择使用的双喷注变量为~\ref{sec:XBXA}节中的 $\{v_1,v_2,v_3\}=\{X_A,X_B,y^*\}$，
+
+\hspace*{\fill}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=3.2in]{ratio_nPDF_fix}
+  \caption{在$Q=100$~GeV时，来自四种nPDF（即EPPS21、nCTEQWZ+SIH、TUJU21和nIMParton16）的铅核中的胶子（上图）和夸克（下图）分布的核修正因子$r^{\textrm{Pb}}_i(x,Q^2)$。
+  根据方程式~(\ref{eq:ri})，因子 $r^{\textrm{Pb}}_{\textrm{q(uark)}}={f^{\textrm{Pb},p}_\textrm{quark}}/{f^{p}_\textrm{quark}}$。}
+  \label{fig:ratio_nPDF_fix}
+\end{figure}
+
+	在图\ref{fig:XB_pp_fix}中，我们展示了能量 $\sqrt{s}=115$GeV 的 $pp$ 碰撞的散射截面，并将结果作为$X_B$的函数进行计算，其中左右两个面板分别对应于$X_{A}\sim0.5$ 和 $X_{A}\sim0.08$ 的区域。通过限制$X_A$的取值来控制前向初始部分子所携带的$x_a$。我们发现，在$X_A\sim0.5$的情况下，双喷注的产生覆盖了更广泛的$X_B$范围（从0.05到0.98）。
+	当我们将$X_A$降低到$0.08$附近时，如图~\ref{fig:XB_pp_fix}中的右面板所示，可以发现大$X_B$区域的双喷注产额可以增加约两个数量级，表明探测大$x$部分子分布具有更高的统计精度。
+	在我们的计算中，因子化/重整化标度取值为$\mu_0=\sqrt{X_AX_Bs}/[4\cosh(0.7y^*)]$\parencite{Ellis:1994dg}。此外，选择几乎背对背的喷注对来限制两个喷注的相对方位角，即$|\Delta\phi_{12}|>2\pi/3$\parencite{CMS:2018jpl}。
+\hspace*{\fill}
+\begin{figure}[htbp]
+	\centering
+	%\vspace{-0.5cm}
+	\includegraphics[width=4.6in]{XB_pp_fix}
+	\caption{在 $\sqrt{s}=115$~GeV 能量的 $pp$ 碰撞中，测量三重微分散射截面 $d^3\sigma/dX_BdX_Ady^*$ 与 $X_B$ 的关系。左右两个面板分别对应于两个不同的 $X_A$ 区间：$X_A\in [0.48, 0.52]$和$X_A\in [0.075, 0.085]$。第三个变量 $y^*$ 的限制为$y^*\in [0,0.5]$。我们的理论结果在领头阶（虚线）和次领头阶（实线）下进行计算。我们使用 anti-$k_T$算法寻找锥角大小为$R=0.7$且具有快度截断 $-4.8<y<1$ 的喷注。喷注对的相对方位角受到限制 $|\Delta\phi_{12}|>2\pi/3$。对于领头和次领头喷注，施加的横向动量截断分别为$p_{T1}>20$~GeV 和 $p_{T2}>10$~GeV。}
+	\label{fig:XB_pp_fix}
+\end{figure}
+
+	对于$p$Pb的碰撞的固定靶情况，	我们利用四个核部分子分布函数的集合（在次领头阶的EPPS21，nCTEQ15QWZ+SIH和TUJU21，在领头阶的nIMP16）计算了三重微分散射截面$d^3\sigma/dX_BdX_Ady^*$上的核修正因子$R_{p\textrm{Pb}}$，结果在图~\ref{fig:XB_pp_rpa_fix} 中展示，图（A0）和（B0）分别对应 于$X_A\sim0.5$ 和 $X_A\sim0.08$。可以观察到结果对 $X_B$ 有很明显地依赖关系，这里的结果类似于图~\ref{fig:ratio_nPDF_fix} 中展示的$r_i^{\textrm{Pb}}(x_{\textrm{Pb}}, Q^2)$。在领头阶近似$X_B=x_{\textrm{Pb}}$的情况下，我们可以大致确定可观测的$R_{p\textrm{Pb}}$中的反遮蔽效应、EMC效应和费米运动效应。
+\hspace*{\fill}
+\begin{figure}[htbp]
+	\centering
+	\hspace{0.4cm}\includegraphics[width=2.7in]{XB_pp_rpa_fix05}
+	\hspace{0.4cm}\includegraphics[width=2.7in]{XB_pp_rpa_fix008}
+	\caption{（A0）和（B0）分别对应于图~\ref{fig:XB_pp_fix}的左和右两个面板，其中四种nPDF的集合预测的 $X_A\sim0.5$ 和 $X_A\sim0.08$ 的核修正因子 $R_{p\textrm{Pb}}$ 如图所示，右符号点加虚线表示。}
+	\label{fig:XB_pp_rpa_fix}
+\end{figure}
+
+	为了更清晰地展示结果，我们将这四个核部分子分布函数的结果分别显示在图~\ref{fig:XB_XA_rpa_rnpdf_fix} 中，并与相应的核部分子分布函数的因子 $r_i^{\textrm{Pb}}(x_{\textrm{Pb}}, Q^2)$（针对胶子和夸克分布）进行比较。可以看到$R_{p\textrm{Pb}}$和$r_i^{\textrm{Pb}}$之间有非常好的一致性。
+	值得注意的是，固定靶情况即展示了大$X_B$（$\gtrsim 0.3$）时的图形，所以$R_{p\textrm{Pb}}$ 接近于夸克分布的 $r_{\textrm{quark}}^{\textrm{Pb}}$。原因也就是\ref{sec:XBXA}提到的小 $X_B$ 值处的双喷注产生主要核中的胶子引发的过程主导，而在大$X_B$ 值处，核中（价）夸克发挥着主导作用。
+	又一次，我们看到在可观测层面上的 $R_{p\textrm{Pb}}(X_B)$ 可以作为部分子分布的核修正因子 $r_i^{\textrm{Pb}}$ 的影像，原因即是三重微分散射截面 $d^3\sigma/dX_BdX_Ady^*$对$x_{\textrm{Pb}}$ 具有很高的分辨率能力。
+
+\hspace*{\fill}
+\begin{figure}[hptb]
+	\centering
+	\hspace{0.5cm}\includegraphics[width=2.65in]{XB_XA_rpa_rnpdf_fix05}
+	\hspace{0.5cm}\includegraphics[width=2.5in]{XB_XA_rpa_rnpdf_fix008}
+	\caption{图~\ref{fig:XB_pp_rpa_fix} 的面板（A0）和（B0）的$R_{p\textrm{Pb}}$ 结果分别在（A1-A4）和（B1-B4）中用符号来显示，并与相应的 nPDF 因子 $r_i^{\textrm{Pb}}(x_{\textrm{Pb}}, Q^2)$ 进行比较。其中胶子分布用实线表示，总夸克分布用虚线表示。在这个比较中，可以注意到领头阶近似有 $X_B=x_{\textrm{Pb}}$。在绘制 $r_i^{\textrm{Pb}}(x_{\textrm{Pb}}, Q^2)$ 时，我们标度设置为 $Q=\sqrt{X_AX_Bs}/[4\cosh(0.7y^*)]$，其中 $X_A=0.5~(0.08)$ ， $y^*=0$。}
+	\label{fig:XB_XA_rpa_rnpdf_fix}
+\end{figure}
+
+
+
+%------------------------------- 4.4
+\section{本章小结}
+
+% Sec. III
+	研究了在pQCD的次领先阶下，$pp$ 和 $p$A 碰撞中的几种双喷注的三重微分散射截面。
+	
+	
+	此外，我们提出三重微分散射截面的核修正因子 $R_{pA}$ 可以很好地揭示夸克和胶子分布的nPDF因子 $r^A_i(x,Q^2)$ 对 $x$ 和 $Q^2$ 的依赖性，并且甚至可以作为 $r^A_i(x,Q^2)$ 从小到大 $x$ 值的良好成像。
+	这反过来为我们提供了一种直观的方法来理解由各种nPDF所预测的 $R_{pA}$ 之间观察到的差异。
+	
+	
+同时，我们研究了三种不同类型的三重微分散射截面以及相应的核修正因子 $R_{pA}$，并为此建立了联系，用来比较观测量 $R_{pA}$ 和nPDF因子 $r^A_i(x,Q^2)$。
+最后讨论了通过使用不同 $p_T$ 区间的 $R_{pA}$ 来揭示 $r^A_i(x,Q^2)$ 随标度变化的可能性。
+
+
+
+
+
+\iffalse
+\begin{equation}\label{equation:test1}
+  K \leq 
+  \begin{dcases}
+    2 \lfloor \frac{d}{2d - n} \rfloor    , & K \text{为偶数} ; \\
+    2 \lfloor \frac{d}{2d - n} \rfloor - 1, & K \text{为奇数}. \\
+  \end{dcases}
+\end{equation}
+
+公式~\eqref{equation:test1} 的引用
+\fi 

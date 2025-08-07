@@ -1,0 +1,83 @@
+\chapter{研究结论与建议}
+
+本章将对整个研究做一个总结，提出研究结论，并对高中生解导数大题及导数教学提出建议。
+
+
+\section{导数解题策略总结}
+
+导数作为高中数学的重点组成部分，在高中数学解题过程中，常与其他知识点交叉。接下来我将结合对前面的例题的分析，得到大多数导数类型题的解法和思路。
+
+% \begin{enumerate}
+  % \item 含参函数单调性问题的求解方法 \par 
+  \subsection{含参函数单调性问题的求解方法}
+    \begin{enumerate}[(1)]
+      \item 首先确定$f(x)$的定义域；
+      \item 求函数$f(x)$导数；
+      \item 探讨导函数是否存在零点；
+      \item 如果导函数有多个零点，则探讨它们之间的大小还有区间的位置关系等等；
+      \item 绘制导函数$f’(x)$中的同号函数的示意图，从而判定其函数的符号；
+      \item 从前一步的示意图列$f’(x)$，$f(x)$随$x$变化的表格，并且把单调区间写出来；
+      \item 将以上的情况结合起来，将函数的单调性完整地写出来\cite{闫伟2015高中数学}.
+    \end{enumerate}
+  % \item 导数的几何意义解题方法 \par
+  \subsection{导数的几何意义解题方法}
+    \begin{enumerate}[(1)]
+      \item 如果题目所给定点为切点：
+        \begin{enumerate}[(a)]
+          \item 先对函数$f(x)$求导；
+          \item 将切点的横坐标代入导函数$f’(x)$中求出切线斜率；
+          \item 然后将切点坐标和所求斜率带入点斜式中得到所求切线方程；
+        \end{enumerate}
+      \item 如果题目所给定点不是切点：
+        \begin{enumerate}[(a)]
+          \item 首先设切点坐标为$(x_0,y_0)$；
+          \item 对函数$f(x)$求导，将切点横坐标$x_0$带入导函数$f’(x)$求出切线斜率$k$；
+          \item 根据设定的切点坐标$(x_0,y_0)$和斜率$k$写出切线方程；
+          \item 然后将定点坐标带入切线方程得到方程1，再将切点坐标带入原函数$f(x)$中得到方程2，联立方程1、2求解\cite{张美娟2017高中数学}.
+        \end{enumerate}
+    \end{enumerate}
+
+    需要特别考虑斜率不存在的情况。
+
+  % \item 解不等式恒成立问题的方法 \par 
+  \subsection{解不等式恒成立问题的方法}
+    该题用构造法解决。可将原本的不等式证明转为用导数研究函数的单调性或极值。不等式恒成立问题的考法主要有以下几种\cite{惠红民一题一课}：
+    \begin{enumerate}[(1)]
+      \item $\forall x \in D, f(x) \geq a \Leftrightarrow f_{\min }(x) \geq a, x \in D$($a$ 为常数 );
+      \item $\forall x \in D, f({x}) \leq a \Leftrightarrow f_{\max }(x) \leq a, x \in D$($a$ 为常数 );
+      \item $\forall x_{1} \in A, \forall x_{2} \in B, f\left(x_{1}\right) \geq g\left(x_{2}\right) \Leftrightarrow f_{\min }(x) \geq g_{\max }\left(x_{2}\right), x_{1} \in A, x_{2} \in B$.
+    \end{enumerate}
+  % \item 函数零点个数的判断 \par 
+  \subsection{函数零点个数的判断}
+    \begin{enumerate}[(1)]
+      \item 定理法: 结合单调性, 利用 ${f}({a}) \cdot {f}({b})<0$, 可判断 ${y}={f}({x})$ 在 $(a, b)$ 上零点的个数; 
+      \item 直接法: 解方程 ${f}({x})=0$, 解出几个实根, ${f}({x})$ 就有几个零点; 
+      \item 性质法: 利用函数单调性、 对称性等性质确定函数零点的个数; 
+      \item 图像法: 画出图像 ${y}={f}({x})$ 的图像, 大致数出零点的个数\cite{惠红民一题一课}。
+    \end{enumerate}
+  % \item 函数的存在性问题解题思路 \par
+  \subsection{函数的存在性问题解题思路}
+    此类题型可以转换成利用导数求函数最值。这就需要对参数进行分类讨论。 另外也可以根据问题的实际情况分离参数, 转换为探究已知函数的最值\cite{惠红民一题一课}，主要情况有:
+      \begin{enumerate}[(1)]
+        \item $\exists x_{0} \in D, f\left(x_{0}\right) \geq a \Leftrightarrow f(x)_{\max } \geq a, x \in D$($a$ 为常数 );
+        \item $\exists x_{0} \in D, f\left(x_{0}\right) \leq a \Leftrightarrow f(x)_{\min } \leq a, x \in D$($a$ 为常数 );
+        \item $\exists x_{1} \in A, \forall x_{2} \in B, f\left(x_{1}\right) \geq g\left(x_{2}\right) \Leftrightarrow f\left(x_{1}\right)_{\max } \geq g\left(x_{2}\right)_{\max }, x_{1} \in A, x_{2} \in B ;$
+        \item $\forall x_{1} \in A, \exists x_{2} \in B, f\left(x_{1}\right) \geq g\left(x_{2}\right) \Leftrightarrow f\left(x_{1}\right)_{\min } \geq g\left(x_{2}\right)_{\min }, x_{1} \in A, x_{2} \in B ;$
+        \item $\exists x_{1} \in A, \exists x_{2} \in B, f\left(x_{1}\right) \geq g\left(x_{2}\right) \Leftrightarrow f\left(x_{1}\right)_{\max } \geq g\left(x_{2}\right)_{\min }, x_{1} \in A, x_{2} \in B .$
+      \end{enumerate}
+    
+    解决导数大题要注意审题，把握题目涵盖知识点，希望上面总结的方法和经验可以提供一些帮助。
+% \end{enumerate}
+
+
+
+\section{研究建议}
+
+\subsection{导数的概念教学建议}
+
+教材在高台跳水和抛物线的切线斜率两个问题的基础上，运用函数$f(x)$归纳概括了他们之间的关系，定义了一般意义上的平均变化率,并给出符号表示,目的是为了引导学生借助函数图象，将函数平均变化率的表达式与任意给定的两点$(x_1,f(x_1))$, $(x_2 ,f(x_2))$的割线有机结合起来，在学会理解和表达导数即为瞬时变化率的同时，教师引导学生从生活和学习经验出发，举出一些导数在实际生活或者高中数学中的简单例子.
+
+
+\subsection{导数的几何意义教学建议}
+
+很多学生对切点的主观认识都来源于前面学过的圆的切线，所以这些学生会对一般的光滑曲线的切线方程存在误解。此时教师可考虑信息化数学工具的使用，如几何画板，GeoGebra. 从最初的割线出发，步步逼近，切线便能由此而来. 该教学方法不仅能展示出教学软件的便捷性，同时也能增进学生对切线定义的认识.

@@ -1,0 +1,663 @@
+% !TeX root = ../main.tex
+
+\chapter{单、双变量含参函数的“任意性”与“存在性”问题分类}
+此类问题的分类方法丰富多样, 大体分为按解法和题目条件两种分类方法, 按解法分类的有判别式法、分类讨论法、数形结合法、导数分析法、分离参数法和最值法等类别, 本文按照题目条件分类, 具体按照所给函数个数、变量个数和量词的组合形式交叉分类, 大体分为单函数单变量、单函数双变量、双函数单变量和双函数双变量四大类, 在这四大类下又细分为任意型、存在型, 以及任意-任意型、任意-存在型和存在-存在型。
+
+每种题型下会给出题型的一般形式和一般解法思路, 以及一道典型例题, 本文所有例题都用最值法给出解题步骤, 最值法最重要的一步是转化与化归, 所以以下所有题型都围绕着如何转化进行讨论。本章所有题型下的例题所给的例题都由一道题目变化而来, 此题目为笔者实习时高一学生问的练习题, 原题具体为本文给出的双函数双变量中任意-存在型的例题。此分类方法以核心函数为出发点, 通过系统调整条件生成各类题型, 建立了统一的函数模型变式体系, 仅保证了知识体系的完整覆盖, 同时也明确了不同题型之间的本质联系, 相对完整地分析了含参函数的“任意性”与“存在性”问题。
+
+
+\section{单函数单变量}
+单函数单变量问题是该专题最基础的部分, 一般在高一 “二次函数” 根的分布问题或恒成立问题的练习中就有涉及, 此时解法一般涉及到判别式法、数形结合和分类讨论法, 后面学完函数章节会涉及到综合性强一点的最值法, 本文所有例题都用最值法给出解题步骤, 最值法最重要的一步是转化与化归, 所以以下所有题型都围绕着如何转化进行讨论。
+
+单函数单变量问题笔者分为了任意型和存在型两部分, 每一部分都有两种类型的题型, 这两种类型区别在于不等号方向, 不等号方向不同, 转化策略也就不同。
+
+
+\subsection{任意型}\label{subsec:任意型}
+单函数单变量的任意型, 一般题型为对某个范围 \(I\) 内的任意的自变量 \(x\), 都有其对应的函数值 \(f(x)\) 大于等于常数 \(m\), 则可以转化为在这个范围 \(I\) 内, 函数的最小值 \(f(x)_{\min }\) 大于等于常数 \(m\), 因为这个取值范围内的最小值大于等于 \(m\), 则在这个范围内的所有函数值都会大于等于 \(m\); 若是小于等于, 则转化为函数的最大值 \(f{(x) }_{max}\) 小于等于 \(m\), 用数学语言表示即:
+
+\begin{type}\label{type:1}
+  对 \(\forall x \in  I\), 都有 \(f(x)  \geq  m\), 则 \(f{(x) }_{\min } \geq  m\);
+\end{type}
+\begin{type}\label{type:2}
+  对 \(\forall x \in  I\), 都有 \(f(x)  \leq  m\), 则 \(f{(x) }_{\max } \leq  m\).
+\end{type}
+
+下面给出两种类型的例题, 以及用最值法求解的过程:
+
+\begin{example}[类型 \ref{type:1}]\label{example:2.1.1.1}
+  已知 \(f(x)  = -{x}^{2} + {ax}-5\), 若对 \(\forall x \in  \left\lbrack  {2, 4}\right\rbrack\), 都有 \(f(x)  \geq  7\) 成立, 求实数 \(a\) 的取值范围.
+\end{example}
+
+\begin{proof}
+  “对 \(\forall x \in  \left\lbrack  {2, 4}\right\rbrack\), 都有 \(f(x)  \geq  7\) 成立” 转化为 “ \(f{(x) }_{\text{ min }} \geq  7, x \in  \left\lbrack  {2, 4}\right\rbrack\) ”
+
+由于 \(f(x)  = -{x}^{2} + {ax}-5 = -{\left( x-\frac{a}{2}\right) }^{2} + \frac{{a}^{2}}{4}-5\) 的对称轴为 \(x = \frac{a}{2}\).
+
+当对称轴 \(\frac{a}{2} \leq  3\), 即 \(a \leq  6\) 时, \(f{(x) }_{\min } = f\left( 4\right)  = -{16} + {4a}-5 \geq  7\), 解得 \(a \geq  7\), 由于 \(\{ a \mid  a \leq  6\}  \cap  \{ a \mid  a \geq  7\}  = \varnothing\), 所以无解;
+
+当对称轴 \(\frac{a}{2} > 3\), 即 \(a > 6\) 时, \(f{(x) }_{\min } = f\left( 2\right)  = -4 + {2a}-5 \geq  7\), 解得 \(a \geq  8\), 由于 \(\{ a \mid  a > 6\}  \cap  \{ a \mid  a \geq  8\}  = \{ a \mid  a \geq  8\}\), 所以 \(a \geq  8\).
+
+综上, \(a\) 的取值范围为 \(\{ a \mid  a \geq  8\}\).
+\end{proof}
+
+\begin{variation}[类型 \ref{type:2}]
+  已知 \(f(x)  = -{x}^{2} + {ax}-5\), 若对 \(\forall x \in  \left\lbrack  {2, 4}\right\rbrack\), 都有 \(f(x)  \leq  7\) 成立, 求实数 \(a\) 的取值范围.
+\end{variation}
+
+\begin{proof}
+  “对 \(\forall x \in  \left\lbrack  {2, 4}\right\rbrack\), 都有 \(f(x)  \leq  7\) 成立” 转化为 “ \(f{(x) }_{\max } \leq  7, x \in  \left\lbrack  {2, 4}\right\rbrack\) ”
+
+由于 \(f(x)  = -{x}^{2} + {ax}-5 = -{\left( x-\frac{a}{2}\right) }^{2} + \frac{{a}^{2}}{4}-5\) 的对称轴为 \(x = \frac{a}{2}\).
+
+当对称轴 \(\frac{a}{2} \leq  2\), 即 \(a \leq  4\) 时, \(f{(x) }_{\max } = f\left( 2\right)  = -4 + {2a}-5 \leq  7\), 解得 \(a \leq  8\), 由于 \(\{ a \mid  a \leq  4\}  \cap  \{ a \mid  a \leq  8\}  = \{ a \mid  a \leq  4\}\), 所以 \(a \leq  4\);
+
+当对称轴 \(\frac{a}{2} \geq  4\), 即 \(a \geq  8\) 时, \(f{(x) }_{\max } = f\left( 4\right)  = -{16} + {4a}-5 \leq  7\), 解得 \(a \leq  7\), 由于 \(\{ a \mid  a \geq  8\}  \cap  \{ a \mid  a \leq  7\}  = \varnothing\), 所以无解;
+
+当对称轴 \(2 < \frac{a}{2} < 4\), 即 \(4 < a < 8\) 时, \(f{(x) }_{\text{ max }} = f\left( \frac{a}{2}\right)  = \frac{{a}^{2}}{4}-5 \leq  7\), 解得 \(-4\sqrt{3} \leq  a \leq  4\sqrt{3}\), 由于 \(\{ a \mid  4 < a < 8\}  \cap  \{ a \mid  -4\sqrt{3} \leq  a \leq  4\sqrt{3}\}  = \{ a \mid  4 < a \leq\)  \(\left. {4\sqrt{3}}\right\}\), 所以 \(4 < a \leq  4\sqrt{3}\).
+
+综上, \(a\) 的取值范围为 \(\{ a \mid  a \leq  4\sqrt{3}\}\).
+\end{proof}
+
+\subsection{存在型}\label{subsec:存在型}
+单函数单变量的存在型, 一般题型为在某个范围 \(I\) 内, 存在自变量 \(x\), 其对应的函数值 \(f(x)\) 大于等于常数 \(m\), 则可以转化为在这个范围 \(I\) 内, 函数的最大值 \(f{(x) }_{\max }\) 大于等于常数 \(m\), 因为这个取值范围内的最大值大于等于 \(m\), 则在这个范围内的就会存在函数值大于等于 \(m\); 若是小于等于, 则转化为函数的最小值 \(f{(x) }_{min}\) 小于等于 \(m\), 用数学语言表示即:
+
+\begin{type}\label{type:3}
+  若 \(\exists x \in  I\), 使得 \(f(x)  \geq  m\), 则 \(f{(x) }_{\max } \geq  m\);
+\end{type}
+
+\begin{type}\label{type:4}
+  若 \(\exists x \in  I\), 使得 \(f(x)  \leq  m\), 则 \(f{(x) }_{\min } \leq  m\).
+\end{type}
+
+下面给出两种类型的例题, 以及用最值法求解的过程:
+
+
+\begin{variation}[类型 \ref{type:3}]\label{variation:2.1.2.2}
+  已知 \(f(x)  = -{x}^{2} + {ax}-5\), 若 \(\exists x \in  \left\lbrack  {2, 4}\right\rbrack\), 使得 \(f(x)  \geq  7\) 成立, 求实数 \(a\) 的取值范围.
+\end{variation}
+\begin{proof}
+  “ \(\exists x \in  \left\lbrack  {2, 4}\right\rbrack\), 使得 \(f(x)  \geq  7\) 成立” 转化为 “ \(f{(x) }_{\max } \geq  7, x \in  \left\lbrack  {2, 4}\right\rbrack\) ”
+
+由于 \(f(x)  = -{x}^{2} + {ax}-5 = -{\left( x-\frac{a}{2}\right) }^{2} + \frac{{a}^{2}}{4}-5\) 的对称轴为 \(x = \frac{a}{2}\).
+
+当对称轴 \(\frac{a}{2} \leq  2\), 即 \(a \leq  4\) 时, \(f{(x) }_{\max } = f\left( 2\right)  = -4 + {2a}-5 \geq  7\), 解得 \(a \geq  8\), 由于 \(\{ a \mid  a \leq  4\}  \cap  \{ a \mid  a \geq  8\}  = \varnothing\), 所以无解;
+
+当对称轴 \(\frac{a}{2} \geq  4\), 即 \(a \geq  8\) 时, \(f{(x) }_{\max } = f\left( 4\right)  = -{16} + {4a}-5 \geq  7\), 解得 \(a \geq  7\), 由于 \(\{ a \mid  a \geq  8\}  \cap  \{ a \mid  a \geq  7\}  = \{ a \mid  a \geq  8\}\), 所以 \(a \geq  8\);
+
+当对称轴 \(2 < \frac{a}{2} < 4\), 即 \(4 < a < 8\) 时, \(f{(x) }_{\max } = f\left( \frac{a}{2}\right)  = \frac{{a}^{2}}{4}-5 \geq  7\), 解得 \(a \leq\)  \(-4\sqrt{3}\) 或 \(a \geq  4\sqrt{3}\), 由于 \(\{ a\left| {4 < a < 8\} \cap \{ a}\right| a \leq  -4\sqrt{3}\) 或 \(a \geq  4\sqrt{3}\}  = \{ a \mid  4\sqrt{3} \leq\)  \(a < 8\}\), 所以 \(4\sqrt{3} \leq  a < 8\).
+
+综上, \(a\) 的取值范围为 \(\{ a \mid  a \geq  4\sqrt{3}\}\).
+\end{proof}
+
+
+\begin{variation}[类型 \ref{type:4}]\label{variation:2.1.2.3}
+  已知 \(f(x)  = -{x}^{2} + {ax}-5\), 若 \(\exists x \in  \left\lbrack  {2, 4}\right\rbrack\), 使得 \(f(x)  \leq  7\) 成立, 求实数 \(a\) 的取值范围.
+\end{variation}
+\begin{proof}
+  “ \(\exists x \in  \left\lbrack  {2, 4}\right\rbrack\), 使得 \(f(x)  \leq  7\) 成立” 转化为 “ \(f{(x) }_{\text{ min }} \leq  7, x \in  \left\lbrack  {2, 4}\right\rbrack\) ”
+
+由于 \(f(x)  = -{x}^{2} + {ax}-5 = -{\left( x-\frac{a}{2}\right) }^{2} + \frac{{a}^{2}}{4}-5\) 的对称轴为 \(x = \frac{a}{2}\).
+
+当对称轴 \(\frac{a}{2} \leq  3\), 即 \(a \leq  6\) 时, \(f{(x) }_{\min } = f\left( 4\right)  = -{16} + {4a}-5 \leq  7\), 解得 \(a \leq  7\), 由于 \(\{ a \mid  a \leq  6\}  \cap  \{ a \mid  a \leq  7\}  = \{ a \mid  a \leq  6\}\), 所以 \(a \leq  6\);
+
+当对称轴 \(\frac{a}{2} > 3\), 即 \(a > 6\) 时, \(f{(x) }_{\min } = f\left( 2\right)  = -4 + {2a}-5 \leq  7\), 解得 \(a \leq  8\), 由于 \(\{ a \mid  a > 6\}  \cap  \{ a \mid  a \leq  8\}  = \{ a \mid  6 < a \leq  8\}\), 所以 \(6 < a \leq  8\).
+
+综上, \(a\) 的取值范围为 \(\{ a \mid  a \leq  8\}\).
+\end{proof}
+
+
+
+\section{单函数双变量}
+
+单函数双变量问题笔者分为了任意-任意型、任意-存在型和存在-存在型三部分, 每一部分都有两种类型的题型, 这两种类型区别在于不等号方向, 不等号方向不同, 转化策略也就不同。单函数双变量转化的关键是先将一个变量看作一个常数, 转化为单函数单变量问题处理。
+
+
+\subsection{任意-任意型}\label{subsec:任意-任意型}
+此类型的题目要求函数两个变量都是任意的, 此时我们可以任选一个变量看作常数, 则题目就可以转化为单函数单变量的任意型问题, 按照 \ref{subsec:任意型} 的解决方法处理, 处理之后又是一个单函数单变量的任意型问题, 再用同样的方法进行处理即可。
+
+题型一般为对 \(\forall {x}_{1} \in  {I}_{1}, \forall {x}_{2} \in  {I}_{2}\), 使得 \(f(x_1, x_2)  \geq  m\), 求参数取值范围, 我们不妨先将 \({x}_{1}\) 看作常量, 则题目转化为 “对 \(\forall {x}_{2} \in  {I}_{2}\), 都有 \(f\left( {x}_{2}\right)  \geq  m\) ”, 此时题目转化为了单函数单变量的任意型问题, 我们利用 \ref{subsec:任意型} 的转化策略可将题目转化为 \(f{\left( {x}_{2}\right) }_{\min } \geq  m, {x}_{2} \in  {I}_{2}, f{\left( {x}_{2}\right) }_{\min }\) 求出来是一个关于 \({x}_{1}\) 的函数, 我们令 \(g\left( {x}_{1}\right)  = f{\left( {x}_{2}\right) }_{\min }\) 则题目变成了 “对 \(\forall {x}_{1} \in  {I}_{1}\), 都有 \(g\left( {x}_{1}\right)  = f{\left( {x}_{2}\right) }_{\min } \geq  m\) ”, 此时又是一个单函数单变量的任意型问题, 再由 \ref{subsec:任意型} 转化为 \(g{\left( {x}_{1}\right) }_{\min } \geq  m, {x}_{1} \in  {I}_{1}\) 即可求解。若是不等号变成小于等于, 则转化时都转化为函数的最大值即可。
+
+用数学语言表示即:
+
+\begin{type}\label{type:5}
+  对 \(\forall {x}_{1} \in  {I}_{1}, \forall {x}_{2} \in  {I}_{2}\), 使得 \(f(x_1, x_2)  \geq  m\), 则不妨先将 \({x}_{1}\) 看作常量, 题目转变成 “对 \(\forall {x}_{2} \in  {I}_{2}\), 都有 \(f\left( {x}_{2}\right)  \geq  m\) ”, 由 \ref{subsec:任意型} 进一步转化成 \(f{\left( {x}_{2}\right) }_{\min } \geq  m\), 令 \(g\left( {x}_{1}\right)  = f{\left( {x}_{2}\right) }_{\min }\) 即可转化成 “对 \(\forall {x}_{1} \in  {I}_{1}\), 都有 \(g\left( {x}_{1}\right)  = f{\left( {x}_{2}\right) }_{\min } \geq  m\) ”, 再由 \ref{subsec:任意型} 转化为 \(g{\left( {x}_{1}\right) }_{\min } \geq  m\) 即可.
+\end{type}
+
+\begin{type}\label{type:6}
+  对 \(\forall {x}_{1} \in  {I}_{1}, \forall {x}_{2} \in  {I}_{2}\), 使得 \(f(x_1, x_2)  \leq  m\), 则不妨先将 \({x}_{1}\) 看作常量, 题目转变成 “对 \(\forall {x}_{2} \in  {I}_{2}\), 都有 \(f\left( {x}_{2}\right)  \leq  m\) ”, 由 \ref{subsec:任意型} 进一步转化成 \(f{\left( {x}_{2}\right) }_{\max } \leq  m\), 令 \(g\left( {x}_{1}\right)  = f{\left( {x}_{2}\right) }_{\max }\) 即可转化成 “对 \(\forall {x}_{1} \in  {I}_{1}\), 都有 \(g\left( {x}_{1}\right)  = f{\left( {x}_{2}\right) }_{\max } \leq  m\) ”, 再由 \ref{subsec:任意型} 转化为 \(g{\left( {x}_{1}\right) }_{\max } \leq  m\) 即可.
+\end{type}
+
+下面给出类型 \ref{type:5} 的例题, 以及用最值法求解的过程, 类型 \ref{type:6} 的求解过程区别只在于求的是函数的最大值, 其它步骤一致:
+
+\begin{variation}[类型 \ref{type:5}]\label{variation:2.1.4}
+  已知 \(f(x_1, x_2)  =  -{x}_{1}^{2} + a{x}_{1} -5 + {x}_{2} -\frac{2}{{x}_{2}}\), 对 \(\forall {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack\), \(\forall {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f(x_1, x_2)  \geq  2\) 成立, 求实数 \(a\) 的取值范围.
+\end{variation}
+
+\begin{proof}
+  不妨先将 \({x}_{1}\) 看作常量, 则转化成 “已知 \(f\left( {x}_{2}\right)  =  -{x}_{1}^{2} + a{x}_{1} -5 + {x}_{2} -\frac{2}{{x}_{2}}\), 对 \(\forall {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\) 都有 \(f\left( {x}_{2}\right)  \geq  2\) ”, 由 \ref{subsec:任意型} 可转化为 “ \(f{\left( {x}_{2}\right) }_{\min } \geq  2, {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\) ”.
+
+因为 \(y = {x}_{2}\) 与 \(y =  -\frac{2}{{x}_{2}}\) 在 \(\left\lbrack  {1, 2}\right\rbrack\) 上单调递增, \(y =  -{x}_{1}^{2} + a{x}_{1} -5\) 是常数, 所以 \(f\left( {x}_{2}\right)  =  -{x}_{1}{}^{2} + a{x}_{1} -5 + {x}_{2} -\frac{2}{{x}_{2}}\) 在 \(\left\lbrack  {1, 2}\right\rbrack\) 上单调递增, 所以 \(f{\left( {x}_{2}\right) }_{\min } = f\left( 1\right)  =  -\)  \({x}_{1}^{2} + a{x}_{1} -5 + 1 -\frac{2}{1} =  -{x}_{1}^{2} + a{x}_{1} -6.\)
+
+令 \(g\left( {x}_{1}\right)  = f{\left( {x}_{2}\right) }_{\min } =  -{x}_{1}^{2} + a{x}_{1} -6\), 此时题目变换为 “对 \(\forall {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack\), 都有 \(g\left( {x}_{1}\right)  = f{\left( {x}_{2}\right) }_{\min } =  -{x}_{1}{}^{2} + a{x}_{1} -6 \geq  2\) ” 再由 \ref{subsec:任意型} 可转化为 “ \(g{\left( {x}_{1}\right) }_{\min } \geq  2\), \({x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack\) ".
+
+由于 \(g\left( {x}_{1}\right)  = f{\left( {x}_{2}\right) }_{\min } =  -{x}_{1}^{2} + a{x}_{1} -6 =  -{\left( {x}_{1} -\frac{a}{2}\right) }^{2} + \frac{{a}^{2}}{4} -6\).
+
+当对称轴 \(\frac{a}{2} \leq  3\), 即 \(a \leq  6\) 时, \(g{\left( {x}_{1}\right) }_{\min } = g{\left( 4\right) }_{\min } =  -{16} + {4a} -6 \geq  2\), 解得 \(a \geq  6\), 由于 \(\{ a \mid  a \leq  6\}  \cap  \{ a \mid  a \geq  6\}  = \{ a \mid  a = 6\}\), 所以 \(a = 6\);
+
+当对称轴 \(\frac{a}{2} > 3\), 即 \(a > 6\) 时, \(g{(x) }_{\min } = g\left( 2\right)  =  -4 + {2a} -6 \geq  2\), 解得 \(a \geq  6\), 由于 \(\{ a \mid  a > 6\}  \cap  \{ a \mid  a \geq  6\}  = \{ a \mid  a > 6\}\), 所以 \(a > 6\).
+
+综上, \(a\) 的取值范围为 \(\{ a \mid  a \geq  6\}\).
+\end{proof}
+
+
+
+\subsection{任意-存在型}\label{subsec:任意-存在型}
+此类型的题目要求函数一个变量是任意的, 另一个存在即可, 此时我们只能把任意变量看作常数, 则题目就可以转化为单函数单变量的任意型问题, 按照 \ref{subsec:任意型} 的解决方法处理, 处理之后是一个单函数单变量的存在型问题, 再用 \ref{subsec:存在型} 的方法进行处理即可。
+
+关于任意-存在型问题都是只能先将任意变量看作常数, 而不能先将存在变量看作常数, 如果先把存在变量看作常数处理, 那么任意变量就失去了任意性, 它的任意性就仅在这个固定的常数下实现, 被存在变量限制, 而题目的意思是对于任意一个任意变量, 都能找到一个存在变量, 存在变量的存在性是在任意变量的任意性的基础上实现的, 所以存在变量是被任意变量限制的, 所以我们必须先把任意变量看作常数, 先处理任意变量, 最后再处理存在变量, 既能保证存在性, 也能保证任意性。在本小节的例题后会给出反例。
+
+此类题型一般为对 \(\forall {x}_{1} \in  {I}_{1}\), 若 \(\exists {x}_{2} \in  {I}_{2}\), 使得 \(f(x_1, x_2)  \geq  m\), 求参数取值范围, 则我们先将 \({x}_{1}\) 看作常量, 题目则转化为 “ \(\exists {x}_{2} \in  {I}_{2}\), 使得 \(f\left( {x}_{2}\right)  \geq  m\) ”, 此时题目转化为了单函数单变量的存在型问题, 我们利用 \ref{subsec:存在型} 的转化策略可将题目转化为 \(f{\left( {x}_{2}\right) }_{\max } \geq  m, {x}_{2} \in  {I}_{2}, f{\left( {x}_{2}\right) }_{\max }\) 求出来是一个关于 \({x}_{1}\) 的函数, 我们令 \(g\left( {x}_{1}\right)  = f{\left( {x}_{2}\right) }_{\max }\) 则题目变成了 “对 \(\forall {x}_{1} \in  {I}_{1}\), 都有 \(g\left( {x}_{1}\right)  = f{\left( {x}_{2}\right) }_{\max } \geq  m\) ”, 此时是一个单函数单变量的任意型问题, 再由 \ref{subsec:任意型} 转化为 \(g{\left( {x}_{1}\right) }_{\min } \geq  m, {x}_{1} \in  {I}_{1}\) 即可求解。若是不等号变成小于等于, 则存在型转化为求最小值, 任意型转化为求最大值。
+
+用数学语言表示即:
+
+\begin{type}\label{type:7}
+  对 \(\forall {x}_{1} \in  {I}_{1}\), 若 \(\exists {x}_{2} \in  {I}_{2}\), 使得 \(f(x_1, x_2)  \geq  m\), 则先将 \({x}_{1}\) 看作常量, 题目转变成 “ \(\exists {x}_{2} \in  {I}_{2}\), 使得 \(f\left( {x}_{2}\right)  \geq  m\) ” , 由 \ref{subsec:存在型} 进一步转化为 \(f{\left( {x}_{2}\right) }_{\max } \geq  m\), 令 \(g\left( {x}_{1}\right)  = f{\left( {x}_{2}\right) }_{\max }\) 即可转化成 “对 \(\forall {x}_{1} \in  {I}_{1}\), 都有 \(g\left( {x}_{1}\right)  = f{\left( {x}_{2}\right) }_{\max } \geq  m\) ”, 再由 \ref{subsec:任意型} 转化为 \(g{\left( {x}_{1}\right) }_{\min } \geq  m\) 即可( \({x}_{1}, {x}_{2}\) 的处理顺序不能替换).
+\end{type}
+
+\begin{type}\label{type:8}
+  对 \(\forall {x}_{1} \in  {I}_{1}\), 若 \(\exists {x}_{2} \in  {I}_{2}\), 使得 \(f(x_1, x_2)  \leq  m\), 则先将 \({x}_{1}\) 看作常量, 题目转变成 “若 \(\exists {x}_{2} \in  {I}_{2}\), 使得 \(f\left( {x}_{2}\right)  \leq  m\) ” , 由 \ref{subsec:存在型} 进一步转化为 \(f{\left( {x}_{2}\right) }_{\text{ min }} \leq  m\), 令 \(g\left( {x}_{1}\right)  = f{\left( {x}_{2}\right) }_{\min }\) 即可转化成 “对 \(\forall {x}_{1} \in  {I}_{1}\), 都有 \(g\left( {x}_{1}\right)  = f{\left( {x}_{2}\right) }_{\min } \leq  m\) ”, 再由 \ref{subsec:任意型} 转化为 \(g{\left( {x}_{1}\right) }_{\max } \leq  m\) 即可( \({x}_{1}, {x}_{2}\) 的处理顺序不能替换).
+\end{type}
+
+下面给出类型 \ref{type:7} 的例题, 以及用最值法求解的过程, 类型 \ref{type:8} 的求解过程区别只在于先转化为求函数的最小值, 再转化为求最大值, 其它步骤一致:
+
+\begin{variation}[类型 \ref{type:7}]\label{variation:2.1.5}
+  已知 \(f(x_1, x_2)  =  -{x}_{1}^{2} + a{x}_{1} -5 + {x}_{2} -\frac{2}{{x}_{2}}\), 对 \(\forall {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack\), 若 \(\exists {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f(x_1, x_2)  \geq  4\) 成立, 求实数 \(a\) 的取值范围.
+\end{variation}
+
+\begin{proof}
+  先将 \({x}_{1}\) 看作常量, 则转化成 “已知 \(f\left( {x}_{2}\right)  =  -{x}_{1}{}^{2} + a{x}_{1} -5 + {x}_{2} -\frac{2}{{x}_{2}}\), 若 \(\exists {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\) 都有 \(f\left( {x}_{2}\right)  \geq  4\) ”, 由 \ref{subsec:存在型} 可转化为 “ \(f{\left( {x}_{2}\right) }_{\max } \geq  4, {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\) ”.
+
+因为 \(y = {x}_{2}\) 与 \(y =  -\frac{2}{{x}_{2}}\) 在 \(\left\lbrack  {1, 2}\right\rbrack\) 上单调递增, \(y =  -{x}_{1}^{2} + a{x}_{1} -5\) 是常数, 所以 \(f\left( {x}_{2}\right)  =  -{x}_{1}{}^{2} + a{x}_{1} -5 + {x}_{2} -\frac{2}{{x}_{2}}\) 在 \(\left\lbrack  {1, 2}\right\rbrack\) 上单调递增, 所以 \(f{\left( {x}_{2}\right) }_{\text{ max }} = f\left( 2\right)  =  -\)  \({x}_{1}^{2} + a{x}_{1} -5 + 2 -\frac{2}{2} =  -{x}_{1}^{2} + a{x}_{1} -4.\)
+
+令 \(g\left( {x}_{1}\right)  = f{\left( {x}_{2}\right) }_{\max } =  -{x}_{1}^{2} + a{x}_{1} -4\), 此时题目变换为 “对 \(\forall {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack\), 都有 \(g\left( {x}_{1}\right)  = f{\left( {x}_{2}\right) }_{\max } =  -{x}_{1}^{2} + a{x}_{1} -4 \geq  4\) ” 再由 \ref{subsec:任意型} 可转化为 “ \(g{\left( {x}_{1}\right) }_{\min } \geq  4\), \({x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack\) ".
+
+由于 \(g\left( {x}_{1}\right)  = f{\left( {x}_{2}\right) }_{\max } =  -{x}_{1}^{2} + a{x}_{1} -4 =  -{\left( {x}_{1} -\frac{a}{2}\right) }^{2} + \frac{{a}^{2}}{4} -4\).
+
+当对称轴 \(\frac{a}{2} \leq  3\), 即 \(a \leq  6\) 时, \(g{\left( {x}_{1}\right) }_{\text{ min }} = g{\left( 4\right) }_{\text{ min }} =  -{16} + {4a} -4 \geq  4\), 解得 \(a \geq  6\), 由于 \(\{ a \mid  a \leq  6\}  \cap  \{ a \mid  a \geq  6\}  = \{ a \mid  a = 6\}\), 所以 \(a = 6\);
+
+当对称轴 \(\frac{a}{2} > 3\), 即 \(a > 6\) 时, \(g{(x) }_{\min } = g\left( 2\right)  =  -4 + {2a} -4 \geq  4\), 解得 \(a \geq  6\), 由于 \(\{ a \mid  a > 6\}  \cap  \{ a \mid  a \geq  6\}  = \{ a \mid  a > 6\}\), 所以 \(a > 6\).
+
+综上, \(a\) 的取值范围为 \(\{ a \mid  a \geq  6\}\).
+\end{proof}
+
+\begin{remark}
+  \({x}_{1}, {x}_{2}\) 的处理顺序不能替换。
+\end{remark}
+
+\begin{counterexample}\label{counterexample:2.2.2.1}
+  已知函数 \(f(x_1, x_2)  = {x}_{1}{}^{2} + {x}_{2}{}^{2} -{2a}{x}_{1}{x}_{2}\), 对 \(\forall {x}_{1} \in  R\), 若 \(\exists {x}_{2} \in  R\), 使得 \(f(x_1, x_2)  \leq  0\) 成立, 求实数 \(a\) 的取值范围.
+\end{counterexample}
+
+\noindent\textbf{解 1} 先处理任意变量 (正确方法)
+
+先将 \({x}_{1}\) 看做常数, 那么问题变成 “ \(\exists {x}_{2} \in  R\), 使得关于 \({x}_{2}\) 的二次函数 \({x}_{2}{}^{2} -\)  \({2a}{x}_{1}{x}_{2} + {x}_{1}{}^{2} \leq  0\) 成立”, 开口向上的二次函数在全体实数 \(R\) 上要存在小于等于零的函数值, 所以判别式 \(\Delta  = {\left( -2a{x}_{1}\right) }^{2} -4 \cdot  1 \cdot  {x}_{1}{}^{2} \geq  0\), 化简得到 \(4{x}_{1}{}^{2}\left( {{a}^{2} -}\right.\) 1) ≥ 0 .
+
+对于 \(\forall {x}_{1} \in \mathbb{R}, 4{x}_{1}{}^{2} \geq  0\) 恒成立, 因此, 条件化简为 \({a}^{2} -1 \geq  0\), 解得 \(a \geq 1\) 或 \(a \leq  -1\). 
+
+
+\noindent\textbf{解 2} 先处理存在变量 (错误方法)
+
+先将 \({x}_{2}\) 看做常数, 那么问题变成 “对 \(\forall {x}_{1} \in  R\), 都有关于 \({x}_{1}\) 的二次函数 \({x}_{1}{}^{2} -\)  \({2a}{x}_{1}{x}_{2} + {x}_{2}{}^{2} \leq  0\) 成立”, 这是一个开口向上的二次函数, 开口向上的二次函数没有上界, 当判别式 \(\Delta  \leq  0\) 时, \({x}_{1}^{2} -{2a}{x}_{1}{x}_{2} + {x}_{2}^{2} \geq  0\) 对所有的 \({x}_{1}\) 恒成立, 当判别式 \(\Delta  > 0\) 时, 函数在某些区间内小于零, 但在其他区间内大于零, 因此, 不可能存在 \({x}_{2}\) 使得 \({x}_{1}{}^{2} -{2a}{x}_{1}{x}_{2} + {x}_{2}{}^{2} \leq  0\) 对所有的 \({x}_{1}\) 恒成立, 这种解法导致题目条件自相矛盾, 从而求不出来 \(a\) 值.
+
+% \noindent\textbf{验证：} 取 \(a = {0.5}\) (满足 \(-1 \leq  a \leq  1\) ) 时, 题目即为 “对 \(\forall {x}_{1} \in  R\), 若 \(\exists {x}_{2} \in  R\), 使得 \({x}_{1}{}^{2} + {x}_{2}{}^{2} -{x}_{1}{x}_{2} \leq  0\) 成立”, 当我们先固定 \({x}_{1} = 1\), 则不等式为 \(1 + {x}_{2}{}^{2} -\)  \({x}_{2} \leq  0\), 该二次函数的判别式 \(\Delta  = {\left( -1\right) }^{2} -4 \cdot  1 \cdot  1 =  -3 < 0\), 无实数解, 即不存在 \({x}_{2}\) 使得不等式成立, 与题目条件矛盾.
+
+
+\subsection{存在-存在型}\label{subsec:存在-存在型}
+此类型的题目要求函数两个变量都存在即可, 此时我们可以任选一个变量看作常数, 则题目就可以转化为单函数单变量的存在型问题, 按照 \ref{subsec:存在型} 的解决方法处理, 处理之后又是一个单函数单变量的存在型问题, 再用同样的方法进行处理即可。
+
+题型一般为若 \(\exists {x}_{1} \in  {I}_{1}, \exists {x}_{2} \in  {I}_{2}\), 使得 \(f(x_1, x_2)  \geq  m\), 求参数取值范围, 我们不妨先将 \({x}_{1}\) 看作常量, 则题目转化为 “若 \(\exists {x}_{2} \in  {I}_{2}\), 使得 \(f\left( {x}_{2}\right)  \geq  m\) ”, 此时题目转化为了单函数单变量的存在型问题, 我们利用 \ref{subsec:存在型} 的转化策略可将题目转化为 \(f{\left( {x}_{2}\right) }_{\max } \geq  m, {x}_{2} \in  {I}_{2}, f{\left( {x}_{2}\right) }_{\max }\) 求出来是一个关于 \({x}_{1}\) 的函数, 我们令 \(g\left( {x}_{1}\right)  = f{\left( {x}_{2}\right) }_{\max }\) 则题目变成了 “ \(\exists {x}_{1} \in  {I}_{1}\), 使得 \(g\left( {x}_{1}\right)  = f{\left( {x}_{2}\right) }_{\max } \geq  m\) ” ”, 此时又是一个单函数单变量的存在型问题, 再由 \ref{subsec:存在型} 转化为 \(g{\left( {x}_{1}\right) }_{\max } \geq  m, {x}_{1} \in\)  \({I}_{1}\) 即可求解。若是不等号变成小于等于, 则转化时都转化为函数的最小值即可。
+
+用数学语言表示即:
+
+\begin{type}\label{type:9}
+  若 \(\exists {x}_{1} \in  {I}_{1}, \exists {x}_{2} \in  {I}_{2}\), 使得 \(f(x_1, x_2)  \geq  m\), 则不妨先将 \({x}_{1}\) 看作常量, 题目转变成 “ \(\exists {x}_{2} \in  {I}_{2}\), 使得 \(f\left( {x}_{2}\right)  \geq  m\) ” , 由 \ref{subsec:存在型} 进一步转化为 \(f{\left( {x}_{2}\right) }_{\max } \geq  m\), 令 \(g\left( {x}_{1}\right)  = f{\left( {x}_{2}\right) }_{\max }\), 即可转化成 “ \(\exists {x}_{1} \in  {I}_{1}\), 使得 \(g\left( {x}_{1}\right)  = f{\left( {x}_{2}\right) }_{\max } \geq  m\) ”, 再由 \ref{subsec:存在型} 转化为 \(g{\left( {x}_{1}\right) }_{\max } \geq  m\) 即可.
+\end{type}
+
+\begin{type}\label{type:10}
+  若 \(\exists {x}_{1} \in  {I}_{1}, \exists {x}_{2} \in  {I}_{2}\), 使得 \(f(x_1, x_2)  \leq  m\), 则不妨先将 \({x}_{1}\) 看作常量, 题目转变成 “ \(\exists {x}_{2} \in  {I}_{2}\), 使得 \(f\left( {x}_{2}\right)  \leq  m\) ” , 由 \ref{subsec:存在型} 进一步转化为 \(f{\left( {x}_{2}\right) }_{\min } \leq  m\), 令 \(g\left( {x}_{1}\right)  = f{\left( {x}_{2}\right) }_{\min }\), 即可转化成 “ \(\exists {x}_{1} \in  {I}_{1}\), 使得 \(g\left( {x}_{1}\right)  = f{\left( {x}_{2}\right) }_{\min } \leq  m\) ”, 再由 \ref{subsec:存在型} 转化为 \(g{\left( {x}_{1}\right) }_{\min } \leq  m\) 即可.
+\end{type}
+
+下面给出类型 \ref{type:9} 的例题, 以及用最值法求解的过程, 类型 \ref{type:10} 的求解过程区别只在于求的是函数的最小值, 其它步骤一致:
+
+
+\begin{variation}[类型 \ref{type:9}]\label{variation:2.1.6}
+  已知 \(f(x_1, x_2)  =  -{x}_{1}^{2} + a{x}_{1} -5 + {x}_{2} -\frac{2}{{x}_{2}}\), 若 \(\exists {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack\), \(\exists {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f(x_1, x_2)  \geq  4\) 成立, 求实数 \(a\) 的取值范围.
+\end{variation}
+
+\begin{proof}
+  不妨先将 \({x}_{1}\) 看作常量, 则转化成 “已知 \(f\left( {x}_{2}\right)  =  -{x}_{1}^{2} + a{x}_{1} -5 + {x}_{2} -\frac{2}{{x}_{2}}\), 若 \(\exists {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\) 使得 \(f\left( {x}_{2}\right)  \geq  4\) ”, 由 \ref{subsec:存在型} 可转化为 “ \(f{\left( {x}_{2}\right) }_{\max } \geq  4, {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\) ”.
+
+因为 \(y = {x}_{2}\) 与 \(y =  -\frac{2}{{x}_{2}}\) 在 \(\left\lbrack  {1, 2}\right\rbrack\) 上单调递增, \(y =  -{x}_{1}^{2} + a{x}_{1} -5\) 是常数, 所以 \(f\left( {x}_{2}\right)  =  -{x}_{1}{}^{2} + a{x}_{1} -5 + {x}_{2} -\frac{2}{{x}_{2}}\) 在 \(\left\lbrack  {1, 2}\right\rbrack\) 上单调递增, 所以 \(f{\left( {x}_{2}\right) }_{\text{ max }} = f\left( 2\right)  =  -\)  \({x}_{1}^{2} + a{x}_{1} -5 + 2 -\frac{2}{2} =  -{x}_{1}^{2} + a{x}_{1} -4.\)
+
+令 \(g\left( {x}_{1}\right)  = f{\left( {x}_{2}\right) }_{\max } =  -{x}_{1}^{2} + a{x}_{1} -4\), 此时题目变换为 “ \(\exists {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack\), 使得 \(g\left( {x}_{1}\right)  = f{\left( {x}_{2}\right) }_{\max } =  -{x}_{1}{}^{2} + a{x}_{1} -4 \geq  4\) ” 再由 \ref{subsec:存在型} 可转化为 “ \(g{\left( {x}_{1}\right) }_{\max } \geq  4\), \({x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack\) ".
+
+由于 \(g\left( {x}_{1}\right)  = f{\left( {x}_{2}\right) }_{\max } =  -{x}_{1}^{2} + a{x}_{1} -4 =  -{\left( {x}_{1} -\frac{a}{2}\right) }^{2} + \frac{{a}^{2}}{4} -4\).
+
+当对称轴 \(\frac{a}{2} \leq  2\), 即 \(a \leq  4\) 时, \(g{\left( {x}_{1}\right) }_{\max } = g\left( 2\right)  =  -4 + {2a} -4 \geq  4\), 解得 \(a \geq  6\), 由于 \(\{ a \mid  a \leq  4\}  \cap  \{ a \mid  a \geq  6\}  = \varnothing\), 所以无解;
+
+当对称轴 \(\frac{a}{2} \geq  4\), 即 \(a \geq  8\) 时, \(g{\left( {x}_{1}\right) }_{\max } = g\left( 4\right)  =  -{16} + {4a} -4 \geq  4\), 解得 \(a \geq 6\), 由于 \(\{ a \mid  a \geq  8\}  \cap  \{ a \mid  a \geq  6\}  = \{ a \mid  a \geq  8\}\), 所以 \(a \geq  8\);
+
+当对称轴 \(2 < \frac{a}{2} < 4\), 即 \(4 < a < 8\) 时, \(g{\left( {x}_{1}\right) }_{\max } = g\left( \frac{a}{2}\right)  = \frac{{a}^{2}}{4} -4 \geq  4\), 解得 \(a \leq   -4\sqrt{2}\) 或 \(a \geq  4\sqrt{2}\), 由于 \(\{ a\left| {4 < a < 8\} \cap \{ a}\right| a \leq   -4\sqrt{2}\) 或 \(a \geq  4\sqrt{2}\}  = \{ a \mid  4\sqrt{2} \leq a < 8\}\), 所以 \(4\sqrt{2} \leq  a < 8\).
+
+综上, \(a\) 的取值范围为 \(\{ a \mid  a \geq  4\sqrt{2}\}\).
+\end{proof}
+
+\section{双函数单变量}
+单函数双变量问题笔者分为了任意型和存在型两部分, 每一部分都有两种类型的题型, 这两种类型区别在于不等号方向, 不等号方向不同, 转化策略也就不同。单函数双变量转化的关键是构造函数, 通过移项和构造函数将题目转化为单函数单变量问题处理。
+
+\subsection{任意型}\label{subsec:2.3任意型}
+双函数单变量的任意型, 一般题型为对某个范围 \(I\) 内的任意的自变量 \(x\), 都有其对应的函数值 \(f(x)\) 和 \(g(x)\), 满足 \(f(x)  \geq  g(x)\), 我们可以将 \(g(x)\) 移到不等号左边, 构造 \(h(x)  = f(x)  -g(x)\), 则题目转化为 “对 \(\forall x \in  I\), 都有 \(h(x)  = f(x)  -g(x)  \geq  0\) ”, 是一个单函数单变量的任意型, 由 \ref{subsec:任意型} 可进一步转化为 \(h{(x) }_{\min } \geq  0, x \in  I\); 若是小于等于号, 则转化为函数的最大值 \(h{(x) }_{\max }\) 小于等于 \(0\), 用数学语言表示即:
+
+\begin{type}\label{type:11}
+  对 \(\forall x \in  I\), 都有 \(f(x)  \geq  g(x)\), 则构造 \(h(x)  = f(x)  -g(x)\), 将问题转化为 \(h{(x) }_{\min } \geq  0\);
+\end{type}
+
+\begin{type}\label{type:12}
+  对 \(\forall x \in  I\), 都有 \(f(x)  \leq  g(x)\), 则构造 \(h(x)  = f(x)  -g(x)\), 将问题转化为 \(h{(x) }_{\max } \leq  0\).
+\end{type}
+
+
+下面给出类型 \ref{type:11} 的例题, 以及用最值法求解的过程, 类型 \ref{type:12} 的求解过程区别只在于求的是函数的最大值, 其它步骤一致:
+\begin{variation}[类型 \ref{type:11}]\label{variation:2.1.7}
+  已知 \(f(x)  =  -{x}^{2} + {ax} -5, g(x)  = x -1\), 若对 \(\forall x \in\)  \(\left\lbrack  {2, 4}\right\rbrack\), 都有 \(f(x)  \geq  g(x)\) 成立, 求实数 \(a\) 的取值范围.
+\end{variation}
+
+\begin{proof}
+  构造 \(h(x)  = f(x)  -g(x)  =  -{x}^{2} + {ax} -5 -\left( {x -1}\right)  =  -{x}^{2} + \left( {a -1}\right) x -4\), 题目转化为 “对 \(\forall x \in  \left\lbrack  {2, 4}\right\rbrack\), 都有 \(h(x)  \geq  0\) 成立”, 由 \ref{subsec:任意型} 转化为 “\(h{(x) }_{\min } \geq\)  \(0, x \in  {\left\lbrack  2, 4\right\rbrack  }\)”.
+
+\(h(x)  =  -{x}^{2} + \left( {a -1}\right) x -4 =  -{\left( x -\frac{a -1}{2}\right) }^{2} + \frac{{\left( a -1\right) }^{2}}{4} -4\) 的对称轴为 \(x = \frac{a -1}{2}\).
+
+当对称轴 \(\frac{a -1}{2} \leq  3\), 即 \(a \leq  7\) 时, \(h{(x) }_{\text{ min }} = h\left( 4\right)  =  -{16} + 4\left( {a -1}\right)  -4 \geq  0\), 解得 \(a \geq  6\), 由于 \(\{ a \mid  a \leq  7\}  \cap  \{ a \mid  a \geq  6\}  = \{ a \mid  6 \leq  a \leq  7\}\), 所以 \(6 \leq  a \leq  7\);
+
+当对称轴 \(\frac{a -1}{2} > 3\), 即 \(a > 7\) 时, \(h{(x) }_{\min } = h\left( 2\right)  =  -4 + 2\left( {a -1}\right)  -4 \geq  0\), 解得 \(a \geq  5\), 由于 \(\{ a \mid  a > 7\}  \cap  \{ a \mid  a \geq  5\}  = \{ a \mid  a > 7\}\), 所以 \(a > 7\).
+
+综上, \(a\) 的取值范围为 \(\{ a \mid  a \geq  6\}\).
+\end{proof}
+
+\subsection{存在型}\label{subsec:2.3存在型}
+双函数单变量的存在型, 一般题型在某个范围 \(I\) 内, 存在自变量 \(x\), 其对应的函数值 \(f(x)\) 和 \(g(x)\), 满足 \(f(x)  \geq  g(x)\), 求参数的取值范围, 我们可以将 \(g(x)\) 移到不等号左边, 构造 \(h(x)  = f(x)  -g(x)\), 则题目转化为 “ \(\exists x \in  I\), 使得 \(h(x)  = f(x)  -\)  \(g(x)  \geq  0\) ”, 是一个单函数单变量的存在型, 由 \ref{subsec:存在型} 可进一步转化为 \(h{(x) }_{\max } \geq\)  \(0, x \in  I\); 若是小于等于号, 则转化为函数的最大值 \(h{(x) }_{\min }\) 小于等于 \(0\), 用数学语言表示即:
+
+\begin{type}\label{type:13}
+  若 \(\exists x \in  I\), 使得 \(f(x)  \geq  g(x)\), 则构造 \(h(x)  = f(x)  -g(x)\), 将问题转化为 \(h{(x) }_{\max } \geq  0\);
+\end{type}
+
+\begin{type}\label{type:14}
+  若 \(\exists x \in  I\), 使得 \(f(x)  \leq  g(x)\), 则构造 \(h(x)  = f(x)  -g(x)\), 将问题转化为 \(h{(x) }_{\min } \leq  0\).
+\end{type}
+
+下面给出类型 \ref{type:13} 的例题, 以及用最值法求解的过程, 类型 \ref{type:14} 的求解过程区别只在于求的是函数的最小值, 其它步骤一致:
+
+\begin{variation}[类型 \ref{type:13}]\label{variation:2.1.8}
+  已知 \(f(x)  =  -{x}^{2} + {ax} -5, g(x)  = x -1\), 若 \(\exists x \in  \left\lbrack  {2, 4}\right\rbrack\), 使得 \(f(x)  \geq  g(x)\) 成立, 求实数 \(a\) 的取值范围.
+\end{variation}
+
+\begin{proof}
+  构造 \(h(x)  = f(x)  -g(x)  =  -{x}^{2} + {ax} -5 -\left( {x -1}\right)  =  -{x}^{2} + \left( {a -1}\right) x -4\), 题目转化为 “若 \(\exists x \in  \left\lbrack  {2, 4}\right\rbrack\), 使得 \(h(x)  \geq  0\) 成立”, 由 \ref{subsec:存在型} 转化为 “\(h{(x) }_{\max } \geq\)  \(0, x \in  {\left\lbrack  2, 4\right\rbrack  }\)”.
+
+\(h(x)  =  -{x}^{2} + \left( {a -1}\right) x -4 =  -{\left( x -\frac{a -1}{2}\right) }^{2} + \frac{{\left( a -1\right) }^{2}}{4} -4\) 的对称轴为 \(x = \frac{a -1}{2}\).
+
+当对称轴 \(\frac{a -1}{2} \leq  2\), 即 \(a \leq  5\) 时, \(h{(x) }_{\max } = h\left( 2\right)  =  -4 + 2\left( {a -1}\right)  -4 \geq  0\), 解得 \(a \geq  5\), 由于 \(\{ a \mid  a \leq  5\}  \cap  \{ a \mid  a \geq  5\}  = \{ a \mid  a = 5\}\), 所以 \(a = 5\);
+
+当对称轴 \(\frac{a -1}{2} \geq  4\), 即 \(a \geq  9\) 时, \(h{(x) }_{\max } = h\left( 4\right)  =  -{16} + 4\left( {a -1}\right)  -4 \geq  0\), 解得 \(a \geq  6\), 由于 \(\{ a \mid  a \geq  9\}  \cap  \{ a \mid  a \geq  6\}  = \{ a \mid  a \geq  9\}\), 所以 \(a \geq  9\);
+
+当对称轴 \(2 < \frac{a -1}{2} < 4\), 即 \(5 < a < 9\) 时, \(h{(x) }_{\max } = h\left( \frac{a -1}{2}\right)  = \frac{{\left( a -1\right) }^{2}}{4} -4 \geq  0\), 解得 \(a \leq   -3\) 或 \(a \geq  5\), 由于 \(\{ a \mid  5 < a < 9\}  \cap  \{ a \mid  a \leq   -3\) 或 \(a \geq  5\}  = \{ a \mid  5 < a < 9\}\), 所以 \(5 < a < 9\).
+
+综上, \(a\) 的取值范围为 \(\{ a \mid  a \geq  5\}\).
+\end{proof}
+
+
+\section{双函数双变量}
+双函数双变量问题笔者分为了任意-任意型、任意-存在型和存在-存在型三部分, 每一部分都有两种类型的题型, 这两种类型区别在于不等号方向, 不等号方向不同, 转化策略也就不同。双函数双变量问题与以上三个问题类型最不同的地方是, 上文的所有题型转化都是转化为求最值问题, 而双函数双变量问题的任意 -存在型和存在-存在型有转化为求值域的问题类型, 更为复杂繁琐, 因而出题人常常爱把它当作压轴题考察学生。双函数双变量转化的关键是同时将两个函数进行转化, 转化其中一个函数时只要把不等号另一边的函数当成常数, 题目即可看作单函数单变量类型。
+
+
+\subsection{任意-任意型}\label{subsec:2.4任意-任意型}
+此类题型一般有两个函数, 不妨设为 \(f(x)\) 和 \(g(x)\), 它们有各自的自变量 \({x}_{1}\) 和 \({x}_{2}\), 也就是它们的自变量不能是同一个, 且它们的自变量都有各自的取值范围 \({I}_{1}\) 和 \({I}_{2}\), 这里要求每一个变量都是任意的, 即对 \(\forall {x}_{1} \in  {I}_{1}\) 和 \(\forall {x}_{2} \in  {I}_{2}\), 都有其对应的函数值 \(f\left( {x}_{1}\right)\) 和 \(g\left( {x}_{2}\right)\), 满足 \(f\left( {x}_{1}\right)  \geq  g\left( {x}_{2}\right)\), 我们只要分开来看两个函数, 即看作对 \(\forall {x}_{1} \in  {I}_{1}\), 都有 \(f\left( {x}_{1}\right)\) 大于等于一个常数, 以及对 \(\forall {x}_{2} \in  {I}_{2}\), 都有 \(g\left( {x}_{2}\right)\) 小于等于一个常数, 即可拆解为两个单函数单变量的任意型问题, 再由 \ref{subsec:任意型} 将其转化为 \(f{\left( {x}_{1}\right) }_{\min }\) 大于等于一个常数, \(g{\left( {x}_{2}\right) }_{\max }\) 小于等于一个常数, 结合来看就是 \(f{\left( {x}_{1}\right) }_{\min } \geq  g{\left( {x}_{2}\right) }_{\max }\); 若是小于等于号, 则转化为 \(f{\left( {x}_{1}\right) }_{\max } \leq  g{\left( {x}_{2}\right) }_{\min }\), 用数学语言表示即:
+
+\begin{type}\label{type:15}
+  对 \(\forall {x}_{1} \in  {I}_{1}, \forall {x}_{2} \in  {I}_{2}\), 使得 \(f\left( {x}_{1}\right)  \geq  g\left( {x}_{2}\right)\), 则 \(f{\left( {x}_{1}\right) }_{\min } \geq  g{\left( {x}_{2}\right) }_{\max }\);
+\end{type}
+
+\begin{type}\label{type:16}
+  对 \(\forall {x}_{1} \in  {I}_{1}, \forall {x}_{2} \in  {I}_{2}\), 使得 \(f\left( {x}_{1}\right)  \leq  g\left( {x}_{2}\right)\), 则 \(f{\left( {x}_{1}\right) }_{\max } \leq  g{\left( {x}_{2}\right) }_{\min }\). 
+\end{type}
+
+下面给出类型 \ref{type:15} 的例题, 以及用最值法求解的过程, 类型 \ref{type:16} 的求解过程区别只在于求的是 \(f{\left( {x}_{1}\right) }_{\max }\) 和 \(g{\left( {x}_{2}\right) }_{\min }\), 其它步骤一致:
+
+
+\begin{variation}[类型 \ref{type:15}]\label{variation:2.1.9}
+  已知 \(f(x)  =  -{x}^{2} + {ax} -5, g(x)  = x -\frac{2}{x}\), 若对 \(\forall {x}_{1} \in\)  \(\left\lbrack  {2, 4}\right\rbrack  , \forall {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 都有 \(f\left( {x}_{1}\right)  \geq  g\left( {x}_{2}\right)\) 成立, 求实数 \(a\) 的取值范围.
+\end{variation}
+
+\begin{proof}
+  “对 \(\forall {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , \forall {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 都有 \(f\left( {x}_{1}\right)  \geq  g\left( {x}_{2}\right)\) 成立” 可转化为 “ \(f{\left( {x}_{1}\right) }_{\text{ min }} \geq  g{\left( {x}_{2}\right) }_{\text{ max }}, {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\) ”.
+
+由于 \(f\left( {x}_{1}\right)  =  -{x}_{1}^{2} + a{x}_{1} -5 =  -{\left( {x}_{1} -\frac{a}{2}\right) }^{2} + \frac{{a}^{2}}{4} -5, {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack\).
+
+当对称轴 \(\frac{a}{2} \leq  3\), 即 \(a \leq  6\) 时, \(f{\left( {x}_{1}\right) }_{\min } = f\left( 4\right)  =  -{16} + {4a} -5 = {4a} -{21}\);
+
+当对称轴 \(\frac{a}{2} > 3\), 即 \(a > 6\) 时, \(f{\left( {x}_{1}\right) }_{\text{ min }} = f\left( 2\right)  =  -4 + {2a} -5 = {2a} -9\).
+
+因为 \(y = {x}_{2}\) 与 \(y =  -\frac{2}{{x}_{2}}\) 在 \(\left\lbrack  {1, 2}\right\rbrack\) 上单调递增, 所以 \(g\left( {x}_{2}\right)  = {x}_{2} -\frac{2}{{x}_{2}}\) 在 \(\left\lbrack  {1, 2}\right\rbrack\) 上单调递增, 所以 \(g{\left( {x}_{2}\right) }_{\max } = g\left( 2\right)  = 2 -\frac{2}{2} = 1\).
+
+当 \(a \leq  6\) 时, \(f{\left( {x}_{1}\right) }_{\min } \geq  g{\left( {x}_{2}\right) }_{\max }\) 即 \({4a} -{21} \geq  1\), 解得 \(a \geq  \frac{11}{2}\), 因为 \(\{ a \mid  a \leq\)  \(6\}  \cap  \left\{  {a\left| {\;a \geq  \frac{11}{2}}\right. }\right\}   = \left\{  {a\left| {\;\frac{11}{2} \leq  a \leq  6}\right. }\right\}\), 所以 \(\frac{11}{2} \leq  a \leq  6\);
+
+当 \(a > 6\) 时, \(f{\left( {x}_{1}\right) }_{\min } \geq  g{\left( {x}_{2}\right) }_{\max }\) 即 \({2a} -9 \geq  1\), 解得 \(a \geq  5\), 因为 \(\{ a \mid  a > 6\}  \cap\)  \(\{ a \mid  a \geq  5\}  = \{ a \mid  a > 6\}\), 所以 \(a > 6\).
+
+综上, \(a\) 的取值范围为 \(\left\{  {a\left| {\;a \geq  \frac{11}{2}}\right. }\right\}\).
+\end{proof}
+
+
+\subsection{任意-存在型}\label{subsec:2.4任意-存在型}
+此类题型一般有两个函数, 不妨设为 \(f(x)\) 和 \(g(x)\), 它们有各自的自变量 \({x}_{1}\) 和 \({x}_{2}\), 也就是它们的自变量不能是同一个, 且它们的自变量都有各自的取值范围 \({I}_{1}\) 和 \({I}_{2}\), 这里要求一个变量是任意的, 一个存在即可, 即对 \(\forall {x}_{1} \in  {I}_{1}, \exists {x}_{2} \in  {I}_{2}\), 其对应的函数值为 \(f\left( {x}_{1}\right)\) 和 \(g\left( {x}_{2}\right)\), 满足 \(f\left( {x}_{1}\right)  \geq  g\left( {x}_{2}\right)\), 我们同样分开来看两个函数, 即看作对 \(\forall {x}_{1} \in  {I}_{1}\), 都有 \(f\left( {x}_{1}\right)\) 大于等于一个常数, 以及 \(\exists {x}_{2} \in  {I}_{2}\), 使得 \(g\left( {x}_{2}\right)\) 小于等于一个常数, 即可拆解为 \(f(x)\) 的单函数单变量的任意型问题和 \(g(x)\) 的单函数单变量的存在型问题, 再由 \ref{subsec:任意型} 将其转化为 \(f{\left( {x}_{1}\right) }_{\min }\) 大于等于一个常数, 由 \ref{subsec:存在型} 将其转化为 \(g{\left( {x}_{2}\right) }_{\min }\) 小于等于一个常数, 结合来看就是 \(f{\left( {x}_{1}\right) }_{\min } \geq  g{\left( {x}_{2}\right) }_{\min }\); 若是小于等于号, 则转化为 \(f{\left( {x}_{1}\right) }_{\max } \leq  g{\left( {x}_{2}\right) }_{\max }\); 若是等于号, 则可理解为对任意的 \(f\left( {x}_{1}\right)\) 都存在 \(g\left( {x}_{2}\right)\) 与之相等, 所以 \(g(x)\) 在 \({I}_{2}\) 上的值域要包含 \(f(x)\) 在 \({I}_{1}\) 上的值域, 即转化为 \(f\left( {x}_{1}\right)\) 的值域 \(A\) 是 \(g\left( {x}_{2}\right)\) 的值域 \(B\) 的子集, 用数学语言表示即:
+
+\begin{type}\label{type:17}
+  对 \(\forall {x}_{1} \in  {I}_{1}, \exists {x}_{2} \in  {I}_{2}\), 使得 \(f\left( {x}_{1}\right)  \geq  g\left( {x}_{2}\right)\), 则 \(f{\left( {x}_{1}\right) }_{\min } \geq  g{\left( {x}_{2}\right) }_{\min }\);
+\end{type}
+
+\begin{type}\label{type:18}
+  对 \(\forall {x}_{1} \in  {I}_{1}, \exists {x}_{2} \in  {I}_{2}\), 使得 \(f\left( {x}_{1}\right)  \leq  g\left( {x}_{2}\right)\), 则 \(f{\left( {x}_{1}\right) }_{\max } \leq  g{\left( {x}_{2}\right) }_{\max }\);
+\end{type}
+
+\begin{type}\label{type:19}
+  对 \(\forall {x}_{1} \in  {I}_{1}, \exists {x}_{2} \in  {I}_{2}\), 使得 \(f\left( {x}_{1}\right)  = g\left( {x}_{2}\right)\), 则 \(f\left( {x}_{1}\right)\) 的值域 \(A\) 是 \(g\left( {x}_{2}\right)\) 的值域 \(B\) 的子集, 即 \(A \subseteq  B\).
+\end{type}
+
+下面给出类型 \ref{type:17} 和类型 \ref{type:19} 的例题, 以及用最值法求解的过程, 类型 \ref{type:18} 的求解过程与类型 \ref{type:17} 类似, 区别只在于求的是 \(f{\left( {x}_{1}\right) }_{\max }\) 和 \(g{\left( {x}_{2}\right) }_{\max }\), 其它步骤一致:
+
+\begin{variation}[类型 \ref{type:17}]\label{variation:2.1.10}
+  已知 \(f(x)  =  -{x}^{2} + {ax} -5, g(x)  = x -\frac{2}{x}\), 若对 \(\forall {x}_{1} \in\)  \(\left\lbrack  {2, 4}\right\rbrack  , \exists {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f\left( {x}_{1}\right)  \geq  g\left( {x}_{2}\right)\) 成立, 求实数 \(a\) 的取值范围.
+\end{variation}
+
+
+\begin{proof}
+  “对 \(\forall {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , \exists {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f\left( {x}_{1}\right)  \geq  g\left( {x}_{2}\right)\) 成立” 可转化为 “ \(f{\left( {x}_{1}\right) }_{\text{ min }} \geq  g{\left( {x}_{2}\right) }_{\text{ min }}, {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\) ”.
+
+由于 \(f\left( {x}_{1}\right)  =  -{x}_{1}^{2} + a{x}_{1} -5 =  -{\left( {x}_{1} -\frac{a}{2}\right) }^{2} + \frac{{a}^{2}}{4} -5, {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack\).
+
+当对称轴 \(\frac{a}{2} \leq  3\), 即 \(a \leq  6\) 时, \(f{\left( {x}_{1}\right) }_{\min } = f\left( 4\right)  =  -{16} + {4a} -5 = {4a} -{21}\);
+
+当对称轴 \(\frac{a}{2} > 3\), 即 \(a > 6\) 时, \(f{\left( {x}_{1}\right) }_{\min } = f\left( 2\right)  =  -4 + {2a} -5 = {2a} -9\).
+
+因为 \(y = {x}_{2}\) 与 \(y =  -\frac{2}{{x}_{2}}\) 在 \(\left\lbrack  {1, 2}\right\rbrack\) 上单调递增, 所以 \(g\left( {x}_{2}\right)  = {x}_{2} -\frac{2}{{x}_{2}}\) 在 \(\left\lbrack  {1, 2}\right\rbrack\) 上单调递增, 所以 \(g{\left( {x}_{2}\right) }_{\min } = g\left( 1\right)  = 1 -\frac{2}{1} =  -1\).
+
+当 \(a \leq  6\) 时, \(f{\left( {x}_{1}\right) }_{\min } \geq  g{\left( {x}_{2}\right) }_{\min }\) 即 \({4a} -{21} \geq   -1\), 解得 \(a \geq  5\), 因为 \(\{ a \mid  a \leq\)  \(6\}  \cap  \{ a \mid  a \geq  5\}  = \{ a \mid  5 \leq  a \leq  6\}\), 所以 \(5 \leq  a \leq  6\);
+
+当 \(a > 6\) 时, \(f{\left( {x}_{1}\right) }_{\text{ min }} \geq  g{\left( {x}_{2}\right) }_{\text{ min }}\) 即 \({2a} -9 \geq   -1\), 解得 \(a \geq  4\), 因为 \(\{ a \mid  a > 6\}  \cap\)  \(\{ a \mid  a \geq  4\}  = \{ a \mid  a > 6\}\), 所以 \(a > 6\).
+
+综上, \(a\) 的取值范围为 \(\{ a \mid  a \geq  5\}\).
+\end{proof}
+
+\begin{variation}[类型 \ref{type:19}]\label{variation:2.1.11}
+  已知 \(f(x)  =  -{x}^{2} + {ax} -5, g(x)  = x -\frac{2}{x}\), 若对 \(\forall {x}_{1} \in\)  \(\left\lbrack  {2, 4}\right\rbrack  , \exists {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f\left( {x}_{1}\right)  = g\left( {x}_{2}\right)\) 成立, 求实数 \(a\) 的取值范围.
+\end{variation}
+
+\begin{proof}
+  “对 \(\forall {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , \exists {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f\left( {x}_{1}\right)  = g\left( {x}_{2}\right)\) 成立”可转化为“ \(f\left( {x}_{1}\right)\) 的值域 \(A\) 是 \(g\left( {x}_{2}\right)\) 的值域 \(B\) 的子集, 即 \(A \subseteq  B, {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\) ”.
+
+由于 \(f\left( {x}_{1}\right)  =  -{x}_{1}^{2} + a{x}_{1} -5 =  -{\left( {x}_{1} -\frac{a}{2}\right) }^{2} + \frac{{a}^{2}}{4} -5, {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack\).
+
+当对称轴 \(\frac{a}{2} \leq  2\), 即 \(a \leq  4\) 时, \(f{\left( {x}_{1}\right) }_{\max } = f\left( 2\right)  =  -4 + {2a} -5 = {2a} -9\), \(f{\left( {x}_{1}\right) }_{\text{ min }} = f\left( 4\right)  =  -{16} + {4a} -5 = {4a} -{21}\), 值域 \(A = \left\lbrack  {{4a} -{21}, {2a} -9}\right\rbrack\);
+
+当对称轴 \(\frac{a}{2} \geq  4\), 即 \(a \geq  8\) 时, \(f{\left( {x}_{1}\right) }_{\max } = f\left( 4\right)  =  -{16} + {4a} -5 = {4a} -{21}\), \(f{\left( {x}_{1}\right) }_{\text{ min }} = f\left( 2\right)  =  -4 + {2a} -5 = {2a} -9\), 值域 \(A = \left\lbrack  {{2a} -9, {4a} -{21}}\right\rbrack\);
+
+当对称轴 \(2 < \frac{a}{2} \leq  3\), 即 \(4 < a \leq  6\) 时, \(f{\left( {x}_{1}\right) }_{\max } = f\left( \frac{a}{2}\right)  = \frac{{a}^{2}}{4} -5, f{\left( {x}_{1}\right) }_{\min } = f\left( 4\right)  =  -{16} + {4a} -5 = {4a} -{21}\), 值域 \(A = \left\lbrack  {{4a} -{21}, \frac{{a}^{2}}{4} -5}\right\rbrack\);
+
+当对称轴 \(3 < \frac{a}{2} < 4\), 即 \(6 < a < 8\) 时, \(f{\left( {x}_{1}\right) }_{\max } = f\left( \frac{a}{2}\right)  = \frac{{a}^{2}}{4} -5, f{\left( {x}_{1}\right) }_{\min } =\)  \(f\left( 2\right)  =  -4 + {2a} -5 = {2a} -9\), 值域 \(A = \left\lbrack  {{2a} -9, \frac{{a}^{2}}{4} -5}\right\rbrack\).
+
+又因为 \(y = {x}_{2}\) 与 \(y =  -\frac{2}{{x}_{2}}\) 在 \(\left\lbrack  {1, 2}\right\rbrack\) 上单调递增, 所以 \(g\left( {x}_{2}\right)  = {x}_{2} -\frac{2}{{x}_{2}}\) 在 \(\left\lbrack  {1, 2}\right\rbrack\) 上单调递增, 所以 \(g{\left( {x}_{2}\right) }_{\max } = g\left( 2\right)  = 2 -\frac{2}{2} = 1, g{\left( {x}_{2}\right) }_{\min } = g\left( 1\right)  = 1 -\frac{2}{1} =  -1\), 值域 \(B = \left\lbrack  {-1, 1}\right\rbrack\).
+
+% 当 \(a \leq  4\) 时, 值域 \(A = \left\lbrack  {{4a} -{21}, {2a} -9}\right\rbrack\) 包含于值域 \(B = \left\lbrack  {-1, 1}\right\rbrack\), 则 
+
+% \(\left\{  {\begin{matrix} {4a} -{21} \leq  {2a} -9 \\  {4a} -{21} \geq   -1 \\  {2a} -9 \leq  1 \end{matrix}\text{ , 解得 }\left\{  {\begin{array}{l} a \leq  {6} \\  a \geq  5 \\  a \leq  5 \end{array}\text{ , 即 }a = 5}\right. }\right.\), 由于 \(\{ a \mid  a \leq  4\}  \cap  \{ a \mid  a = 5\}  = \varnothing\), 
+
+% 所以无解;
+
+% 当 \(a \geq  8\) 时, 值域 \(A = \left\lbrack  {{2a} -9, {4a} -{21}}\right\rbrack\) 包含于值域 \(B = \left\lbrack  {-1, 1}\right\rbrack\), 则
+
+% \(\left\{  {\begin{matrix} {4a} -{21} \leq  {2a} -9 \\  {2a} -9 \geq   -1 \\  {4a} -{21} \leq  1 \end{matrix}, \text{ 解得 }\left\{  {\begin{matrix} a \leq  {6} \\  a \geq  4 \\  a \leq  \frac{11}{2} \end{matrix}, \text{ 即 }4 \leq  a \leq  \frac{11}{2}, \text{ 由于 }\{ a \mid  a \geq  8\}  \cap  \{ a \mid  4 \leq  }\right. }\right.\left. {a \leq  \frac{11}{2}}\right\}   = \varnothing\), 所以无解;
+
+% 当 \(4 < a \leq  6\) 时, 值域 \(A = \left\lbrack  {{4a} -{21}, \frac{{a}^{2}}{4} -5}\right\rbrack\) 包含于值域 \(B = \left\lbrack  {-1, 1}\right\rbrack\), 则
+
+% \(\left\{  {\begin{matrix} {4a} -{21} \leq  \frac{a^2}{4} -5 \\  {4a} -{21} \geq   -1 \\  \frac{{a}^{2}}{4} -5 \leq  1 \end{matrix}, \text{ 解得 }\left\{  {\begin{matrix} a \in \mathbb{R} \\  a \geq  5 \\   -2\sqrt{6} \leq  a \leq  2\sqrt{6} \end{matrix}, \text{ 无解; }}\right. }\right.\)
+当 \(a \leq  4\) 时, 值域 \(A = \left\lbrack  {{4a} - {21}, {2a} - 9}\right\rbrack\) 包含于值域 \(B = \left\lbrack  {-1, 1}\right\rbrack\), 则
+\[
+\begin{cases}
+{4a} - {21} \leq  {2a} - 9 \\
+{4a} - {21} \geq  -1 \\
+{2a} - 9 \leq  1
+\end{cases}, 
+\; \text{解得} \;
+\begin{cases}
+a \leq  {6} \\
+a \geq  5 \\
+a \leq  5
+\end{cases}, 
+\; \text{即} \; a = 5
+\]
+由于 \(\{ a \mid  a \leq  4\}  \cap  \{ a \mid  a = 5\}  = \varnothing\), 所以无解;
+
+当 \(a \geq  8\) 时, 值域 \(A = \left\lbrack  {{2a} - 9, {4a} - {21}}\right\rbrack\) 包含于值域 \(B = \left\lbrack  {-1, 1}\right\rbrack\), 则
+\[
+\begin{cases}
+{4a} - {21} \leq  {2a} - 9 \\
+{2a} - 9 \geq  -1 \\
+{4a} - {21} \leq  1
+\end{cases}, 
+\; \text{解得} \;
+\begin{cases}
+a \leq  {6} \\
+a \geq  4 \\
+a \leq  \frac{11}{2}
+\end{cases}, 
+\; \text{即} \; 4 \leq  a \leq  \frac{11}{2}
+\]
+由于 \(\{ a \mid  a \geq  8\}  \cap  \{ a \mid  4 \leq  a \leq  \frac{11}{2}\}  = \varnothing\), 所以无解;
+
+当 \(4 < a \leq  6\) 时, 值域 \(A = \left\lbrack  {{4a} - {21}, \frac{{a}^{2}}{4} - 5}\right\rbrack\) 包含于值域 \(B = \left\lbrack  {-1, 1}\right\rbrack\), 则
+\[
+\begin{cases}
+{4a} - {21} \leq  \frac{a^2}{4} - 5 \\
+{4a} - {21} \geq  -1 \\
+\frac{{a}^{2}}{4} - 5 \leq  1
+\end{cases}, 
+\; \text{解得} \;
+\begin{cases}
+a \in \mathbb{R} \\
+a \geq  5 \\
+ -2\sqrt{6} \leq  a \leq  2\sqrt{6}
+\end{cases}, 
+\; \text{无解;}
+\]
+
+当 \(6 < a < 8\) 时, 值域 \(A = \left\lbrack  {{2a} -9, \frac{{a}^{2}}{4} -5}\right\rbrack\) 包含于值域 \(B = \left\lbrack  {-1, 1}\right\rbrack\), 则
+% \(\left\{  {\begin{matrix}  2a-9 \leq \frac{a^2}{4} -5 \\  {2a} -9 \geq   -1 \\  \frac{{a}^{2}}{4} -5 \leq  1 \end{matrix}, \text{ 解得 }\left\{  {\begin{matrix} a \in \mathbb{R} \\  a \geq  4 \\   -2\sqrt{6} \leq  a \leq  2\sqrt{6} \end{matrix}, \text{ 即 }4 \leq  a \leq  2\sqrt{6}, \text{ 由于 }\{ a \mid  6 < }\right. }\right.\left. {a < 8}\right\}   \cap  \left\{  {a \mid  4 \leq  a \leq  2\sqrt{6}}\right\}   = \{ a \mid  4 \leq  a \leq  2\sqrt{6}\} .\) 综上, \(a\) 的取值范围为 \(\{ a \mid  4 \leq  a \leq  2\sqrt{6}\}\).
+\[
+\begin{cases}
+    2a - 9 \leq \dfrac{a^2}{4} - 5 \\
+    2a - 9 \geq -1 \\
+    \dfrac{a^2}{4} - 5 \leq 1
+\end{cases}, 
+\; \text{解得} \; 
+\begin{cases}
+    a \in \mathbb{R} \\
+    a \geq 4 \\
+    -2\sqrt{6} \leq a \leq 2\sqrt{6}
+\end{cases}, 
+\; \text{即 } 4 \leq a \leq 2\sqrt{6}.
+\]
+由于  
+\[
+\{ a \mid 6 < a < 8 \} \cap \{ a \mid 4 \leq a \leq 2\sqrt{6} \} = \varnothing, 
+\]  
+所以无解。
+
+综上，没有满足所有条件的实数 $a$.
+\end{proof}
+
+
+\subsection{存在-存在型}\label{subsec:2.4存在-存在型}
+此类题型一般有两个函数, 不妨设为 \(f(x)\) 和 \(g(x)\), 它们有各自的自变量 \({x}_{1}\) 和 \({x}_{2}\), 也就是它们的自变量不能是同一个, 且它们的自变量都有各自的取值范围 \({I}_{1}\) 和 \({I}_{2}\), 这里要求两个变量存在即可, 即 \(\exists {x}_{1} \in  {I}_{1}, \exists {x}_{2} \in  {I}_{2}\), 其对应的函数值为 \(f\left( {x}_{1}\right)\) 和 \(g\left( {x}_{2}\right)\), 满足 \(f\left( {x}_{1}\right)  \geq  g\left( {x}_{2}\right)\), 我们同样分开来看两个函数, 即看作对 \(\exists {x}_{1} \in  {I}_{1}\), 使得 \(f\left( {x}_{1}\right)\) 大于等于一个常数, 以及 \(\exists {x}_{2} \in  {I}_{2}\), 使得 \(g\left( {x}_{2}\right)\) 小于等于一个常数, 即可拆解为 \(f(x)\) 的单函数单变量的存在型问题和 \(g(x)\) 的单函数单变量的存在型问题, 再由 \ref{subsec:存在型} 将其转化为 \(f{\left( {x}_{1}\right) }_{\max }\) 大于等于一个常数, 由 \ref{subsec:存在型} 将其转化为 \(g{\left( {x}_{2}\right) }_{\min }\) 小于等于一个常数, 结合来看就是 \(f{\left( {x}_{1}\right) }_{\max } \geq  g{\left( {x}_{2}\right) }_{\min }\); 若是小于等于号, 则转化为 \(f{\left( {x}_{1}\right) }_{\min } \leq  g{\left( {x}_{2}\right) }_{\max }\); 若是等于号, 则可理解为存在 \(f\left( {x}_{1}\right)\) 和 \(g\left( {x}_{2}\right)\) 相等, 也就是 \(f(x)\) 在 \({I}_{1}\) 上的值域与 \(g(x)\) 在 \({I}_{2}\) 上的值域要有交集, 即转化为 \(f\left( {x}_{1}\right)\) 的值域 \(A\) 与 \(g\left( {x}_{2}\right)\) 的值域 \(B\) 有非空交集, 用数学语言表示即:
+
+
+\begin{type}\label{type:20}
+  若 \(\exists {x}_{1} \in  {I}_{1}, \exists {x}_{2} \in  {I}_{2}\), 使得 \(f\left( {x}_{1}\right)  \geq  g\left( {x}_{2}\right)\), 则 \(f{\left( {x}_{1}\right) }_{\max } \geq  g{\left( {x}_{2}\right) }_{\min }\);
+\end{type}
+
+\begin{type}\label{type:21}
+  若 \(\exists {x}_{1} \in  {I}_{1}, \exists {x}_{2} \in  {I}_{2}\), 使得 \(f\left( {x}_{1}\right)  \leq  g\left( {x}_{2}\right)\), 则 \(f{\left( {x}_{1}\right) }_{\min } \leq  g{\left( {x}_{2}\right) }_{\max }\);
+\end{type}
+
+\begin{type}\label{type:22}
+  若 \(\exists {x}_{1} \in  {I}_{1}, \exists {x}_{2} \in  {I}_{2}\), 使得 \(f\left( {x}_{1}\right)  = g\left( {x}_{2}\right)\), 则 \(f\left( {x}_{1}\right)\) 的值域 \(A\) 与 \(g\left( {x}_{2}\right)\) 的值域 \(B\) 有非空交集, 即 \(A \cap  B \neq  \varnothing\).
+\end{type}
+
+下面给出类型 \ref{type:20} 和类型 \ref{type:22} 的例题, 以及用最值法求解的过程, 类型 \ref{type:21} 的求解过程与类型 \ref{type:17} 类似, 区别只在于求的是 \(f{\left( {x}_{1}\right) }_{\min }\) 和 \(g{\left( {x}_{2}\right) }_{\max }\), 其它步骤一致:
+
+\begin{variation}[类型 \ref{type:20}]\label{variation:2.1.12}
+  已知 \(f(x)  =  -{x}^{2} + {ax} -5, g(x)  = x -\frac{2}{x}\), 若 \(\exists {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack\), \(\exists {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f\left( {x}_{1}\right)  \geq  g\left( {x}_{2}\right)\) 成立, 求实数 \(a\) 的取值范围.
+\end{variation}
+
+
+\begin{proof}
+  “若 \(\exists {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , \exists {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f\left( {x}_{1}\right)  \geq  g\left( {x}_{2}\right)\) 成立” 可转化为 " \(f{\left( {x}_{1}\right) }_{\max } \geq  g{\left( {x}_{2}\right) }_{\min }, {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\) ".
+
+由于 \(f\left( {x}_{1}\right)  =  -{x}_{1}^{2} + a{x}_{1} -5 =  -{\left( {x}_{1} -\frac{a}{2}\right) }^{2} + \frac{{a}^{2}}{4} -5, {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack\).
+
+当对称轴 \(\frac{a}{2} \leq  2\), 即 \(a \leq  4\) 时, \(f{\left( {x}_{1}\right) }_{\max } = f\left( 2\right)  =  -4 + {2a} -5 = {2a} -9\);
+
+当对称轴 \(\frac{a}{2} \geq  4\), 即 \(a \geq  8\) 时, \(f{\left( {x}_{1}\right) }_{\max } = f\left( 4\right)  =  -{16} + {4a} -5 = {4a} -{21}\);
+
+当对称轴 \(2 < \frac{a}{2} < 4\), 即 \(4 < a < 8\) 时, \(f{\left( {x}_{1}\right) }_{\max } = f\left( \frac{a}{2}\right)  = \frac{{a}^{2}}{4} -5\).
+
+又因为 \(y = {x}_{2}\) 与 \(y =  -\frac{2}{{x}_{2}}\) 在 \(\left\lbrack  {1, 2}\right\rbrack\) 上单调递增, 所以 \(g\left( {x}_{2}\right)  = {x}_{2} -\frac{2}{{x}_{2}}\) 在 \(\left\lbrack  {1, 2}\right\rbrack\) 上单调递增, 所以 \(g{\left( {x}_{2}\right) }_{\min } = g\left( 1\right)  = 1 -\frac{2}{1} =  -1\).
+
+当 \(a \leq  4\) 时, \(f{\left( {x}_{1}\right) }_{\max } \geq  g{\left( {x}_{2}\right) }_{\min }\) 即 \({2a} -9 \geq   -1\), 解得 \(a \geq  4\), 因为 \(\{ a \mid  a \leq  4\}  \cap\)  \(\{ a \mid  a \geq  4\}  = \{ a \mid  a = 4\}\), 所以 \(a = 4\);
+
+当 \(a \geq  8\) 时, \(f{\left( {x}_{1}\right) }_{\max } \geq  g{\left( {x}_{2}\right) }_{\min }\) 即 \({4a} -{21} \geq   -1\), 解得 \(a \geq  5\), 因为 \(\{ a \mid  a \geq\)  \(8\}  \cap  \{ a \mid  a \geq  5\}  = \{ a \mid  a \geq  8\}\), 所以 \(a \geq  8\);
+
+当 \(4 < a < 8\) 时, \(f{\left( {x}_{1}\right) }_{\max } \geq  g{\left( {x}_{2}\right) }_{\min }\) 即 \(\frac{{a}^{2}}{4} -5 \geq   -1\), 解得 \(a \leq   -4\) 或 \(a \geq  4\), 因为 \(\{ a \mid  4 < a < 8\}  \cap  \{ a \mid  a \leq   -4\) 或 \(a \geq  4\}  = \{ a \mid  4 < a < 8\}\), 所以 \(4 < a < 8\).
+
+综上, \(a\) 的取值范围为 \(\{ a \mid  a \geq  4\}\).
+\end{proof}
+
+
+\begin{variation}[类型 \ref{type:22}]\label{variation:2.1.13}
+  已知 \(f(x)  =  -{x}^{2} + {ax} -5, g(x)  = x -\frac{2}{x}\), 若 \(\exists {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack\), \(\exists {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f\left( {x}_{1}\right)  = g\left( {x}_{2}\right)\) 成立, 求实数 \(a\) 的取值范围.
+\end{variation}
+
+\begin{proof}
+  “ \(\exists {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , \exists {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f\left( {x}_{1}\right)  = g\left( {x}_{2}\right)\) 成立” 可转化为 “ \(f\left( {x}_{1}\right)\) 的值域 \(A\) 与 \(g\left( {x}_{2}\right)\) 的值域 \(B\) 有非空交集, 即 \(A \cap  B \neq  \varnothing , {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , {x}_{2} \in\)  \(\left\lbrack  {1, 2}\right\rbrack\) ”.
+
+由于 \(f\left( {x}_{1}\right)  =  -{x}_{1}^{2} + a{x}_{1} -5 =  -{\left( {x}_{1} -\frac{a}{2}\right) }^{2} + \frac{{a}^{2}}{4} -5, {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack\).
+
+当对称轴 \(\frac{a}{2} \leq  2\), 即 \(a \leq  4\) 时, \(f{\left( {x}_{1}\right) }_{\max } = f\left( 2\right)  =  -4 + {2a} -5 = {2a} -9\), \(f{\left( {x}_{1}\right) }_{\text{ min }} = f\left( 4\right)  =  -{16} + {4a} -5 = {4a} -{21}\), 值域 \(A = \left\lbrack  {{4a} -{21}, {2a} -9}\right\rbrack\);
+
+当对称轴 \(\frac{a}{2} \geq  4\), 即 \(a \geq  8\) 时, \(f{\left( {x}_{1}\right) }_{\max } = f\left( 4\right)  =  -{16} + {4a} -5 = {4a} -{21}\), \(f{\left( {x}_{1}\right) }_{\text{ min }} = f\left( 2\right)  =  -4 + {2a} -5 = {2a} -9\), 值域 \(A = \left\lbrack  {{2a} -9, {4a} -{21}}\right\rbrack\);
+
+当对称轴 \(2 < \frac{a}{2} \leq  3\), 即 \(4 < a \leq  6\) 时, \(f{\left( {x}_{1}\right) }_{\max } = f\left( \frac{a}{2}\right)  = \frac{{a}^{2}}{4} -5, f{\left( {x}_{1}\right) }_{\min } =\)  \(f\left( 4\right)  =  -{16} + {4a} -5 = {4a} -{21}\), 值域 \(A = \left\lbrack  {{4a} -{21}, \frac{{a}^{2}}{4} -5}\right\rbrack\);
+
+当对称轴 \(3 < \frac{a}{2} < 4\), 即 \(6 < a < 8\) 时, \(f{\left( {x}_{1}\right) }_{\max } = f\left( \frac{a}{2}\right)  = \frac{{a}^{2}}{4} -5, f{\left( {x}_{1}\right) }_{\min } =\)  \(f\left( 2\right)  =  -4 + {2a} -5 = {2a} -9\), 值域 \(A = \left\lbrack  {{2a} -9, \frac{{a}^{2}}{4} -5}\right\rbrack\).
+
+又因为 \(y = {x}_{2}\) 与 \(y =  -\frac{2}{{x}_{2}}\) 在 \(\left\lbrack  {1, 2}\right\rbrack\) 上单调递增, 所以 \(g\left( {x}_{2}\right)  = {x}_{2} -\frac{2}{{x}_{2}}\) 在 \(\left\lbrack  {1, 2}\right\rbrack\) 上单调递增, 所以 \(g{\left( {x}_{2}\right) }_{\max } = g\left( 2\right)  = 2 -\frac{2}{2} = 1, g{\left( {x}_{2}\right) }_{\min } = g\left( 1\right)  = 1 -\frac{2}{1} =  -1\), 值域 \(B = \left\lbrack  {-1, 1}\right\rbrack\).
+
+当 \(a \leq  4\) 时, 值域 \(A = \left\lbrack  {{4a} - {21}, {2a} - 9}\right\rbrack\) 与值域 \(B = \left\lbrack  {-1, 1}\right\rbrack\) 有非空交集, 则
+\[
+\begin{cases}
+{4a} - {21} \leq {2a} - 9 \\
+{2a} - 9 \geq  -1 \\
+{4a} - {21} \leq  1
+\end{cases}, 
+\; \text{解得} \;
+\begin{cases}
+a \leq 6 \\
+a \geq  4 \\
+a \leq  \frac{11}{2}
+\end{cases}, 
+\; \text{即} \; 4 \leq  a \leq  \frac{11}{2}
+\]
+又 \(\{ a \mid  a \leq  4\}  \cap  \{ a \mid  4 \leq  a \leq \frac{11}{2}\} = \{ a \mid  a = 4\}; \)
+
+当 \(a \geq  8\) 时, 值域 \(A = \left\lbrack  {{2a} - 9, {4a} - {21}}\right\rbrack\) 与值域 \(B = \left\lbrack  {-1, 1}\right\rbrack\) 有非空交集, 则
+\[
+\begin{cases}
+{2a} - 9 \leq {4a} - {21} \\
+{4a} - {21} \geq  -1 \\
+{2a} - 9 \leq  1
+\end{cases}, 
+\; \text{解得} \;
+\begin{cases}
+a \geq 6 \\
+a \geq  5 \\
+a \leq  5
+\end{cases}, 
+\; \text{无解;}
+\]
+
+当 \(4 < a \leq  6\) 时, 值域 \(A = \left\lbrack  {{4a} - {21}, \frac{{a}^{2}}{4} - 5}\right\rbrack\) 与值域 \(B = \left\lbrack  {-1, 1}\right\rbrack\) 有非空交集, 则
+\[
+\begin{cases}
+{4a} - {21} < \frac{{a}^{2}}{4} - 5 \\
+\frac{{a}^{2}}{4} - 5 \geq  -1 \\
+{4a} - {21} \leq  1
+\end{cases}, 
+\; \text{解得} \;
+\begin{cases}
+a \in \mathbb{R} \\
+a \leq  -4\text{ 或 }a \geq  4 \\
+a \leq  \frac{11}{2}
+\end{cases}, 
+\; \text{即} \; a \leq  -4\text{ 或 }4 \leq  a \leq  \frac{11}{2}
+\]
+又
+\[
+\{ a \mid  4 < a \leq  6\}  \cap  \{ a \mid  a \leq  -4\text{ 或 }4 \leq  a \leq  \frac{11}{2}\} = \{ a \mid  4 < a \leq  \frac{11}{2}\};
+\]
+
+当 \(6 < a < 8\) 时, 值域 \(A = \left\lbrack  {{2a} - 9, \frac{{a}^{2}}{4} - 5}\right\rbrack\) 与值域 \(B = \left\lbrack  {-1, 1}\right\rbrack\) 有非空交集, 则
+\[
+\begin{cases}
+{2a} - 9 < \frac{{a}^{2}}{4} - 5 \\
+\frac{{a}^{2}}{4} - 5 \geq  -1 \\
+{2a} - 9 \leq  1
+\end{cases}, 
+\; \text{解得} \;
+\begin{cases}
+a \in \mathbb{R} \\
+a \leq  -4\text{ 或 }a \geq  4 \\
+a \leq 5
+\end{cases}, 
+\; \text{即} \; a \leq -4\text{ 或 }4 \leq  a \leq  5
+\]
+又 \(\{ a \mid  6 <  a < 8\}  \cap  \{ a \mid  a \leq  -4\text{ 或 }\; 4 \leq  a \leq  5\} = \varnothing \)。
+
+% 当 \(a \leq  4\) 时, 值域 \(A = \left\lbrack  {{4a} -{21}, {2a} -9}\right\rbrack\) 与值域 \(B = \left\lbrack  {-1, 1}\right\rbrack\) 有非空交集, 则
+
+% \(\left\{  {\begin{matrix} {4a} -{21} \leq {2a} -9 \\  {2a} -9 \geq   -1 \\  {4a} -{21} \leq  1 \end{matrix}, \text{ 解得 }\left\{  {\begin{array}{l} a \leq 6 \\  a \geq  4 \\  a \leq  \frac{11}{2} \end{array}\text{ , 即 }4 \leq  a \leq  \frac{11}{2}, }\right. }\right.\) 又 \(\{ a \mid  a \leq  4\}  \cap  \{ a \mid  4 \leq  a \leq\)  \(\left. \frac{11}{2}\right\}   = \{ a \mid  a = 4\} ;\)
+
+% 当 \(a \geq  8\) 时, 值域 \(A = \left\lbrack  {{2a} -9, {4a} -{21}}\right\rbrack\) 与值域 \(B = \left\lbrack  {-1, 1}\right\rbrack\) 有非空交集, 则
+
+% \(\left\{  {\begin{matrix} {2a} -9 \leq {4a} -{21} \\  {4a} -{21} \geq   -1 \\  {2a} -9 \leq  1 \end{matrix}, \text{ 解得 }\left\{  {\begin{array}{l} a \geq 6 \\  a \geq  5 \\  a \leq  5 \end{array}\text{ 无解; }}\right. }\right.\)
+
+% 当 \(4 < a \leq  6\) 时, 值域 \(A = \left\lbrack  {{4a} -{21}, \frac{{a}^{2}}{4} -5}\right\rbrack\) 与值域 \(B = \left\lbrack  {-1, 1}\right\rbrack\) 有非空交集, 则
+
+% \(\left\{  \begin{matrix} {4a} -{21} < \frac{{a}^{2}}{4} -5 \\  \frac{{a}^{2}}{4} -5 \geq   -1 \\  {4a} -{21} \leq  1 \end{matrix}\right.\), 解得 \(\left\{  \begin{matrix} a \in \mathbb{R} \\  a \leq   -4\text{ 或 }a \geq  4  \\  a \leq  \frac{11}{2} \end{matrix}, \right.\) 即 \(a \leq   -4\) 或 \(4 \leq  a \leq  \frac{11}{2}, \) 又
+% \[
+% \{ a \mid  4 < a \leq  6\}  \cap  \left\{  {a\left| {\;a \leq   -4\text{ 或 }4 \leq  a \leq  \frac{11}{2}}\right. }\right\}   = \left\{  {a\left| {\;4 < a \leq  \frac{11}{2}}\right. }\right\}  ;
+% \]
+
+% 当 \(6 < a < 8\) 时, 值域 \(A = \left\lbrack  {{2a} -9, \frac{{a}^{2}}{4} -5}\right\rbrack\) 与值域 \(B = \left\lbrack  {-1, 1}\right\rbrack\) 有非空交集, 则
+
+% \(\left\{  {\begin{matrix} {2a} -9 < \frac{{a}^{2}}{4} -5 \\  \frac{{a}^{2}}{4} -5 \geq   -1 \\  {2a} -9 \leq  1 \end{matrix}, \text{ 解得 }\left\{  \begin{matrix} a \in \mathbb{R} \\  a \leq   -4\text{ 或 }a \geq  4 \\ a \leq 5 \end{matrix}, \right. }\right.\)即 \(a \leq -4\) 或 \(4 \leq  a \leq  5, \) 又 \(\{ a \mid  6 <  a < 8\}  \cap  \{ a \mid  a \leq   -4\) 或 \(4 \leq  a \leq  5\}  = \{ a \mid  4 \leq  a \leq  5\} .\)
+
+综上, \(a\) 的取值范围为 \(\left\{  {a\left| {\;4 \leq  a \leq  \frac{11}{2}}\right. }\right\}\).
+\end{proof}

@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Bash(mkdir:*)",
+      "Bash(cp:*)",
+      "Bash(chmod:*)",
+      "Bash(mv:*)",
+      "Bash(xelatex:*)",
+      "Bash(rmdir:*)"
+    ],
+    "deny": []
+  }
+}

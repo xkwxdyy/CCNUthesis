@@ -1,0 +1,407 @@
+% !TeX root = ../main.tex
+
+\chapter{单、双变量含参函数的“任意性”与“存在性”问题教学设计}
+本章用一个工厂营收的实际问题作为案例引入, 设计一个连接所有题型教学的问题链, 建立统一的函数模型变式体系, 帮助学生形成系统性知识; 把问题镶嵌在实际问题背景中, 让学生把现实问题转化成数学问题, 帮助学生提高解决实际问题的能力。然后使用 GeoGebra 软件动态展示参数变化对函数图像的影响, 让学生深入理解题目变化规律, 引导学生将题目进行转化, 训练学生数形结合、 转化与化归等数学思想。每类题型教学顺序为:第一, 用实际问题引入, 将实际问题转化为数学问题之后, 第二, 利用 GeoGebra 动态演示让学生理解题意, 第三, 引导学生将问题进行转化, 最后求解, 规范书写。
+
+本文教学设计大体分为单函数和双函数类型的教学两部分, 由单函数问题引入专题, 双函数问题深入专题。对于单函数问题, 由老师示范解题过程, 双函数问题则让学生分组合作, 通过 GeoGebra 软件调整参数、观察图像变化, 自己探索解题方法。
+
+这种 “教师引导加自主探究” 的设计, 既保证了概念传递的准确性, 又通过小组合作培养了学生的自主学习和深入思考能力。借助技术工具, 抽象的数学问题变得直观易懂, 帮助学生真正掌握知识, 并能灵活运用到实际问题中。
+
+
+\section{问题驱动，引入课题}
+\subsection{问题引入}
+通过一个实际问题引入简单的含参函数 “任意性” 与 “存在性” 问题, 首先接触最基础的单函数单变量类型, 帮助学生初步认识这类问题, 思考问题本质. 例如, 某一个工厂 \(A\) 生产一种产品, 其利润函数为 \(f(x)  =  - {x}^{2} + {ax} - 5\), 其中 \(x\) 表示产量, \(a\) 是一个可调整的参数. 为了保证工厂盈利, 
+
+\begin{enumerate}[(1)]
+  \item 我们要求当产量 \(x\) 在区间 \(\left\lbrack  {2, 4}\right\rbrack\) 上时, 利润必须始终大于等于 7, 此时 \(a\) 的取值范围应该是多少?
+
+  \item 如果要求当产量 \(x\) 在区间 \(\left\lbrack  {2, 4}\right\rbrack\) 上时, 利润必须至少有一个值大于等于 7, 此时 \(a\) 的取值范围应该又是多少呢?
+\end{enumerate}
+
+\subsection{问题驱动}
+教师提问学生: 如何通过调整参数 \(a\) 满足要求(1)和(2)？你能用数学语言描述这两个条件吗?
+
+引导学生回答: 调整参数 \(a\) 的取值, 可以生成不同的函数解析式, 从而生成不同的函数图象, 我们可以借助 GeoGebra 快速又直观地观察在区间 $[2, 4]$ 上的函数图象是否可以满足(1)和(2)。要求(1)如果用数学语言来描述的话即 “已知 \(f(x)  =  - {x}^{2} + {ax} - 5\), 若对 \(\forall x \in  \left\lbrack  {2, 4}\right\rbrack\), 都有 \(f(x)  \geq  7\) 成立, 求实数 \(a\) 的取值范围”, 也就是 \ref{subsec:任意型} 的例题 \ref{example:2.1.1.1}。要求(2)如果用数学语言来描述的话即“ 已知 \(f(x)  =  - {x}^{2} + {ax} - 5\), 若 \(\exists x \in  \left\lbrack  {2, 4}\right\rbrack\), 使得 \(f(x)  \geq  7\) 成立, 求实数 \(a\) 的取值范围”, 也就是 \ref{subsec:存在型} 的变式 \ref{variation:2.1.2.2}.
+
+
+\subsection{设计意图}
+通过实际问题引入数学问题, 引导学生从实际问题中抽象出数学语言, 培养数学建模和数学抽象能力。
+
+
+\section{单函数单变量问题探究}
+上文引导将在实际生活中遇到的问题转化为数学问题, 下面则带领学生研究题目, 找出解决问题的方法, 主要是引导学生将题目进行转化, 培养转化与化归的思想。
+
+
+\subsection{GeoGebra 动态演示}
+使用 GeoGebra 绘制函数 \(f(x)  =  - {x}^{2} + {ax} - 5\), 添加滑动条动态调整参数 \(a\) 的值, 引导学生观察当 \(a\) 变化时, 函数图象如何变化? \(a\) 取什么值时, 图象满足要求(1)和(2)?
+
+教师演示: 在 GeoGebra 中创建滑动条 \(a\), 在属性中将滑动条区间调整为包含 8 的区间, 如最小改为 -10, 最大改为 10, 增量改为 1, 在代数区输入函数 \(f(x)  =  - {x}^{2} + {ax} - 5, 2 \leq  x \leq  4\), 那么我们就可以在绘图区看到函数 \(f(x)\) 在 \(\left\lbrack  {2, 4}\right\rbrack\) 上的图象, 用交点工具把函数两端的点绘制出来, 在属性中选择显示数值, 滑动滑动条, 我们发现当 \(a \geq  8\) 时, \(f(x)  \geq  7\) 在 \(\left\lbrack  {2, 4}\right\rbrack\) 上恒成立.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.7\textwidth]{图 3.2.1}
+  \caption{当 \(a = 7\) 时, 存在 \(x\) 使 \(f(x)  < 7\)}
+  % \label{fig:}
+\end{figure}
+
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.7\textwidth]{图 3.2.2}
+  \caption{当 \(a = 8\) 时, 对 \(\forall x \in  \left\lbrack  {2, 4}\right\rbrack\), 都有 \(f(x)  \geq  7\)}
+  % \label{fig:}
+\end{figure}
+
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.7\textwidth]{图 3.2.3}
+  \caption{当 \(a = 9\) 时, 对 \(\forall x \in  \left\lbrack  {2, 4}\right\rbrack\), 都有 \(f(x)  \geq  7\)}
+  % \label{fig:}
+\end{figure}
+
+再次滑动滑动条, 我们发现当 \(a > 7\) 时, 就会存在 \(x \in  \left\lbrack  {2, 4}\right\rbrack\), 使得 \(f(x)  \geq  7\) 成立, 当 \(a < 6\) 时不存在 \(x \in  \left\lbrack  {2, 4}\right\rbrack\), 使得 \(f(x)  \geq  7\) 成立, 所以我们可以定性地知道当 \(a\) 大于等于 6 到 7 中间的某一个数时, 就会存在 \(x \in  \left\lbrack  {2, 4}\right\rbrack\), 使得 \(f(x)  \geq  7\) 成立, 具体的值我们需要定量地计算.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.7\textwidth]{图 3.2.4}
+  \caption{当 \(a = 6\) 时, 不存在 \(x \in  \left\lbrack  {2, 4}\right\rbrack\), 使得 \(f(x)  \geq  7\) 成立}
+  % \label{fig:}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.7\textwidth]{图 3.2.5}
+  \caption{当 \(a = 7\) 时, 存在 \(x \in  \left\lbrack  {2, 4}\right\rbrack\), 使得 \(f(x)  \geq  7\) 成立}
+  % \label{fig:}
+\end{figure}
+
+\subsection{问题转化与解决}
+教师问: 对于要求 (1) 对 \(\forall x \in  \left\lbrack  {2, 4}\right\rbrack\), 都有 \(f(x)  \geq  7\) 成立, 我们通过改变 \(a\) 值来观察寻找满足要求的函数图象, 在这个过程中, 我们可以寻找图象上的一个值, 只要这个值满足要求, 那么图象就满足要求, 请问这个值是什么值?
+
+引导学生回答: 函数在 \(\left\lbrack  {2, 4}\right\rbrack\) 上的最小值.
+
+教师接着问:对于要求(2) \(\exists x \in  \left\lbrack  {2, 4}\right\rbrack\), 使得 \(f(x)  \geq  7\), 我们同样通过改变 \(a\) 值来观察寻找满足要求的函数图象, 在这个过程中, 我们同样可以寻找图象上的一个值, 只要这个值满足要求, 那么图象就满足要求, 请问这个值是什么值?
+
+引导学生回答: 函数在 \(\left\lbrack  {2, 4}\right\rbrack\) 上的最大值.
+
+教师总结:所以, 要求 (1) “对 \(\forall x \in  \left\lbrack  {2, 4}\right\rbrack\), 都有 \(f(x)  \geq  7\) 成立” 可以转化为求 \(f(x)\) 在 \(\left\lbrack  {2, 4}\right\rbrack\) 上的最小值 \(f{(x) }_{\min }\), 只要 \(f{(x) }_{\min } \geq  7\), 则对 \(\forall x \in  \left\lbrack  {2, 4}\right\rbrack\), 都有 \(f(x)  \geq  7\). 同理, 要求 (2) “ \(\exists x \in  \left\lbrack  {2, 4}\right\rbrack\), 使得 \(f(x)  \geq  7\) ” 可以转化为求 \(f(x)\) 在 \(\left\lbrack  {2, 4}\right\rbrack\) 上的最大值 \(f{(x) }_{\max }\), 只要 \(f{(x) }_{\max } \geq  7\), 则 \(\exists x \in  \left\lbrack  {2, 4}\right\rbrack\), 使得 \(f(x)  \geq  7\).
+
+板书求解 \(f{(x) }_{\min }\) 和 \(f{(x) }_{\max }\), 令它们都大于 7 , 得到 \(a\) 的取值范围, 具体过程详见 \ref{subsec:任意型} 的例 \ref{example:2.1.1.1} 和 \ref{subsec:存在型} 的变式 \ref{variation:2.1.2.2}。这里可以提醒学生注意, 由于 \(f(x)  =  - {x}^{2} + {ax} - 5\) 开口向下, 所以在 \(\left\lbrack  {2, 4}\right\rbrack\) 上的最小值只可能在两个端点处取到, 所以只根据对称轴进行两次分类讨论, 而在 \(\left\lbrack  {2, 4}\right\rbrack\) 上的最大值可能在两个端点和顶点处取到, 所以需要进行三次分类讨论.
+
+
+\subsection{设计意图}
+通过动态演示, 帮助学生直观理解参数对函数的影响, 培养直观想象和数形结合的能力, 引导学生将实际问题转化为数学问题, 将恒成立和能成立问题转化为求函数最值问题, 培养数学建模和转化与化归的能力。
+
+
+\section{单函数双变量问题探究}
+此类型问题的教学过程与单函数单变量问题的教学思路一致, 导入的问题是在函数单变量问题导入的背景下的一个改编及追问, 形成一个问题链。渐进式提问导入可激起学生探究的兴趣, 培养学生独立思考的能力及系统性的知识观。本问题类型的函数模型有两个变量, 所以其函数图象是一个三维立体图象, 在用 GeoGebra 动态演示的时候需要让学生自主发现这一变化, 引导学生在软件的 3D 绘图区发现函数图象, 且临界值需要用平面来表示, 才能与函数值进行比较, 引导学生进行思维的转化。
+
+
+\subsection{问题引入}
+如果我们又增开了一个工厂 \(B\), 两个工厂总利润函数为 \(f(x_1, x_2)  =  - {x}_{1}{}^{2} + a{x}_{1} - 5 + {x}_{2} - \frac{2}{{x}_{2}}\), 其中 \({x}_{1}\) 和 \({x}_{2}\) 分别表示两个工厂 \(A\) 和 \(B\) 的产量, \(a\) 是一个可调整的参数. 为了保证工厂盈利, 
+
+\begin{enumerate}[(1)]
+  \item 我们要求在区域 \(D = \left\{  {\left( {{x}_{1}, {x}_{2}}\right)  \mid  {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack  }\right\}\) 上, 不论两个工厂的产量 \({x}_{1}\) 和 \({x}_{2}\) 取何值, 总利润必须始终大于 2, 此时 \(a\) 的取值范围应该是多少?
+
+  \item 如果我们要求在区域 \(D\) 上, 不论工厂 \(A\) 的产量 \({x}_{1}\) 多少, 总存在工厂 \(B\) 的产量 \({x}_{2}\), 使得工厂总利润必须至少有一个值大于等于 4 , 此时 \(a\) 的取值范围又应该是多少?
+  
+  \item 如果我们要求在区域 \(D\) 上, 工厂总利润必须至少有一个值大于等于 4 , 此时 \(a\) 的取值范围又应该是多少?
+\end{enumerate}
+
+教师提问学生:你能用数学语言描述这三个条件吗？
+
+引导学生回答:
+
+要求 (1) 即 “已知 \(f(x_1, x_2)  =  - {x}_{1}^{2} + a{x}_{1} - 5 + {x}_{2} - \frac{2}{{x}_{2}}\), 对 \(\forall {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , \forall {x}_{2} \in \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f(x_1, x_2)  \geq  2\) 成立, 求实数 \(a\) 的取值范围”, 也就是 \ref{subsec:任意-任意型} 的变式 \ref{variation:2.1.4}.
+
+要求(2)即 “已知 \(f(x_1, x_2)  =  - {x}_{1}^{2} + a{x}_{1} - 5 + {x}_{2} - \frac{2}{{x}_{2}}\), 对 \(\forall {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack\), 若 \(\exists {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f(x_1, x_2)  \geq  4\) 成立, 求实数 \(a\) 的取值范围”, 也就是\ref{subsec:任意-存在型} 的变式 \ref{variation:2.1.5} .
+
+要求 (3) 即 “已知 \(f(x_1, x_2)  =  - {x}_{1}^{2} + a{x}_{1} - 5 + {x}_{2} - \frac{2}{{x}_{2}}\), 若 \(\exists {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , \exists {x}_{2} \in \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f(x_1, x_2)  \geq  4\) 成立, 求实数 \(a\) 的取值范围”, 也就是 \ref{subsec:存在-存在型} 的变式 \ref{variation:2.1.6}.
+
+
+\subsection{GeoGebra 动态演示}
+使用 GeoGebra 绘制函数 \(f(x_1, x_2)  =  - {x}_{1}^{2} + a{x}_{1} - 5 + {x}_{2} - \frac{2}{{x}_{2}}\) 的三维图象, 并添加滑动条动态调整参数 \(a\) 的值, 引导学生观察当 \(a\) 变化时, 函数图象如何变化? 当 \(a\) 取什么值时, 图象满足要求(1)、(2)和(3)？
+
+教师演示: 在 GeoGebra 中创建滑动条 \(a\), 在属性中将滑动条区间调整为包含 6 的区间, 如最小改为 -10 , 最大改为 10 , 增量改为 1 , 在代数区输入函数 \(f(x_1, x_2)  = - {x}_{1}{}^{2} + a{x}_{1} - 5 + {x}_{2} - \frac{2}{{x}_{2}}, 2 \leq  {x}_{1} \leq  4, 1 \leq  {x}_{2} \leq  2\), 那么我们就可以在 \(3D\) 绘图区看到函数 \(f(x_1, x_2)\) 在区域 \(D = \left\{  {\left( {{x}_{1}, {x}_{2}}\right)  \mid  {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack  }\right\}\) 上的图象, 再绘制 \(z = 2\) 平面, 滑动滑动条, 我们发现当 \(a \geq  6\) 时, \(f(x_1, x_2)  \geq  2\) 在 \(D\) 上恒成立.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.6\textwidth]{图 3.3.1}
+  \caption{当 \(a = 5\) 时, 存在 \({x}_{1}, {x}_{2}\) 使 \(f(x_1, x_2)  < 2\)}
+  % \label{fig:}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.6\textwidth]{图 3.3.2}
+  \caption{当 \(a = 6\) 时, 对 \(\forall {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , \forall {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 都有 \(f(x_1, x_2)  \geq  2\)}
+  % \label{fig:}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.6\textwidth]{图 3.3.3}
+  \caption{当 \(a = 7\) 时, 对 \(\forall {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , \forall {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 都有 \(f(x_1, x_2)  \geq  2\)}
+  % \label{fig:}
+\end{figure}
+
+我们将 \(z = 2\) 平面删除, 绘制 \(z = 4\) 平面, 再次滑动滑动条, 我们发现当 \(a \geq 6\) 时, 就会 \(\exists {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , \exists {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f(x)  \geq  4\) 成立, 当 \(a < 5\) 时, 不存在 \({x}_{1} \in \left\lbrack  {2, 4}\right\rbrack\) 和 \({x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f(x)  \geq  4\) 成立, 所以我们可以定性地知道当 \(a\) 大于等于 5 到 6 中间的某一个数时, 就会 \(\exists {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , \exists {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f(x)  \geq  4\) 成立, 具体的值我们需要定量地计算.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.6\textwidth]{图 3.3.4}
+  \caption{当 \(a = 5\) 时, 不存在 \({x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack\) 和 \({x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f(x_1, x_2)  \geq  4\)}
+  % \label{fig:}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.6\textwidth]{图 3.3.5}
+  \caption{当 \(a = 6\) 时, \(\exists {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , \exists {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f(x_1, x_2)  \geq  4\)}
+  % \label{fig:}
+\end{figure}
+
+以上即要求(1)和要求(3)的图象探究, 对于要求(2), 我们需要用图象表示对 \(\forall {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack\), 总 \(\exists {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f(x_1, x_2)  \geq  4\), 即用限定一个变量是任意取的, 而另一个变量是在此基础上存在的, 使结论成立的变量。我们先固定 \({x}_{1}\) 为常数, 那么双变量函数 \(f(x_1, x_2)\) 变为单变量函数 \(f\left( {x}_{2}\right)\), 此时图象就是一条 2 维的曲线。创建滑动条 \({x}_{1}\), 区间设为 \(\left\lbrack  {2, 4}\right\rbrack\), 滑动滑动条 \(a\), 再在 \(\left\lbrack  {2, 4}\right\rbrack\) 上任意滑动滑动条 \({x}_{1}\), 在改变 \({x}_{1}\) 的过程中观察是否有 \({x}_{2}\) 使得 \(f(x_1, x_2)  \geq  4\), 如果有, 那么此时的 \(a\) 可取, 如果没有, 那么此时的 \(a\) 舍去. 观察图象, 我们发现当 \(a < 6\) 时, 无论怎么滑动滑动条 \({x}_{1}\), 都不存在 \({x}_{2}\) 使得函数大于等于 4, 当 \(a \geq  6\) 时, 滑动滑动条 \({x}_{1}\), 都存在 \({x}_{2}\) 使得函数大于等于 4 . 所以当 \(a \geq  6\) 时, 对 \(\forall {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack\), 总 \(\exists {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f(x_1, x_2)  \geq  4\) 成立.
+
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.6\textwidth]{图 3.3.6}
+  \caption{当 \(a = 5\) 时, 对 \(\forall {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack\), 都不存在 \({x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f(x_1, x_2)  \geq  4\)}
+  % \label{fig:}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.6\textwidth]{图 3.3.7}
+  \caption{当 \(a = 6\) 时, 对 \(\forall {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack\), \(\exists {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f(x_1, x_2)  \geq  4\)}
+  % \label{fig:}
+\end{figure}
+
+
+\subsection{问题转化与解决}
+教师问: 经过单函数单变量问题的探究, 我们可以将此类问题转化为函数的最值问题, 那么对于单函数双变量问题, 要求 (1) “对 \(\forall {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , \forall {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 都有 \(f(x_1, x_2)  \geq  2\) ”, 我们该如何转化? 我们在操作的过程中同样是观察这个函数的 3 维图象的最低点是否满足要求, 那么我们是否能够同样将其转化为最值问题呢?
+
+引导学生回答: 可以转化为求 \(f(x_1, x_2)\) 在区域 \(D\) 上的最小值 \(f{\left( {x}_{1}, {x}_{2}\right) }_{\min }\), 只要 \(f{\left( {x}_{1}, {x}_{2}\right) }_{\min } \geq  2\), 则对 \(\forall {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , \forall {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 都有 \(f(x_1, x_2)  \geq  2\).
+
+教师继续提问: 那么 \(f(x_1, x_2)\) 在区域 \(D\) 上的最小值该如何求呢?
+
+引导同学回答: 我们可以先把 \({x}_{1}\) 看作常数, 那么双变量函数 \(f(x_1, x_2)\) 变为单变量函数 \(f\left( {x}_{2}\right)\), 转化为求 \(f{\left( {x}_{2}\right) }_{\min }\) 就简单得多, \(f{\left( {x}_{2}\right) }_{\min }\) 是一个关于 \({x}_{1}\) 的函数, 我们设为 \(g\left( {x}_{1}\right)\), 此时再转化为求 \(g{\left( {x}_{1}\right) }_{\min }\), 最后令 \(g{\left( {x}_{1}\right) }_{\min } \geq  2\), 解不等式就可以得到 \(a\) 的取值范围.
+
+同理, 要求 (3) “ \(\exists {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , \exists {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f(x_1, x_2)  \geq  4\) ” 可以转化为求 \(f(x_1, x_2)\) 在区域 \(D\) 上的最大值 \(f{\left( {x}_{1}, {x}_{2}\right) }_{\max }\), 只要 \(f{\left( {x}_{1}, {x}_{2}\right) }_{\max } \geq  4\), 则 \(\exists {x}_{1} \in \left\lbrack  {2, 4}\right\rbrack  , \exists {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f(x_1, x_2)  \geq  4\) 。而求 \(f{\left( {x}_{1}, {x}_{2}\right) }_{\max }\) 同样可以先将其中一个变量看作常数处理, 转化为单变量问题, 进而转化为函数最值问题.
+
+教师提问: 那么对于要求 (2) “对 \(\forall {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack\), 若 \(\exists {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f(x_1, x_2)  \geq  4\) ” 可以直接转化为最值问题吗?
+
+引导学生回答:不能.因为体现不出变量的任意性和存在性。但是通过刚才的经验, 我们可以先把 \({x}_{1}\) 看作常数, 将函数转变单变量函数处理.
+
+教师问: 那么我可以先把 \({x}_{2}\) 看作常数处理吗?
+
+引导学生回答:不行。如果先把存在变量看作常数处理, 那么任意变量就失去了任意性, 它的任意性就仅在这个固定的常数下实现, 被存在变量限制, 而题目的意思是对于任意一个任意变量, 都能找到一个存在变量, 存在变量的存在性是在任意变量的任意性的基础上实现的, 所以存在变量是被任意变量限制的, 所以我们必须先把任意变量看作常数, 先处理存在问题, 最后再处理任意问题, 既能保证存在性, 也能保证任意性.
+
+教师总结举反例: 详见 \ref{subsec:任意-存在型} 的补充反例 \ref{counterexample:2.2.2.1}.
+
+板书求解(1)(2)(3), 具体过程详见 \ref{subsec:任意-任意型} 的变式 \ref{variation:2.1.4}、\ref{subsec:任意-存在型} 的变式 \ref{variation:2.1.5} 和 \ref{subsec:存在-存在型} 的变式 \ref{variation:2.1.6}.
+
+
+\subsection{设计意图}
+通过动态演示, 帮助学生直观理解参数对函数的影响, 培养直观想象和数形结合的能力, 引导学生将实际问题转化为数学问题, 培养数学建模和转化与化归的能力。
+
+
+\section{双函数单变量问题探究（学生自主探究）}
+双函数部分的教学是由学生模仿单函数的教学思路进行自主探究, 学生首先要将实际问题转化为数学问题, 然后用 GeoGebra 动态演示理解题意, 进一步思考题目的转化策略, 最后在草稿纸上写出题目的求解过程。
+
+\subsection{问题引入}
+如果工厂的利润函数为 \(f(x)  =  - {x}^{2} + {ax} - 5\), 成本函数为 \(g(x)  = x - 1\), 其中其中 \(x\) 表示产量, \(a\) 是一个可调整的参数. 为了保证工厂盈利, 
+
+\begin{enumerate}[(1)]
+  \item 我们要求当产量 \(x\) 在区间 \(\left\lbrack  {2, 4}\right\rbrack\) 上时, 利润必须始终大于成本, 此时 \(a\) 的取值范围应该是多少?
+
+  \item 如果我们要求当产量 \(x\) 在区间 \(\left\lbrack  {2, 4}\right\rbrack\) 上时, 利润必须至少有一个值大于等于成本, 此时 \(a\) 的取值范围又是多少?
+\end{enumerate}
+
+教师提问学生:你能用数学语言描述这两个条件吗? 小组间进行讨论.
+
+小组派代表回答:
+
+要求 (1) 即 “已知 \(f(x)  =  - {x}^{2} + {ax} - 5, g(x)  = x - 1\), 若对 \(\forall x \in  \left\lbrack  {2, 4}\right\rbrack\), 都有 \(f(x)  \geq  g(x)\) 成立, 求实数 \(a\) 的取值范围”, 也就是 \ref{subsec:2.3任意型} 的变式 \ref{variation:2.1.7}.
+
+要求 (2) 即 “已知 \(f(x)  =  - {x}^{2} + {ax} - 5, g(x)  = x - 1\), 若 \(\exists x \in  \left\lbrack  {2, 4}\right\rbrack\), 使得 \(f(x)  \geq  g(x)\) 成立, 求实数 \(a\) 的取值范围”, 也就是 \ref{subsec:2.3存在型} 的变式 \ref{variation:2.1.8}.
+
+
+
+\subsection{GeoGebra 动态演示}
+使用 GeoGebra 绘制函数 \(f(x)\) 和 \(g(x)\), 添加滑动条动态调整参数 \(a\) 的值, 引导学生观察当 \(a\) 变化时, 函数图象如何变化? \(a\) 取什么值时, 图象满足要求 (1) 和 (2) ?
+
+学生动手操作: 在 GeoGebra 中创建滑动条 \(a\), 在属性中将滑动条区间调整为 -10 到 10, 如最小改为 -10, 最大改为 10, 增量改为 1, 在代数区输入函数 \(f(x)  =  - {x}^{2} + {ax} - 5, 2 \leq  x \leq  4\), 以及函数 \(g(x)  = x - 1, 2 \leq  x \leq  4\), 那么我们就可以在绘图区看到函数 \(f(x)\) 和 \(g(x)\) 在 \(\left\lbrack  {2, 4}\right\rbrack\) 上的图象, 用交点工具把函数 \(f(x)\) 两端的点绘制出来, 在属性中选择显示数值, 滑动滑动条, 我们发现当 \(a \geq  6\) 时, \(f(x)  \geq  g(x)\) 对 \(\forall x \in  \left\lbrack  {2, 4}\right\rbrack\) 恒成立。当 \(a \geq  5\) 时, \(\exists x \in  \left\lbrack  {2, 4}\right\rbrack\), 使得 \(f(x)  \geq  g(x)\) 成立.
+
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.6\textwidth]{图 3.4.1}
+  \caption{当 \(a = 5\) 时, 存在 \(x\) 使 \(f(x)  < g(x)\), 也存在 \(x\) 使 \(f(x)  \geq  g(x)\) 成立}
+  % \label{fig:}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.6\textwidth]{图 3.4.2}
+  \caption{当 \(a = 6\) 时, 对 \(\forall x \in  \left\lbrack  {2, 4}\right\rbrack\), 都有 \(f(x)  \geq  g(x)\) 成立}
+  % \label{fig:}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.6\textwidth]{图 3.4.3}
+  \caption{当 \(a = 7\) 时, 对 \(\forall x \in  \left\lbrack  {2, 4}\right\rbrack\), 都有 \(f(x)  \geq  g(x)\) 成立}
+  % \label{fig:}
+\end{figure}
+
+\subsection{问题转化与解决}
+小组讨论将问题进行转化:
+
+要求(1)“对 \(\forall x \in  \left\lbrack  {2, 4}\right\rbrack\), 都有 \(f(x)  \geq  g(x)\) 成立”, 即 “对 \(\forall x \in  \left\lbrack  {2, 4}\right\rbrack\), 都有 \(h(x)  = f(x)  - g(x)  \geq  0\) 成立”, 那么就转化为了单函数单变量问题, 由前面的学习, 可以进一步转化为 \(h{(x) }_{\min } \geq  0, x \in  \left\lbrack  {2, 4}\right\rbrack\);
+
+同理, 要求 (2) “ \(\exists x \in  \left\lbrack  {2, 4}\right\rbrack\), 使得 \(f(x)  \geq  g(x)\) ” , 可转化为 \(h{(x) }_{\max } \geq  0, x \in  \left\lbrack  {2, 4}\right\rbrack\).
+
+学生在草稿纸上动手求解(1)(2), 教师请一位同学在黑板上求解.
+
+
+\subsection{设计意图}
+通过动态演示, 帮助学生直观理解参数对函数的影响, 培养直观想象和数形结合的能力, 引导学生将实际问题转化为数学问题, 培养数学建模和转化与化归的能力。
+
+
+\section{双函数双变量问题探究（学生自主探究）}
+\subsection{问题引入}
+如果两个工厂 \(A\) 和 \(B\) 的利润函数分别为 \(f\left( {x}_{1}\right)  =  - {x}_{1}^{2} + a{x}_{1} - 5\) 和 \(g\left( {x}_{2}\right)  = {x}_{2} - \frac{2}{{x}_{2}}\), \({x}_{1}\) 和 \({x}_{2}\) 分别表示 \(A\) 和 \(B\) 两个工厂的产量, \(a\) 是一个可调整的参数.
+
+\begin{enumerate}[(1)]
+  \item 我们要求在区域 \(D = \left\{  {\left( {{x}_{1}, {x}_{2}}\right)  \mid  {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack  }\right\}\) 上, \(A\) 工厂利润必须始终大于 \(B\) 工厂, 此时 \(a\) 的取值范围又应该是多少?
+
+  \item 如果我们要求在区域 \(D\) 上, 不论工厂 \(A\) 的产量 \({x}_{1}\) 多少, 总存在工厂 \(B\) 的产量 \({x}_{2}\), 使得工厂 \(A\) 的利润必须至少有一个值大于等于工厂 \(B\) 的利润, 此时 \(a\) 的取值范围又应该是多少?
+  
+  \item 如果我们要求在区域 \(D\) 上, \(A\) 工厂利润必须至少有一个值恰好等于 \(B\) 工厂, 此时 \(a\) 的取值范围又应该是多少?
+\end{enumerate}
+
+教师提问学生: 你能用数学语言描述这三个条件吗？小组间进行讨论.
+
+小组派代表回答:
+
+要求 (1) 即 “已知 \(f(x)  =  - {x}^{2} + {ax} - 5, g(x)  = x - \frac{2}{x}\), 若对 \(\forall {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , \forall {x}_{2} \in \left\lbrack  {1, 2}\right\rbrack\), 都有 \(f\left( {x}_{1}\right)  \geq  g\left( {x}_{2}\right)\) 成立, 求实数 \(a\) 的取值范围”, 也就是 \ref{subsec:2.4任意-任意型} 的变式 \ref{variation:2.1.9}. 要求 (2) 即“已知 \(f(x)  =  - {x}^{2} + {ax} - 5, g(x)  = x - \frac{2}{x}\), 若对 \(\forall {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , \exists {x}_{2} \in \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f\left( {x}_{1}\right)  \geq  g\left( {x}_{2}\right)\) 成立, 求实数 \(a\) 的取值范围”, 也就是 \ref{subsec:2.4任意-存在型} 的变式 \ref{variation:2.1.10}。 要求 (3) 即 “已知 \(f(x)  =  - {x}^{2} + {ax} - 5, g(x)  = x - \frac{2}{x}\), 若 \(\exists {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , \exists {x}_{2} \in \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f\left( {x}_{1}\right)  = g\left( {x}_{2}\right)\) 成立, 求实数 \(a\) 的取值范围”, 也就是 \ref{subsec:2.4存在-存在型} 的变式 \ref{variation:2.1.13}.
+
+\subsection{GeoGebra 动态演示}
+使用 GeoGebra 绘制函数 \(f(x)\) 和 \(g(x)\), 添加滑动条动态调整参数 \(a\) 的值, 引导学生观察当 \(a\) 变化时, 函数图象如何变化? \(a\) 取什么值时, 图象满足要求 (1)、(2)和(3)?
+
+学生动手操作: 在 GeoGebra 中创建滑动条 \(a\), 在属性中将滑动条区间调整为 -10 到 10, 如最小改为 -10, 最大改为 10, 增量改为 0.5, 在代数区输入函数 \(f(x)  =  -{x}^{2} + {ax} - 5, 2 \leq  x \leq  4\), 以及函数 \(g(x)  = x - \frac{2}{x}, 1 \leq  x \leq  2\), 那么我们就可以在绘图区看到函数 \(f(x)\) 在 \(\left\lbrack  {2, 4}\right\rbrack\) 上以及 \(g(x)\) 在 \(\left\lbrack  {1, 2}\right\rbrack\) 上的图象, 用交点工具把函数 \(f(x)\) 和 \(g(x)\) 两端的点绘制出来, 在属性中选择显示名称和数值, 滑动滑动条, 我们发现当 \(a \geq  \frac{11}{2}\) 时, 对 \(\forall {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , \forall {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 都有 \(f\left( {x}_{1}\right)  \geq  g\left( {x}_{2}\right)\) 成立.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.6\textwidth]{图 3.5.1}
+  \caption{当 \(a = 5\) 时, \(\exists {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack\), \(\exists {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f\left( {x}_{1}\right)  < g\left( {x}_{2}\right)\)}
+  % \label{fig:}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.6\textwidth]{图 3.5.2}
+  \caption{当 \(a = {5.5}\) 时, 对 \(\forall {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , \forall {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 都有 \(f\left( {x}_{1}\right)  \geq  g\left( {x}_{2}\right)\) 成立}
+  % \label{fig:}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.6\textwidth]{图 3.5.3}
+  \caption{当 \(a = 6\) 时, 对 \(\forall {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , \forall {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 都有 \(f\left( {x}_{1}\right)  \geq  g\left( {x}_{2}\right)\) 成立}
+  % \label{fig:}
+\end{figure}
+
+再次滑动滑动条, 发现当 \(4 \leq  a \leq  \frac{11}{2}\) 时, 总 \(\exists {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , \exists {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f\left( {x}_{1}\right)  = g\left( {x}_{2}\right)\) 成立. 
+
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.6\textwidth]{图 3.5.4}
+  \caption{当 \(a = {3.5}\) 时, 不存在 \({x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f\left( {x}_{1}\right)  = g\left( {x}_{2}\right)\) 成立}
+  % \label{fig:}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.6\textwidth]{图 3.5.5}
+  \caption{当 \(a = 4\) 时, \(\exists {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , \exists {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f\left( {x}_{1}\right)  = g\left( {x}_{2}\right)\) 成立}
+  % \label{fig:}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.6\textwidth]{图 3.5.6}
+  \caption{当 \(a = {5.5}\) 时, \(\exists {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , \exists {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f\left( {x}_{1}\right)  = g\left( {x}_{2}\right)\) 成立}
+  % \label{fig:}
+\end{figure}
+
+% \begin{figure}[htbp]
+%   \centering
+%   \includegraphics[width=0.6\textwidth]{图 3.5.7}
+%   \caption{当 \(a = 6\) 时, 不存在 \({x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f\left( {x}_{1}\right)  = g\left( {x}_{2}\right)\) 成立}
+%   % \label{fig:}
+% \end{figure}
+
+
+以上即要求(1)和(3)的图象探究, 对于要求(2)“已知 \(f(x)  =  - {x}^{2} + {ax} - 5, g(x)  = x - \frac{2}{x}\), 若对 \(\forall {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , \exists {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f\left( {x}_{1}\right)  \geq  g\left( {x}_{2}\right)\) 成立, 求实数 \(a\) 的取值范围”, 我们需要保证对任意一个 \(f\left( {x}_{1}\right)\) 的取值, 都存在一个 \(g\left( {x}_{2}\right)\) 比它小, 通过观察图象, 我们发现当 \(a \geq  5\) 时满足条件.
+
+% \begin{figure}[htbp]
+%   \centering
+%   \includegraphics[width=0.6\textwidth]{图 3.5.8}
+%   \caption{当 \(a = {4.5}\) 时, 存在 \(f\left( {x}_{1}\right)\) 找不到 \(g\left( {x}_{2}\right)\) 比它小或与它相等}
+%   % \label{fig:}
+% \end{figure}
+
+
+% \begin{figure}[htbp]
+%   \centering
+%   \includegraphics[width=0.6\textwidth]{图 3.5.9}
+%   \caption{当 \(a = 5\) 时, 对任意的 \(f\left( {x}_{1}\right)\) 都有 \(g\left( {x}_{2}\right)\) 比它小或与它相等}
+%   % \label{fig:}
+% \end{figure}
+
+% \begin{figure}[htbp]
+%   \centering
+%   \includegraphics[width=0.6\textwidth]{图 3.5.10}
+%   \caption{当 \(a = {5.5}\) 时, 对任意的 \(f\left( {x}_{1}\right)\) 都有 \(g\left( {x}_{2}\right)\) 比它小或与它相等}
+%   % \label{fig:}
+% \end{figure}
+
+
+
+\subsection{问题转化与解决}
+小组讨论将问题进行转化:
+
+要求(1)“对 \(\forall {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , \forall {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f\left( {x}_{1}\right)  \geq  g\left( {x}_{2}\right)\) ” , 可转化 \(f{\left( {x}_{1}\right) }_{\text{ min }} \geq g{\left( {x}_{2}\right) }_{\max }, {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\)
+
+要求(2)即 “对 \(\forall {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , \exists {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f\left( {x}_{1}\right)  \geq  g\left( {x}_{2}\right)\) 成立”, 可转化为 \(f{\left( {x}_{1}\right) }_{\min } \geq  g{\left( {x}_{2}\right) }_{\min }\);
+
+要求(3)即 “对 \(\exists {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , \exists {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f\left( {x}_{1}\right)  = g\left( {x}_{2}\right)\) 成立”, 可转化为 \(f\left( {x}_{1}\right)\) 的值域 \(A\) 与 \(g\left( {x}_{2}\right)\) 的值域 \(B\) 有非空交集, 即 \(A \cap  B \neq  \varnothing\).
+
+学生在草稿纸上动手求解(1)(2)(3), 教师请一位同学在黑板上求解.
+
+
+\subsection{设计意图}
+通过动态演示, 帮助学生直观理解参数对函数的影响, 培养直观想象和数形结合的能力, 引导学生将实际问题转化为数学问题, 培养数学建模和转化与化归的能力。
+
+
+\section{总结提升，布置作业}
+\subsection{回顾本节课的核心内容}
+本节课主要通过实际问题, 引出含参函数的任意性与存在性问题, 主要包括了单函数单变量、单函数双变量、双函数单变量和双函数双变量问题, 而在这些问题中又包含了量词组合的几种类型。这类题目关键是理解题意, 将题目转化为函数的最值与值域问题求解, 不等问题转化为最值问题, 相等问题转化为值域问题。
+
+
+\subsection{布置作业}
+\noindent\emph{基础题} 已知 \(f(x)  =  - {x}^{2} + {ax} - 5, g(x)  = x - \frac{2}{x}\), 若 \(\exists {x}_{1} \in  \left\lbrack  {2, 4}\right\rbrack  , \exists {x}_{2} \in  \left\lbrack  {1, 2}\right\rbrack\), 使得 \(f\left( {x}_{1}\right)  \geq  g\left( {x}_{2}\right)\) 成立, 求实数 \(a\) 的取值范围.
+
+\noindent\emph{提高题} 已知函数 \(y = x + \frac{t}{x}\), 若对任意 \(a \in  \left\lbrack  {1, 4}\right\rbrack\), 总存在 \(x \in  \left\lbrack  {1, 4}\right\rbrack\), 使得 \({a}^{2} + 4 = max  + {6x}\) 成立, 则 \(m\) 的取值范围为? (提示: 等式两边同时除 \(a\) )
+
+\noindent\emph{探究题} 设计一个双函数双变量问题, 并尝试用本节课所学方法解决。
+
+
+\subsection{设计意图}
+
+通过总结提升, 帮助学生梳理知识体系, 强化数学思维, 通过布置作业, 巩固学生的学习成果, 培养独立解决问题的能力。

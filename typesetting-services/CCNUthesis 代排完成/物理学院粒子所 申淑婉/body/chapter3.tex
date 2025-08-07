@@ -1,0 +1,99 @@
+% !TeX root = ../main.tex
+
+%------------------------------- 3
+
+\chapter{质子-质子和质子-核碰撞中的双喷注产生}
+
+
+%------------------------------- 3.2
+\label{sec:CNM}
+
+\section{质子-核碰撞中的双喷注}
+
+% PRD II B
+
+\hspace*{\fill}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=3.0in]{ratio_nPDF}
+  \caption{在$Q=100$~GeV时，来自四种nPDF（即EPPS16、nCTEQ15、TUJU19和nIMParton16）的铅核中的胶子（上图）和夸克（下图）分布的核修正因子$r^{\textrm{Pb}}_i(x,Q^2)$。
+  除非另有说明，在本文中提到的夸克分布指的是被定义为 $f_{\textrm{quark}}(x,Q^2)\equiv\sum_{i}{\left[q_i(x,Q^2)+\bar{q}_i(x,Q^2)\right]}$ 的活跃夸克味道的总体（或单重态）分布，根据方程式~(\ref{eq:ri})，因子 $r^{\textrm{Pb}}_{\textrm{q(uark)}}={f^{\textrm{Pb},p}_\textrm{quark}}/{f^{p}_\textrm{quark}}$。}
+  \label{fig:ratio_nPDF}
+\end{figure}
+
+在本章中，为了考虑$pA$碰撞中的初态冷核物质效应，我们在计算中使用了四种核部分子分布函数的参数化集，分别是 EPPS16~\parencite{Eskola:2016oht}, nCTEQ15~\parencite{Kovarik:2015cma}, TUJU19~\parencite{Walt:2019slu} 和 nIMParton16~\parencite{Wang:2016mzo}。
+在图~\ref{fig:ratio_nPDF} 中，我们绘制了四种nPDF的集合中，标度为 $Q=100$~GeV时，铅核($^{208}$Pb)中胶子和夸克分布的因子$r^A_i(x,Q^2)$。可以观察到这些nPDF的集合之间存在显著差异，尤其是对于胶子分布。对于某些特定的$x$值，一些nPDF可以给出增强效应，而其他一些则可能给出压低效应，这意味着各种核效应的范围尚不清晰。这些问题也促使我们对 $p$A 碰撞中 nPDF 的更细致的运动学扫描的研究。
+在本研究中，我们将重点研究这些差异如何体现在双喷注的观测量上。我们希望我们的研究有助于未来的实验测量，以阐明这些核效应的范围。
+
+\hspace*{\fill}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=4.5in]{eta_cms_rpa_sep}
+  \caption{图~\ref{fig:eta_cms_pp} 对应的 $p$Pb 和 $pp$ 碰撞中双喷注 $\eta_{\textrm{dijet}}$ 分布的归一化的比值。带有垂直条的圆圈代表不确定度的CMS数据~\parencite{CMS:2018jpl}。彩色线条代表使用四种nPDF的集合（即EPPS16、nCTEQ15、TUJU19和nIMParton16）的理论预测，其中的带子对应于微扰计算中的因子化/重整化标度 （$\mu_0/2, \mu_0, 2\mu_0$）的变化。nIMP16的结果是在领头阶计算，而其他三种nPDF的集合的结果在次领头阶计算。}
+  \label{fig:eta_cms_rpa_sep}
+\end{figure}
+
+在我们计算双喷注产生的过程时，为了统一 $pp$ 基准的结果，我们在 $p$A 碰撞中使用了四种nPDF的集合中的 $r^{A}_i(x,Q^2)$ 因子，这些因子叠加在 CT14 质子 PDF 之上。需要注意的是，nCTEQ15、TUJU19和nIMP16的nPDF是使用它们自己的质子 PDF 提取的，而不是CT14（例如，nCTEQ15使用CTEQ6M PDF 的一个变体~\parencite{Kovarik:2015cma}），但是我们在本研究中忽略了这种差异，因为我们只关注核修正效应。
+此外，由于nIMP16是在一个领头阶 QCD 分析中获得的~\parencite{Wang:2016mzo}，因此在使用nIMP时我们仅进行了领头阶计算。其他三个nPDF的集合在次领头阶计算中使用。在本研究中，我们仅考虑了领头扭度 PDF 的核修正效应，而没有关注可能的更高扭度核效应~\parencite{Kang:2013raa,Ru:2019qvz}。
+此外，由于目前没有明确的实验证据表明 $p$A 碰撞中可能存在的末态喷注淬火效应~\parencite{Xie:2020zdb,Huss:2020whe}，因此我们仅考虑了初态的冷核物质效应。
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=6.0in]{tuju19}
+	\caption{铅核中束缚质子的PDF相对于自由质子的PDF比值$R_i^{p/Pb}$，并分别由不同的部分子味道所展示。比值分别在初始标度$Q^2_0 = 1.69$GeV$^2$（第一行）和标度$Q^2 = 100$GeV$^2$（第二行）的次领头阶和次次领头阶中获取~\parencite{Walt:2019slu}。}
+	\label{fig:tuju19}
+\end{figure}
+例如，对应于图~\ref{fig:eta_cms_pp} 中 $pp$ 碰撞中的结果，我们计算了质子-铅~($p$Pb) 碰撞中的归一化的 $\eta_{\textrm{dijet}}$ 分布，并在图~\ref{fig:eta_cms_rpa_sep} 中绘制了 $p$Pb 和 $pp$ 碰撞结果的比值，同时也展示了 CMS 实验数据~\parencite{CMS:2018jpl} 以供比较。
+可以看到，使用四种nPDF的结果之间存在差异，而且由于CMS实验测量非常精确，在 $\eta_{\textrm{dijet}}$ 的很大范围内，实验不确定性甚至会比各种预测之间的差异还要小。
+使用EPPS16的结果与实验数据在整体上有很好的一致性，只有在向前区域显示了微小差异，这是因为此处的比约肯 $x$ 小区域与遮蔽效应有关。这与参考文献~\parencite{CMS:2018jpl}中的结果一致。
+我们还注意到，使用CMS双喷注实验数据重新加权的EPPS确实表明胶子分布中的遮蔽效应有更强的压低~\parencite{Eskola:2019dui}。使用nCTEQ15的结果也能很好地描述实验数据。
+然而，使用TUJU19和nIMP16的结果均在某种程度上偏离数据。
+例如，在 $\eta_{\textrm{dijet}}\sim -1$的区域，TUJU19显示出了很强的增强效应，而这在实验数据中并未观察到。这种增强效应与图~\ref{fig:ratio_nPDF} 中所看到的胶子较强的反遮蔽效应有关~($x\sim0.2$)。
+我们注意到，TUJU19也提供了次次领头阶（NNLO） nPDF，其中展示了一个更弱的反遮蔽效应，如图~\ref{fig:tuju19}所示。
+
+
+值得一提的是，我们研究的目的并不是排除任何参数化的nPDF，而是提供一种更直观的方式来研究各种nPDF的集合之间的差异，并为未来更有效的实验测量提供便利。因此，在计算中，我们仅使用nPDF的中心值，而不考虑其不确定度。
+在图~\ref{fig:eta_cms_rpa_sep}（以及下一章的图中），理论结果图上的带状对应于微扰计算中因子化/重整化标度（$\mu_0/2, \mu_0, 2\mu_0$）的变化。
+
+由于高精度，CMS实验数据已经对nPDF尤其是核中的胶子分布提供了强大的约束~\parencite{Eskola:2019dui}。
+然而，初态部分子的动量分数 $x$ 在领头阶计算中并不能完全控制（如~\ref{sec:pp}节所讨论的），这导致了不同核效应在可观测量中的混合。
+接下来，我们将讨论在可观测层面上进一步改进的可能性，即通过使用双喷注的三重微分散射截面来减少混合程度。
+
+%------------------------------- 3.3
+
+\section{本章小结}
+
+	在本章工作中，
+	我们在回顾了 $pp$ 和 $p$A碰撞中的双喷注产生以及本研究中使用的理论框架，
+	双喷注产生的机制涉及质子（或核）中的部分子之间的相互作用。在 $pp$ 碰撞中，喷注的产生主要是通过质子内部的强子碎裂过程实现的，其中高动量部分子相互作用并形成喷注。而在$p$A碰撞中，除了质子内部的强子碎裂，还存在来自核中的核子-核子碰撞过程，这可能对双喷注产生有所贡献。
+	% Sec. II A
+	我们探讨了通过末态观测量来获取初态信息的可行性。但在考虑到高阶修正后，已经建立的这种对应关系会有一定程度的打破。
+	% Sec. II B
+	在研究冷核物质效应时，用到NLOJet++程序，计算了微扰QCD框架下领头阶贡献的双喷注关于$\{\eta_{\textrm{dijet}},p_{T,\textrm{avg}}\}$ 的二重微分散射截面。
+	我们的理论结果区分了微扰计算中不同的因子化/重整化标度（$\mu_0/2, \mu_0, 2\mu_0$）。
+	同时使用了四种核修正的参数化形式：EPPS16、nCTEQ15、TUJU19 和 nIMParton16。我们发现不同的nPDF之间存在显著差异，尤其是对于胶子分布。
+	我们从观测量的角度成功解释了不同类型的部分子分布函数，例如以上四种nPDF中，TUJU19的反遮蔽效应更强。
+	最后，我们讨论了双喷注的运动学以及引入三重微分散射截面的必要性。
+
+
+\iffalse
+\begin{figure}[htbp]
+  \centering
+  % 推荐图片都放在 figures 目录中，下面的图片可以不写后缀名，也不需要写上级目录
+  \includegraphics[width = 5cm]{ccnulogo}
+  \caption{插入图片}
+  \label{figure:test1}
+\end{figure}
+
+\begin{table}[htbp]
+  \centering
+  \caption{测试}
+  \label{table:test1}
+  \begin{tabular}{|c|c|}
+    11 & 22 \\
+    33 & 44 
+  \end{tabular}
+\end{table}
+
+图~\ref{figure:test1} 和表~\ref{table:test1} 的引用
+
+\fi

@@ -1,0 +1,161 @@
+% !TeX encoding = UTF-8
+% !TeX program = xelatex
+% !TeX spellcheck = en_US
+
+%********************************************
+% CCNUthesis: 华中师范大学论文模板(非官方)
+% update date: 2025-04-24
+% version: v1.4.6
+%
+% 重要提示：
+%   1. 请确保使用 UTF-8 编码保存
+%   2. 请使用 XeLaTeX 或 latexmk 编译
+%   3. 请仔细阅读用户文档
+%   4. 不需要的注释可以尽情删除
+%   5. 本模板并非官方模板，请谨慎选择使用，且使用时请注意教务处、学院的要求，不同学院的细节要求可能不同
+%********************************************
+
+
+% \documentclass[type = bachelor]{CCNUthesis}
+\documentclass[type = bachelor, blind-version=remove-partial-schoolname]{CCNUthesis}
+% \documentclass[type = master]{CCNUthesis}
+% \documentclass[type = master, copyright-version=new]{CCNUthesis}
+% \documentclass[type = master, blind-version=blind-schoolname]{CCNUthesis}
+% \documentclass[type = master,version = print-master-oneside]{CCNUthesis}
+% \documentclass[type = doctor]{CCNUthesis}
+% \documentclass[type = doctor,  copyright-version=new]{CCNUthesis}
+% \documentclass[type = doctor, blind-version=blind-schoolname]{CCNUthesis}
+% \documentclass[type = doctor, copyright-version=new, version = print-doctor]{CCNUthesis}
+
+
+% type
+% 学术类型
+%   可选选项：bachelor|master|doctor
+%     默认：bachelor
+
+% version
+% 文档版本
+%   可选选项：electronic|print-master-oneside|print-master-twoside|
+%           print-doctor
+%     默认：electronic
+%     electronic：电子版，无空白页
+%     print-master-oneside：打印版，硕士，无空白页，单面打印
+%     print-master-twoside：打印版，硕士，有空白页，双面打印
+%     print-doctor：打印版，博士，有空白页，双面打印
+
+% blind-version
+% 盲审版本
+%    可选选项：true|false|remove-partial-schoolname|remove-all-schoolname|blind-schoolname
+%    默认：false
+%    【本｜硕｜博】blind-version 或 blind-version = true：开启盲审版本，姓名、导师姓名等个人信息会去掉，去掉校名和版权声明页
+%    【本｜硕｜博】blind-version = false 或者不填"blind-version"：正常编译
+%    【本】blind-version = remove-partial-schoolname：去掉个人信息，保留版权声明页，但是去掉校名和版权声明页中的“华中师范”四个字（此为邓国泰老师在旧模板中的做法）
+%    【本】blind-version = remove-all-schoolname：去掉个人信息和校名，保留版权声明页，但是去掉版权声明页中出现的“华中师范大学”六个字
+%    【硕｜博】blind-version = blind-schoolname：去掉个人信息和校名，保留版权声明页，但是版权声明页中出现的“华中师范大学”六个字变成“XXXXXX”
+
+% copyright-version
+% 【硕｜博】版权声明页版本，由于 2023 年后增加了新的版权页，故增加此键值让用户选择是否更新为最新的版本
+%    可选选项：old|new
+%    默认：old
+%    old：旧版版权声明页，对应 copyright 目录下的 Originality_Copyright_master_doctor_old.pdf
+%    new：新版版权声明页，对应 copyright 目录下的 Originality_Copyright_master_doctor_new.pdf
+
+
+% 加载用户的个人信息和论文相关参数设置的配置文件
+\input{ccnu-setup.tex}
+
+
+% 需要的额外宏包可以在此处自行调用
+%   关于模板已经载入的宏包请参看手册「宏包依赖情况」
+
+
+
+% 需要的命令环境可以自行定义
+\newcommand{\upe}{\mathrm{e}}   % 直立的e，用于表示常量，如自然常数      
+\newcommand{\upi}{\mathrm{i}}   % 直立的i，用于表示常量，如虚数单位
+
+
+\begin{document}
+
+
+% \frontmatter 开启论文前置部分
+% 前置部分包含目录、中英文摘要以及符号表等
+\frontmatter
+
+
+% 摘要
+%   适用学位类型：【本｜硕｜博】
+\input{./front/abstract.tex}
+
+
+% 符号表
+%   适用学位类型：【本｜硕｜博】
+%   不需要的话将 \input{./front/notation.tex} 注释掉或删除
+% \input{./front/notation.tex}
+
+
+
+% \mainmatter 进入论文主体部分
+\mainmatter
+
+
+
+% 主体采用多文件编译的方式
+% 即把每一章放进一个单独的 tex 文件里，并在这里用 \input 导入
+% 例如 \input{./body/chapter1.tex}
+% 表示插入 main.tex 所在目录中的 body 目录下的 chapter1.tex 文件
+
+% 正文
+% 适用学位类型：【本｜硕｜博】
+% \input{./body/chapter0.tex}  % 代码示例文件，不需要的话注释掉或者删掉即可
+
+\input{./body/chapter1.tex}
+\input{./body/chapter2.tex}
+\input{./body/chapter3.tex}
+\input{./body/chapter4.tex}
+\input{./body/chapter5.tex}
+
+
+\nocite{*}
+% 论文后文部分，参考文献、致谢、附录等
+\backmatter
+
+
+% 参考文献
+%********************************************
+% 行内引用：\parencite{} or \parencite[]{}，下面两个情况要用行内引用
+%    - 去掉这个引用句子结构不完整，比如“定理证明可参看[1]”
+%    - 英文文献的引用
+% 上标引用：\cite{} or \cite[]{}，下面情况要用上标引用
+%    - 去掉这个引用，句子结构完整，比如“作者提到，‘CCNUthesis 真是一个好模板。’^[1]”
+%      其中“^[1]” 表示上标引用
+%********************************************
+
+% 输出参考文献
+%   适用学位类型：【本｜硕｜博】
+%   无须用户进行任何操作
+%   用户要想正确输出参考文献：
+%     1. 在 bib 文件中输入正确的参考文献条目信息
+%     2. 在正文中正确地使用 \parencite 或 \cite 引用
+%     3. 使用 xelatex-biber-xelatex*2 编译链或 latexmk 方式编译 main.tex 文件
+\printbibliography
+
+
+% 附录
+% 【硕｜博】附录在致谢前
+% \include{./back/appendix.tex}
+
+% 攻读学位期间取得的研究成果（博）
+% \include{./back/publications.tex}
+
+
+% 致谢
+% \include{./back/acknowledgements.tex}
+
+
+% 附录
+% 【本】附录在致谢后
+% \include{./back/appendix.tex}
+
+
+\end{document}
