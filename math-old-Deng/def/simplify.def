@@ -360,6 +360,160 @@
                 \mychA.#1&\mychB.#2&\mychC.#3&\mychD.#4&E.#5
         \end{tabular}}
 
+
+% 邓增加：处理选项宽度
+% \newlength{\awidth}
+% \newlength{\bwidth}
+% \newlength{\cwidth}
+% \newlength{\dwidth}
+% \newlength{\ewidth}
+% \newlength{\fwidth}
+% \newlength{\first@width}
+% \newlength{\second@width}
+% \newlength{\third@width}
+% \newlength{\one@two}
+% \newlength{\one@three}
+% \newlength{\one@four}
+% \newlength{\one@five}
+% \newlength{\two@five}
+% \setlength{\one@two}{18\ccwd}
+% \setlength{\one@three}{12\ccwd}
+% \setlength{\one@four}{9\ccwd}
+% \setlength{\one@five}{7\ccwd}
+% \setlength{\two@five}{14\ccwd}
+
+
+
+% \makeatletter
+% \def\chf#1#2#3#4{%
+%     \settowidth{\awidth}{A.#1}%
+%     \settowidth{\bwidth}{B.#2}%
+%     \settowidth{\cwidth}{C.#3}%
+%     \settowidth{\dwidth}{D.#4}%
+%     % 判断四种排版情况
+%     \ifdim\awidth<\one@four\relax
+%     \ifdim\bwidth<\one@four\relax
+%         \ifdim\cwidth<\one@four\relax
+%         \ifdim\dwidth<\one@four\relax
+%             % 情况1: 一行四列
+%             \noindent\hspace*{5pt}%
+%             \begin{tabular}{*{4}{@{}p{1.05\one@four}}@{}}
+%             A.#1 & B.#2 & C.#3 & D.#4
+%             \end{tabular}\par
+%         \else
+%             \check@four@tworows{#1}{#2}{#3}{#4}%
+%         \fi
+%         \else
+%         \check@four@tworows{#1}{#2}{#3}{#4}%
+%         \fi
+%     \else
+%         \check@four@tworows{#1}{#2}{#3}{#4}%
+%     \fi
+%     \else
+%     \check@four@tworows{#1}{#2}{#3}{#4}%
+%     \fi
+% }
+% \newcommand{\check@four@tworows}[4]{%
+%     \ifdim\awidth<\one@two\relax
+%     \ifdim\bwidth<\one@two\relax
+%         \ifdim\cwidth<\one@two\relax
+%         \ifdim\dwidth<\one@two\relax
+%             % 情况2: 两行两列
+%             \noindent\hspace*{5pt}
+%             \begin{tabular}{*{2}{@{}p{1.02\one@two}}}
+%             A.#1 & B.#2 \\
+%             C.#3 & D.#4
+%             \end{tabular}%
+%             \par
+%         \else
+%             \check@four@threeA{#1}{#2}{#3}{#4}%
+%         \fi
+%         \else
+%         \check@four@threeA{#1}{#2}{#3}{#4}%
+%         \fi
+%     \else
+%         \check@four@threeA{#1}{#2}{#3}{#4}%
+%     \fi
+%     \else
+%     \check@four@threeA{#1}{#2}{#3}{#4}%
+%     \fi
+% }
+
+% \newcommand{\check@four@threeA}[4]{%
+%     \ifdim\awidth<\one@two\relax
+%     \ifdim\bwidth<\one@two\relax
+%         % 情况3A: 1&2正常，3和4合并
+%         \noindent\hspace*{5pt}
+%         \begin{tabular}{*{2}{@{}p{1.02\one@two}@{}}}
+%         A.#1 & B.#2 \\
+%         \multicolumn{2}{@{}p{37\ccwd}}{C.#3} \\
+%         \multicolumn{2}{@{}p{37\ccwd}}{D.#4}
+%         \end{tabular}%
+%         \par
+%         \else\check@four@threeB{#1}{#2}{#3}{#4}%
+%     \fi
+%     \else
+%     \check@four@threeB{#1}{#2}{#3}{#4}%
+%     \fi
+% }
+
+% \newcommand{\check@four@threeB}[4]{%
+%     \ifdim\awidth>\one@two\relax
+%     \ifdim\bwidth<\one@two\relax
+%         \ifdim\cwidth<\one@two\relax
+%         % 情况3B: 1和4合并，2&3正常
+%         \noindent\hspace*{5pt}
+%         \begin{tabular}{*{2}{@{}p{1.02\one@two}}}
+%         \multicolumn{2}{{@{}p{37\ccwd}}}{A.#1} \\
+%         B.#2 & C.#3 \\
+%         \multicolumn{2}{{@{}p{37\ccwd}}}{D.#4}
+%         \end{tabular}%
+%         \par
+%         \else
+%     \check@four@threeC{#1}{#2}{#3}{#4}%
+%     \fi
+%     \else\check@four@threeC{#1}{#2}{#3}{#4}%
+%     \fi
+%     \else\check@four@threeC{#1}{#2}{#3}{#4}%
+%     \fi
+% }
+
+% \newcommand{\check@four@threeC}[4]{%
+%     %\ifdim\awidth>18\ccwd\relax
+%     \ifdim\bwidth>\one@two\relax
+%         \ifdim\cwidth<\one@two\relax
+%         \ifdim\dwidth<\one@two\relax
+%             % 情况3C: 1和2合并，3&4正常
+%             \noindent\hspace*{5pt}
+%             \begin{tabular}{*{2}{@{}p{1.02\one@two}}}
+%             \multicolumn{2}{{@{}p{37\ccwd}}}{A.#1} \\
+%             \multicolumn{2}{{@{}p{37\ccwd}}}{B.#2} \\
+%             C.#3 & D.#4
+%             \end{tabular}%
+%             \par
+%         \else
+%             \check@four@fourrows{#1}{#2}{#3}{#4}%
+%         \fi
+%         \else
+%         \check@four@fourrows{#1}{#2}{#3}{#4}%
+%         \fi
+%     \else
+%         \check@four@fourrows{#1}{#2}{#3}{#4}%
+%     \fi
+% }
+
+% \newcommand{\check@four@fourrows}[4]{%
+%     % 情况4: 四行一列
+%     \noindent\hspace*{5pt}
+%     \begin{tabular}{{@{}p{.95\textwidth}}}
+%     A.#1 \\ B.#2 \\ C.#3 \\ D.#4
+%     \end{tabular}%
+%     \par
+% }
+% \makeatother
+
+
+
 %%%%%% 参考文献上标命令
 \makeatletter
 \let\chfold\chf

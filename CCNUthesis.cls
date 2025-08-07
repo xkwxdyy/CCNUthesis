@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\ProvidesExplClass {CCNUthesis} {2025-04-11} {v1.4.6}
+\ProvidesExplClass {CCNUthesis} {2025-04-24} {v1.4.6}
   {Thesis template for Central China Normal University}
 \RequirePackage { l3keys2e, xparse }
 
@@ -2036,13 +2036,14 @@
 % 落款
 \NewDocumentEnvironment { signature } { +b }
   {
-    \vfil
+    % \vfil
+    \vspace*{2\baselineskip}
     \begin{flushright}
       \begin{tabular}{c}
         #1
       \end{tabular}
     \end{flushright}
-    \vfil
+    % \vfil
   }
   {}
 
@@ -2177,24 +2178,45 @@
 
 \cs_new:Npn \__ccnu_ctex_format_bachelor:
   {
-    \bool_if:NTF \g__ccnu_chapter_newpage_bool
+    \bool_if:NTF \g__ccnu_cover_word_version_bool
       {
-        \keys_set:nn { ctex }
+        \bool_if:NTF \g__ccnu_chapter_newpage_bool
           {
-            chapter =
+            \keys_set:nn { ctex }
               {
-                format      = \zihao{-3} \normalfont \bfseries,
-                name        = {},
-                indent      = 1.4em,
-                number      = \__ccnu_arabic:n { chapter },
-                beforeskip  = 5 ex plus 0.5 ex,
-                afterskip   = 2.7 ex plus 0.5 ex,
-                break       = { \newpage },
-                fixskip     = true
+                chapter =
+                  {
+                    format      = \zihao{-3} \normalfont \bfseries,
+                    name        = {},
+                    indent      = 1.4em,
+                    number      = \__ccnu_arabic:n { chapter },
+                    beforeskip  = 5 ex plus 0.5 ex,
+                    afterskip   = 2.7 ex plus 0.5 ex,
+                    break       = { \newpage },
+                    fixskip     = true
+                  }
+              }
+          }
+          {
+            \keys_set:nn { ctex }
+              {
+                chapter =
+                  {
+                    format      = \zihao{-3} \normalfont \bfseries,
+                    name        = {},
+                    indent      = 1.4em,
+                    number      = \__ccnu_arabic:n { chapter },
+                    beforeskip  = 5 ex plus 0.5 ex,
+                    afterskip   = 2.7 ex plus 0.5 ex,
+                    % break       = { \needspace { 4em } },
+                    break       = { \addpenalty { \@secpenalty } },
+                    fixskip     = true
+                  }
               }
           }
       }
       {
+        % 邓模板默认不 break
         \keys_set:nn { ctex }
           {
             chapter =
@@ -2883,16 +2905,31 @@
           }
       }
       {
-        \node ( logo ) at 
-          (
-            [ shift = { ( 0em , \l__ccnu_tmpa_dim ) } ]
-              current~page.north
-          )
+        \bool_if:NTF \g__ccnu_cover_word_version_bool
           {
-            \includegraphics
-              [ height = 3.5em, width = 0.4\textwidth ]
-              { logo / ccnulogo.png } 
-          };
+            \node ( logo ) at 
+            (
+              [ shift = { ( 0em , \l__ccnu_tmpa_dim ) } ]
+                current~page.north
+            )
+            {
+              \includegraphics
+                [ height = 3.5em, width = 0.4\textwidth ]
+                { logo / ccnulogo.png } 
+            };
+          }
+          {
+            \node ( logo ) at 
+            (
+              [ shift = { ( 0em , \l__ccnu_tmpa_dim ) } ]
+                current~page.north
+            )
+            {
+              \includegraphics
+                [ height = 3.5em, width = 0.4\textwidth ]
+                { logo / ccnulogo_black.png } 
+            };
+          }
       }
   }
 
@@ -4778,10 +4815,20 @@
         bibstyle     = \tl_use:N \l__ccnu_biblatex_bibstyle_tl,
         citestyle    = gb7714-CCNU,
       }
-    \tl_if_in:NnT \l__ccnu_biblatex_bibstyle_tl { gb7714-CCNU }
+    \bool_if:NTF \g__ccnu_cover_word_version_bool
       {
-        \clist_put_right:Nn \l__ccnu_biblatex_options_clist
-          { CCNUpunctcn  = true }
+        \tl_if_in:NnT \l__ccnu_biblatex_bibstyle_tl { gb7714-CCNU }
+        {
+          \clist_put_right:Nn \l__ccnu_biblatex_options_clist
+            { CCNUpunctcn  = true }
+        }
+      }
+      {
+        \tl_if_in:NnT \l__ccnu_biblatex_bibstyle_tl { gb7714-CCNU }
+        {
+          \clist_put_right:Nn \l__ccnu_biblatex_options_clist
+            { CCNUpunctcn  = false }
+        }
       }
     \exp_args:NV \PassOptionsToPackage \l__ccnu_biblatex_options_clist
       { biblatex }
@@ -4816,10 +4863,20 @@
                       indent = 0pt
                     }
                 }
-              \setlength { \bibitemindent } { 0em }
-              \setlength { \bibhang } { 2em }
-              \setlength { \biblabelsep } { 0mm } 
-              \setlength { \biblabelextend } { 0pt }
+              \bool_if:NTF \g__ccnu_cover_word_version_bool
+                {
+                  \setlength { \bibitemindent } { 0em }
+                  \setlength { \bibhang } { 2em }
+                  \setlength { \biblabelsep } { 0mm } 
+                  \setlength { \biblabelextend } { 0pt }
+                }
+                {
+                  \setlength { \bibitemindent } { 0em }
+                  \setlength { \bibhang } { 1em }
+                  \setlength { \biblabelextend } { 0pt }
+                  % 声明文章和期刊类型的参考文献中卷号的字段格式为加粗
+                  \DeclareFieldFormat[article,periodical]{volume}{\textbf{####1}}
+                }
               \linespread { 1.25 } \selectfont
               \__ccnu_printbibliography:n { ##1 }
             \group_end:
