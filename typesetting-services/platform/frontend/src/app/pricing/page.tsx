@@ -142,7 +142,10 @@ export default function PricingPage() {
       }),
     });
     const data = await res.json();
-    if (res.ok) alert('订单创建成功，ID: ' + data.id);
+    if (res.ok) {
+      alert('订单创建成功，ID: ' + data.id);
+      window.location.href = `/orders/${data.id}`;
+    }
     else alert('下单失败: ' + (data.error || '未知错误'));
   };
 
