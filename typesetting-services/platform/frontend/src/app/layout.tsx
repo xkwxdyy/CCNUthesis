@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { AntdRegistry } from '@ant-design/nextjs-registry';
-import { ConfigProvider } from 'antd';
-import zhCN from 'antd/locale/zh_CN';
 
 export const metadata: Metadata = {
   title: "CCNUthesis 代排服务平台",
@@ -17,19 +14,7 @@ export default function RootLayout({
   return (
     <html lang="zh-CN">
       <body className="antialiased">
-        <AntdRegistry>
-          <ConfigProvider
-            locale={zhCN}
-            theme={{
-              token: {
-                colorPrimary: '#1890ff',
-                borderRadius: 8,
-              },
-            }}
-          >
-            {children}
-          </ConfigProvider>
-        </AntdRegistry>
+        {children}
       </body>
     </html>
   );

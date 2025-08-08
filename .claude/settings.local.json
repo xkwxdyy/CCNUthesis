@@ -8,7 +8,9 @@
       "Bash(mv:*)",
       "Bash(xelatex:*)",
       "Bash(rmdir:*)",
-      "Bash(npx create-next-app:*)"
+      "Bash(npx create-next-app:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(npm install:*)"
     ],
     "deny": []
   }
