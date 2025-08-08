@@ -2,17 +2,19 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { FileText, Calculator, BookOpen, Users, Menu, X, User } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useUser } from '@/hooks/use-user';
 
 const navItems = [
   { href: '/', label: '首页', icon: FileText },
   { href: '/pricing', label: '价格计算', icon: Calculator },
   { href: '/services', label: '服务介绍', icon: BookOpen },
   { href: '/portfolio', label: '案例展示', icon: Users },
+  { href: '/orders', label: '我的订单', icon: FileText },
   { href: '/account', label: '个人中心', icon: User },
 ];
 
@@ -20,6 +22,20 @@ export default function AppHeader() {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const router = useRouter();
+  const { user, loading } = useUser();
+
+  async function handleLogout() {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+      // 退出后回到首页并刷新，让所有使用用户信息的组件重新获取登录态
+      router.push('/');
+      router.refresh?.();
+    } catch (e) {
+      // 忽略错误，最坏情况下也让页面刷新一次
+      router.push('/');
+    }
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -88,15 +104,32 @@ export default function AppHeader() {
 
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center space-x-2">
-            <Button variant="ghost" size="sm">
-              <Link href="/login" className="flex items-center">
-                <User className="h-4 w-4 mr-2" />
-                登录
-              </Link>
-            </Button>
-            <Button size="sm">
-              <Link href="/register">开始使用</Link>
-            </Button>
+            {loading ? null : user ? (
+              <>
+                <Link href="/account">
+                  <Button variant="ghost" size="sm" className="flex items-center">
+                    <User className="h-4 w-4 mr-2" />
+                    {user.name || user.email}
+                  </Button>
+                </Link>
+                <Link href="/orders">
+                  <Button variant="ghost" size="sm">我的订单</Button>
+                </Link>
+                <Button variant="outline" size="sm" onClick={handleLogout}>退出</Button>
+              </>
+            ) : (
+              <>
+                <Button variant="ghost" size="sm">
+                  <Link href="/login" className="flex items-center">
+                    <User className="h-4 w-4 mr-2" />
+                    登录
+                  </Link>
+                </Button>
+                <Button size="sm">
+                  <Link href="/register">开始使用</Link>
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -143,15 +176,32 @@ export default function AppHeader() {
                   );
                 })}
                 <div className="pt-2 border-t space-y-2">
-                  <Button variant="outline" className="w-full">
-                    <Link href="/login" className="flex items-center w-full">
-                      <User className="h-4 w-4 mr-2" />
-                      登录
-                    </Link>
-                  </Button>
-                  <Button className="w-full">
-                    <Link href="/register">开始使用</Link>
-                  </Button>
+                  {loading ? null : user ? (
+                    <>
+                      <Link href="/account" onClick={() => setIsMobileMenuOpen(false)}>
+                        <Button variant="outline" className="w-full flex items-center justify-start">
+                          <User className="h-4 w-4 mr-2" />
+                          {user.name || user.email}
+                        </Button>
+                      </Link>
+                      <Link href="/orders" onClick={() => setIsMobileMenuOpen(false)}>
+                        <Button variant="ghost" className="w-full justify-start">我的订单</Button>
+                      </Link>
+                      <Button className="w-full" onClick={() => { setIsMobileMenuOpen(false); handleLogout(); }}>退出</Button>
+                    </>
+                  ) : (
+                    <>
+                      <Button variant="outline" className="w-full">
+                        <Link href="/login" className="flex items-center w-full" onClick={() => setIsMobileMenuOpen(false)}>
+                          <User className="h-4 w-4 mr-2" />
+                          登录
+                        </Link>
+                      </Button>
+                      <Button className="w-full">
+                        <Link href="/register" onClick={() => setIsMobileMenuOpen(false)}>开始使用</Link>
+                      </Button>
+                    </>
+                  )}
                 </div>
               </div>
             </nav>

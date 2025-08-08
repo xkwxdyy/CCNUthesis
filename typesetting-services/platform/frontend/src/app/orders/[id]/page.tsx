@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { QRCodeCanvas } from 'qrcode.react';
 
 interface OrderDetail {
   id: string;
@@ -24,6 +25,7 @@ export default function OrderDetailPage() {
   const params = useParams<{ id: string }>();
   const [order, setOrder] = useState<OrderDetail | null>(null);
   const [loading, setLoading] = useState(true);
+  const [polling, setPolling] = useState(false);
 
   useEffect(() => {
     const id = params?.id;
@@ -33,6 +35,24 @@ export default function OrderDetailPage() {
       .then((d) => setOrder(d))
       .finally(() => setLoading(false));
   }, [params?.id]);
+
+  // 简单轮询支付状态（30s内每3s一次）
+  const pollStatus = async () => {
+    if (polling || !order) return;
+    setPolling(true);
+    const start = Date.now();
+    const id = order.id;
+    while (Date.now() - start < 30000) {
+      // 等待3秒
+      // eslint-disable-next-line no-await-in-loop
+      await new Promise((r) => setTimeout(r, 3000));
+      // eslint-disable-next-line no-await-in-loop
+      const fresh = await fetch(`/api/orders/${id}`).then((r) => r.json());
+      setOrder(fresh);
+      if (fresh.depositPaid && fresh.finalPaid) break;
+    }
+    setPolling(false);
+  };
 
   const [desc, setDesc] = useState("");
   const [file, setFile] = useState<File | null>(null);
@@ -49,6 +69,32 @@ export default function OrderDetailPage() {
       setOrder(updated);
       setDesc("");
       setFile(null);
+    }
+  };
+
+  const [wechatCodeUrl, setWechatCodeUrl] = useState<string | null>(null);
+
+  const pay = async (type: 'deposit' | 'final', method: 'alipay' | 'wechat' | 'mock') => {
+    if (!order) return;
+    const amount = type === 'deposit' ? Math.round(order.totalPrice * 0.3) : Math.round(order.totalPrice - order.totalPrice * 0.3);
+    const res = await fetch('/api/payments/create', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ orderId: order.id, amount, method, type }),
+    });
+    const data = await res.json();
+    if (res.ok) {
+      if (method === 'wechat' && data.payUrl && data.payUrl.startsWith('weixin://wxpay/')) {
+        // 部分网关返回 weixin:// 链接，不利于桌面扫码；实际生产建议服务端将 code_url 返回
+        window.location.href = data.payUrl;
+      } else if (method === 'wechat' && data.payUrl && !data.payUrl.startsWith('http')) {
+        // code_url 可能是字符串，前端用二维码渲染
+        setWechatCodeUrl(data.payUrl);
+      } else {
+        window.open(data.payUrl, '_blank');
+      }
+    } else {
+      alert('下单支付失败: ' + (data.error || '未知错误'));
     }
   };
 
@@ -123,6 +169,25 @@ export default function OrderDetailPage() {
               <CardContent>
                 <div className="text-sm text-muted-foreground">
                   创建时间：{new Date(order.createdAt).toLocaleString()}
+                </div>
+                <div className="mt-6 space-y-3">
+                  <div className="text-sm font-medium">支付</div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <Button onClick={() => pay('deposit', 'alipay')}>支付宝订金</Button>
+                    <Button onClick={() => pay('deposit', 'wechat')}>微信订金</Button>
+                    <Button variant="outline" onClick={() => pay('final', 'alipay')}>支付宝尾款</Button>
+                    <Button variant="outline" onClick={() => pay('final', 'wechat')}>微信尾款</Button>
+                  </div>
+                  <div className="text-xs text-muted-foreground">若未配置支付，将使用模拟链接。</div>
+                  <div className="mt-2">
+                    <Button variant="ghost" onClick={pollStatus} disabled={polling}>刷新支付状态</Button>
+                  </div>
+                  {wechatCodeUrl && (
+                    <div className="mt-4 flex flex-col items-center gap-2">
+                      <QRCodeCanvas value={wechatCodeUrl} size={180} />
+                      <div className="text-xs text-muted-foreground">使用微信扫码完成支付</div>
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>
