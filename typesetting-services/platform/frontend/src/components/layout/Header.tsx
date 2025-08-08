@@ -13,6 +13,7 @@ const navItems = [
   { href: '/pricing', label: '价格计算', icon: Calculator },
   { href: '/services', label: '服务介绍', icon: BookOpen },
   { href: '/portfolio', label: '案例展示', icon: Users },
+  { href: '/account', label: '个人中心', icon: User },
 ];
 
 export default function AppHeader() {

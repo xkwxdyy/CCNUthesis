@@ -3,8 +3,10 @@
 import MainLayout from "@/components/layout/MainLayout";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+
+export const dynamic = "force-dynamic";
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -12,13 +14,20 @@ export default function RegisterPage() {
   const [name, setName] = useState("");
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  const [ref, setRef] = useState('');
+  // Read referral code from URL on client to avoid suspense requirement
+  // and potential pre-render errors
+  useEffect(() => {
+    const sp = new URLSearchParams(window.location.search);
+    setRef(sp.get('ref') || '');
+  }, []);
 
   const onSubmit = async () => {
     setError(null);
     const res = await fetch("/api/auth/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password, name }),
+      body: JSON.stringify({ email, password, name, referrerCode: ref }),
     });
     const data = await res.json();
     if (!res.ok) return setError(data.error || "注册失败");
