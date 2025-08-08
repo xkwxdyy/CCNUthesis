@@ -51,7 +51,8 @@
 
 @layer base {
   * {
-    @apply border-border;
+    /* Tailwind v4 may not support @apply border-border; use direct CSS instead */
+    border-color: hsl(var(--border));
   }
   body {
     @apply bg-background text-foreground antialiased;

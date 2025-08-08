@@ -5,6 +5,10 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import MainLayout from '@/components/layout/MainLayout';
+import PainPointDiagnostic from '@/components/marketing/PainPointDiagnostic';
+import SocialProof from '@/components/marketing/SocialProof';
+import ComparisonTable from '@/components/marketing/ComparisonTable';
+import StickyCTA from '@/components/marketing/StickyCTA';
 import Link from 'next/link';
 import { 
   ArrowRight, 
@@ -82,26 +86,27 @@ export default function Home() {
 
   return (
     <MainLayout>
+      <StickyCTA />
       {/* Hero Section */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5" />
-        <div className="container mx-auto px-4 py-20 md:py-32">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10" />
+        <div className="container mx-auto px-4 py-20 md:py-36">
           <motion.div 
             className="max-w-4xl mx-auto text-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <Badge className="mb-4" variant="secondary">
+            <Badge className="mb-4 glass border-primary/30" variant="secondary">
               <Sparkles className="h-3 w-3 mr-1" />
               华中师范大学官方模板作者
             </Badge>
             
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
+            <h1 className="text-5xl md:text-7xl font-extrabold mb-6 bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent">
               专业 LaTeX 论文排版服务
             </h1>
             
-            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-300/90 mb-10 max-w-2xl mx-auto">
               将你的 Word 文档转换为精美的 LaTeX 排版，
               <br />
               让你专注于内容创作，我们负责完美呈现
@@ -109,13 +114,13 @@ export default function Home() {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/pricing">
-                <Button size="xl" className="group">
+                <Button size="xl" className="group shadow-lg shadow-primary/20">
                   立即体验
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Button>
               </Link>
               <Link href="/services">
-                <Button size="xl" variant="outline">
+                <Button size="xl" variant="outline" className="backdrop-blur border-white/20">
                   了解服务
                 </Button>
               </Link>
@@ -141,7 +146,7 @@ export default function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-card/50">
+      <section className="py-16 bg-card/50 glass">
         <div className="container mx-auto px-4">
           <motion.div 
             className="grid grid-cols-2 md:grid-cols-4 gap-6"
@@ -170,6 +175,9 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
+
+      {/* Pain Point Diagnostic */}
+      <PainPointDiagnostic />
 
       {/* Features Grid */}
       <section className="py-20">
@@ -261,6 +269,12 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
+
+      {/* Social Proof */}
+      <SocialProof />
+
+      {/* Comparison Table */}
+      <ComparisonTable />
 
       {/* CTA Section */}
       <section className="py-20">

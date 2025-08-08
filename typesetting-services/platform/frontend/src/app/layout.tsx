@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { ParticleBackground } from "@/components/ui/particle-background";
 
 export const metadata: Metadata = {
   title: "CCNUthesis 代排服务平台",
@@ -14,7 +15,8 @@ export default function RootLayout({
   return (
     <html lang="zh-CN">
       <body className="antialiased" suppressHydrationWarning>
-        {children}
+        <ParticleBackground />
+        <div className="relative z-10">{children}</div>
       </body>
     </html>
   );

@@ -50,7 +50,7 @@ export function RippleEffect({
   return (
     <div 
       className="absolute inset-0 overflow-hidden pointer-events-none"
-      onMouseDown={handleClick as any}
+      onMouseDown={(e) => handleClick(e as unknown as React.MouseEvent)}
       style={{ pointerEvents: 'auto' }}
     >
       <AnimatePresence>
