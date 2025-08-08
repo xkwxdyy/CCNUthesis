@@ -4,6 +4,7 @@ import AppHeader from './Header';
 import { motion } from 'framer-motion';
 import { Mail, MessageCircle, Github } from 'lucide-react';
 import Link from 'next/link';
+import { FooterYear } from '@/components/ui/footer-year';
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -105,7 +106,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
           </div>
 
           <div className="mt-8 pt-8 border-t text-center text-sm text-muted-foreground">
-            <p>© 2021-{new Date().getFullYear()} CCNUthesis 代排服务. All rights reserved.</p>
+            <p>© 2021-<FooterYear /> CCNUthesis 代排服务. All rights reserved.</p>
             <p className="mt-2">
               Powered by Next.js • Designed with 💙 for Academic Excellence
             </p>
