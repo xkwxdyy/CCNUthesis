@@ -8,7 +8,7 @@ import { FooterYear } from '@/components/ui/footer-year';
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary/20">
+    <div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary/10 text-foreground">
       <AppHeader />
       
       {/* Main Content with padding for fixed header */}

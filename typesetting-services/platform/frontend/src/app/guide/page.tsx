@@ -14,8 +14,8 @@ export default function GuidePage() {
     <MainLayout>
       <section className="py-16">
         <div className="container mx-auto px-4 max-w-3xl">
-          <h1 className="text-4xl font-bold mb-6">自查指南（精简版）</h1>
-          <p className="text-muted-foreground mb-8">按以下清单自查，可减少80%常见返工</p>
+          <h1 className="text-4xl font-bold mb-6 text-white">自查指南（精简版）</h1>
+          <p className="text-white/80 mb-8">按以下清单自查，可减少80%常见返工</p>
           <ol className="list-decimal list-inside space-y-3">
             {steps.map((s) => (
               <li key={s.title}>

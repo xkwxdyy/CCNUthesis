@@ -35,8 +35,8 @@ export default function ServicesPage() {
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="text-center mb-10">
-            <h1 className="text-4xl font-bold mb-3">服务范围</h1>
-            <p className="text-muted-foreground">覆盖论文排版的全流程关键环节</p>
+            <h1 className="text-4xl font-bold mb-3 text-white">服务范围</h1>
+            <p className="text-white/80">覆盖论文排版的全流程关键环节</p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {services.map((s, i) => (

@@ -57,7 +57,7 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
-    background: #0a0a0f;
+    /* 使用设计令牌，而不是硬编码黑色，避免文字对比度问题 */
     min-height: 100vh;
   }
 }

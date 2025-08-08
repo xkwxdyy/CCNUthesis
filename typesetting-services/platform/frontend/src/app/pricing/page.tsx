@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import MainLayout from '@/components/layout/MainLayout';
-import { ParticleBackground } from '@/components/ui/particle-background';
+// 注意：根布局 `app/layout.tsx` 已全局渲染 `ParticleBackground`。
+// 为避免在本页面重复叠加背景层导致层叠复杂且潜在遮挡，移除本页内的额外背景。
 import { GlowCard } from '@/components/ui/glow-card';
 import { NeonButton } from '@/components/ui/neon-button';
 import { AnimatedCounter } from '@/components/ui/animated-counter';
@@ -151,8 +152,7 @@ export default function PricingPage() {
 
   return (
     <MainLayout>
-      <ParticleBackground />
-      
+      {/* 背景已在根布局渲染，这里不再重复渲染 */}
       <div className="relative z-10 min-h-screen">
         <div className="container mx-auto px-4 py-12 max-w-7xl">
           {/* Hero Section */}
@@ -188,7 +188,7 @@ export default function PricingPage() {
             </h1>
 
             <motion.p 
-              className="text-xl text-gray-400 max-w-3xl mx-auto mb-8"
+              className="text-xl text-white/85 max-w-3xl mx-auto mb-8"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.6, duration: 0.8 }}
@@ -197,7 +197,7 @@ export default function PricingPage() {
             </motion.p>
 
             <motion.div 
-              className="flex flex-wrap justify-center gap-6 text-sm"
+              className="flex flex-wrap justify-center gap-6 text-sm text-white/80"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 2, duration: 0.6 }}
@@ -235,16 +235,16 @@ export default function PricingPage() {
                       <Brain className="h-6 w-6 text-purple-400" />
                     </div>
                     <div>
-                      <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                      <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-300 to-blue-300 bg-clip-text text-transparent">
                         智能分析
                       </h2>
-                      <p className="text-sm text-gray-400">上传文档或手动输入</p>
+                      <p className="text-sm text-white/70">上传文档或手动输入</p>
                     </div>
                   </div>
 
                   {/* File Upload */}
                   <div className="mb-8">
-                    <Label className="text-gray-300 mb-3 block flex items-center gap-2">
+                    <Label className="text-white/85 mb-3 block flex items-center gap-2">
                       <Cpu className="h-4 w-4 text-cyan-400" />
                       文档上传
                     </Label>
@@ -271,7 +271,7 @@ export default function PricingPage() {
                       <div className="w-full border-t border-gray-700"></div>
                     </div>
                     <div className="relative flex justify-center">
-                      <span className="px-4 bg-black text-sm text-gray-400">或手动输入</span>
+                      <span className="px-4 bg-black/60 text-sm text-white/80">或手动输入</span>
                     </div>
                   </div>
 
@@ -288,7 +288,7 @@ export default function PricingPage() {
                         whileHover={{ scale: 1.02 }}
                         transition={{ type: 'spring', stiffness: 400 }}
                       >
-                        <Label className="text-gray-400 text-sm mb-2 flex items-center gap-2">
+                        <Label className="text-white/80 text-sm mb-2 flex items-center gap-2">
                           <item.icon className={`h-3 w-3 ${item.color}`} />
                           {item.label}
                         </Label>
@@ -299,9 +299,9 @@ export default function PricingPage() {
                             placeholder="0"
                             value={formValues[item.field as keyof FormValues] || ''}
                             onChange={(e) => handleInputChange(item.field as keyof FormValues, e.target.value)}
-                            className="bg-black/50 border-gray-700 text-white placeholder-gray-500 focus:border-purple-500 transition-all duration-300"
+                            className="bg-black/50 border-gray-600 text-white placeholder-white/50 focus:border-purple-400 transition-all duration-300"
                           />
-                          <div className="absolute inset-0 rounded-md bg-gradient-to-r from-purple-600/0 via-purple-600/20 to-purple-600/0 opacity-0 group-focus-within:opacity-100 pointer-events-none transition-opacity duration-300" />
+                          <div className="absolute inset-0 rounded-md bg-gradient-to-r from-purple-600/0 via-purple-500/25 to-purple-600/0 opacity-0 group-focus-within:opacity-100 pointer-events-none transition-opacity duration-300" />
                         </div>
                       </motion.div>
                     ))}
@@ -343,14 +343,14 @@ export default function PricingPage() {
                   { icon: TrendingUp, title: '智能优化', desc: '精准报价' },
                   { icon: Star, title: '五星服务', desc: '专业团队' },
                 ].map((feature, index) => (
-                  <GlowCard key={index} glowColor="rgba(59, 130, 246, 0.3)">
+                   <GlowCard key={index} glowColor="rgba(59, 130, 246, 0.35)">
                     <div className="p-4 flex items-start gap-3">
                       <div className="p-2 rounded-lg bg-gradient-to-br from-blue-600/20 to-cyan-600/20 border border-blue-500/30">
                         <feature.icon className="h-4 w-4 text-blue-400" />
                       </div>
                       <div>
                         <h3 className="text-sm font-semibold text-white">{feature.title}</h3>
-                        <p className="text-xs text-gray-400">{feature.desc}</p>
+                        <p className="text-xs text-white/75">{feature.desc}</p>
                       </div>
                     </div>
                   </GlowCard>
@@ -383,15 +383,16 @@ export default function PricingPage() {
                             initial={{ scale: 0 }}
                             animate={{ scale: 1 }}
                             transition={{ type: 'spring', delay: 0.2 }}
-                            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-green-600/20 to-emerald-600/20 border border-green-500/30 mb-4"
+                             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-green-600/25 to-emerald-600/25 border border-green-500/40 mb-4"
                           >
                             <Star className="h-4 w-4 text-green-400" />
                             <span className="text-sm font-medium text-green-400">计算完成</span>
                           </motion.div>
 
                           <div className="relative">
+                            {/* 背景发光层：仅作装饰，放在底层并且不吃指针事件，避免覆盖文字导致“看起来像被模糊” */}
                             <motion.div
-                              className="absolute inset-0 blur-3xl"
+                              className="absolute inset-0 blur-3xl pointer-events-none z-0"
                               animate={{
                                 background: [
                                   'radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%)',
@@ -407,16 +408,18 @@ export default function PricingPage() {
                               }}
                             />
                             
-                            <div className="relative">
-                              <div className="text-7xl font-black mb-2">
+                            {/* 文本层：明确置于上层，提高可读性 */}
+                            <div className="relative z-10">
+                              <div className="text-7xl font-black mb-2 leading-none">
                                 <AnimatedCounter
                                   value={calculation.totalPrice}
                                   prefix="¥"
                                   duration={2}
+                                  glowEffect={false}
                                   className="bg-gradient-to-r from-yellow-400 via-pink-400 to-purple-400 bg-clip-text text-transparent"
                                 />
                               </div>
-                              <p className="text-gray-400">预估总价</p>
+                              <p className="text-white/80">预估总价</p>
                             </div>
                           </div>
                         </div>
@@ -449,14 +452,14 @@ export default function PricingPage() {
                                   initial={{ opacity: 0, x: -20 }}
                                   animate={{ opacity: 1, x: 0 }}
                                   transition={{ delay: index * 0.1 }}
-                                  className="flex items-center justify-between p-3 rounded-lg bg-gradient-to-r from-gray-900/50 to-gray-800/50 border border-gray-700/50"
+                                   className="flex items-center justify-between p-3 rounded-lg bg-gradient-to-r from-gray-900/55 to-gray-800/55 border border-gray-600/50"
                                 >
                                   <span className="text-gray-400 text-sm">{item.label}</span>
                                   <div className="flex items-center gap-2">
                                     <span className={`text-lg font-semibold bg-gradient-to-r ${item.color} bg-clip-text text-transparent`}>
                                       ¥{item.value}
                                     </span>
-                                    <ArrowUpRight className="h-4 w-4 text-gray-500" />
+                                     <ArrowUpRight className="h-4 w-4 text-white/50" />
                                   </div>
                                 </motion.div>
                               ))}
@@ -465,7 +468,7 @@ export default function PricingPage() {
                                 <motion.div
                                   initial={{ opacity: 0, scale: 0.9 }}
                                   animate={{ opacity: 1, scale: 1 }}
-                                  className="flex items-center justify-between p-3 rounded-lg bg-gradient-to-r from-purple-900/30 to-pink-900/30 border border-purple-500/30"
+                                   className="flex items-center justify-between p-3 rounded-lg bg-gradient-to-r from-purple-900/35 to-pink-900/35 border border-purple-500/35"
                                 >
                                   <span className="text-purple-300 text-sm font-medium">复杂度系数</span>
                                   <Badge className="bg-gradient-to-r from-purple-600 to-pink-600 text-white border-0">
@@ -504,7 +507,7 @@ export default function PricingPage() {
 
                         {/* Promo Badge */}
                         <motion.div
-                          className="mt-6 p-4 rounded-xl bg-gradient-to-r from-purple-900/20 via-pink-900/20 to-orange-900/20 border border-purple-500/30"
+                           className="mt-6 p-4 rounded-xl bg-gradient-to-r from-purple-900/25 via-pink-900/25 to-orange-900/25 border border-purple-500/35"
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 0.8 }}
@@ -514,8 +517,8 @@ export default function PricingPage() {
                               <Sparkles className="h-5 w-5 text-yellow-400" />
                             </div>
                             <div>
-                              <h4 className="text-sm font-semibold text-yellow-400">限时优惠</h4>
-                              <p className="text-xs text-gray-400">邀请好友下单，双方各得¥30优惠券</p>
+                               <h4 className="text-sm font-semibold text-yellow-300">限时优惠</h4>
+                               <p className="text-xs text-white/80">邀请好友下单，双方各得¥30优惠券</p>
                             </div>
                           </div>
                         </motion.div>
@@ -548,10 +551,10 @@ export default function PricingPage() {
                           </div>
                         </motion.div>
                         
-                        <h3 className="text-2xl font-bold mb-3 bg-gradient-to-r from-gray-400 to-gray-500 bg-clip-text text-transparent">
+                        <h3 className="text-2xl font-bold mb-3 text-white/85">
                           等待计算
                         </h3>
-                        <p className="text-gray-500 max-w-xs mx-auto">
+                        <p className="text-white/75 max-w-xs mx-auto">
                           上传文档或输入信息，AI 将为您智能分析并生成报价
                         </p>
                       </div>

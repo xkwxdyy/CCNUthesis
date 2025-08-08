@@ -48,10 +48,10 @@ export default function AppHeader() {
   return (
     <header
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-300 text-foreground',
         isScrolled
-          ? 'bg-background/80 backdrop-blur-md border-b shadow-sm'
-          : 'bg-background/60 backdrop-blur-sm'
+          ? 'bg-background/85 backdrop-blur-md border-b shadow-sm'
+          : 'bg-background/70 backdrop-blur'
       )}
     >
       <div className="container mx-auto px-4">

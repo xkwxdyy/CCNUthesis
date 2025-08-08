@@ -112,7 +112,7 @@ export function NeonButton({
         },
       }}
     >
-      <span className="absolute inset-0 rounded-lg bg-gradient-to-r opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl"
+      <span className="absolute inset-0 rounded-lg bg-gradient-to-r opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl pointer-events-none"
         style={{
           background: `linear-gradient(135deg, ${colors.glow}, ${colors.shadow})`,
         }}
@@ -120,7 +120,7 @@ export function NeonButton({
 
       <span
         className={cn(
-          'absolute -inset-[2px] rounded-lg opacity-75 blur-sm transition-all duration-300',
+          'absolute -inset-[2px] rounded-lg opacity-75 blur-sm transition-all duration-300 pointer-events-none',
           'group-hover:opacity-100 group-hover:blur-md',
           isPressed && 'blur-lg'
         )}
@@ -130,7 +130,7 @@ export function NeonButton({
         }}
       />
 
-      <span className="absolute -inset-[1px] rounded-lg bg-gradient-to-r opacity-50"
+      <span className="absolute -inset-[1px] rounded-lg bg-gradient-to-r opacity-50 pointer-events-none"
         style={{
           background: `linear-gradient(135deg, ${colors.border})`,
         }}

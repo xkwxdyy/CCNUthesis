@@ -26,8 +26,8 @@ export default function PortfolioPage() {
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="text-center mb-10">
-            <h1 className="text-4xl font-bold mb-3">案例展示</h1>
-            <p className="text-muted-foreground">展示典型场景与交付效果</p>
+            <h1 className="text-4xl font-bold mb-3 text-white">案例展示</h1>
+            <p className="text-white/80">展示典型场景与交付效果</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {cases.map((c, i) => (

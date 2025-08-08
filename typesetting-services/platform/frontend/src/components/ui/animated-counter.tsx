@@ -12,6 +12,8 @@ interface AnimatedCounterProps {
   className?: string;
   startAnimation?: boolean;
   onComplete?: () => void;
+  // 是否在动画时开启“发光/霓虹”效果。默认关闭，避免文字看起来发虚/模糊
+  glowEffect?: boolean;
 }
 
 export function AnimatedCounter({
@@ -23,6 +25,7 @@ export function AnimatedCounter({
   className = '',
   startAnimation = true,
   onComplete,
+  glowEffect = false,
 }: AnimatedCounterProps) {
   const [displayValue, setDisplayValue] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -81,7 +84,7 @@ export function AnimatedCounter({
         <motion.span
           className="relative z-10"
           animate={
-            isAnimating
+            glowEffect && isAnimating
               ? {
                   textShadow: [
                     '0 0 20px rgba(139, 92, 246, 0.8)',
@@ -93,7 +96,7 @@ export function AnimatedCounter({
           }
           transition={{
             duration: 0.5,
-            repeat: isAnimating ? Infinity : 0,
+            repeat: glowEffect && isAnimating ? Infinity : 0,
             ease: 'easeInOut',
           }}
         >
@@ -118,7 +121,7 @@ export function AnimatedCounter({
           {suffix}
         </motion.span>
 
-        {isAnimating && (
+        {glowEffect && isAnimating && (
           <motion.span
             className="absolute inset-0 flex items-center justify-center"
             initial={{ opacity: 0 }}
@@ -134,7 +137,7 @@ export function AnimatedCounter({
         )}
       </span>
 
-      {isAnimating && (
+      {glowEffect && isAnimating && (
         <motion.div
           className="absolute -inset-4 pointer-events-none"
           initial={{ opacity: 0 }}

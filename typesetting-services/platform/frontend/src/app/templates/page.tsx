@@ -14,7 +14,7 @@ export default function TemplatesPage() {
     <MainLayout>
       <section className="py-16">
         <div className="container mx-auto px-4 max-w-3xl">
-          <h1 className="text-4xl font-bold mb-6">模板下载</h1>
+          <h1 className="text-4xl font-bold mb-6 text-white">模板下载</h1>
           <div className="space-y-4">
             {files.map((f) => (
               <Card key={f.name}>

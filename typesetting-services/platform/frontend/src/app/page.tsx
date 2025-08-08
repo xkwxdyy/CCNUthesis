@@ -106,7 +106,7 @@ export default function Home() {
               专业 LaTeX 论文排版服务
             </h1>
             
-            <p className="text-xl text-gray-300/90 mb-10 max-w-2xl mx-auto">
+            <p className="text-xl text-white/90 mb-10 max-w-2xl mx-auto">
               将你的 Word 文档转换为精美的 LaTeX 排版，
               <br />
               让你专注于内容创作，我们负责完美呈现
@@ -127,7 +127,7 @@ export default function Home() {
             </div>
 
             {/* Trust Indicators */}
-            <div className="mt-12 flex flex-wrap justify-center gap-6 text-sm text-muted-foreground">
+            <div className="mt-12 flex flex-wrap justify-center gap-6 text-sm text-white/80">
               <div className="flex items-center gap-2">
                 <CheckCircle className="h-4 w-4 text-green-500" />
                 <span>2021年起服务至今</span>
