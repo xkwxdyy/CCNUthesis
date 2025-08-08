@@ -13,6 +13,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { FileUpload } from '@/components/ui/file-upload';
+import { useUser } from '@/hooks/use-user';
 import { 
   Calculator, 
   Sparkles,
@@ -48,6 +49,7 @@ interface FormValues {
 }
 
 export default function PricingPage() {
+  const { user } = useUser();
   const [files, setFiles] = useState<File[]>([]);
   const [formValues, setFormValues] = useState<FormValues>({
     pageCount: 0,
@@ -87,22 +89,28 @@ export default function PricingPage() {
     setShowPriceBreakdown(true);
   };
 
-  const handleFileUpload = (acceptedFiles: File[]) => {
+  const handleFileUpload = async (acceptedFiles: File[]) => {
     setFiles(acceptedFiles);
     setIsAnalyzing(true);
-    
-    setTimeout(() => {
-      const mockValues = {
-        pageCount: Math.floor(Math.random() * 50) + 20,
-        formulaCount: Math.floor(Math.random() * 30) + 5,
-        tableCount: Math.floor(Math.random() * 15) + 3,
-        refCount: Math.floor(Math.random() * 40) + 10,
+    try {
+      const form = new FormData();
+      form.append('file', acceptedFiles[0]);
+      const res = await fetch('/api/analyze', { method: 'POST', body: form });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.error || '分析失败');
+      const values = {
+        pageCount: data?.statistics?.page_count ?? 0,
+        formulaCount: data?.statistics?.formula_count ?? 0,
+        tableCount: data?.statistics?.table_count ?? 0,
+        refCount: data?.statistics?.reference_count ?? 0,
       };
-      
-      setFormValues(mockValues);
-      calculatePrice(mockValues);
+      setFormValues(values);
+      calculatePrice(values);
+    } catch (e) {
+      console.error(e);
+    } finally {
       setIsAnalyzing(false);
-    }, 3000);
+    }
   };
 
   const handleInputChange = (field: keyof FormValues, value: string) => {
@@ -113,6 +121,29 @@ export default function PricingPage() {
 
   const handleCalculate = () => {
     calculatePrice(formValues);
+  };
+
+  const handleCreateOrder = async () => {
+    if (!calculation) return;
+    if (!user) {
+      window.location.href = '/login';
+      return;
+    }
+    const res = await fetch('/api/orders', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        userId: user.id,
+        pageCount: formValues.pageCount,
+        formulaCount: formValues.formulaCount,
+        tableCount: formValues.tableCount,
+        refCount: formValues.refCount,
+        totalPrice: calculation.totalPrice,
+      }),
+    });
+    const data = await res.json();
+    if (res.ok) alert('订单创建成功，ID: ' + data.id);
+    else alert('下单失败: ' + (data.error || '未知错误'));
   };
 
   return (
@@ -450,7 +481,7 @@ export default function PricingPage() {
                             variant="success"
                             className="w-full"
                             glowIntensity="high"
-                            onClick={() => {}}
+                             onClick={handleCreateOrder}
                           >
                             <Rocket className="mr-2 h-5 w-5" />
                             立即下单
