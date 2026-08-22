@@ -40,10 +40,10 @@ jobs:
         with:
           packages: |
             latex latex-bin latexmk xetex biber ctex
-            amsmath amsfonts amsthm biblatex biblatex-gb7714-2015
-            geometry fancyhdr footmisc graphicx caption fontspec
-            tikzpagenodes tabularray calc etoolbox xeCJKfntef zhlineskip
-            enumitem tocloft newtx unicode-math hyperref pifont
+            amsmath amsfonts biblatex biblatex-gb7714-2015
+            geometry fancyhdr footmisc caption fontspec tikzpagenodes
+            tabularray etoolbox zhlineskip enumitem tocloft newtx
+            unicode-math hyperref
       - name: Compile test fixtures
         run: bash scripts/test.sh --parallel --report --report-format markdown
       - name: Build user guide
