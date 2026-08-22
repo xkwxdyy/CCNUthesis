@@ -811,12 +811,12 @@
   ItalicFont     = *-Italic,
   BoldItalicFont = *-BoldItalic,
   Scale          = 1.1]
-\setsansfont{IBMPlexSansCondensed}[%
-  Extension      = .otf,
-  UprightFont    = *-Regular,
-  BoldFont       = *-Bold,
-  ItalicFont     = *-Italic,
-  BoldItalicFont = *-BoldItalic]
+% Use explicit filenames so XeTeX can resolve the TeX Live font files even
+% when the system font database has not been refreshed by the CI installer.
+\setsansfont{IBMPlexSansCondensed-Regular.otf}[%
+  BoldFont       = IBMPlexSansCondensed-Bold.otf,
+  ItalicFont     = IBMPlexSansCondensed-Italic.otf,
+  BoldItalicFont = IBMPlexSansCondensed-BoldItalic.otf]
 % Iosevka Slab is optional: it is not shipped by every TeX Live profile.
 % Keep the documentation portable by falling back to Latin Modern Mono.
 \IfFontExistsTF{Iosevka Slab}{%
