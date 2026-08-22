@@ -23,7 +23,10 @@ import zipfile
 import logging
 from pathlib import Path
 from datetime import datetime
-from typing import Optional, List, Tuple
+from typing import Optional
+
+
+SEMVER_RE = re.compile(r"^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$")
 
 
 # Configure logging
@@ -79,15 +82,26 @@ class CCNUthesisBuild:
             'doc_version': re.compile(r'\\newcommand\{\\DocVersion\}\{v([^}]*)\}'),
         }
         
-    def get_version_from_user(self, version: Optional[str] = None) -> str:
-        """Get version number from user input."""
+    def get_version_from_user(self, version: Optional[str] = None,
+                              non_interactive: bool = False) -> str:
+        """Get and validate a semantic version, optionally without prompts."""
+        if version and not SEMVER_RE.fullmatch(version):
+            raise ValueError(f"invalid version '{version}'; expected MAJOR.MINOR.PATCH")
+        if version and (non_interactive or os.environ.get("CI")):
+            return version
         if version:
             confirm = input(f"New version will be: v{version}. Confirm? [y/N]: ")
             if confirm.lower() == 'y':
                 return version
-        
+
+        if non_interactive:
+            raise ValueError("a version is required in non-interactive mode")
+
         while True:
             version = input("Please enter the new version number (e.g., 1.4.7): ")
+            if not SEMVER_RE.fullmatch(version):
+                self.logger.error("Version must match MAJOR.MINOR.PATCH (for example, 1.4.7)")
+                continue
             confirm = input(f"New version will be: v{version}. Confirm? [y/N]: ")
             if confirm.lower() == 'y':
                 return version
@@ -194,12 +208,26 @@ class CCNUthesisBuild:
         self.logger.info(f"Compiling {tex_file.name}...")
         
         try:
+            env = os.environ.copy()
+            env['TEXINPUTS'] = f"{self.source_dir}{os.pathsep}{env.get('TEXINPUTS', '')}"
+            # PAR-packed Biber tries to write its thin-binary cache under the
+            # user's home directory. Keep it in a writable, per-project cache.
+            biber_cache = self.base_dir / '.cache' / 'biber'
+            biber_cache.mkdir(parents=True, exist_ok=True)
+            env['PAR_GLOBAL_TEMP'] = str(biber_cache)
+            env['PAR_GLOBAL_TMPDIR'] = str(biber_cache)
+            env['TEXMFVAR'] = str(self.base_dir / '.cache' / 'texmf-var')
+            env['TEXMFCONFIG'] = str(self.base_dir / '.cache' / 'texmf-config')
+            Path(env['TEXMFVAR']).mkdir(parents=True, exist_ok=True)
+            Path(env['TEXMFCONFIG']).mkdir(parents=True, exist_ok=True)
             result = subprocess.run(
-                ['latexmk', '-xelatex', str(tex_file)],
+                ['latexmk', '-xelatex', '-g', '-interaction=nonstopmode',
+                 '-halt-on-error', tex_file.name],
                 cwd=work_dir,
                 capture_output=True,
                 text=True,
-                timeout=120
+                timeout=int(os.environ.get('CCNU_BUILD_TIMEOUT', '180')),
+                env=env,
             )
             
             if result.returncode == 0:
@@ -207,8 +235,9 @@ class CCNUthesisBuild:
                 return True
             else:
                 self.logger.error(f"✗ Failed to compile {tex_file.name}")
-                if result.stderr:
-                    self.logger.debug(result.stderr)
+                output = (result.stdout + "\n" + result.stderr).strip()
+                if output:
+                    self.logger.error("\n".join(output.splitlines()[-30:]))
                 return False
                 
         except subprocess.TimeoutExpired:
@@ -381,25 +410,36 @@ class CCNUthesisBuild:
         return archive_path
         
     def run(self, version: Optional[str] = None, skip_compile: bool = False,
-            skip_docs: bool = False) -> bool:
+            skip_docs: bool = False, non_interactive: bool = False,
+            dry_run: bool = False) -> bool:
         """Run the build process."""
-        # Get version
-        version = self.get_version_from_user(version)
-        
-        # Update version in files
-        if not self.update_version(version):
-            self.logger.error("Failed to update version")
+        try:
+            version = self.get_version_from_user(version, non_interactive)
+        except ValueError as exc:
+            self.logger.error(str(exc))
             return False
-            
+
+        if dry_run:
+            self.logger.info("Dry run: version v%s is valid; no files will be changed", version)
+            return True
+
         # Compile documentation
         if not skip_docs:
             if not self.build_documentation():
-                self.logger.warning("Documentation compilation failed")
+                self.logger.error("Documentation compilation failed; release was not created")
+                return False
                 
         # Compile example
         if not skip_compile:
             if not self.build_example():
-                self.logger.warning("Example compilation failed")
+                self.logger.error("Example compilation failed; release was not created")
+                return False
+
+        # Update version only after all preflight builds pass, so a failed
+        # release does not leave the working tree with a half-updated version.
+        if not self.update_version(version):
+            self.logger.error("Failed to update version")
+            return False
                 
         # Prepare release files
         release_dir = self.prepare_release_files(version)
@@ -445,6 +485,16 @@ def main():
         action='store_true',
         help='Enable debug output'
     )
+    parser.add_argument(
+        '--non-interactive',
+        action='store_true',
+        help='Never prompt; require a valid version argument'
+    )
+    parser.add_argument(
+        '--dry-run',
+        action='store_true',
+        help='Validate the version and options without changing files'
+    )
     
     args = parser.parse_args()
     
@@ -453,7 +503,9 @@ def main():
     success = builder.run(
         version=args.version,
         skip_compile=args.skip_compile,
-        skip_docs=args.skip_docs
+        skip_docs=args.skip_docs,
+        non_interactive=args.non_interactive,
+        dry_run=args.dry_run,
     )
     
     sys.exit(0 if success else 1)

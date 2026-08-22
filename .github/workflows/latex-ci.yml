@@ -1,0 +1,50 @@
+name: LaTeX checks
+
+on:
+  push:
+    paths:
+      - 'source/**'
+      - 'test/**'
+      - 'docs/**'
+      - 'assets/**'
+      - 'scripts/**'
+      - 'Makefile'
+      - '.github/workflows/latex-ci.yml'
+  pull_request:
+    paths:
+      - 'source/**'
+      - 'test/**'
+      - 'docs/**'
+      - 'assets/**'
+      - 'scripts/**'
+      - 'Makefile'
+      - '.github/workflows/latex-ci.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: latex-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate change fragments
+        run: make check-changes
+      - name: Install TeX Live
+        uses: zauguin/install-texlive@v4
+        with:
+          packages: |
+            latex latex-bin latexmk xetex biber ctex
+            amsmath amsfonts amsthm biblatex biblatex-gb7714-2015
+            geometry fancyhdr footmisc graphicx caption fontspec
+            tikzpagenodes tabularray calc etoolbox xeCJKfntef zhlineskip
+            enumitem tocloft newtx unicode-math hyperref pifont
+      - name: Compile test fixtures
+        run: bash scripts/test.sh --parallel --report --report-format markdown
+      - name: Build user guide
+        run: make docs

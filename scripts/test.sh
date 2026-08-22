@@ -1,466 +1,221 @@
-#!/bin/bash
-# Test script for CCNUthesis development
-# Supports parallel testing and report generation
+#!/usr/bin/env bash
+set -Eeuo pipefail
 
-# Colors for output
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-CYAN='\033[0;36m'
-NC='\033[0m' # No Color
+# Compile the repository's supported TeX fixtures. Every configured fixture is
+# required: a missing directory or source file is a failure, never a skip.
 
-# Configuration
+BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PARALLEL=false
 GENERATE_REPORT=false
 REPORT_FORMAT="text"
 VERBOSE=false
 CLEAN_AFTER=true
-TEST_TIMEOUT=120
+TEST_TIMEOUT="${CCNU_TEST_TIMEOUT:-120}"
 
-# Parse arguments
-while [[ $# -gt 0 ]]; do
-    case $1 in
-        -p|--parallel)
-            PARALLEL=true
-            shift
-            ;;
-        -r|--report)
-            GENERATE_REPORT=true
-            shift
-            ;;
-        --report-format)
-            REPORT_FORMAT="$2"
-            shift 2
-            ;;
-        -v|--verbose)
-            VERBOSE=true
-            shift
-            ;;
-        --no-clean)
-            CLEAN_AFTER=false
-            shift
-            ;;
-        -h|--help)
-            echo "Usage: $0 [options]"
-            echo ""
-            echo "Options:"
-            echo "  -p, --parallel          Run tests in parallel"
-            echo "  -r, --report           Generate test report"
-            echo "  --report-format FORMAT  Report format (text|html|markdown)"
-            echo "  -v, --verbose          Show detailed output"
-            echo "  --no-clean             Don't clean auxiliary files after test"
-            echo "  -h, --help             Show this help message"
-            exit 0
-            ;;
-        *)
-            echo "Unknown option: $1"
-            exit 1
-            ;;
-    esac
+usage() {
+  cat <<'EOF'
+Usage: scripts/test.sh [options]
+
+Options:
+  -p, --parallel           Compile independent fixtures in parallel
+  -r, --report             Write a report using --report-format
+      --report-format FMT  text, markdown, or html (default: text)
+  -v, --verbose            Print each compiler log on failure
+      --no-clean            Keep LaTeX auxiliary files in fixture directories
+  -h, --help               Show this help
+EOF
+}
+
+while (($#)); do
+  case "$1" in
+    -p|--parallel) PARALLEL=true; shift ;;
+    -r|--report) GENERATE_REPORT=true; shift ;;
+    --report-format)
+      (($# >= 2)) || { echo "--report-format requires a value" >&2; exit 2; }
+      REPORT_FORMAT="$2"
+      shift 2
+      ;;
+    -v|--verbose) VERBOSE=true; shift ;;
+    --no-clean) CLEAN_AFTER=false; shift ;;
+    -h|--help) usage; exit 0 ;;
+    *) echo "Unknown option: $1" >&2; usage >&2; exit 2 ;;
+  esac
 done
 
-# Base directory
-BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-cd "$BASE_DIR"
+case "$REPORT_FORMAT" in
+  text|markdown|md|html) ;;
+  *) echo "Unsupported report format: $REPORT_FORMAT" >&2; exit 2 ;;
+esac
 
-# Test results storage
-declare -A test_results
-declare -A test_times
-declare -A test_logs
+if ! command -v latexmk >/dev/null 2>&1; then
+  echo "latexmk is required but was not found on PATH" >&2
+  exit 2
+fi
 
-# Initialize test report
-REPORT_FILE="$BASE_DIR/test-report-$(date +%Y%m%d-%H%M%S)"
-REPORT_DATA=""
+TIMEOUT_CMD=()
+if command -v timeout >/dev/null 2>&1; then
+  TIMEOUT_CMD=(timeout "$TEST_TIMEOUT")
+fi
 
-echo -e "${GREEN}╔════════════════════════════════════════╗${NC}"
-echo -e "${GREEN}║     CCNUthesis Test Runner v2.0       ║${NC}"
-echo -e "${GREEN}╚════════════════════════════════════════╝${NC}"
-echo ""
+RESULT_DIR="$(mktemp -d "${TMPDIR:-/tmp}/ccnu-test.XXXXXX")"
+trap 'rm -rf "$RESULT_DIR"' EXIT
 
-# Function to run a single test
-run_test() {
-    local test_name=$1
-    local test_dir=$2
-    local test_type=$3
-    
-    local start_time=$(date +%s)
-    
-    if [ "$VERBOSE" = true ]; then
-        echo -e "${CYAN}Testing: $test_name${NC}"
-        echo "  Directory: $test_dir"
-        echo "  Type: $test_type"
-    else
-        echo -ne "${YELLOW}Testing $test_name...${NC}"
-    fi
-    
-    # Check if test directory exists
-    if [ ! -d "$test_dir" ]; then
-        test_results["$test_name"]="SKIP"
-        test_logs["$test_name"]="Test directory not found"
-        if [ "$VERBOSE" = false ]; then
-            echo -e " ${YELLOW}SKIPPED${NC} (directory not found)"
-        fi
-        return 2
-    fi
-    
-    # Check if main.tex exists
-    if [ ! -f "$test_dir/main.tex" ]; then
-        test_results["$test_name"]="SKIP"
-        test_logs["$test_name"]="main.tex not found"
-        if [ "$VERBOSE" = false ]; then
-            echo -e " ${YELLOW}SKIPPED${NC} (main.tex not found)"
-        fi
-        return 2
-    fi
-    
-    cd "$test_dir"
-    
-    # Clean previous builds
-    if [ "$CLEAN_AFTER" = true ]; then
-        latexmk -c >/dev/null 2>&1
-    fi
-    
-    # Compile with timeout
-    local compile_log="$test_dir/test-compile.log"
-    if timeout $TEST_TIMEOUT latexmk -xelatex main.tex > "$compile_log" 2>&1; then
-        local end_time=$(date +%s)
-        local duration=$((end_time - start_time))
-        
-        test_results["$test_name"]="PASS"
-        test_times["$test_name"]=$duration
-        test_logs["$test_name"]="Compiled successfully in ${duration}s"
-        
-        if [ "$VERBOSE" = false ]; then
-            echo -e " ${GREEN}✓ PASSED${NC} (${duration}s)"
-        else
-            echo -e "  ${GREEN}✓ Test passed in ${duration}s${NC}"
-        fi
-        
-        # Additional checks
-        if [ "$test_type" = "full" ]; then
-            run_additional_checks "$test_name" "$test_dir"
-        fi
-        
-        return 0
-    else
-        local end_time=$(date +%s)
-        local duration=$((end_time - start_time))
-        
-        test_results["$test_name"]="FAIL"
-        test_times["$test_name"]=$duration
-        
-        # Extract error message
-        local error_msg=$(grep -E "(Error|Fatal|Emergency stop)" "$compile_log" | head -5 | tr '\n' ' ')
-        test_logs["$test_name"]="Compilation failed: $error_msg"
-        
-        if [ "$VERBOSE" = false ]; then
-            echo -e " ${RED}✗ FAILED${NC}"
-        else
-            echo -e "  ${RED}✗ Test failed${NC}"
-            echo "  Error: $error_msg"
-        fi
-        
-        return 1
-    fi
-}
-
-# Function to run additional checks
-run_additional_checks() {
-    local test_name=$1
-    local test_dir=$2
-    
-    if [ "$VERBOSE" = true ]; then
-        echo "  Running additional checks..."
-    fi
-    
-    # Check PDF exists
-    if [ ! -f "$test_dir/main.pdf" ]; then
-        echo -e "    ${YELLOW}⚠ PDF not generated${NC}"
-        return 1
-    fi
-    
-    # Check bibliography
-    if [ -f "$test_dir/main.bbl" ]; then
-        local bib_entries=$(grep -c "\\bibitem" "$test_dir/main.bbl" 2>/dev/null || echo 0)
-        if [ "$VERBOSE" = true ]; then
-            echo -e "    Bibliography entries: $bib_entries"
-        fi
-    fi
-    
-    # Check for warnings
-    local warnings=$(grep -c "Warning" "$test_dir/test-compile.log" 2>/dev/null || echo 0)
-    if [ $warnings -gt 0 ] && [ "$VERBOSE" = true ]; then
-        echo -e "    ${YELLOW}⚠ $warnings warnings found${NC}"
-    fi
-    
-    return 0
-}
-
-# Function to run tests in parallel
-run_parallel_tests() {
-    local pids=()
-    
-    echo "Running tests in parallel..."
-    echo ""
-    
-    # Start all tests in background
-    for test_config in "${test_configs[@]}"; do
-        IFS='|' read -r test_name test_dir test_type <<< "$test_config"
-        (run_test "$test_name" "$test_dir" "$test_type") &
-        pids+=($!)
-    done
-    
-    # Wait for all tests to complete
-    for pid in "${pids[@]}"; do
-        wait $pid
-    done
-}
-
-# Function to run tests sequentially
-run_sequential_tests() {
-    for test_config in "${test_configs[@]}"; do
-        IFS='|' read -r test_name test_dir test_type <<< "$test_config"
-        run_test "$test_name" "$test_dir" "$test_type"
-    done
-}
-
-# Define test configurations
-test_configs=(
-    "Basic Template|$BASE_DIR/test/test-basic|full"
-    "Bachelor Template|$BASE_DIR/test/test-bachelor|full"
-    "Master Template|$BASE_DIR/test/test-master|full"
-    "Doctor Template|$BASE_DIR/test/test-doctor|full"
-    "Bibliography Test|$BASE_DIR/test/test-bibliography|quick"
-    "Math Mode Test|$BASE_DIR/test/test-math|quick"
-    "Figure/Table Test|$BASE_DIR/test/test-figures|quick"
+# name | working directory | TeX source | kind
+TESTS=(
+  "Basic Template|test/test-basic|main.tex|full"
+  "Choices Test|test|choices-test.tex|quick"
+  "Newtheorem Test|test|main-test-1-ccnunewtheorem.tex|quick"
 )
 
-# Run tests
-echo -e "${BLUE}Running ${#test_configs[@]} tests...${NC}"
-echo ""
+run_case() {
+  local index="$1"
+  local name="$2"
+  local relative_dir="$3"
+  local tex_file="$4"
+  local kind="$5"
+  local work_dir="$BASE_DIR/$relative_dir"
+  local result_file="$RESULT_DIR/$index.result"
+  local log_file="$RESULT_DIR/$index.log"
+  local start end duration stem cache_dir
+  start="$(date +%s)"
 
-if [ "$PARALLEL" = true ]; then
-    run_parallel_tests
-else
-    run_sequential_tests
-fi
+  if [[ ! -d "$work_dir" ]]; then
+    printf '%s\tFAIL\t0\tmissing directory: %s\n' "$name" "$relative_dir" > "$result_file"
+    return 0
+  fi
+  if [[ ! -f "$work_dir/$tex_file" ]]; then
+    printf '%s\tFAIL\t0\tmissing source: %s/%s\n' "$name" "$relative_dir" "$tex_file" > "$result_file"
+    return 0
+  fi
 
-# Calculate statistics
-total_tests=0
-passed_tests=0
-failed_tests=0
-skipped_tests=0
-total_time=0
+  if [[ "$CLEAN_AFTER" == true ]]; then
+    (cd "$work_dir" && latexmk -c >/dev/null 2>&1) || true
+  fi
 
-for test_name in "${!test_results[@]}"; do
-    ((total_tests++))
-    case ${test_results[$test_name]} in
-        PASS)
-            ((passed_tests++))
-            ;;
-        FAIL)
-            ((failed_tests++))
-            ;;
-        SKIP)
-            ((skipped_tests++))
-            ;;
-    esac
-    
-    if [ -n "${test_times[$test_name]}" ]; then
-        ((total_time += ${test_times[$test_name]}))
+  stem="${tex_file%.tex}"
+  # Biber is a PAR-packed binary on macOS.  Give each parallel fixture an
+  # isolated writable cache so PAR's lock file cannot deadlock independent
+  # compilations in CI sandboxes where the user's home cache may be read-only.
+  cache_dir="$RESULT_DIR/biber-cache-$index"
+  mkdir -p "$cache_dir" "$RESULT_DIR/texmf-var" "$RESULT_DIR/texmf-config"
+  if (
+    cd "$work_dir"
+    TEXINPUTS="$BASE_DIR/source:${TEXINPUTS:-}" \
+      PAR_GLOBAL_TEMP="$cache_dir" PAR_GLOBAL_TMPDIR="$cache_dir" \
+      TEXMFVAR="$RESULT_DIR/texmf-var" TEXMFCONFIG="$RESULT_DIR/texmf-config" \
+      "${TIMEOUT_CMD[@]}" latexmk -xelatex -g -interaction=nonstopmode -halt-on-error "$tex_file"
+  ) >"$log_file" 2>&1; then
+    if [[ "$kind" == full && ! -s "$work_dir/$stem.pdf" ]]; then
+      printf '%s\tFAIL\t0\tcompiler succeeded but PDF is missing\n' "$name" > "$result_file"
+      return 0
     fi
+    end="$(date +%s)"
+    duration=$((end - start))
+    printf '%s\tPASS\t%s\t%s\n' "$name" "$duration" "$log_file" > "$result_file"
+  else
+    end="$(date +%s)"
+    duration=$((end - start))
+    printf '%s\tFAIL\t%s\t%s\n' "$name" "$duration" "$log_file" > "$result_file"
+  fi
+
+  if [[ "$CLEAN_AFTER" == true ]]; then
+    (cd "$work_dir" && latexmk -c >/dev/null 2>&1) || true
+  fi
+}
+
+echo "CCNUthesis test runner"
+echo "Fixtures: ${#TESTS[@]} | parallel: $PARALLEL | timeout: ${TEST_TIMEOUT}s"
+
+index=0
+for config in "${TESTS[@]}"; do
+  IFS='|' read -r name relative_dir tex_file kind <<< "$config"
+  if [[ "$PARALLEL" == true ]]; then
+    run_case "$index" "$name" "$relative_dir" "$tex_file" "$kind" &
+  else
+    run_case "$index" "$name" "$relative_dir" "$tex_file" "$kind"
+  fi
+  index=$((index + 1))
 done
 
-# Generate report
-generate_text_report() {
-    echo ""
-    echo "════════════════════════════════════════"
-    echo "            TEST SUMMARY"
-    echo "════════════════════════════════════════"
-    echo ""
-    echo "Total:    $total_tests tests"
-    echo -e "Passed:   ${GREEN}$passed_tests${NC}"
-    echo -e "Failed:   ${RED}$failed_tests${NC}"
-    echo -e "Skipped:  ${YELLOW}$skipped_tests${NC}"
-    echo "Time:     ${total_time}s"
-    echo ""
-    
-    if [ $failed_tests -gt 0 ]; then
-        echo "Failed tests:"
-        for test_name in "${!test_results[@]}"; do
-            if [ "${test_results[$test_name]}" = "FAIL" ]; then
-                echo -e "  ${RED}✗ $test_name${NC}"
-                if [ "$VERBOSE" = true ]; then
-                    echo "    ${test_logs[$test_name]}"
-                fi
-            fi
-        done
-        echo ""
-    fi
-    
-    # Success rate
-    if [ $total_tests -gt 0 ]; then
-        local success_rate=$((passed_tests * 100 / total_tests))
-        echo -n "Success rate: "
-        if [ $success_rate -ge 90 ]; then
-            echo -e "${GREEN}${success_rate}%${NC}"
-        elif [ $success_rate -ge 70 ]; then
-            echo -e "${YELLOW}${success_rate}%${NC}"
-        else
-            echo -e "${RED}${success_rate}%${NC}"
-        fi
-    fi
-}
-
-generate_markdown_report() {
-    local report_file="${REPORT_FILE}.md"
-    
-    {
-        echo "# CCNUthesis Test Report"
-        echo ""
-        echo "**Date:** $(date '+%Y-%m-%d %H:%M:%S')"
-        echo "**Total Tests:** $total_tests"
-        echo "**Duration:** ${total_time}s"
-        echo ""
-        echo "## Summary"
-        echo ""
-        echo "| Status | Count |"
-        echo "|--------|-------|"
-        echo "| ✅ Passed | $passed_tests |"
-        echo "| ❌ Failed | $failed_tests |"
-        echo "| ⏭️ Skipped | $skipped_tests |"
-        echo ""
-        echo "## Test Results"
-        echo ""
-        echo "| Test Name | Status | Duration | Notes |"
-        echo "|-----------|--------|----------|-------|"
-        
-        for test_name in "${!test_results[@]}"; do
-            local status="${test_results[$test_name]}"
-            local duration="${test_times[$test_name]:-N/A}s"
-            local notes="${test_logs[$test_name]}"
-            
-            case $status in
-                PASS) status="✅ PASS" ;;
-                FAIL) status="❌ FAIL" ;;
-                SKIP) status="⏭️ SKIP" ;;
-            esac
-            
-            echo "| $test_name | $status | $duration | ${notes:0:50}... |"
-        done
-        
-    } > "$report_file"
-    
-    echo ""
-    echo -e "${GREEN}Markdown report saved to: $report_file${NC}"
-}
-
-generate_html_report() {
-    local report_file="${REPORT_FILE}.html"
-    
-    {
-        echo "<!DOCTYPE html>"
-        echo "<html><head>"
-        echo "<title>CCNUthesis Test Report</title>"
-        echo "<style>"
-        echo "body { font-family: Arial, sans-serif; margin: 20px; }"
-        echo "h1 { color: #333; }"
-        echo ".summary { background: #f0f0f0; padding: 15px; border-radius: 5px; }"
-        echo ".pass { color: green; font-weight: bold; }"
-        echo ".fail { color: red; font-weight: bold; }"
-        echo ".skip { color: orange; font-weight: bold; }"
-        echo "table { border-collapse: collapse; width: 100%; margin-top: 20px; }"
-        echo "th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }"
-        echo "th { background-color: #4CAF50; color: white; }"
-        echo "tr:nth-child(even) { background-color: #f2f2f2; }"
-        echo "</style>"
-        echo "</head><body>"
-        echo "<h1>CCNUthesis Test Report</h1>"
-        echo "<div class='summary'>"
-        echo "<p><strong>Date:</strong> $(date '+%Y-%m-%d %H:%M:%S')</p>"
-        echo "<p><strong>Total Tests:</strong> $total_tests</p>"
-        echo "<p><strong>Duration:</strong> ${total_time}s</p>"
-        echo "<p>"
-        echo "<span class='pass'>Passed: $passed_tests</span> | "
-        echo "<span class='fail'>Failed: $failed_tests</span> | "
-        echo "<span class='skip'>Skipped: $skipped_tests</span>"
-        echo "</p>"
-        echo "</div>"
-        echo "<h2>Test Results</h2>"
-        echo "<table>"
-        echo "<tr><th>Test Name</th><th>Status</th><th>Duration</th><th>Notes</th></tr>"
-        
-        for test_name in "${!test_results[@]}"; do
-            local status="${test_results[$test_name]}"
-            local duration="${test_times[$test_name]:-N/A}"
-            local notes="${test_logs[$test_name]}"
-            local class=""
-            
-            case $status in
-                PASS) class="pass" ;;
-                FAIL) class="fail" ;;
-                SKIP) class="skip" ;;
-            esac
-            
-            echo "<tr>"
-            echo "<td>$test_name</td>"
-            echo "<td class='$class'>$status</td>"
-            echo "<td>${duration}s</td>"
-            echo "<td>${notes}</td>"
-            echo "</tr>"
-        done
-        
-        echo "</table>"
-        echo "</body></html>"
-    } > "$report_file"
-    
-    echo ""
-    echo -e "${GREEN}HTML report saved to: $report_file${NC}"
-}
-
-# Display summary
-generate_text_report
-
-# Generate report if requested
-if [ "$GENERATE_REPORT" = true ]; then
-    case $REPORT_FORMAT in
-        markdown|md)
-            generate_markdown_report
-            ;;
-        html)
-            generate_html_report
-            ;;
-        *)
-            # Text report already displayed
-            ;;
-    esac
+if [[ "$PARALLEL" == true ]]; then
+  wait || true
 fi
 
-# Clean up if requested
-if [ "$CLEAN_AFTER" = true ]; then
-    echo ""
-    echo "Cleaning auxiliary files..."
-    for test_config in "${test_configs[@]}"; do
-        IFS='|' read -r test_name test_dir test_type <<< "$test_config"
-        if [ -d "$test_dir" ]; then
-            cd "$test_dir"
-            latexmk -c >/dev/null 2>&1
-            rm -f test-compile.log
-        fi
-    done
-fi
+total=0
+passed=0
+failed=0
+report_rows=()
+for result_file in "$RESULT_DIR"/*.result; do
+  IFS=$'\t' read -r name result duration detail < "$result_file"
+  total=$((total + 1))
+  if [[ "$result" == PASS ]]; then
+    passed=$((passed + 1))
+  else
+    failed=$((failed + 1))
+  fi
+  report_rows+=("$name|$result|$duration|$detail")
+done
 
-# Exit code
 echo ""
-if [ $failed_tests -eq 0 ]; then
-    echo -e "${GREEN}╔════════════════════════════════════════╗${NC}"
-    echo -e "${GREEN}║         All tests passed! 🎉          ║${NC}"
-    echo -e "${GREEN}╚════════════════════════════════════════╝${NC}"
-    exit 0
-else
-    echo -e "${RED}╔════════════════════════════════════════╗${NC}"
-    echo -e "${RED}║      $failed_tests test(s) failed ⚠️               ║${NC}"
-    echo -e "${RED}╚════════════════════════════════════════╝${NC}"
-    exit 1
+echo "Total: $total | Passed: $passed | Failed: $failed"
+for row in "${report_rows[@]}"; do
+  IFS='|' read -r name result duration detail <<< "$row"
+  if [[ "$result" == PASS ]]; then
+    echo "PASS  $name (${duration}s)"
+  else
+    echo "FAIL  $name (${duration}s)"
+    if [[ "$VERBOSE" == true && -f "$detail" ]]; then
+      sed -n '1,120p' "$detail"
+    elif [[ -f "$detail" ]]; then
+      echo "      log: $detail"
+    else
+      echo "      $detail"
+    fi
+  fi
+done
+
+if [[ "$GENERATE_REPORT" == true && "$REPORT_FORMAT" != text ]]; then
+  REPORT_FILE="$BASE_DIR/test-report-$(date +%Y%m%d-%H%M%S)"
+  mkdir -p "${REPORT_FILE}-logs"
+  persistent_rows=()
+  row_index=0
+  for row in "${report_rows[@]}"; do
+    IFS='|' read -r name result duration detail <<< "$row"
+    if [[ -f "$detail" ]]; then
+      persistent_detail="${REPORT_FILE}-logs/${row_index}.log"
+      cp "$detail" "$persistent_detail"
+      detail="$persistent_detail"
+    fi
+    persistent_rows+=("$name|$result|$duration|$detail")
+    row_index=$((row_index + 1))
+  done
+  report_rows=("${persistent_rows[@]}")
+  if [[ "$REPORT_FORMAT" == markdown || "$REPORT_FORMAT" == md ]]; then
+    {
+      echo "# CCNUthesis Test Report"
+      echo
+      echo "| Fixture | Result | Duration | Detail |"
+      echo "|---|---|---:|---|"
+      for row in "${report_rows[@]}"; do
+        IFS='|' read -r name result duration detail <<< "$row"
+        echo "| $name | $result | ${duration}s | $detail |"
+      done
+    } > "$REPORT_FILE.md"
+    echo "Report: $REPORT_FILE.md"
+  else
+    {
+      echo '<!doctype html><meta charset="utf-8"><title>CCNUthesis Test Report</title>'
+      echo '<table><tr><th>Fixture</th><th>Result</th><th>Duration</th><th>Detail</th></tr>'
+      for row in "${report_rows[@]}"; do
+        IFS='|' read -r name result duration detail <<< "$row"
+        printf '<tr><td>%s</td><td>%s</td><td>%ss</td><td>%s</td></tr>\n' "$name" "$result" "$duration" "$detail"
+      done
+      echo '</table>'
+    } > "$REPORT_FILE.html"
+    echo "Report: $REPORT_FILE.html"
+  fi
+fi
+
+if ((failed > 0)); then
+  exit 1
 fi

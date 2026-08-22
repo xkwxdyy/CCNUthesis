@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "topic": "latex-workflow",
+  "changes": [
+    {
+      "id": "latex-compatibility-and-workflow",
+      "type": "fixed",
+      "zh": "修复新版本 TeX Live 兼容性，并完善模板测试、构建和发布自动化。",
+      "changelog": true,
+      "announce": false
+    }
+  ]
+}

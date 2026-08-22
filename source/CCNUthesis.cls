@@ -364,7 +364,6 @@
         \PassOptionsToPackage 
           {
             restoremathleading,
-            UseMSWordMultipleLineSpacing,
             MSWordLineSpacingMultiple   = 1.5
           }
           { zhlineskip }
@@ -377,7 +376,6 @@
         \PassOptionsToPackage 
           {
             restoremathleading,
-            UseMSWordMultipleLineSpacing,
             MSWordLineSpacingMultiple   = 1.25
           }
           { zhlineskip }
@@ -416,7 +414,6 @@
     etoolbox,          % 补丁
     mathtools,         
     amsthm,            % 定理类环境
-    thmtools,          % 定理类环境
     xeCJKfntef,        % 下划线
     zhlineskip         % 行距
   }
@@ -1805,88 +1802,78 @@
   {
     theorem-bodyfont = normal,
   }
-% 去掉.号，但只能通过新定义 style 的方式进行
-\declaretheoremstyle
-  [
-    headpunct     = {},
-    postheadspace = { 0.5em },
-    headindent    = 2\ccwd,
-    bodyfont      = \l__ccnu_theorem_body_tl,
-  ]
-  { ccnustyle }
-\cs_new:Npn \__ccnu_declare_theorem_with_counter_within:n #1
-  {
-    \declaretheorem
-      [
-        style = ccnustyle,
-        name =  \clist_item:nn {#1} {1} ,
-        refname = \clist_item:nn {#1} {2} ,
-        within = \clist_item:nn {#1} {3} ,
-      ]
-      { \clist_item:nn {#1} {4} }
-  }
-\cs_new:Npn \__ccnu_declare_theorem_with_counter_sibling:n #1
-  {
-    \declaretheorem
-      [
-        style   = ccnustyle ,
-        name    = \clist_item:nn {#1} {1} ,
-        refname = \clist_item:nn {#1} {2} ,
-        sibling = \clist_item:nn {#1} {3} ,
-      ]
-      { \clist_item:nn {#1} {4} }
-  }
-
+% amsthm 的原生接口避免依赖 thmtools 的旧版 \newtheorem 补丁。
+% 该补丁在新 LaTeX 内核下会重复创建 sibling 计数器。
+\newtheoremstyle { ccnustyle }
+  { 0pt } { 0pt }
+  { \l__ccnu_theorem_body_tl }
+  { 2\ccwd }
+  { \bfseries } { }
+  { 0.5em }
+  { \thmname{#1}\thmnumber{ #2}\thmnote{ (#3)} }
+\theoremstyle { ccnustyle }
 
 % 和旧模板一样的计数器依赖
+\newtheorem { theorem } { 定理 } [ chapter ]
+\newtheorem { example } { 例 } [ chapter ]
+\newtheorem { question } { 问题 } [ chapter ]
+\newtheorem { definition } [ theorem ] { 定义 }
+\newtheorem { property } [ theorem ] { 性质 }
+\newtheorem { proposition } [ theorem ] { 命题 }
+\newtheorem { corollary } [ theorem ] { 推论 }
+\newtheorem { lemma } [ theorem ] { 引理 }
+\newtheorem { axiom } [ theorem ] { 公理 }
+\newtheorem { counterexample } [ theorem ] { 反例 }
+\newtheorem { conjecture } [ theorem ] { 猜想 }
+\newtheorem { claim } [ theorem ] { 断言 }
+\newtheorem { remark } [ theorem ] { 注 }
 
-\clist_map_function:nN
+\tl_new:N   \l__ccnu_theorem_sibling_tl
+\tl_new:N   \l__ccnu_theorem_within_tl
+\bool_new:N \l__ccnu_theorem_numbered_bool
+\__ccnu_msg_new:nn { unknown-theorem-option }
+  { Unknown~ theorem~ option~ `#1'. }
+\__ccnu_msg_new:nn { theorem-conflicting-options }
+  { The~ `sibling'~ and~ `within'~ options~ cannot~ be~ used~ together. }
+\keys_define:nn { ccnu / theorem }
   {
-    { 定理, 定理, chapter, theorem },
-    { 例, 例, chapter, example },
-    { 问题, 问题, chapter, question },
+    sibling .tl_set:N = \l__ccnu_theorem_sibling_tl,
+    within  .tl_set:N = \l__ccnu_theorem_within_tl,
+    numbered .choice:,
+    numbered / yes .code:n = { \bool_set_true:N  \l__ccnu_theorem_numbered_bool },
+    numbered / no  .code:n = { \bool_set_false:N \l__ccnu_theorem_numbered_bool },
+    numbered .initial:n = yes,
+    unknown .code:n =
+      { \__ccnu_error:nn { unknown-theorem-option } { \l_keys_key_str } },
   }
-  \__ccnu_declare_theorem_with_counter_within:n
-
-\clist_map_function:nN
-  {
-    { 定义, 定义, theorem, definition },
-    { 性质, 性质, theorem, property },
-    { 命题, 命题, theorem, proposition },
-    { 推论, 推论, theorem, corollary },
-    { 引理, 引理, theorem, lemma },
-    { 公理, 公理, theorem, axiom },
-    { 反例, 反例, theorem, counterexample },
-    { 猜想, 猜想, theorem, conjecture },
-    { 断言, 断言, theorem, claim },
-    { 注, 注, theorem, remark },
-  }\__ccnu_declare_theorem_with_counter_sibling:n
 
 \NewDocumentCommand { \ccnunewtheorem } { s O{} m m }
   {
-    \IfBooleanTF {#1}
+    \tl_clear:N \l__ccnu_theorem_sibling_tl
+    \tl_clear:N \l__ccnu_theorem_within_tl
+    \bool_set_true:N \l__ccnu_theorem_numbered_bool
+    \keys_set:nn { ccnu / theorem } {#2}
+    \tl_if_empty:NF \l__ccnu_theorem_sibling_tl
       {
-        % 有*
-        \declaretheorem
-          [
-            style = ccnustyle,
-            name =  #3 ,
-            refname = #3 ,
-            numbered = no,
-            #2
-          ]
-          { #4 }
+        \tl_if_empty:NF \l__ccnu_theorem_within_tl
+          { \__ccnu_error:n { theorem-conflicting-options } }
       }
+    \IfBooleanTF {#1}
+      { \newtheorem* {#4} {#3} }
       {
-        % 无*
-        \declaretheorem
-          [
-            style = ccnustyle,
-            name =  #3 ,
-            refname = #3 ,
-            #2
-          ]
-          { #4 }
+        \bool_if:NTF \l__ccnu_theorem_numbered_bool
+          {
+            \tl_if_empty:NF \l__ccnu_theorem_sibling_tl
+              { \newtheorem {#4} [\tl_use:N \l__ccnu_theorem_sibling_tl] {#3} }
+            \tl_if_empty:NF \l__ccnu_theorem_within_tl
+              { \newtheorem {#4} {#3} [\tl_use:N \l__ccnu_theorem_within_tl] }
+            \tl_if_empty:NT \l__ccnu_theorem_sibling_tl
+              {
+                \tl_if_empty:NT \l__ccnu_theorem_within_tl
+                  { \newtheorem {#4} {#3} }
+              }
+          }
+          { \newtheorem* {#4} {#3} }
       }
   }
 
