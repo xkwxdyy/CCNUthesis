@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "topic": "remove-donation-references",
+  "changes": [
+    {
+      "id": "remove-donation-references",
+      "type": "removed",
+      "zh": "移除用户手册中的赞助收款内容，并同步清理相关私有素材忽略规则。",
+      "changelog": false,
+      "announce": false
+    }
+  ]
+}

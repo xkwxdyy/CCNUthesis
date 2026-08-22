@@ -44,6 +44,14 @@ CCNUthesis-manual.pdf
 *.synctex.gz(busy)
 *.pdfsync
 
+## Sensitive or private materials
+legacy/math-old-Deng/*.pdf
+legacy/math-old-Deng/真实论文.pdf
+legacy/math-old-Deng/真实论文.tex
+legacy/math-old-Deng/xuduosi.tex
+legacy/math-old-Deng/吉呷.tex
+docs/user-guide/figures/夏大鱼羊支付宝微信收款码.png
+
 ## Build tool directories for auxiliary files
 # latexrun
 latex.out/
@@ -329,9 +337,16 @@ main-test/
 tutorial/
 
 release/
+.cache/
+test-report-*
 
 doc/CCNUthesis-doc.pdf
 
 main-test.tex
 
 Feedback.md
+
+# The GitHub and Gitee Wiki worktrees are maintained as independent Git
+# repositories inside this working tree; do not embed them in the main repo.
+CCNUthesis.wiki-github/
+CCNUthesis.wiki-gitee/
