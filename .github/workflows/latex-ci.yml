@@ -40,11 +40,12 @@ jobs:
         with:
           packages: |
             latex latex-bin latexmk xetex biber ctex l3experimental
-            collection-latexrecommended collection-latexextra
+            amscls tools graphics psnfss xecjk filehook
             amsmath amsfonts mathtools biblatex biblatex-gb7714-2015
             geometry fancyhdr footmisc bigfoot caption fontspec tikzpagenodes ifoddpage
             tabularray etoolbox accsupp zhlineskip enumitem tocloft newtx
-            unicode-math hyperref
+            unicode-math hyperref listings makecell siunitx tabularx threeparttable
+            xcolor xcolor-material xunicode zref-base tikz
       - name: Compile test fixtures
         run: bash scripts/test.sh --parallel --verbose --report --report-format markdown
       - name: Build user guide
