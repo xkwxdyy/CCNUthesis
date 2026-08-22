@@ -44,7 +44,7 @@ jobs:
             amsmath amsfonts mathtools biblatex biblatex-gb7714-2015 tex-gyre xits
             geometry fancyhdr footmisc bigfoot caption fontspec tikzpagenodes ifoddpage
             tabularray etoolbox accsupp oberdiek mwe zhlineskip enumitem tocloft newtx
-            booktabs colortbl multirow xpinyin hologo csquotes fancyvrb underscore
+            booktabs colortbl multirow xpinyin hologo csquotes fancyvrb underscore hypdoc
             unicode-math hyperref listings makecell siunitx threeparttable pgf
             xcolor xcolor-material xunicode zref
       - name: Compile test fixtures
