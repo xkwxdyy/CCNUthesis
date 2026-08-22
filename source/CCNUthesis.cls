@@ -867,14 +867,11 @@
       }
       {
         % Linux
-        \fontspec_font_if_exist:nTF { STXinwei }
-          {
-            \newCJKfontfamily \ccnutitlefont { STXinwei }
-          }
-          {
-            \newCJKfontfamily \ccnutitlefont { FandolHei-Regular }
-          }
-
+        % TeX Live's font lookup may report a false positive for the
+        % platform-specific STXinwei name and then invoke mktextfm.  That
+        % leaves CI without a usable CJK title font, so use the bundled
+        % Fandol font explicitly on Linux.
+        \newCJKfontfamily \ccnutitlefont { FandolHei-Regular }
       }
   }
 
