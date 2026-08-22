@@ -316,9 +316,10 @@ TSWLatexianTemp*
 
 CCNUthesis-manual.pdf
 
-test/
-
 CCNUthesis.wiki
+
+# Test fixture build products
+test/*.pdf
 
 *-v*
 *.xmind
