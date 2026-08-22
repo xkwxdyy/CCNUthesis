@@ -165,7 +165,8 @@ for row in "${report_rows[@]}"; do
   else
     echo "FAIL  $name (${duration}s)"
     if [[ "$VERBOSE" == true && -f "$detail" ]]; then
-      sed -n '1,120p' "$detail"
+      echo "      --- compiler log (tail) ---"
+      tail -n 120 "$detail"
     elif [[ -f "$detail" ]]; then
       echo "      log: $detail"
     else
