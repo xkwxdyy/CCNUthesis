@@ -41,7 +41,7 @@ jobs:
           packages: |
             latex latex-bin latexmk xetex biber ctex
             amsmath amsfonts biblatex biblatex-gb7714-2015
-            geometry fancyhdr footmisc perpage caption fontspec tikzpagenodes
+            geometry fancyhdr footmisc bigfoot caption fontspec tikzpagenodes
             tabularray etoolbox zhlineskip enumitem tocloft newtx
             unicode-math hyperref
       - name: Compile test fixtures
