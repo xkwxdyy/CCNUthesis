@@ -21,7 +21,13 @@ test-parallel:
 	bash scripts/test.sh --parallel
 
 docs:
-	cd docs/user-guide && latexmk -xelatex -g -interaction=nonstopmode -halt-on-error CCNUthesis-doc.tex
+	@mkdir -p .cache/biber-docs .cache/texmf-var .cache/texmf-config
+	cd docs/user-guide && \
+		PAR_GLOBAL_TEMP="$(CURDIR)/.cache/biber-docs" \
+		PAR_GLOBAL_TMPDIR="$(CURDIR)/.cache/biber-docs" \
+		TEXMFVAR="$(CURDIR)/.cache/texmf-var" \
+		TEXMFCONFIG="$(CURDIR)/.cache/texmf-config" \
+		latexmk -xelatex -g -interaction=nonstopmode -halt-on-error CCNUthesis-doc.tex
 
 package:
 	@test -n "$(VERSION)" || (echo 'VERSION is required, e.g. make package VERSION=1.4.7' >&2; exit 2)

@@ -817,25 +817,48 @@
   BoldFont       = *-Bold,
   ItalicFont     = *-Italic,
   BoldItalicFont = *-BoldItalic]
-\setmonofont{Iosevka Slab}[%
-  UprightFont    = * Light,
-  BoldFont       = * Semibold,
-  ItalicFont     = * Light Oblique,
-  BoldItalicFont = * Semibold Oblique,
-  Scale          = MatchLowercase]
+% Iosevka Slab is optional: it is not shipped by every TeX Live profile.
+% Keep the documentation portable by falling back to Latin Modern Mono.
+\IfFontExistsTF{Iosevka Slab}{%
+  \setmonofont{Iosevka Slab}[%
+    UprightFont    = * Light,
+    BoldFont       = * Semibold,
+    ItalicFont     = * Light Oblique,
+    BoldItalicFont = * Semibold Oblique,
+    Scale          = MatchLowercase]%
+}{%
+  \setmonofont{lmmono10-regular.otf}[Scale = MatchLowercase]%
+}
 \setmathfont{LibertinusMath-Regular.otf}
-\setCJKmainfont{Source Han Serif SC}[%
-  ItalicFont     = FZKai-Z03,
-  CharacterWidth = Full]
-\setCJKsansfont{Source Han Sans SC}[%
-  ItalicFont     = *,
-  CharacterWidth = Full]
-\setCJKmonofont{Source Han Sans SC}[%
-  UprightFont    = * Normal,
-  BoldFont       = * Bold,
-  AutoFakeSlant  = 0.1763,  % = tan(10 deg)
-  Scale          = 0.8903,
-  CharacterWidth = Full]
+\IfFontExistsTF{Source Han Serif SC}{%
+  \setCJKmainfont{Source Han Serif SC}[%
+    ItalicFont     = FZKai-Z03,
+    CharacterWidth = Full]%
+}{%
+  \setCJKmainfont{FandolSong-Regular.otf}[%
+    BoldFont      = FandolSong-Bold.otf,
+    ItalicFont    = FandolKai-Regular.otf,
+    CharacterWidth = Full]%
+}
+\IfFontExistsTF{Source Han Sans SC}{%
+  \setCJKsansfont{Source Han Sans SC}[%
+    ItalicFont     = *,
+    CharacterWidth = Full]%
+  \setCJKmonofont{Source Han Sans SC}[%
+    UprightFont    = * Normal,
+    BoldFont       = * Bold,
+    AutoFakeSlant  = 0.1763,  % = tan(10 deg)
+    Scale          = 0.8903,
+    CharacterWidth = Full]%
+}{%
+  \setCJKsansfont{FandolHei-Regular.otf}[%
+    BoldFont      = FandolHei-Bold.otf,
+    CharacterWidth = Full]%
+  \setCJKmonofont{FandolHei-Regular.otf}[%
+    BoldFont       = FandolHei-Bold.otf,
+    AutoFakeSlant  = 0.1763,
+    CharacterWidth = Full]%
+}
 \ctexset{%
   section/name        = {第,节},
   section/format+     = \raggedright,
