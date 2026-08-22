@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "topic": "remove-service-materials",
+  "changes": [
+    {
+      "id": "remove-service-materials",
+      "type": "removed",
+      "zh": "移除与代排服务平台和客户项目相关的仓库内容，仓库恢复为纯 LaTeX 模板。",
+      "changelog": false,
+      "announce": false
+    }
+  ]
+}

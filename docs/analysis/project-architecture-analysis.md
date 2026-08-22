@@ -72,9 +72,6 @@ CCNUthesis/
 │   ├── references/              # 参考资料
 │   └── feedback.md              # 用户反馈
 │
-├── 📁 typesetting-services/      # 代排服务
-│   └── [客户项目和服务文档]
-│
 ├── 📁 legacy/                    # 历史版本归档
 │   └── math-old-Deng/           # 邓国泰老师旧版模板
 │

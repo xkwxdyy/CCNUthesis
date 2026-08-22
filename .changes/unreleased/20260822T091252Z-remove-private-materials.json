@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "topic": "remove-private-materials",
+  "changes": [
+    {
+      "id": "remove-private-materials",
+      "type": "removed",
+      "zh": "移除已停用的个人资料、收款素材和历史论文文件，避免非模板内容进入发布仓库。",
+      "changelog": false,
+      "announce": false
+    }
+  ]
+}
