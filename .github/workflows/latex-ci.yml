@@ -45,6 +45,6 @@ jobs:
             tabularray etoolbox zhlineskip enumitem tocloft newtx
             unicode-math hyperref
       - name: Compile test fixtures
-        run: bash scripts/test.sh --parallel --report --report-format markdown
+        run: bash scripts/test.sh --parallel --verbose --report --report-format markdown
       - name: Build user guide
         run: make docs
