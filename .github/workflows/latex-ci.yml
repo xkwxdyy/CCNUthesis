@@ -45,7 +45,7 @@ jobs:
             geometry fancyhdr footmisc bigfoot caption fontspec tikzpagenodes ifoddpage
             tabularray etoolbox accsupp oberdiek mwe zhlineskip enumitem tocloft newtx
             booktabs colortbl multirow xpinyin hologo csquotes fancyvrb underscore hypdoc
-            libertinus-fonts plex-otf unicode-math hyperref listings makecell siunitx
+            libertinus-fonts unicode-math hyperref listings makecell siunitx
             threeparttable pgf
             xcolor xcolor-material xunicode zref
       - name: Compile test fixtures

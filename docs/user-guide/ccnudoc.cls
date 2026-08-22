@@ -811,12 +811,14 @@
   ItalicFont     = *-Italic,
   BoldItalicFont = *-BoldItalic,
   Scale          = 1.1]
-% Use explicit filenames so XeTeX can resolve the TeX Live font files even
-% when the system font database has not been refreshed by the CI installer.
-\setsansfont{IBMPlexSansCondensed-Regular.otf}[%
-  BoldFont       = IBMPlexSansCondensed-Bold.otf,
-  ItalicFont     = IBMPlexSansCondensed-Italic.otf,
-  BoldItalicFont = IBMPlexSansCondensed-BoldItalic.otf]
+% TeX Gyre Heros is included in the minimal CI font set and avoids relying on
+% a system font database for the optional IBM Plex family.
+\setsansfont{texgyreheros}[%
+  Extension      = .otf,
+  UprightFont    = *-regular,
+  BoldFont       = *-bold,
+  ItalicFont     = *-italic,
+  BoldItalicFont = *-bolditalic]
 % Iosevka Slab is optional: it is not shipped by every TeX Live profile.
 % Keep the documentation portable by falling back to Latin Modern Mono.
 \IfFontExistsTF{Iosevka Slab}{%
