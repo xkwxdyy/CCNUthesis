@@ -76,7 +76,7 @@ run_case() {
   local work_dir="$BASE_DIR/$relative_dir"
   local result_file="$RESULT_DIR/$index.result"
   local log_file="$RESULT_DIR/$index.log"
-  local start end duration stem cache_dir
+  local start end duration stem cache_dir lock_dir
   start="$(date +%s)"
 
   if [[ ! -d "$work_dir" ]]; then
@@ -87,6 +87,14 @@ run_case() {
     printf '%s\tFAIL\t0\tmissing source: %s/%s\n' "$name" "$relative_dir" "$tex_file" > "$result_file"
     return 0
   fi
+
+  # Multiple fixtures may live in the same directory (for example, the two
+  # focused tests under test/).  Serialize cleanup and compilation per
+  # directory so parallel mode cannot remove another fixture's auxiliaries.
+  lock_dir="$RESULT_DIR/lock-${relative_dir//\//_}"
+  while ! mkdir "$lock_dir" 2>/dev/null; do
+    sleep 0.1
+  done
 
   if [[ "$CLEAN_AFTER" == true ]]; then
     (cd "$work_dir" && latexmk -c >/dev/null 2>&1) || true
@@ -107,6 +115,7 @@ run_case() {
   ) >"$log_file" 2>&1; then
     if [[ "$kind" == full && ! -s "$work_dir/$stem.pdf" ]]; then
       printf '%s\tFAIL\t0\tcompiler succeeded but PDF is missing\n' "$name" > "$result_file"
+      rmdir "$lock_dir"
       return 0
     fi
     end="$(date +%s)"
@@ -121,6 +130,7 @@ run_case() {
   if [[ "$CLEAN_AFTER" == true ]]; then
     (cd "$work_dir" && latexmk -c >/dev/null 2>&1) || true
   fi
+  rmdir "$lock_dir"
 }
 
 echo "CCNUthesis test runner"
